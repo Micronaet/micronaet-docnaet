@@ -39,6 +39,15 @@ _logger = logging.getLogger(__name__)
 
 # TODO docnaet.user to create as res.users
 # TODO docnaet.compnay to create as res.company
+class ResCompany(orm.Model):
+    ''' Docnaet company extra fields
+    '''
+    _inherit = 'res.company'
+    _columns = {
+        'docnaet_path': fields.char(
+            'Docnaet path', size=64, 
+            help='Docnaet root path in file system for store docs'), 
+        }
 
 class DocnaetLanguage(orm.Model):
     ''' Object docnaet.language

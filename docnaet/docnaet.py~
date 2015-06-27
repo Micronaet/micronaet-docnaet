@@ -39,6 +39,15 @@ _logger = logging.getLogger(__name__)
 
 # TODO docnaet.user to create as res.users
 # TODO docnaet.compnay to create as res.company
+class ResCompany(orm.Model):
+    ''' Docnaet company extra fields
+    '''
+    _inherit = 'res.company'
+    _columns = {
+        'docnaet_path': fields.char(
+            'Docnaet path', size=64, 
+            help='Docnaet root path in file system for store docs'), 
+        }
 
 class DocnaetLanguage(orm.Model):
     ''' Object docnaet.language
@@ -121,13 +130,18 @@ class DocnaetDocument(orm.Model):
                 docnaet_proxy.docnaet_extension,     
                 )
         else: # Link to detail form in docnaet
-            parameters = self.pool.get('res.company').get_docnaet_parameters(cr, uid, context=context)
-            final_url = r"http://%s/docnaet/asp/autenticazione.asp?token=T&client_id=%s&document_id=%s&company_id=%s&user_id=%s"%(
+            parameters = self.pool.get('res.company').get_docnaet_parameters(
+                cr, uid, context=context)
+            final_url = r"http://%s/docnaet/asp/autenticazione.asp?"
+                "token=T&client_id=%s&document_id=%s&company_id=%s"
+                "&user_id=%s"%(
                         parameters.docnaet_host, 
                         docnaet_proxy.docnaet_client_id, 
                         docnaet_proxy.docnaet_document_id, 
                         docnaet_proxy.docnaet_company_id, 
-                        docnaet_proxy.docnaet_user_id if docnaet_proxy.docnaet_user_id else parameters.docnaet_guest_user_id.id,
+                        docnaet_proxy.docnaet_user_id \
+                            if docnaet_proxy.docnaet_user_id \
+                            else parameters.docnaet_guest_user_id.id,
                         )
 
         return {'type': 'ir.actions.act_url', 'url':final_url, 'target': 'new'}
@@ -154,7 +168,7 @@ class DocnaetDocument(orm.Model):
         # TODO remove for directly open in OpenERP
         # Docnaet ID (for open document)
         #'docnaet_document_id': fields.integer('Docnaet Document ID'),
-        #'docnaet_document_real_id': fields.integer('Docnaet Document Real ID'),
+        #'docnaet_document_real_id': fields.integer('Docnaet Document RealID'),
         #'docnaet_protocol_id': fields.integer('Docnaet Protocol ID'),
         #'docnaet_language_id': fields.integer('Docnaet Language ID'),
         #'docnaet_type_id': fields.integer('Docnaet Type ID'),
