@@ -24,6 +24,10 @@
     'name': 'Docnaet',
     'version': '0.0.1',
     'category': 'Document Management',
+    'description': '''
+        Micronaet - Docnaet Document Manager
+        Default module for create structure to integrare Docnaet Management    
+        ''',
     'author': 'Micronaet s.r.l.',
     'website': 'http://www.micronaet.it',
     'depends': [
