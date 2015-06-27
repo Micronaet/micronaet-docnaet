@@ -133,14 +133,14 @@ class DocnaetDocument(orm.Model):
             parameters = self.pool.get('res.company').get_docnaet_parameters(
                 cr, uid, context=context)
             final_url = r"http://%s/docnaet/asp/autenticazione.asp?token=T&client_id=%s&document_id=%s&company_id=%s&user_id=%s" % (
-                        parameters.docnaet_host, 
-                        docnaet_proxy.docnaet_client_id, 
-                        docnaet_proxy.docnaet_document_id, 
-                        docnaet_proxy.docnaet_company_id, 
-                        docnaet_proxy.docnaet_user_id \
-                            if docnaet_proxy.docnaet_user_id \
-                            else parameters.docnaet_guest_user_id.id,
-                        )
+                parameters.docnaet_host, 
+                docnaet_proxy.docnaet_client_id, 
+                docnaet_proxy.docnaet_document_id, 
+                docnaet_proxy.docnaet_company_id, 
+                docnaet_proxy.docnaet_user_id \
+                    if docnaet_proxy.docnaet_user_id \
+                    else parameters.docnaet_guest_user_id.id,
+                )
 
         return {'type': 'ir.actions.act_url', 'url':final_url, 'target': 'new'}
                         

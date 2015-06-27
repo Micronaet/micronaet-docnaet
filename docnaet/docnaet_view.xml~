@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-    <!---->
     <!--res.company--> 
     <record model="ir.ui.view" id="res_company_form_view">
         <field name="name">Company Docnaet MS SQL</field>
@@ -71,6 +70,28 @@
             </form>
         </field>
     </record>    
-    </data>
+    <record model="ir.actions.act_window" id="action_docnaet_document_tree">
+        <field name="name">Documents</field>
+        <field name="res_model">docnaet.document</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_docnaet_document_tree"/>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+    </record>
+    
+    <menuitem id="docnaet_root" string="Docnaet" sequence="20"/>
+        <menuitem parent="docnaet_root" id="docnaet_administration" string="Administration" sequence="10" />
+            <!--<menuitem parent="docnaet_administration" id="docnaet_administration_company" string="Company" sequence="1" action="" />
+            <menuitem parent="docnaet_administration" id="docnaet_administration_user" string="User" sequence="5" action="" />-->
+            <menuitem parent="docnaet_administration" id="docnaet_administration_protocol" string="Protocol" sequence="10" action=""/>
+            <menuitem parent="docnaet_administration" id="docnaet_administration_tipology" string="Tipoloy" sequence="20" action="" />
+            <menuitem parent="docnaet_administration" id="docnaet_administration_language" string="Language" sequence="30" action="" />
+
+        <menuitem parent="docnaet_root" id="docnaet_document" string="Document" sequence="20" />
+            <menuitem parent="docnaet_document" id="docnaet_document_my_document" string="My document" sequence="10" action="action_docnaet_document_tree"/>
+            <menuitem parent="docnaet_document" id="docnaet_document_document" string="Document" sequence="20" action="action_docnaet_document_tree" />            
+    
+    </data>    
 </openerp>    
     
