@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data> <!--noupdate="1">-->
+        <!--Email alert template -->
+        <record id="email_alert_template_user_crm_meeting" model="email.template">
+            <field name="name">Alert CRM meeting</field>
+            <field name="email_from">openerp@micronaet.it</field>
+            <field name="subject">Alert: ${object.name}</field>
+            <field name="email_to">${object.user_id.email}</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">it_IT</field>
+            <field name="body_html"><![CDATA[
+    <div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+        <p>Spett.le ${object.name},</p>
+        <p>Segnaliamo un'attivita' da portare avanti</p>
+        <!-- Insert Area: for list of link to crm.meeting-->
+            <!--micronaet-->
+        <!-- End Insert Area: for list of link to crm.meeting-->
+        <br/>
+        <p>Messaggio inviato automaticamente dal sistema</p>
+    </div>
+            ]]></field>
+        </record>
+    </data>
+</openerp>

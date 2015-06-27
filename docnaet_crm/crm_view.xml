@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    <!--crm.meeting--> 
+    <record model="ir.ui.view" id="crm_meeting_docnaet_form_view">
+        <field name="name">CRM Meeting Docnaet</field>
+        <field name="model">crm.meeting</field>
+        <field name="inherit_id" ref="base_calendar.view_crm_meeting_form" />
+        <field name="arch" type="xml">
+            <field name="description" position="after">
+    	        <group colspan="4" col="6">
+                    <separator string ="Docnaet" colspan="6" />
+                    <field name="docnaet_document_id" readonly="1" />
+                    <field name="docnaet_alert" invisible="1" />
+                    <button name="button_call_url_document" string="Docnaet form" type="object" attrs="{'invisible':[('docnaet_document_id','=',False)]}"/>
+                    <button name="button_call_url_docnaet" string="Docnaet document" type="object" attrs="{'invisible':[('docnaet_document_id','=',False)]}" />
+                    <button name="button_remove_docnaet_alert" string="Stop Docnaet alert" type="object" context="{'docnaet_document_id': docnaet_document_id}" attrs="{'invisible':['|',('docnaet_document_id','=',False),('docnaet_alert','=',False)]}"/>
+                </group>
+            </field>
+        </field>
+    </record>   
+    </data>
+</openerp>    
+    

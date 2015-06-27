@@ -1,0 +1,8 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_docnaet_language_user","docnaet.language","model_docnaet_language","base.group_user",1,1,1,1
+"access_docnaet_type_user","docnaet.type","model_docnaet_type","base.group_user",1,1,1,1
+"access_docnaet_user_user","docnaet.user","model_docnaet_user","base.group_user",1,1,1,1
+"access_docnaet_company_user","docnaet.company","model_docnaet_company","base.group_user",1,1,1,1
+"access_docnaet_protocol_user","docnaet.protocol","model_docnaet_protocol","base.group_user",1,1,1,1
+"access_docnaet_document_user","docnaet.document","model_docnaet_document","base.group_user",1,1,1,1
+

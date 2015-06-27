@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    <!---->
+    <!--res.users--> 
+    <record model="ir.ui.view" id="res_users_form_view">
+        <field name="name">User Docnaet</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <xpath expr="/form/sheet/notebook" position="inside">
+			    <page string="Docnaet">
+			        <group><!--colspan="4" col="4">-->
+   			             <field name="docnaet_user_id"/>			           
+			        </group>
+			    </page>                
+            </xpath>
+        </field>
+    </record>    
+
+    <!--res.company--> 
+    <record model="ir.ui.view" id="res_company_form_view">
+        <field name="name">Company Docnaet MS SQL</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <xpath expr="/form/sheet/notebook/page[@string='General Information']" position="after">
+			    <page string="Docnaet">
+			        <group colspan="4" col="4">
+			           <field name="docnaet_company_id" string="Docnaet Company"/>
+			           <field name="docnaet_mssql_database" string="Database" />
+
+			           <field name="docnaet_host" string="Docnaet webserver"/>
+			           <field name="docnaet_mssql_type" string="Type of server" />
+			           
+			           <field name="docnaet_mssql_host" string="Host"/>
+			           <field name="docnaet_mssql_port" string="Port" />
+			           
+			           <field name="docnaet_mssql_username" string="Username" />
+			           <field name="docnaet_mssql_password" password="1" string="Password"/>
+
+			           <field name="docnaet_guest_user_id" />			           			           
+			        </group>
+			    </page>                
+            </xpath>
+        </field>
+    </record>    
+
+    <!--docnaet.document--> 
+    <record model="ir.ui.view" id="docnaet_document_tree_view">
+        <field name="name">Docnaet document</field>
+        <field name="model">docnaet.document</field>        
+        <field name="arch" type="xml">
+            <tree string="Docnaet document">
+               <field name="name" />
+               <field name="protocol_id" />
+               <field name="number" />
+               <field name="type_id" />
+               <field name="language_id" />
+               <field name="date" />
+               <field name="deadline" />
+               <field name="user_id" />
+               <field name="partner_id" />
+               <field name="docnaet_document_id" invisible="1" />
+               <field name="docnaet_extension" />
+               <button type="object" name="button_call_url_docnaet" string="Docnaet"/>
+               <button type="object" name="button_call_url_document" string="Document"/>
+            </tree>
+        </field>
+    </record>    
+    <record model="ir.ui.view" id="docnaet_document_form_view">
+        <field name="name">Docnaet document</field>
+        <field name="model">docnaet.document</field>        
+        <field name="arch" type="xml">
+            <form string="Docnaet document" version="7.0">
+               <sheet>
+                  <group colspan="4" col="4"> 
+                       <field name="protocol_id" />
+                       <field name="number" />
+
+                       <field name="date" />
+                       <field name="name" />
+
+                       <field name="company_id" />
+                       <field name="deadline" />
+
+                       <field name="type_id" />
+                       <field name="language_id" />
+
+                       <field name="user_id" />
+                       <field name="partner_id" />
+
+                       <field name="docnaet_document_id" />
+                       <field name="docnaet_extension" />
+
+                       <button type="object" name="button_call_url_docnaet" string="Docnaet"/>
+                       <button type="object" name="button_call_url_document" string="Document"/>
+
+                       <!--ID for open document (only for open document, not necessary)-->
+                       <!--<field name="docnaet_document_real_id" />
+                       <field name="docnaet_protocol_id" />
+                       <field name="docnaet_language_id" />
+                       <field name="docnaet_type_id" />
+                       <field name="docnaet_company_id" />
+                       <field name="docnaet_client_id" />
+                       <field name="docnaet_user_id" />-->
+                    </group>   
+                </sheet>   
+            </form>
+        </field>
+    </record>    
+    </data>
+</openerp>    
+    
