@@ -30,7 +30,7 @@ from openerp.tools import (
     DEFAULT_SERVER_DATE_FORMAT, 
     DEFAULT_SERVER_DATETIME_FORMAT, 
     DATETIME_FORMATS_MAP, 
-    float_compare
+    float_compare)
 import openerp.addons.decimal_precision as dp
 from openerp.tools.translate import _
 
@@ -132,9 +132,7 @@ class DocnaetDocument(orm.Model):
         else: # Link to detail form in docnaet
             parameters = self.pool.get('res.company').get_docnaet_parameters(
                 cr, uid, context=context)
-            final_url = r"http://%s/docnaet/asp/autenticazione.asp?"
-                "token=T&client_id=%s&document_id=%s&company_id=%s"
-                "&user_id=%s"%(
+            final_url = r"http://%s/docnaet/asp/autenticazione.asp?token=T&client_id=%s&document_id=%s&company_id=%s&user_id=%s" % (
                         parameters.docnaet_host, 
                         docnaet_proxy.docnaet_client_id, 
                         docnaet_proxy.docnaet_document_id, 

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+    <!---->
     <!--res.company--> 
     <record model="ir.ui.view" id="res_company_form_view">
         <field name="name">Company Docnaet MS SQL</field>
