@@ -340,34 +340,37 @@
                    <field name="state" widget="statusbar" statusbar_visible="draft,suspended,timed,confirmed,cancel" readonly="1" />
                </head>
                <sheet>               
-                  <group colspan="4" col="5"> 
+                  <group colspan="4" col="4"> 
                        <button type="object" name="button_call_url_docnaet" string="Docnaet" class="oe_highlight"/>
                        <button type="object" name="button_assign_fax_number" string="Assign fax" attrs="{'invisible':[('fax_number','=',True)]}"/>
-                       <field name="name" colspan="4"/>
                        <newline />
+                       
+                       <field name="name" colspan="4"/>
 
                        <field name="protocol_id" />
                        <field name="number" />
-                       <newline />
+
                        <field name="fax_number" />
                        <newline />
 
                        <field name="date" />
                        <field name="deadline" />
-                       <newline />
 
                        <field name="type_id" />
                        <field name="language_id" />
-                       <newline />
 
                        <field name="user_id" />
                        <field name="partner_id" />
-                       <newline />
 
                        <field name="company_id" />
                        <field name="docnaet_extension" />
-                       <newline />
 
+                       <separator string="Description" colspan="4"/>
+                       <field name="description" />
+
+                       <separator string="Note" colspan="4"/>
+                       <field name="note" />
+                       
 
                     </group>   
                 </sheet>   
