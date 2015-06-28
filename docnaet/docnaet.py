@@ -48,19 +48,6 @@ class ResCompany(orm.Model):
             help='Docnaet root path in file system for store docs'), 
         }
 
-class DocnaetProtocolTemplateProgram(orm.Model):
-    ''' Object docnaet.protocol.template.program
-    '''    
-    
-    _name = 'docnaet.protocol.template.program'
-    _description = 'Docnaet program'
-                    
-    _columns = {        
-        'name': fields.char('Language', size=64, required=True),
-        'extension': fields.char('Extension', size=5),
-        'note': fields.text('Note'),
-        }
-
 class DocnaetLanguage(orm.Model):
     ''' Object docnaet.language
     '''    
@@ -99,6 +86,19 @@ class DocnaetProtocol(orm.Model):
         'note': fields.text('Note'),
         }
 
+class DocnaetProtocolTemplateProgram(orm.Model):
+    ''' Object docnaet.protocol.template.program
+    '''    
+    
+    _name = 'docnaet.protocol.template.program'
+    _description = 'Docnaet program'
+                    
+    _columns = {        
+        'name': fields.char('Language', size=64, required=True),
+        'extension': fields.char('Extension', size=5),
+        'note': fields.text('Note'),
+        }
+
 class DocnaetProtocolTemplate(orm.Model):
     ''' Object docnaet.protocol.template
     '''    
@@ -107,9 +107,11 @@ class DocnaetProtocolTemplate(orm.Model):
     _rec_name = 'lang_id'
 
     _columns = {
-        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
         'lang_id': fields.many2one('docnaet.language', 'Language', 
             required=True),
+        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
+        'program_id': fields.many2one('docnaet.protocol.template.program', 
+            'Program'),
         'note': fields.text('Note'),
         }
 

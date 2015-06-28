@@ -1,6 +1,36 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+    <!--docnaet.protocol.template.language--> 
+    <record model="ir.ui.view" id="view_docnaet_protocol_template_program_form">
+        <field name="name">Docnaet program</field>
+        <field name="model">docnaet.protocol.template.language</field>
+        <field name="arch" type="xml">
+            <form string="Docnaet language" version="7.0">
+                <sheet>
+                    <group colspan="4" col="4">
+                        <field name="name" colspan="4"/>
+                        <field name="extension" />
+                        <separator string="Note" colspan="4"/>
+                        <field name="note" colspan="4" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>    
+
+    <record model="ir.ui.view" id="view_docnaet_protocol_template_program_tree">
+        <field name="name">Docnaet program</field>
+        <field name="model">docnaet.protocol.template.language</field>
+        <field name="arch" type="xml">
+            <tree string="Docnaet language">
+                <field name="name" />
+                <field name="extension" />
+                <field name="note" />
+            </tree>
+        </field>
+    </record>    
+
     <!--docnaet.protocol.template--> 
     <record model="ir.ui.view" id="view_docnaet_protocol_template_form">
         <field name="name">Docnaet protocol template</field>
@@ -13,6 +43,7 @@
                         <field name="protocol_id" invisible="context.get('embedded', False)"/>
                         <separator string="Note" colspan="4"/>
                         <field name="note" colspan="4" nolabel="1"/>
+                        <!--TODO button for create or open document-->
                     </group>
                 </sheet>
             </form>
