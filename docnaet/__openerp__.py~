@@ -27,7 +27,7 @@
     'description': '''
         Micronaet - Docnaet Document Manager
         Default module for create structure to integrare Docnaet Management    
-    ''',
+        ''',
     'author': 'Micronaet s.r.l.',
     'website': 'http://www.micronaet.it',
     'depends': [

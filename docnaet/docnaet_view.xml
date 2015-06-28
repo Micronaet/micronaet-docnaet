@@ -1,6 +1,82 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+    <!--docnaet.language--> 
+    <record model="ir.ui.view" id="view_docnaet_language_form">
+        <field name="name">Docnaet language</field>
+        <field name="model">docnaet.language</field>
+        <field name="arch" type="xml">
+            <form string="Docnaet language" version="7.0">
+                <sheet>
+                    <group colspan="4" col="4">
+                        <field name="name" colspan="4"/>
+                        <field name="code" />
+                        <field name="iso_code" />
+                        <separator string="Note" colspan="4"/>
+                        <field name="note" colspan="4" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>    
+
+    <record model="ir.ui.view" id="view_docnaet_language_tree">
+        <field name="name">Docnaet language</field>
+        <field name="model">docnaet.language</field>
+        <field name="arch" type="xml">
+            <tree string="Docnaet language">
+                <field name="name" />
+                <field name="code" />
+                <field name="iso_code" />
+                <field name="note" />
+            </tree>
+        </field>
+    </record>    
+
+    <record model="ir.actions.act_window" id="action_docnaet_language">
+        <field name="name">Docnaet language</field>
+        <field name="res_model">docnaet.language</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_docnaet_language_tree"/>
+    </record>
+    
+    <!--res.users--> 
+    <!--for docnaet admin:--> 
+    <record model="ir.ui.view" id="res_users_form_docnaet_view">
+        <field name="name">User Docnaet</field>
+        <field name="model">res.users</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <form string="User docnaet" version="7.0">
+                <sheet>
+                    <group colspan="4" col="4">
+                       <field name="name" readonly="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>    
+
+    <record model="ir.ui.view" id="res_users_tree_docnaet_view">
+        <field name="name">User Docnaet</field>
+        <field name="model">res.users</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <tree string="User docnaet" create="0">
+                <field name="name" readonly="1" />
+            </tree>
+        </field>
+    </record>    
+
+    <record model="ir.actions.act_window" id="action_docnaet_users_form">
+        <field name="name">User</field>
+        <field name="res_model">res.users</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="res_users_tree_docnaet_view"/>
+        <field name="context">{'form_view_ref':'docnaet.res_users_form_docnaet_view'}</field>
+    </record>
     
     <!--res.company--> 
     <record model="ir.ui.view" id="res_company_form_view">
@@ -128,18 +204,18 @@
         <field name="domain">[('user_id','=',uid)]</field>
     </record>
     
-    <menuitem id="docnaet_root" name="Docnaet" sequence="20"/>
+    <menuitem id="docnaet_root" name="Docnaet" sequence="20" groups="group_docnaet_user,group_docnaet_admin,group_docnaet_agent"/>
 
         <menuitem parent="docnaet_root" id="docnaet_document" name="Document" sequence="20" />
             <menuitem parent="docnaet_document" id="docnaet_document_my_document" name="My document" sequence="10" action="action_docnaet_my_document_tree"/>
             <menuitem parent="docnaet_document" id="docnaet_document_document" name="Document" sequence="20" action="action_docnaet_document_tree" />            
 
-        <menuitem parent="docnaet_root" id="docnaet_administration" name="Administration" sequence="90" />
+        <menuitem parent="docnaet_root" id="docnaet_administration" name="Administration" sequence="90" groups="group_docnaet_admin"/>
             <menuitem parent="docnaet_administration" id="docnaet_administration_company" string="Company" sequence="1" action="action_docnaet_company_form" />
-            <menuitem parent="docnaet_administration" id="docnaet_administration_user" string="User" sequence="5" action="" />
+            <menuitem parent="docnaet_administration" id="docnaet_administration_user" string="User" sequence="5" action="action_docnaet_users_form" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_protocol" name="Protocol" sequence="10" action=""/>
             <menuitem parent="docnaet_administration" id="docnaet_administration_tipology" name="Tipoloy" sequence="20" action="" />
-            <menuitem parent="docnaet_administration" id="docnaet_administration_language" name="Language" sequence="30" action="" />
+            <menuitem parent="docnaet_administration" id="docnaet_administration_language" name="Language" sequence="30" action="action_docnaet_language" />
     
     </data>    
 </openerp>    

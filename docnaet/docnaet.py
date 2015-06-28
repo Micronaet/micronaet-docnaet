@@ -58,6 +58,8 @@ class DocnaetLanguage(orm.Model):
                     
     _columns = {        
         'name': fields.char('Language', size=64, required=True),
+        'code': fields.char('Code', size=16),
+        'iso_code': fields.char('ISO Code', size=16),
         'note': fields.text('Note'),
         }
 
