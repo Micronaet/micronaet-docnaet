@@ -287,8 +287,26 @@
                <field name="user_id" />
                <field name="partner_id" />
                <field name="docnaet_extension" />
-               <button type="object" name="button_call_url_docnaet" string="Docnaet"/>
-               <button type="object" name="button_call_url_document" string="Document"/>
+               <button type="object" name="button_call_url_docnaet" string="Docnaet" icon="gtk-file"/>
+
+               <!--draft-->
+               <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply"/>
+               <button name="document_draft_suspended" string="Suspended" type="workflow" states="draft" icon="terp-calendar"/>
+               <button name="document_draft_timed" string="Timed" type="workflow" states="draft" icon="terp-go-today"/>
+               <button name="document_draft_cancel" string="Cancel" type="workflow" states="draft" icon="gtk-cancel"/>
+
+               <!--confirmed-->
+               <button name="document_confirmed_suspended" string="Suspended" type="workflow" states="confirmed" icon="terp-calendar"/>
+               <button name="document_confirmed_timed" string="Timed" type="workflow" states="confirmed" icon="terp-go-today"/>
+               <button name="document_confirmed_cancel" string="Cancel" type="workflow" states="confirmed" icon="gtk-cancel"/>
+
+               <!--suspended-->
+               <button name="document_suspended_confirmed" string="Confirmed" type="workflow" states="suspended" icon="gtk-apply"/>
+               <button name="document_suspended_cancel" string="Cancel" type="workflow" states="suspended" icon="gtk-cancel"/>
+
+               <!--timed-->
+               <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
+               <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
             </tree>
         </field>
     </record>    
@@ -298,11 +316,24 @@
         <field name="arch" type="xml">
             <form string="Docnaet document" version="7.0">
                <head> 
-                   <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon=""/>
-                   <button name="document_draft_suspended" string="Suspended" type="workflow" states="draft" icon=""/>
-                   <button name="document_draft_timed" string="Timed" type="workflow" states="draft" icon=""/>
-                   <button name="document_draft_cancel" string="Cancel" type="workflow" states="draft" icon=""/>
-                   
+                   <!--draft-->
+                   <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply"/>
+                   <button name="document_draft_suspended" string="Suspended" type="workflow" states="draft" icon="terp-calendar"/>
+                   <button name="document_draft_timed" string="Timed" type="workflow" states="draft" icon="terp-go-today"/>
+                   <button name="document_draft_cancel" string="Cancel" type="workflow" states="draft" icon="gtk-cancel"/>
+
+                   <!--confirmed-->
+                   <button name="document_confirmed_suspended" string="Suspended" type="workflow" states="confirmed" icon="terp-calendar"/>
+                   <button name="document_confirmed_timed" string="Timed" type="workflow" states="confirmed" icon="terp-go-today"/>
+                   <button name="document_confirmed_cancel" string="Cancel" type="workflow" states="confirmed" icon="gtk-cancel"/>
+
+                   <!--suspended-->
+                   <button name="document_suspended_confirmed" string="Confirmed" type="workflow" states="suspended" icon="gtk-apply"/>
+                   <button name="document_suspended_cancel" string="Cancel" type="workflow" states="suspended" icon="gtk-cancel"/>
+
+                   <!--timed-->
+                   <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
+                   <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
                </head>
                <sheet>               
                   <group colspan="4" col="5"> 
