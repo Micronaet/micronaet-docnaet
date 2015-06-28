@@ -59,7 +59,7 @@
             <field name="act_to" ref="act_timed" />
             <field name="signal">document_draft_timed</field>
         </record>
-        <record id="document_t1d" model="workflow.transition">
+        <record id="document_t1x" model="workflow.transition">
             <field name="act_from" ref="act_draft" />
             <field name="act_to" ref="act_cancel" />
             <field name="signal">document_draft_cancel</field>
@@ -73,10 +73,10 @@
         </record>
         <record id="document_t2b" model="workflow.transition">
             <field name="act_from" ref="act_confirmed" />
-            <field name="act_to" ref="act_timedd" />
+            <field name="act_to" ref="act_timed" />
             <field name="signal">document_confirmed_timed</field>
         </record>
-        <record id="document_t2c" model="workflow.transition">
+        <record id="document_t2x" model="workflow.transition">
             <field name="act_from" ref="act_confirmed" />
             <field name="act_to" ref="act_cancel" />
             <field name="signal">document_confirmed_cancel</field>
@@ -88,7 +88,7 @@
             <field name="act_to" ref="act_confirmed" />
             <field name="signal">document_suspended_confirmed</field>
         </record>
-        <record id="document_t3b" model="workflow.transition">
+        <record id="document_t3x" model="workflow.transition">
             <field name="act_from" ref="act_suspended" />
             <field name="act_to" ref="act_cancel" />
             <field name="signal">document_suspended_cancel</field>
@@ -100,7 +100,7 @@
             <field name="act_to" ref="act_confirmed" />
             <field name="signal">document_timed_confirmed</field>
         </record>
-        <record id="document_t4b" model="workflow.transition">
+        <record id="document_t4x" model="workflow.transition">
             <field name="act_from" ref="act_timed" />
             <field name="act_to" ref="act_cancel" />
             <field name="signal">document_timed_cancel</field>

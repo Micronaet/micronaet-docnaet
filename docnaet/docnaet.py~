@@ -136,13 +136,23 @@ class DocnaetDocument(orm.Model):
     _order = 'date,name'
 
         
+    # -------------------------------------------------------------------------
+    # Workflow state event: 
+    # -------------------------------------------------------------------------
+    def document_draft(self, cr, uid, ids, context=None):
+        ''' WF Draft state
+        '''
+        return True
+        
+    # -------------------------------------------------------------------------
     # Button event:
-    def button_assign_fax_number(cr, uid, ids, context=None):
+    # -------------------------------------------------------------------------
+    def button_assign_fax_number(self, cr, uid, ids, context=None):
         ''' Assign fax number to document (next counter)
         '''
         # TODO assign fax number from counters
         return True
-        
+
     # -------------------------------------------------
     # Utility for URL creation:
     # -------------------------------------------------    
@@ -219,5 +229,6 @@ class DocnaetDocument(orm.Model):
         'partner_id': fields.many2one('res.partner', 'Partner', required=True),
 
         'docnaet_extension': fields.char('Docnaet files ext.', size=5),
+        
         }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
