@@ -85,6 +85,9 @@ class DocnaetProtocol(orm.Model):
         'next': fields.integer('Next protocol', required=True), 
         'note': fields.text('Note'),
         }
+    _defaults = {
+        'next': lambda *x: 1,
+        }    
 
 class DocnaetProtocolTemplateProgram(orm.Model):
     ''' Object docnaet.protocol.template.program
