@@ -307,6 +307,8 @@
                <!--timed-->
                <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
                <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
+
+               <field name="state" />
             </tree>
         </field>
     </record>    
@@ -334,6 +336,8 @@
                    <!--timed-->
                    <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
                    <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
+
+                   <field name="state" widget="statusbar" statusbar_visible="draft,suspended,timed,confirmed,cancel" readonly="1" />
                </head>
                <sheet>               
                   <group colspan="4" col="5"> 

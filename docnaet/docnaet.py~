@@ -140,8 +140,43 @@ class DocnaetDocument(orm.Model):
     # Workflow state event: 
     # -------------------------------------------------------------------------
     def document_draft(self, cr, uid, ids, context=None):
-        ''' WF Draft state
+        ''' WF draft state
         '''
+        self.write(cr, uid, ids, {
+            'state': 'draft',
+            }, context=context)
+        return True
+
+    def document_confirmed(self, cr, uid, ids, context=None):
+        ''' WF confirmed state
+        '''
+        self.write(cr, uid, ids, {
+            'state': 'confirmed',
+            }, context=context)
+        return True
+
+    def document_suspended(self, cr, uid, ids, context=None):
+        ''' WF suspended state
+        '''
+        self.write(cr, uid, ids, {
+            'state': 'suspended',
+            }, context=context)
+        return True
+
+    def document_timed(self, cr, uid, ids, context=None):
+        ''' WF timed state
+        '''
+        self.write(cr, uid, ids, {
+            'state': 'timed',
+            }, context=context)
+        return True
+
+    def document_cancel(self, cr, uid, ids, context=None):
+        ''' WF cancel state
+        '''
+        self.write(cr, uid, ids, {
+            'state': 'cancel',
+            }, context=context)
         return True
         
     # -------------------------------------------------------------------------
@@ -227,8 +262,17 @@ class DocnaetDocument(orm.Model):
         'company_id': fields.many2one('res.company', 'Company'),
         'user_id': fields.many2one('res.users', 'User', required=True),
         'partner_id': fields.many2one('res.partner', 'Partner', required=True),
-
         'docnaet_extension': fields.char('Docnaet files ext.', size=5),
         
-        }
+        'state': fields.selection([
+            ('draft', 'Draft'),
+            ('confirmed', 'Confirmed'),
+            ('suspended', 'Suspended'),
+            ('timed', 'Timed'),
+            ('cancel', 'Cancel'), ], 'State', readonly=True)
+            }
+            
+        _defaults = {
+            'state': lambda *x: 'draft',        
+            }    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

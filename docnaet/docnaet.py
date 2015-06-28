@@ -272,7 +272,7 @@ class DocnaetDocument(orm.Model):
             ('cancel', 'Cancel'), ], 'State', readonly=True)
             }
             
-        _defaults = {
-            'state': lambda *x: 'draft',        
-            }    
+    _defaults = {
+        'state': lambda *x: 'draft',        
+        }    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
