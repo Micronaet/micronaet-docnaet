@@ -202,6 +202,18 @@ _logger = logging.getLogger(__name__)
                     'docnaet_user_id': item["ID_utente"],
                     'docnaet_extension': item["docEstensione"],
                     #docScaduto
+                    
+                    # TODO remove for directly open in OpenERP
+                    # Docnaet ID (for open document)
+                    #'docnaet_document_id': fields.integer('Docnaet Document ID'),
+                    #'docnaet_document_real_id': fields.integer('Docnaet Document RealID'),
+                    #'docnaet_protocol_id': fields.integer('Docnaet Protocol ID'),
+                    #'docnaet_language_id': fields.integer('Docnaet Language ID'),
+                    #'docnaet_type_id': fields.integer('Docnaet Type ID'),
+                    #'docnaet_company_id': fields.integer('Docnaet Company ID'),  
+
+                    #'docnaet_client_id': fields.integer('Docnaet Client ID'),
+                    #'docnaet_user_id': fields.integer('Docnaet User ID'),
                    }
             document_id=self.search(cr, uid, [('docnaet_document_id','=',item["ID_documento"])])
             if document_id:

@@ -297,27 +297,37 @@
         <field name="model">docnaet.document</field>        
         <field name="arch" type="xml">
             <form string="Docnaet document" version="7.0">
-               <sheet>
-                  <group colspan="4" col="4"> 
+               <head>
+                  <button type="object" name="button_call_url_docnaet" string="Docnaet"/>
+                  <button type="object" name="button_assign_fax_number" string="Assign fax" attrs="{'invisible':[('fax_number','=',True)]}"/>
+               </head>
+               <sheet>               
+                  <group colspan="4" col="5"> 
+                       <field name="name" colspan="4"/>
+                       <newline />
+
                        <field name="protocol_id" />
                        <field name="number" />
+                       <newline />
+                       <field name="fax_number" />
+                       <newline />
 
                        <field name="date" />
-                       <field name="name" />
-
-                       <field name="company_id" />
                        <field name="deadline" />
+                       <newline />
 
                        <field name="type_id" />
                        <field name="language_id" />
+                       <newline />
 
                        <field name="user_id" />
                        <field name="partner_id" />
+                       <newline />
 
+                       <field name="company_id" />
                        <field name="docnaet_extension" />
+                       <newline />
 
-                       <button type="object" name="button_call_url_docnaet" string="Docnaet"/>
-                       <button type="object" name="button_call_url_document" string="Document"/>
 
                     </group>   
                 </sheet>   

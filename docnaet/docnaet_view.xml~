@@ -26,7 +26,6 @@
             <tree string="Docnaet program">
                 <field name="name" />
                 <field name="extension" />
-                <field name="program_id" />
                 <field name="note" />
             </tree>
         </field>
@@ -59,6 +58,7 @@
             <tree string="Docnaet protocol template">
                 <field name="protocol_id" invisible="context.get('embedded', False)"/>
                 <field name="lang_id" />
+                <field name="program_id" />
                 <field name="note" />
             </tree>
         </field>
@@ -298,23 +298,29 @@
         <field name="arch" type="xml">
             <form string="Docnaet document" version="7.0">
                <sheet>
-                  <group colspan="4" col="4"> 
+                  <group colspan="4" col="5"> 
+                       <field name="name" colspan="4"/>
+                       <newline />
+
                        <field name="protocol_id" />
                        <field name="number" />
+                       <newline />
 
                        <field name="date" />
-                       <field name="name" />
-
-                       <field name="company_id" />
                        <field name="deadline" />
+                       <newline />
 
                        <field name="type_id" />
                        <field name="language_id" />
+                       <newline />
 
                        <field name="user_id" />
                        <field name="partner_id" />
+                       <newline />
 
+                       <field name="company_id" />
                        <field name="docnaet_extension" />
+                       <newline />
 
                        <button type="object" name="button_call_url_docnaet" string="Docnaet"/>
                        <button type="object" name="button_call_url_document" string="Document"/>

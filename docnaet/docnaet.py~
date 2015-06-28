@@ -136,9 +136,16 @@ class DocnaetDocument(orm.Model):
     _order = 'date,name'
 
         
+    # Button event:
+    def button_assign_fax_number(cr, uid, ids, context=None):
+        ''' Assign fax number to document (next counter)
+        '''
+        # TODO assign fax number from counters
+        return True
+        
     # -------------------------------------------------
     # Utility for URL creation:
-    # -------------------------------------------------
+    # -------------------------------------------------    
     def button_call_url_docnaet(self, cr, uid, ids, context=None):
         ''' Call action for open form of document in docnaet
         '''
@@ -187,36 +194,30 @@ class DocnaetDocument(orm.Model):
                 )
 
         return {'type': 'ir.actions.act_url', 'url':final_url, 'target': 'new'}
+             
+    # TODO fax button
                         
     _columns = {        
-        'name': fields.char('Oggetto', size=64),
-        'number': fields.char('Prot. n.', size=10),
-        'date': fields.date('Date'),
-        'deadline': fields.date('Deadline'),
-        'deadline_extra': fields.char('Deadline info', size=64),
+        'name': fields.char('Subject', size=80, required=True),
         'description': fields.text('Description'),
         'note': fields.text('Note'),
+        
+        'number': fields.char('Prot. n.', size=10),
+        'fax_number': fields.char('Fax. n.', size=10),
 
-        # OpenERP ID-many2one 
-        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
+        'date': fields.date('Date', required=True),
+        'deadline': fields.date('Deadline'),
+        'deadline_extra': fields.char('Deadline info', size=64),
+
+        # OpenERP many2one 
+        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol', 
+            required=True),
         'language_id': fields.many2one('docnaet.language', 'Language'),
         'type_id': fields.many2one('docnaet.type', 'Type'),
         'company_id': fields.many2one('res.company', 'Company'),
-        'user_id': fields.many2one('res.users', 'User'),
-        'partner_id': fields.many2one('res.partner', 'Partner'),
+        'user_id': fields.many2one('res.users', 'User', required=True),
+        'partner_id': fields.many2one('res.partner', 'Partner', required=True),
 
-        'docnaet_extension': fields.char('Docnaet files ext.', size = 5),       
-
-        # TODO remove for directly open in OpenERP
-        # Docnaet ID (for open document)
-        #'docnaet_document_id': fields.integer('Docnaet Document ID'),
-        #'docnaet_document_real_id': fields.integer('Docnaet Document RealID'),
-        #'docnaet_protocol_id': fields.integer('Docnaet Protocol ID'),
-        #'docnaet_language_id': fields.integer('Docnaet Language ID'),
-        #'docnaet_type_id': fields.integer('Docnaet Type ID'),
-        #'docnaet_company_id': fields.integer('Docnaet Company ID'),  
-
-        #'docnaet_client_id': fields.integer('Docnaet Client ID'),
-        #'docnaet_user_id': fields.integer('Docnaet User ID'),
+        'docnaet_extension': fields.char('Docnaet files ext.', size=5),
         }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
