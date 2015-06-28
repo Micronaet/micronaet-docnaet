@@ -1,6 +1,42 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+    <!--docnaet.type--> 
+    <record model="ir.ui.view" id="view_docnaet_type_form">
+        <field name="name">Docnaet type</field>
+        <field name="model">docnaet.type</field>
+        <field name="arch" type="xml">
+            <form string="Docnaet type" version="7.0">
+                <sheet>
+                    <group colspan="4" col="4">
+                        <field name="name" colspan="4"/>
+                        <separator string="Note" colspan="4"/>
+                        <field name="note" colspan="4" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>    
+
+    <record model="ir.ui.view" id="view_docnaet_type_tree">
+        <field name="name">Docnaet type</field>
+        <field name="model">docnaet.type</field>
+        <field name="arch" type="xml">
+            <tree string="Docnaet type">
+                <field name="name" />
+                <field name="note" />
+            </tree>
+        </field>
+    </record>    
+
+    <record model="ir.actions.act_window" id="action_docnaet_type">
+        <field name="name">Docnaet type</field>
+        <field name="res_model">docnaet.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_docnaet_type_tree"/>
+    </record>
+
     <!--docnaet.language--> 
     <record model="ir.ui.view" id="view_docnaet_language_form">
         <field name="name">Docnaet language</field>
@@ -214,7 +250,7 @@
             <menuitem parent="docnaet_administration" id="docnaet_administration_company" string="Company" sequence="1" action="action_docnaet_company_form" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_user" string="User" sequence="5" action="action_docnaet_users_form" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_protocol" name="Protocol" sequence="10" action=""/>
-            <menuitem parent="docnaet_administration" id="docnaet_administration_tipology" name="Tipoloy" sequence="20" action="" />
+            <menuitem parent="docnaet_administration" id="docnaet_administration_type" name="Tipoloy" sequence="20" action="action_docnaet_type" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_language" name="Language" sequence="30" action="action_docnaet_language" />
     
     </data>    
