@@ -37,8 +37,7 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
-# TODO docnaet.user to create as res.users
-# TODO docnaet.compnay to create as res.company
+# TODO res.country
 class ResCompany(orm.Model):
     ''' Docnaet company extra fields
     '''
@@ -83,7 +82,32 @@ class DocnaetProtocol(orm.Model):
 
     _columns = {        
         'name': fields.char('Protocol', size=64, required=True),
+        'next': fields.integer('Next protocol'), required=True), 
         'note': fields.text('Note'),
+        }
+
+class DocnaetProtocolTemplate(orm.Model):
+    ''' Object docnaet.protocol.template
+    '''    
+    _name = 'docnaet.protocol.template'
+    _description = 'Docnaet protocol template'
+    _rec_name = 'lang_id'
+
+    _columns = {
+        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol')
+        'lang_id': fields.many2one('docnaet.language', 'Language', 
+            required=True)
+        'note': fields.text('Note'),
+        }
+
+class DocnaetProtocol(orm.Model):
+    ''' 2many fields
+    '''    
+    _name = 'docnaet.protocol'
+
+    _columns = {
+        'template_ids': fields.one2many('docnaet.protocol.template', 
+            'protocol_id', 'Template)
         }
 
 class DocnaetDocument(orm.Model):
