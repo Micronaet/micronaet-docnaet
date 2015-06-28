@@ -376,14 +376,26 @@
             </form>
         </field>
     </record>    
-    <record model="ir.actions.act_window" id="action_docnaet_document_tree">
-        <field name="name">Documents</field>
+    <record model="ir.ui.view" id="docnaet_document_calendar_view">
+        <field name="name">docnaet.document.calendar</field>
+        <field name="model">docnaet.document</field>
+        <field name="type">calendar</field>
+        <field name="priority" eval="10"/>
+        <field name="arch" type="xml">
+            <calendar color="protocol_id" date_start="deadline" string="Document deadline">
+                <field name="name"/>
+                <field name="partner_id"/>
+            </calendar>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_docnaet_deadline_document_tree">
+        <field name="name">My documents deadline</field>
         <field name="res_model">docnaet.document</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="docnaet_document_calendar_view"/>
         <field name="context">{}</field>
-        <field name="domain">[]</field>
+        <field name="domain">[('user_id','=',uid)]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_my_document_tree">
         <field name="name">My Documents</field>
@@ -394,12 +406,22 @@
         <field name="context">{}</field>
         <field name="domain">[('user_id','=',uid)]</field>
     </record>
+    <record model="ir.actions.act_window" id="action_docnaet_document_tree">
+        <field name="name">Documents</field>
+        <field name="res_model">docnaet.document</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+    </record>
     
     <menuitem id="docnaet_root" name="Docnaet" sequence="20" groups="group_docnaet_user,group_docnaet_admin,group_docnaet_agent"/>
 
         <menuitem parent="docnaet_root" id="docnaet_document" name="Document" sequence="20" />
             <menuitem parent="docnaet_document" id="docnaet_document_my_document" name="My document" sequence="10" action="action_docnaet_my_document_tree"/>
-            <menuitem parent="docnaet_document" id="docnaet_document_document" name="Document" sequence="20" action="action_docnaet_document_tree" />            
+            <menuitem parent="docnaet_document" id="docnaet_document_deadline" name="Deadline" sequence="20" action="action_docnaet_deadline_document_tree" />            
+            <menuitem parent="docnaet_document" id="docnaet_document_document" name="Document" sequence="30" action="action_docnaet_document_tree" />            
 
         <menuitem parent="docnaet_root" id="docnaet_administration" name="Administration" sequence="90" groups="group_docnaet_admin"/>
             <menuitem parent="docnaet_administration" id="docnaet_administration_company" string="Company" sequence="1" action="action_docnaet_company_form" />
