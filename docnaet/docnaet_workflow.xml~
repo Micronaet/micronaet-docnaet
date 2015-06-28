@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!--Create Workflow-->
+        <record id="wkf_docnaet_document" model="workflow">
+            <field name="name">wkf</field>
+            <field name="osv">docnaet.document</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <!--Activity-->
+        <record id="act_draft" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_docnaet_document" />
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">document_draft()</field>
+        </record>
+        <record id="act_confirmed" model="workflow.activity" >
+            <field name="wkf_id" ref="wkf_docnaet_document" />
+            <field name="name">confirmed</field>
+            <field name="kind">function</field>
+            <field name="action">document_confirmed()</field>
+        </record>
+        <record id="act_suspended" model="workflow.activity" >
+            <field name="wkf_id" ref="wkf_docnaet_document" />
+            <field name="name">suspended</field>
+            <field name="kind">function</field>
+            <field name="action">document_suspended()</field>
+        </record>
+        <record id="act_cancel" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_docnaet_document" />
+            <field name="flow_sop">True</field>
+            <field name="name">cancel</field>
+            <field name="kind">function</field>
+            <field name="action">document_cancel()</field>
+        </record>
+
+        <!--Transition-->
+        <record id="document_t1a" model="workflow.transition">
+            <field name="act_from" ref="act_draft" />
+            <field name="act_to" ref="act_confirmed" />
+            <field name="signal">document_draft_confirmed</field>
+        </record>
+        <record id="document_t1b" model="workflow.transition">
+            <field name="act_from" ref="act_draft" />
+            <field name="act_to" ref="act_suspended" />
+            <field name="signal">document_draft_suspended</field>
+        </record>
+        <record id="document_t1c" model="workflow.transition">
+            <field name="act_from" ref="act_draft" />
+            <field name="act_to" ref="act_cancel" />
+            <field name="signal">document_draft_cancel</field>
+        </record>
+        <record id="document_t2a" model="workflow.transition">
+            <field name="act_from" ref="act_confirmed" />
+            <field name="act_to" ref="act_cancel" />
+            <field name="signal">document_confirmed_cancel</field>
+        </record>
+        <record id="document_t2b" model="workflow.transition">
+            <field name="act_from" ref="act_confirmed" />
+            <field name="act_to" ref="act_suspended" />
+            <field name="signal">document_confirmed_suspended</field>
+        </record>
+        <record id="document_t3a" model="workflow.transition">
+            <field name="act_from" ref="act_suspended" />
+            <field name="act_to" ref="act_confirmed" />
+            <field name="signal">document_suspended_confirmed</field>
+        </record>
+        <record id="document_t3b" model="workflow.transition">
+            <field name="act_from" ref="act_suspended" />
+            <field name="act_to" ref="act_cancel" />
+            <field name="signal">document_suspended_cancel</field>
+        </record>
+    </data>
+</openerp>

@@ -298,7 +298,7 @@
         <field name="arch" type="xml">
             <form string="Docnaet document" version="7.0">
                <head>
-                  <button type="object" name="button_call_url_docnaet" string="Docnaet"/>
+                  <button type="object" name="button_call_url_docnaet" string="Docnaet" class="oe_highlight"/>
                   <button type="object" name="button_assign_fax_number" string="Assign fax" attrs="{'invisible':[('fax_number','=',True)]}"/>
                </head>
                <sheet>               
