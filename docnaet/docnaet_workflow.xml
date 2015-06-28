@@ -43,6 +43,7 @@
         </record>
 
         <!--Transition-->
+          <!--From draft transition: -->
         <record id="document_t1a" model="workflow.transition">
             <field name="act_from" ref="act_draft" />
             <field name="act_to" ref="act_confirmed" />
@@ -58,37 +59,48 @@
             <field name="act_to" ref="act_timed" />
             <field name="signal">document_draft_timed</field>
         </record>
-        <record id="document_t1d" model="workflow.transition">
+        <record id="document_t1x" model="workflow.transition">
             <field name="act_from" ref="act_draft" />
             <field name="act_to" ref="act_cancel" />
             <field name="signal">document_draft_cancel</field>
         </record>
+        
+          <!--From confirmed transition: -->
         <record id="document_t2a" model="workflow.transition">
-            <field name="act_from" ref="act_confirmed" />
-            <field name="act_to" ref="act_cancel" />
-            <field name="signal">document_confirmed_cancel</field>
-        </record>
-        <record id="document_t2b" model="workflow.transition">
             <field name="act_from" ref="act_confirmed" />
             <field name="act_to" ref="act_suspended" />
             <field name="signal">document_confirmed_suspended</field>
         </record>
+        <record id="document_t2b" model="workflow.transition">
+            <field name="act_from" ref="act_confirmed" />
+            <field name="act_to" ref="act_timed" />
+            <field name="signal">document_confirmed_timed</field>
+        </record>
+        <record id="document_t2x" model="workflow.transition">
+            <field name="act_from" ref="act_confirmed" />
+            <field name="act_to" ref="act_cancel" />
+            <field name="signal">document_confirmed_cancel</field>
+        </record>
+        
+          <!--From suspended transition: -->
         <record id="document_t3a" model="workflow.transition">
             <field name="act_from" ref="act_suspended" />
             <field name="act_to" ref="act_confirmed" />
             <field name="signal">document_suspended_confirmed</field>
         </record>
-        <record id="document_t3b" model="workflow.transition">
+        <record id="document_t3x" model="workflow.transition">
             <field name="act_from" ref="act_suspended" />
             <field name="act_to" ref="act_cancel" />
             <field name="signal">document_suspended_cancel</field>
         </record>
-        <record id="document_t3a" model="workflow.transition">
+
+          <!--From timed transition: -->        
+        <record id="document_t4a" model="workflow.transition">
             <field name="act_from" ref="act_timed" />
             <field name="act_to" ref="act_confirmed" />
             <field name="signal">document_timed_confirmed</field>
         </record>
-        <record id="document_t3b" model="workflow.transition">
+        <record id="document_t4x" model="workflow.transition">
             <field name="act_from" ref="act_timed" />
             <field name="act_to" ref="act_cancel" />
             <field name="signal">document_timed_cancel</field>

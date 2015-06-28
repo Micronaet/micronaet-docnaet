@@ -35,6 +35,7 @@
         ],
     'init_xml': [], 
     'update_xml': [
+        'security/docnaet_group.xml',
         'security/ir.model.access.csv',
         'docnaet_view.xml',
         ],
