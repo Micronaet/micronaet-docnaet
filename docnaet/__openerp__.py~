@@ -38,7 +38,7 @@
         'security/docnaet_group.xml',
         'security/ir.model.access.csv',
         'docnaet_view.xml',
-        #'docnaet_workflow.xml',
+        'docnaet_workflow.xml',
         ],
     'demo_xml': [],
     'active': False, 

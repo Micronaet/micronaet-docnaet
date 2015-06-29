@@ -54,6 +54,7 @@ class DocnaetLanguage(orm.Model):
     
     _name = 'docnaet.language'
     _description = 'Docnaet language'
+    _order = 'name'
                     
     _columns = {        
         'name': fields.char('Language', size=64, required=True),
@@ -67,6 +68,7 @@ class DocnaetType(orm.Model):
     '''    
     _name = 'docnaet.type'
     _description = 'Docnaet type'
+    _order = 'name'
     
 
     _columns = {        
@@ -79,11 +81,14 @@ class DocnaetProtocol(orm.Model):
     '''    
     _name = 'docnaet.protocol'
     _description = 'Docnaet protocol'
+    _order = 'name'
 
     _columns = {        
         'name': fields.char('Protocol', size=64, required=True),
         'next': fields.integer('Next protocol', required=True), 
         'note': fields.text('Note'),
+        # TODO company_id
+        # TODO default_application_id
         }
     _defaults = {
         'next': lambda *x: 1,
@@ -95,6 +100,7 @@ class DocnaetProtocolTemplateProgram(orm.Model):
     
     _name = 'docnaet.protocol.template.program'
     _description = 'Docnaet program'
+    _order = 'name'
                     
     _columns = {        
         'name': fields.char('Language', size=64, required=True),
@@ -108,6 +114,7 @@ class DocnaetProtocolTemplate(orm.Model):
     _name = 'docnaet.protocol.template'
     _description = 'Docnaet protocol template'
     _rec_name = 'lang_id'
+    _order = 'name'
 
     _columns = {
         'lang_id': fields.many2one('docnaet.language', 'Language', 
@@ -134,7 +141,6 @@ class DocnaetDocument(orm.Model):
     _name = 'docnaet.document'
     _description = 'Docnaet document'
     _order = 'date,name'
-
         
     # -------------------------------------------------------------------------
     # Workflow state event: 

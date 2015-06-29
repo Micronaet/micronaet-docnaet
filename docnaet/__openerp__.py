@@ -43,5 +43,5 @@
     'demo_xml': [],
     'active': False, 
     'installable': True, 
-    'application': True,
+    #'application': True,
     }

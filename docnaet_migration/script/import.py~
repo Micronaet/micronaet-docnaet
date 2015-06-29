@@ -89,7 +89,7 @@ for line in lines:
         continue
     
     # read fields:    
-    access_id = int(line[0])
+    docnaet_id = int(line[0])
     name = line[1].strip()
     password = line[2].strip()
     
@@ -97,17 +97,19 @@ for line in lines:
         name = "admin"
 
     item_ids = erp_pool.search([('login', '=', name)])
+    data = {
+        'login': name,
+        'name': name,
+        'password': password,
+        'docnaet_id': docnaet_id,  
+        }
     if item_ids:
         openerp_id = item_ids[0]
-        #erp_pool.write(openerp_id, {}) # No update
+        #erp_pool.write(openerp_id, data) # No update
     else:        
-        openerp_id = erp_pool.create({
-            'login': name,
-            'name': name,
-            'password': password,
-            })
-        print "%s. Create user: %s" % (i, name)    
-    user[access_id] = openerp_id
+        openerp_id = erp_pool.create(data)
+        print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
+    user[docnaet_id] = openerp_id
 
 # Applicazioni 
 application = {}    
@@ -116,19 +118,63 @@ application = {}
 language = {}
 
 # Protocolli 
-csv_file = 'Protocolli.txt'
+filename = 'Protocolli.txt'
+erp_pool = erp.DocnaetProtocol
+protocol = {}
+csv_file = os.path.expanduser(
+    os.path.join(path, filename))
+
+lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
+i = - header   
+tot_cols = False
+for line in lines:
+    i += 1
+    if i <= 0:
+        continue # jump intestation
+    if not tot_cols: # save for test 
+        tot_cols = len(line)
+    
+    if tot_cols != len(line):
+        print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
+        continue
+    
+    # read fields:    
+    docnaet_id = int(line[0])
+    name = line[1].strip()
+    next = eval(line[2].strip())
+    note = line[3].strip()
+    #company_id = eval(line[4].strip())
+    #application_id = eval(line[5].strip())
+    
+    if name == "Administrator":
+        name = "admin"
+
+    item_ids = erp_pool.search([('name', '=', name)])
+    data = {
+        'name': name,
+        'note': note,
+        'docnaet_id': docnaet_id,
+        'next': next,
+        }
+    if item_ids:
+        openerp_id = item_ids[0]
+        #erp_pool.write(openerp_id, data) # No update
+    else:        
+        openerp_id = erp_pool.create(data)            
+        print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
+    user[docnaet_id] = openerp_id
 
 # Clienti
-csv_file = 'Clienti.txt'
+filename = 'Clienti.txt'
 
 # Nazioni
-csv_file = 'Nazioni.txt'
+filename = 'Nazioni.txt'
 
 # Tipologie
-csv_file = 'Tipologie.txt'
+filename = 'Tipologie.txt'
 
 # Documenti 
-csv_file = 'Documenti.txt'
+filename = 'Documenti.txt'
 
 # -----------------------------------------------------------------------------
 #                                Not migration
