@@ -114,7 +114,7 @@ class DocnaetProtocolTemplate(orm.Model):
     _name = 'docnaet.protocol.template'
     _description = 'Docnaet protocol template'
     _rec_name = 'lang_id'
-    _order = 'name'
+    _order = 'lang_id'
 
     _columns = {
         'lang_id': fields.many2one('docnaet.language', 'Language', 
