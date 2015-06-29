@@ -374,13 +374,17 @@
                                <separator string="Note" colspan="4"/>
                                <field name="note" colspan="4" nolabel="1"/>                               
                            </page>
-                           <page string="Document info">
+                           
+                           <page string="Document info">                               
                            </page>
+                           
                            <page string="Linked document">
-                               <field name="original_id" readonly="1" />
-                               
-                               <separator string="Duplicated in" colspan="4"/>
-                               <field name="duplicated_ids" colspan="4" nolabel="1" readonly="1" context="{'embedded':True}"/>
+                               <group colspan="4" col="2">
+                                   <field name="original_id" readonly="1" />
+                                   
+                                   <separator string="Duplicated in" />
+                                   <field name="duplicated_ids" nolabel="1" readonly="1" context="{'embedded':True}"/>
+                               </group>    
                            </page>
                        </notebook>
                     </group>   
