@@ -1,7 +1,7 @@
 [OpenERP]
-dbname: Docnaet7
+dbname: Docnaet
 user: admin
-pwd: admin
+pwd: password
 server: localhost
 port: 8069
 
