@@ -318,7 +318,7 @@
         <field name="model">docnaet.document</field>        
         <field name="arch" type="xml">
             <form string="Docnaet document" version="7.0">
-               <head> 
+               <header> 
                    <!--draft-->
                    <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply"/>
                    <button name="document_draft_suspended" string="Suspended" type="workflow" states="draft" icon="terp-calendar"/>
@@ -339,7 +339,7 @@
                    <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
 
                    <field name="state" widget="statusbar" readonly="1" />
-               </head>
+               </header>
                <sheet>               
                   <group colspan="4" col="4"> 
                        <button type="object" name="button_call_url_docnaet" string="Docnaet" class="oe_highlight"/>
@@ -381,10 +381,10 @@
                            <page string="Linked document">
                                <group colspan="4" col="2">
                                    <field name="original_id" readonly="1" />
-                                   
-                                   <separator string="Duplicated in" />
-                                   <field name="duplicated_ids" nolabel="1" readonly="1" context="{'embedded':True}"/>
                                </group>    
+                                   
+                               <separator string="Duplicated in" />
+                               <field name="duplicated_ids" nolabel="1" readonly="1" context="{'embedded':True}" />
                            </page>
                        </notebook>
                     </group>   

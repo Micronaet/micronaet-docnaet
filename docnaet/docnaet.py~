@@ -248,8 +248,8 @@ class DocnaetDocument(orm.Model):
         'description': fields.text('Description'),
         'note': fields.text('Note'),
         
-        'number': fields.char('Prot. n.', size=10),
-        'fax_number': fields.char('Fax. n.', size=10),
+        'number': fields.char('N.', size=10),
+        'fax_number': fields.char('Fax n.', size=10),
 
         'date': fields.date('Date', required=True),
         'deadline': fields.date('Deadline'),
@@ -268,6 +268,11 @@ class DocnaetDocument(orm.Model):
         'original_id': fields.many2one('docnaet.document', 'Original',
             help='Parent orignal document after this duplication'),
 
+        # Workflow date event:
+        #'date_confirmed': fields.text('Confirmed event', required=True),
+        #'date_suspended': fields.date('Suspended event', required=True),
+        #'date_deadline': fields.date('Deadline event', required=True),
+        
         'priority': fields.selection([
             ('lowest', 'Lowest'),
             ('low', 'Low'),

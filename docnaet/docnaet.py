@@ -248,8 +248,8 @@ class DocnaetDocument(orm.Model):
         'description': fields.text('Description'),
         'note': fields.text('Note'),
         
-        'number': fields.char('Prot. n.', size=10),
-        'fax_number': fields.char('Fax. n.', size=10),
+        'number': fields.char('N.', size=10),
+        'fax_number': fields.char('Fax n.', size=10),
 
         'date': fields.date('Date', required=True),
         'deadline': fields.date('Deadline'),
