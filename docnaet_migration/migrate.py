@@ -26,7 +26,7 @@ import openerp.addons.decimal_precision as dp
 from openerp.osv import fields, osv, expression, orm
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-from openerp import SUPERUSER_ID, api
+from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
@@ -44,7 +44,7 @@ class ResUsers(orm.Model):
     _inherit = 'res.users'
     
     _columns = {
-        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        'docnaet_id': fields.integer('Docnaet ID migration'), 
         }
 
 class ResCompany(orm.Model):
@@ -53,7 +53,7 @@ class ResCompany(orm.Model):
     _inherit = 'res.company'
     
     _columns = {
-        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        'docnaet_id': fields.integer('Docnaet ID migration'), 
         }
     
 class ResPartner(orm.Model):
@@ -62,7 +62,7 @@ class ResPartner(orm.Model):
     _inherit = 'res.partner'
     
     _columns = {
-        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        'docnaet_id': fields.integer('Docnaet ID migration'), 
         }
     
 class DocnaetLanguage(orm.Model):
@@ -71,7 +71,7 @@ class DocnaetLanguage(orm.Model):
     _inherit = 'docnaet.language'
     
     _columns = {
-        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        'docnaet_id': fields.integer('Docnaet ID migration'), 
         }
 
 class DocnaetType(orm.Model):
@@ -80,7 +80,7 @@ class DocnaetType(orm.Model):
     _inherit = 'docnaet.type'
     
     _columns = {
-        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        'docnaet_id': fields.integer('Docnaet ID migration'), 
         }
 
 class DocnaetProtocol(orm.Model):
@@ -89,7 +89,7 @@ class DocnaetProtocol(orm.Model):
     _inherit = 'docnaet.protocol'
     
     _columns = {
-        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        'docnaet_id': fields.integer('Docnaet ID migration'), 
         }
 
 class DocnaetDocument(orm.Model):
@@ -98,7 +98,7 @@ class DocnaetDocument(orm.Model):
     _inherit = 'docnaet.document'
     
     _columns = {
-        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        'docnaet_id': fields.integer('Docnaet ID migration'), 
         }
 
 """def docnaet_2_openerp_id(self, cr, uid, docnaet_id, context=None):
