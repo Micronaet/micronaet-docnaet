@@ -243,6 +243,41 @@ filename = 'Clienti.txt'
 
 # Nazioni  <<< TODO with rename (english name and italian)
 filename = 'Nazioni.txt'
+country = {}
+erp_pool = erp.ResCountry
+csv_file = os.path.expanduser(
+    os.path.join(path, filename))
+
+lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
+i = - header   
+tot_cols = False
+for line in lines:
+    i += 1
+    if i <= 0:
+        continue # jump intestation
+    if not tot_cols: # save for test 
+        tot_cols = len(line)
+    
+    if tot_cols != len(line):
+        print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
+        continue
+    
+    # read fields:    
+    docnaet_id = int(line[0])
+    name = line[1].strip()
+    
+    item_ids = erp_pool.search([('name', '=', name)])
+    data = {
+        'name': name,
+        'docnaet_id': docnaet_id,
+        }
+    if item_ids:
+        openerp_id = item_ids[0]
+        #erp_pool.write(openerp_id, data) # No update
+    else:        
+        openerp_id = erp_pool.create(data)            
+        print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
+    country[docnaet_id] = openerp_id
 
 # Documenti 
 filename = 'Documenti.txt'

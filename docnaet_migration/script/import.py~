@@ -241,7 +241,7 @@ for line in lines:
 # Clienti
 filename = 'Clienti.txt'
 
-# Nazioni  <<< 
+# Nazioni  <<< TODO with rename (english name and italian)
 filename = 'Nazioni.txt'
 
 # Documenti 

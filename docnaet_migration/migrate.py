@@ -56,6 +56,15 @@ class ResCompany(orm.Model):
         'docnaet_id': fields.integer('Docnaet ID migration'), 
         }
     
+class ResCountry(orm.Model):
+    ''' Add extra fields for migration
+    '''
+    _inherit = 'res.country'
+    
+    _columns = {
+        'docnaet_id': fields.integer('Docnaet ID migration'), 
+        }
+
 class ResPartner(orm.Model):
     ''' Add extra fields for migration
     '''
