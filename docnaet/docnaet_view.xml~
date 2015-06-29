@@ -249,8 +249,8 @@
         <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="res_partner_tree_docnaet_view"/>
-        <!--<field name="context">{'form_view_ref':'docnaet.res_partner_form_docnaet_view'}</field>-->
+        <!--<field name="view_id" ref="res_partner_tree_docnaet_view"/>
+        <field name="context">{'form_view_ref':'docnaet.res_partner_form_docnaet_view'}</field>-->
     </record>
     
     <!--res.country--> 
@@ -343,8 +343,32 @@
         <field name="view_id" ref="res_company_tree_docnaet_view"/>
         <field name="context">{'form_view_ref':'docnaet.res_company_form_docnaet_view'}</field>
     </record>
-    
+        
     <!--docnaet.document--> 
+    <record model="ir.ui.view" id="view_docnaet_document_search">
+        <field name="name">docnaet.document.search</field>
+        <field name="model">docnaet.document</field>
+        <field name="arch" type="xml">
+            <search string="Docnaet document" version="7.0">
+                <field name="partner_id" filter_domain="[('partner_id','=',self)]"/>
+                <field name="protocol_id" filter_domain="[('protocol_id','=',self)]"/>
+                <field name="type_id" filter_domain="[('type_id','=',self)]"/>
+                
+                <filter name="state" string="Draft state" domain="[('state','=','draft')]"/>
+                <filter name="state" string="Confirmed state" domain="[('state','=','confirmed')]"/>
+                <filter name="state" string="Suspended state" domain="[('state','=','suspended')]"/>
+                <filter name="state" string="Timed state" domain="[('state','=','timed')]"/>
+                <filter name="state" string="Cancel state" domain="[('state','=','cancel')]"/>
+                
+                <group expand="0" string="Group By">
+                    <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_protocol" string="Protocol" context="{'group_by': 'protocol_id'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'type_id'}"/>
+                    <filter string="Status" context="{'group_by': 'state'}" icon="terp-stock_effects-object-colorize"/>
+                </group>                
+           </search>
+        </field>
+    </record>
     <record model="ir.ui.view" id="docnaet_document_tree_view">
         <field name="name">Docnaet document</field>
         <field name="model">docnaet.document</field>        

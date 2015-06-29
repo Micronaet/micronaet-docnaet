@@ -46,6 +46,11 @@ erp = erppeek.Client(
     )
 
 # -----------------------------------------------------------------------------
+#                             Convertion function:
+# -----------------------------------------------------------------------------
+# TODO
+
+# -----------------------------------------------------------------------------
 #                             Manual importations
 # -----------------------------------------------------------------------------
 # Importanza 
@@ -375,9 +380,9 @@ for line in lines:
         suspended = line[14].strip()
         access = line[15].strip()
         company_id = line[16].strip()
-        number = line[17].strip()
-        fax = line[18].strip()
-        user_id = line[19].strip()
+        number = int(line[17].strip() or '0')
+        fax = int(line[18].strip() or '0')
+        user_code = line[19].strip()
         date_create = line[20].strip()
         control = line[21].strip()
         extension = line[22].strip()
@@ -388,6 +393,12 @@ for line in lines:
         if not protocol_id:
             print "%s. Error protocol docnaet ID: %s" % (i, protocol_code)    
             continue # TODO use a "Not found" protocol
+
+        user_id = protocol.get(user_code, False)
+        if not user_id:
+            #print "%s. Error user docnaet ID: %s (repl. admin)" % (
+            #    i, user_code)    
+            user_id = 1    
         
         item_ids = erp_pool.search([('name', '=', name)])
         data = {
@@ -400,9 +411,9 @@ for line in lines:
             'fax_number': fax,
             'docnaet_extension': extension,
             'protocol_id': protocol_id,
+            'user_id': user_id,
             
             # TODO:
-            'user_id': 1,
             'date': '2015/01/01',
             'partner_id': 1,
             }
