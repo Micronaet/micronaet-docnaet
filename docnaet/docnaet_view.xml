@@ -385,7 +385,6 @@
                <field name="user_id" readonly="context.get('embedded',False)"/>
                <field name="partner_id" />
                <field name="docnaet_extension" readonly="context.get('embedded',False)"/>
-               <button type="object" name="button_call_url_docnaet" string="Docnaet" icon="gtk-file"/>
 
                <!--draft-->
                <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply"/>
@@ -407,6 +406,7 @@
                <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
 
                <field name="state" />
+               <button type="object" name="button_call_url_docnaet" string="Docnaet" icon="gtk-file"/>
             </tree>
         </field>
     </record>    
