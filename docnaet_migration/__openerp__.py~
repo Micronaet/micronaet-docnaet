@@ -18,10 +18,11 @@
 ###############################################################################
 
 {
-    'name': '',
+    'name': 'Docnaet: Version migration',
     'version': '0.1',
-    'category': '',
+    'category': 'Migration',
     'description': '''        
+        Manage migration from original Docnaet version
         ''',
     'author': 'Micronaet S.r.l. - Nicola Riolini',
     'website': 'http://www.micronaet.it',

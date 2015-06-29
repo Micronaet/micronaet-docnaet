@@ -38,7 +38,69 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
-#'docnaet_id': fields.integer('Docnaet ID'),
+class ResUsers(orm.Model):
+    ''' Add extra fields for migration
+    '''
+    _inherit = 'res.users'
+    
+    _columns = {
+        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        }
+
+class ResCompany(orm.Model):
+    ''' Add extra fields for migration
+    '''
+    _inherit = 'res.company'
+    
+    _columns = {
+        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        }
+    
+class ResPartner(orm.Model):
+    ''' Add extra fields for migration
+    '''
+    _inherit = 'res.partner'
+    
+    _columns = {
+        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        }
+    
+class DocnaetLanguage(orm.Model):
+    ''' Add extra fields for migration
+    '''
+    _inherit = 'docnaet.language'
+    
+    _columns = {
+        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        }
+
+class DocnaetType(orm.Model):
+    ''' Add extra fields for migration
+    '''
+    _inherit = 'docnaet.type'
+    
+    _columns = {
+        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        }
+
+class DocnaetProtocol(orm.Model):
+    ''' Add extra fields for migration
+    '''
+    _inherit = 'docnaet.protocol'
+    
+    _columns = {
+        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        }
+
+class DocnaetDocument(orm.Model):
+    ''' Add extra fields for migration
+    '''
+    _inherit = 'docnaet.document'
+    
+    _columns = {
+        'docnaet_id': fields.integer('Docnaet ID migration')), 
+        }
+
 """def docnaet_2_openerp_id(self, cr, uid, docnaet_id, context=None):
     ''' Search docnaet ID and return OpenERP ID
     '''
@@ -46,7 +108,7 @@ _logger = logging.getLogger(__name__)
     if oerp_id:
         return oerp_id[0]
     else:
-        return False"""
+        return False
 
 
     # --------------------
@@ -227,5 +289,5 @@ _logger = logging.getLogger(__name__)
         deadline_not_necessary_ids = self.search(cr, uid, [('id','not in',deadlined_ids),('deadline','!=',False)], context=context)        
         res = self.write(cr, uid, deadline_not_necessary_ids, {'deadline': False,}, context=context)
         return deadlined_ids
-
+"""
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ###############################################################################
 #
 #    Copyright (C) 2001-2014 Micronaet SRL (<http://www.micronaet.it>).
@@ -17,26 +18,7 @@
 #
 ###############################################################################
 
-{
-    'name': 'Docnaet: Version migration',
-    'version': '0.1',
-    'category': 'Migration',
-    'description': '''        
-        Manage migration from original Docnaet version
-        ''',
-    'author': 'Micronaet S.r.l. - Nicola Riolini',
-    'website': 'http://www.micronaet.it',
-    'license': 'AGPL-3',
-    'depends': [
-        'base',
-        ],
-    'init_xml': [],
-    'demo': [],
-    'data': [
-        #'security/ir.model.access.csv',    
-        #'_views.xml', # after wizard      
-        ],
-    'active': False,
-    'installable': True,
-    'auto_install': False,
-    }
+
+import migrate
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

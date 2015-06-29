@@ -21,23 +21,28 @@ import os
 import sys
 import csv
 import erppeek
+import ConfigParser
 
 # Read parameters:
-hostname = 
-port
-db
-user
-password
+config = ConfigParser.ConfigParser()
+config.read(['config.cfg'])
 
-path
-separator
+server = config.get('OpenERP', 'server')
+port = config.get('OpenERP', 'port')
+dbname = config.get('OpenERP', 'dbname')
+user = config.get('OpenERP', 'user')
+password = config.get('OpenERP', 'password')
+
+path = config.get('csv', 'path')
+header = eval(config.get('csv', 'header'))
+delimiter = config.get('csv', 'delimiter')
 
 # Client erpeek:
 erp = erppeek.Client(
-    'http://%s:%s' % (openerp.hostname, openerp.port),
-    db=openerp.name,
-    user=openerp.username,
-    password=openerp.password,
+    'http://%s:%s' % (server, port),
+    db=dbname,
+    user=user,
+    password=password,
     )
 
 # -----------------------------------------------------------------------------
@@ -66,23 +71,44 @@ company = {
 filename = 'Utenti.txt'
 erp_pool = erp.ResUsers
 user = {}
+csv_file = os.path.expanduser(
+    os.path.join(path, filename))
 
-for line in csv(
-        open(os.path.expanduser(os.path.join(path, filename))), separator):
-    # read fields:    
-    access_id = line[0]
-    name = line[1]
+lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
+i = - header   
+tot_cols = False
+for line in lines:
+    i += 1
+    if i <= 0:
+        continue # jump intestation
+    if not tot_cols: # save for test 
+        tot_cols = len(line)
     
-    item_ids = erp_pool.search([('name', '=', name)])
+    if tot_cols != len(line):
+        print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
+        continue
+    
+    # read fields:    
+    access_id = int(line[0])
+    name = line[1].strip()
+    password = line[2].strip()
+    
+    if name == "Administrator":
+        name = "admin"
+
+    item_ids = erp_pool.search([('login', '=', name)])
     if item_ids:
-        erp_pool.write(item_ids, {})
         openerp_id = item_ids[0]
-    else:
-        openerp_id = erp_pool.create(item_ids, {})
+        #erp_pool.write(openerp_id, {}) # No update
+    else:        
+        openerp_id = erp_pool.create({
+            'login': name,
+            'name': name,
+            'password': password,
+            })
+        print "%s. Create user: %s" % (i, name)    
     user[access_id] = openerp_id
 
-
-    
 # Applicazioni 
 application = {}    
 
