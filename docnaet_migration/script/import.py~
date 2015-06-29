@@ -69,8 +69,8 @@ company = {
 # -----------------------------------------------------------------------------
 # Utenti
 filename = 'Utenti.txt'
-erp_pool = erp.ResUsers
 user = {}
+erp_pool = erp.ResUsers
 csv_file = os.path.expanduser(
     os.path.join(path, filename))
 
@@ -115,12 +115,49 @@ for line in lines:
 application = {}    
 
 # Lingue 
+filename = 'Lingue.txt'
 language = {}
+erp_pool = erp.DocnaetLanguage
+csv_file = os.path.expanduser(
+    os.path.join(path, filename))
+
+lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
+i = - header   
+tot_cols = False
+for line in lines:
+    i += 1
+    if i <= 0:
+        continue # jump intestation
+    if not tot_cols: # save for test 
+        tot_cols = len(line)
+    
+    if tot_cols != len(line):
+        print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
+        continue
+    
+    # read fields:    
+    docnaet_id = int(line[0])
+    name = line[1].strip()
+    note = line[2].strip()
+    
+    item_ids = erp_pool.search([('name', '=', name)])
+    data = {
+        'name': name,
+        'note': note,
+        'docnaet_id': docnaet_id,
+        }
+    if item_ids:
+        openerp_id = item_ids[0]
+        #erp_pool.write(openerp_id, data) # No update
+    else:
+        openerp_id = erp_pool.create(data)            
+        print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
+    language[docnaet_id] = openerp_id
 
 # Protocolli 
 filename = 'Protocolli.txt'
-erp_pool = erp.DocnaetProtocol
 protocol = {}
+erp_pool = erp.DocnaetProtocol
 csv_file = os.path.expanduser(
     os.path.join(path, filename))
 
@@ -146,9 +183,6 @@ for line in lines:
     #company_id = eval(line[4].strip())
     #application_id = eval(line[5].strip())
     
-    if name == "Administrator":
-        name = "admin"
-
     item_ids = erp_pool.search([('name', '=', name)])
     data = {
         'name': name,
@@ -162,16 +196,53 @@ for line in lines:
     else:        
         openerp_id = erp_pool.create(data)            
         print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
-    user[docnaet_id] = openerp_id
+    protocol[docnaet_id] = openerp_id
+
+# Tipologie
+filename = 'Tipologie.txt'
+tipology = {}
+erp_pool = erp.DocnaetType
+csv_file = os.path.expanduser(
+    os.path.join(path, filename))
+
+lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
+i = - header   
+tot_cols = False
+for line in lines:
+    i += 1
+    if i <= 0:
+        continue # jump intestation
+    if not tot_cols: # save for test 
+        tot_cols = len(line)
+    
+    if tot_cols != len(line):
+        print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
+        continue
+    
+    # read fields:    
+    docnaet_id = int(line[0])
+    name = line[1].strip()
+    note = line[2].strip()
+    
+    item_ids = erp_pool.search([('name', '=', name)])
+    data = {
+        'name': name,
+        'note': note,
+        'docnaet_id': docnaet_id,
+        }
+    if item_ids:
+        openerp_id = item_ids[0]
+        #erp_pool.write(openerp_id, data) # No update
+    else:        
+        openerp_id = erp_pool.create(data)            
+        print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
+    tipology[docnaet_id] = openerp_id
 
 # Clienti
 filename = 'Clienti.txt'
 
-# Nazioni
+# Nazioni  <<< 
 filename = 'Nazioni.txt'
-
-# Tipologie
-filename = 'Tipologie.txt'
 
 # Documenti 
 filename = 'Documenti.txt'

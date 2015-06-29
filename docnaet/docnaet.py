@@ -37,7 +37,7 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
-# TODO res.country
+# TODO res.country (importabili con i partner)
 class ResCompany(orm.Model):
     ''' Docnaet company extra fields
     '''
