@@ -48,6 +48,49 @@ erp = erppeek.Client(
 # -----------------------------------------------------------------------------
 #                             Convertion function:
 # -----------------------------------------------------------------------------
+def prepare_string(value):
+    ''' Return formatted string
+    '''
+    try:
+        return value.strip()
+    except:
+        print "Convert error: %s" % value
+
+def prepare_bool(value):
+    ''' Return formatted boolean
+    '''
+    # TODO controllare con un valore il True
+    return value.strip() == -1
+
+def prepare_int(value):
+    ''' Return formatted int
+    '''
+    try: 
+        return int(value.strip())
+    except:
+        return 0    
+
+def prepare_float(value):
+    ''' Return formatted float
+    '''
+    try: 
+        return float(value.strip())
+    except:
+        return 0.0
+
+def prepare_date(value):
+    ''' Return formatted date from dd/mm/yy in yyyy/mm/dd
+    '''    
+    value = value.strip()    
+    if len (value) < 8:
+        res = False
+    else:    
+        res = "%s/%s/%s" % (
+            "20%s" % value[6:8] if value[6:8] < '50' else "19%s" % value[6:8],
+            value[0:2],
+            value[3:5],
+            )
+    return res        
 # TODO
 
 # -----------------------------------------------------------------------------
@@ -335,7 +378,6 @@ for line in lines:
         
     country[docnaet_id] = openerp_id
 
-import pdb; pdb.set_trace()
 # Documenti 
 filename = 'Documenti.txt'
 document = {}
@@ -363,31 +405,31 @@ for line in lines:
             break    
         
         # read fields:    
-        docnaet_id = int(line[0])     
-        protocol_code = int(line[1].strip())
-        language_id = line[2].strip()
-        type_id = line[3].strip()
-        support_id = line[4].strip()
-        partner_id = line[5].strip()
-        name = line[6].strip()
-        description= line[7].strip()
-        note = line[8].strip()
-        date = line[9].strip()
-        file_name = line[10].strip()
-        deadline = line[11].strip()
-        deadlined = line[12].strip()
-        deadline_reason = line[13].strip()
-        suspended = line[14].strip()
-        access = line[15].strip()
-        company_id = line[16].strip()
-        number = int(line[17].strip() or '0')
-        fax = int(line[18].strip() or '0')
-        user_code = line[19].strip()
-        date_create = line[20].strip()
-        control = line[21].strip()
-        extension = line[22].strip()
-        product_id = line[23].strip()
-        #old_id = line[24].strip()
+        docnaet_id = prepare_int(line[0])     
+        protocol_code = prepare_int(line[1].strip())
+        language_id = prepare_int(line[2])
+        type_id = prepare_int(line[3])
+        support_id = prepare_int(line[4])
+        partner_id = prepare_int(line[5])
+        name = prepare_string(line[6])
+        description= prepare_string(line[7])
+        note = line[8].strip() #prepare_string(line[8])
+        date = prepare_date(line[9])
+        file_name = prepare_string(line[10])
+        deadline = prepare_date(line[11])
+        #deadlined = prepare_bool(line[12])
+        deadline_reason = prepare_string(line[13])
+        #suspended = prepare_bool(line[14])
+        #access = line[15].strip()
+        company_id = prepare_int(line[16])
+        number = prepare_int(line[17])
+        fax = prepare_int(line[18])
+        user_code = prepare_int(line[19])
+        date_create = prepare_date(line[20])
+        #control = line[21].strip()
+        extension = prepare_string(line[22])
+        product_id = prepare_int(line[23])
+        ## NO old_id = line[24].strip()
         
         protocol_id = protocol.get(protocol_code, False)
         if not protocol_id:
@@ -412,9 +454,9 @@ for line in lines:
             'docnaet_extension': extension,
             'protocol_id': protocol_id,
             'user_id': user_id,
+            'date': date,
             
             # TODO:
-            'date': '2015/01/01',
             'partner_id': 1,
             }
         if item_ids:
@@ -426,8 +468,7 @@ for line in lines:
             print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
         document[docnaet_id] = openerp_id
     except:
-        print "%s. Error %s: %s [%s]" % (
-            i, csv_file.split('.')[0], data, sys.exc_info())    
+        print "%s. Error document import: %s" % (i, data)
             
 
 # -----------------------------------------------------------------------------
