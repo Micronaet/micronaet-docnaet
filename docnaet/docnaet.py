@@ -294,8 +294,8 @@ class DocnaetDocument(orm.Model):
     _inherit = 'docnaet.document'
 
     _columns = {
-        'duplicated_ids': fields.one2many('docnaet.document', 'origin_id',
-            'duplicated', help='Child document duplicated from this'
+        'duplicated_ids': fields.one2many('docnaet.document', 'original_id',
+            'duplicated', help='Child document duplicated from this'),
         }
         
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

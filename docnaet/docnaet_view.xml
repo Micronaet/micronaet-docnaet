@@ -366,12 +366,23 @@
                        <field name="company_id" />
                        <field name="docnaet_extension" />
 
-                       <separator string="Description" colspan="4"/>
-                       <field name="description" />
+                       <notebook colspan="4">
+                           <page string="Extra info">
+                               <separator string="Description" colspan="4"/>
+                               <field name="description" colspan="4" nolabel="1"/>
 
-                       <separator string="Note" colspan="4"/>
-                       <field name="note" />                       
-
+                               <separator string="Note" colspan="4"/>
+                               <field name="note" colspan="4" nolabel="1"/>                               
+                           </page>
+                           <page string="Document info">
+                           </page>
+                           <page string="Linked document">
+                               <field name="original_id" />
+                               
+                               <separator string="Duplicated in" colspan="4"/>
+                               <field name="duplicated_ids" colspan="4" nolabel="1" readonly="1"/>
+                           </page>
+                       </notebook>
                     </group>   
                 </sheet>   
             </form>
