@@ -244,6 +244,7 @@ class DocnaetDocument(orm.Model):
                         
     _columns = {        
         'name': fields.char('Subject', size=80, required=True),
+        'filename': fields.char('File name', size=100),
         'description': fields.text('Description'),
         'note': fields.text('Note'),
         
@@ -263,16 +264,38 @@ class DocnaetDocument(orm.Model):
         'user_id': fields.many2one('res.users', 'User', required=True),
         'partner_id': fields.many2one('res.partner', 'Partner', required=True),
         'docnaet_extension': fields.char('Docnaet files ext.', size=5),
+
+        'original_id': fields.many2one('docnaet.document', 'Original',
+            help='Parent orignal document after this duplication'),
+
+        'priority': fields.selection([
+            ('lowest', 'Lowest'),
+            ('low', 'Low'),
+            ('normal', 'Normal'),
+            ('high', 'high'),
+            ('highest', 'Highest'), ], 'Priority'),
         
         'state': fields.selection([
             ('draft', 'Draft'),
             ('confirmed', 'Confirmed'),
             ('suspended', 'Suspended'),
             ('timed', 'Timed'),
-            ('cancel', 'Cancel'), ], 'State', readonly=True)
-            }
-            
-        _defaults = {
-            'state': lambda *x: 'draft',        
-            }    
+            ('cancel', 'Cancel'), ], 'State', readonly=True),
+        }
+        
+    _defaults = {
+        'priority': lambda *x: 'normal',
+        'state': lambda *x: 'draft',        
+        }    
+
+class DocnaetDocument(orm.Model):
+    ''' Add extra relation fileds
+    '''          
+    _inherit = 'docnaet.document'
+
+    _columns = {
+        'duplicated_ids': fields.one2many('docnaet.document', 'origin_id',
+            'duplicated', help='Child document duplicated from this'
+        }
+        
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

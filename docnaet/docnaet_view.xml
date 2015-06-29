@@ -276,7 +276,8 @@
         <field name="name">Docnaet document</field>
         <field name="model">docnaet.document</field>        
         <field name="arch" type="xml">
-            <tree string="Docnaet document">
+            <tree string="Docnaet document" colors="red:priority in ('high', 'highest');grey:priority in ('low', 'lowest')">
+               <field name="priority" invisible="1"/>
                <field name="name" />
                <field name="protocol_id" />
                <field name="number" />
@@ -351,7 +352,7 @@
                        <field name="number" />
 
                        <field name="fax_number" />
-                       <newline />
+                       <field name="priority"/>
 
                        <field name="date" />
                        <field name="deadline" />
@@ -385,6 +386,7 @@
             <calendar color="protocol_id" date_start="deadline" string="Document deadline">
                 <field name="name"/>
                 <field name="partner_id"/>
+                <field name="priority"/>
             </calendar>
         </field>
     </record>
