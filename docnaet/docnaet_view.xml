@@ -282,12 +282,12 @@
                <field name="protocol_id" />
                <field name="number" />
                <field name="type_id" />
-               <field name="language_id" />
+               <field name="language_id" readonly="context.get('embedded',False)"/>
                <field name="date" />
                <field name="deadline" />
-               <field name="user_id" />
+               <field name="user_id" readonly="context.get('embedded',False)"/>
                <field name="partner_id" />
-               <field name="docnaet_extension" />
+               <field name="docnaet_extension" readonly="context.get('embedded',False)"/>
                <button type="object" name="button_call_url_docnaet" string="Docnaet" icon="gtk-file"/>
 
                <!--draft-->
@@ -338,7 +338,7 @@
                    <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
                    <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
 
-                   <field name="state" widget="statusbar" statusbar_visible="draft,suspended,timed,confirmed,cancel" readonly="1" />
+                   <field name="state" widget="statusbar" readonly="1" />
                </head>
                <sheet>               
                   <group colspan="4" col="4"> 
@@ -377,10 +377,10 @@
                            <page string="Document info">
                            </page>
                            <page string="Linked document">
-                               <field name="original_id" />
+                               <field name="original_id" readonly="1" />
                                
                                <separator string="Duplicated in" colspan="4"/>
-                               <field name="duplicated_ids" colspan="4" nolabel="1" readonly="1"/>
+                               <field name="duplicated_ids" colspan="4" nolabel="1" readonly="1" context="{'embedded':True}"/>
                            </page>
                        </notebook>
                     </group>   

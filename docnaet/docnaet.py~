@@ -263,7 +263,7 @@ class DocnaetDocument(orm.Model):
         'company_id': fields.many2one('res.company', 'Company'),
         'user_id': fields.many2one('res.users', 'User', required=True),
         'partner_id': fields.many2one('res.partner', 'Partner', required=True),
-        'docnaet_extension': fields.char('Docnaet files ext.', size=5),
+        'docnaet_extension': fields.char('Ext.', size=5),
 
         'original_id': fields.many2one('docnaet.document', 'Original',
             help='Parent orignal document after this duplication'),
@@ -294,7 +294,7 @@ class DocnaetDocument(orm.Model):
     _inherit = 'docnaet.document'
 
     _columns = {
-        'duplicated_ids': fields.one2many('docnaet.document', 'origin_id',
+        'duplicated_ids': fields.one2many('docnaet.document', 'original_id',
             'duplicated', help='Child document duplicated from this'),
         }
         

@@ -263,11 +263,16 @@ class DocnaetDocument(orm.Model):
         'company_id': fields.many2one('res.company', 'Company'),
         'user_id': fields.many2one('res.users', 'User', required=True),
         'partner_id': fields.many2one('res.partner', 'Partner', required=True),
-        'docnaet_extension': fields.char('Docnaet files ext.', size=5),
+        'docnaet_extension': fields.char('Ext.', size=5),
 
         'original_id': fields.many2one('docnaet.document', 'Original',
             help='Parent orignal document after this duplication'),
 
+        # Workflow date event:
+        #'date_confirmed': fields.text('Confirmed event', required=True),
+        #'date_suspended': fields.date('Suspended event', required=True),
+        #'date_deadline': fields.date('Deadline event', required=True),
+        
         'priority': fields.selection([
             ('lowest', 'Lowest'),
             ('low', 'Low'),
