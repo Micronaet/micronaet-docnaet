@@ -4,7 +4,6 @@ import sys
 #import subprocess
 
 # Parameters:
-import pdb; pdb.set_trace()
 # TODO parametrize:
 docnaet_path = "C:\\Docnaet\\FileStore"
 

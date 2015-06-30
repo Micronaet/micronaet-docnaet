@@ -4,7 +4,6 @@ import sys
 #import subprocess
 
 # Parameters:
-import pdb; pdb.set_trace()
 # TODO parametrize:
 docnaet_path = "C:\\Docnaet\\FileStore"
 
@@ -30,8 +29,7 @@ if operation == 'open':
     document_id = parameters[1]
     
     document = os.path.join(docnaet_path, document_id)
-    command ="start %s" % document
-    os.system(command)
+    os.system("start %s" % document)
     
 elif operation == 'home':
     pass # TODO
