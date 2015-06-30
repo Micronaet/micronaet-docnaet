@@ -30,7 +30,7 @@ class document_duplication(orm.TransientModel):
     _description = 'Document duplication'
 
 
-    def button_duplicate(self, cr, uid, ids, context=None):
+    def duplication (self, cr, uid, ids, context=None):
         ''' Button event for duplication
         '''
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]

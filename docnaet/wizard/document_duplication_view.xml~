@@ -3,6 +3,7 @@
     <data>
 
     <!--docnaet.document.duplication.wizard-->
+
     <record id="document_duplication_form" model="ir.ui.view">
         <field name="name">docnaet.document.duplication.wizard.form</field>
         <field name="model">docnaet.document.duplication.wizard</field>

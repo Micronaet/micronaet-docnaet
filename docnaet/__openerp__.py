@@ -37,6 +37,7 @@
     'update_xml': [
         'security/docnaet_group.xml',
         'security/ir.model.access.csv',
+        'wizard/document_duplication_view.xml',
         'docnaet_view.xml',
         'docnaet_workflow.xml',
         ],
