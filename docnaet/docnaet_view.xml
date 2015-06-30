@@ -387,7 +387,7 @@
         <field name="name">Docnaet document</field>
         <field name="model">docnaet.document</field>        
         <field name="arch" type="xml">
-            <tree string="Docnaet document" colors="red:priority in ('high', 'highest');grey:priority in ('low', 'lowest')">
+            <tree string="Docnaet document" colors="grey:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
                <field name="protocol_id" />
                <field name="number" />
                <field name="date" />
