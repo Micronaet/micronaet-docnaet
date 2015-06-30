@@ -350,9 +350,20 @@
         <field name="model">docnaet.document</field>
         <field name="arch" type="xml">
             <search string="Docnaet document" version="7.0">
+                <field name="number" />
+                <field name="date" />
+                <field name="deadline" />
+                <field name="deadline_info" />
+                <field name="name" />
+                <field name="description" />
+                <field name="note" />
+                <field name="state" />
+                <field name="priority" />
+                <field name="docnaet_extension" />
                 <field name="partner_id" filter_domain="[('partner_id','=',self)]"/>
                 <field name="protocol_id" filter_domain="[('protocol_id','=',self)]"/>
                 <field name="type_id" filter_domain="[('type_id','=',self)]"/>
+                <field name="language_id" filter_domain="[('language_id','=',self)]"/>
                 
                 <filter name="state" string="Draft state" domain="[('state','=','draft')]"/>
                 <filter name="state" string="Confirmed state" domain="[('state','=','confirmed')]"/>
@@ -361,9 +372,12 @@
                 <filter name="state" string="Cancel state" domain="[('state','=','cancel')]"/>
                 
                 <group expand="0" string="Group By">
+                    <filter name="group_date" string="Date" context="{'group_by': 'date'}"/>
+                    <filter name="group_deadline" string="Deadline" context="{'group_by': 'deadline'}"/>
                     <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
                     <filter name="group_protocol" string="Protocol" context="{'group_by': 'protocol_id'}"/>
                     <filter name="group_type" string="Type" context="{'group_by': 'type_id'}"/>
+                    <filter name="group_language" string="Language" context="{'group_by': 'language_id'}"/>
                     <filter string="Status" context="{'group_by': 'state'}" icon="terp-stock_effects-object-colorize"/>
                 </group>                
            </search>
@@ -374,38 +388,37 @@
         <field name="model">docnaet.document</field>        
         <field name="arch" type="xml">
             <tree string="Docnaet document" colors="red:priority in ('high', 'highest');grey:priority in ('low', 'lowest')">
-               <field name="priority" invisible="1"/>
-               <field name="name" />
                <field name="protocol_id" />
                <field name="number" />
+               <field name="date" />
+               <field name="name" />
+               <field name="partner_id" />
+               <field name="user_id" readonly="context.get('embedded',False)"/>
                <field name="type_id" />
                <field name="language_id" readonly="context.get('embedded',False)"/>
-               <field name="date" />
+               <field name="priority" invisible="1"/>
                <field name="deadline" />
-               <field name="user_id" readonly="context.get('embedded',False)"/>
-               <field name="partner_id" />
+               <field name="deadline_info" invisible="1"/>
                <field name="docnaet_extension" readonly="context.get('embedded',False)"/>
 
+               <!--WORKFLOW BUTTON-->
                <!--draft-->
                <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply"/>
                <button name="document_draft_suspended" string="Suspended" type="workflow" states="draft" icon="terp-calendar"/>
                <button name="document_draft_timed" string="Timed" type="workflow" states="draft" icon="terp-go-today"/>
                <button name="document_draft_cancel" string="Cancel" type="workflow" states="draft" icon="gtk-cancel"/>
-
                <!--confirmed-->
                <button name="document_confirmed_suspended" string="Suspended" type="workflow" states="confirmed" icon="terp-calendar"/>
                <button name="document_confirmed_timed" string="Timed" type="workflow" states="confirmed" icon="terp-go-today"/>
                <button name="document_confirmed_cancel" string="Cancel" type="workflow" states="confirmed" icon="gtk-cancel"/>
-
                <!--suspended-->
                <button name="document_suspended_confirmed" string="Confirmed" type="workflow" states="suspended" icon="gtk-apply"/>
                <button name="document_suspended_cancel" string="Cancel" type="workflow" states="suspended" icon="gtk-cancel"/>
-
                <!--timed-->
                <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
                <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
-
                <field name="state" />
+               
                <button type="object" name="button_call_url_docnaet" string="Docnaet" icon="gtk-file"/>
             </tree>
         </field>
@@ -453,6 +466,7 @@
 
                        <field name="date" />
                        <field name="deadline" />
+                       <!--<field name="deadline_info" />-->
 
                        <field name="type_id" />
                        <field name="language_id" />

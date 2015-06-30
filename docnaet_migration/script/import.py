@@ -456,29 +456,33 @@ for line in lines:
             print "%s. Error protocol docnaet ID: %s" % (i, protocol_code)    
             continue # TODO use a "Not found" protocol
 
-        user_id = protocol.get(user_code, False)
-        if not user_id:
-            #print "%s. Error user docnaet ID: %s (repl. admin)" % (
-            #    i, user_code)    
-            user_id = 1    
+        language_id = language.get(language_code, False) # no warn if error
+
+        type_id = tipology.get(type_code, False) # no warn if error
+
+        user_id = protocol.get(user_code, 1) # No warning or error (set admin)
         
         company_id = company.get(company_code, 1)    
         
         # Create / Update operations:
         item_ids = erp_pool.search([('name', '=', name)])
         data = {
+            'company_id': company_id,
+            'user_id': user_id,
+            'protocol_id': protocol_id,
+            'language_id': language_id,
+            'type_id': type_id,
             'name': name,
+            'date': date,
+            #'deadline': deadline, # not implemented in docnaet
+            #'deadline_info': deadline_reason, # not implemented in docnaet
             'description': description,
             'note': note,
-            'docnaet_id': docnaet_id,
-            'filename': file_name,
             'number': number,
             'fax_number': fax,
             'docnaet_extension': extension,
-            'protocol_id': protocol_id,
-            'user_id': user_id,
-            'date': date,
-            'company_id': company_id,
+            'filename': file_name,
+            'docnaet_id': docnaet_id,
             
             # TODO:
             'partner_id': 1,
@@ -493,6 +497,7 @@ for line in lines:
         document[docnaet_id] = openerp_id
     except:
         print "%s. Error document import: %s" % (i, data)
+        print sys.exc_info()
             
 
 # -----------------------------------------------------------------------------

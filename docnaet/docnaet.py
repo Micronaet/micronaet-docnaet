@@ -259,7 +259,7 @@ class DocnaetDocument(orm.Model):
 
         'date': fields.date('Date', required=True),
         'deadline': fields.date('Deadline'),
-        'deadline_extra': fields.char('Deadline info', size=64),
+        'deadline_info': fields.char('Deadline info', size=64),
 
         # OpenERP many2one 
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol', 
