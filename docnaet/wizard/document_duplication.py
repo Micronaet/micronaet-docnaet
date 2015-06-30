@@ -19,7 +19,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-from openerp.osv import osv, fields
+from openerp.osv import osv, orm, fields
 from datetime import datetime
 
 
@@ -64,6 +64,6 @@ class document_duplication(orm.TransientModel):
         }
 
     _defaults = {
-         'mode': lambda *a: 'mode',
-    }
+        'mode': lambda *a: 'new',
+        }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

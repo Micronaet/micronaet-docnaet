@@ -419,7 +419,8 @@
                <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
                <field name="state" />
                
-               <button type="object" name="button_call_url_docnaet" string="Docnaet" icon="gtk-file"/>
+               <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" />
+               <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
             </tree>
         </field>
     </record>    
@@ -452,9 +453,9 @@
                </header>
                <sheet>               
                   <group colspan="4" col="4"> 
-                       <button type="object" name="button_call_url_docnaet" string="Document" class="oe_highlight"/>
+                       <button type="object" name="button_call_url_docnaet" string="Open document" class="oe_highlight"/>
                        <button type="object" name="button_assign_fax_number" string="Assign fax" attrs="{'invisible':[('fax_number','=',True)]}"/>
-                       <button type="action" name="%(action_duplicate_wizard)d" string="Duplicate" />
+                       <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" />
                        <newline />
                        
                        <field name="name" colspan="4"/>
