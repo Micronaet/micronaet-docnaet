@@ -452,8 +452,9 @@
                </header>
                <sheet>               
                   <group colspan="4" col="4"> 
-                       <button type="object" name="button_call_url_docnaet" string="Docnaet" class="oe_highlight"/>
+                       <button type="object" name="button_call_url_docnaet" string="Document" class="oe_highlight"/>
                        <button type="object" name="button_assign_fax_number" string="Assign fax" attrs="{'invisible':[('fax_number','=',True)]}"/>
+                       <button type="object" name="button_duplicate" string="Duplicate" />
                        <newline />
                        
                        <field name="name" colspan="4"/>

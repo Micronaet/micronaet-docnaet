@@ -4,9 +4,7 @@ import os
 #import subprocess
 
 # Parameters:
-image_path = "C:\\Fashion\\image"
-default_program = True
-default_program_command = "c:\\windows\\system32\\mspaint.exe"
+image_path = "C:\\Docnaet\\Filestore"
 
 if len(sys.argv) != 2:
     print("Not all parameters!")
@@ -17,11 +15,7 @@ subpath = argument[0]
 image = argument[1]
 
 image_path = "%s\\%s\\" % (image_path,  subpath)
-if default_program:
-   command ="start %s%s" %(image_path, image)
-else:
-   command = "'%s' %s%s" %(default_program_command, image_path, image)
-
+command ="start %s%s" %(image_path, image)
 os.system(command)
 
 #subprocess.call(["start", image], shell=True)
