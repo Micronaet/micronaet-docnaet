@@ -28,7 +28,9 @@ if operation == 'open':
     protocol_id = parameters[0]
     document_id = parameters[1]
     
-    document = os.path.join(docnaet_path, document_id)
+    # real: document = os.path.join(docnaet_path, document_id)
+    # temp:
+    document = os.path.join(docnaet_path, protocol_id, document_id) 
     os.system("start %s" % document)
     
 elif operation == 'home':
