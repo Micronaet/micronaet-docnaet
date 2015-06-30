@@ -4,6 +4,7 @@ import os
 #import subprocess
 
 # Parameters:
+import pdb; pdb.set_trace()
 image_path = "C:\\Docnaet\\Filestore"
 
 if len(sys.argv) != 2:

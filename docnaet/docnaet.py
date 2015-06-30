@@ -185,6 +185,9 @@ class DocnaetDocument(orm.Model):
             }, context=context)
         return True
         
+    # -------------------------------------------------------------------------
+    # Utility:
+    # -------------------------------------------------------------------------
     def call_docnaet_url(self, cr, uid, ids, mode, context=None):    
         ''' Call url in format: docnaet://[operation] cases:
             [open] protocol - id.ext > open document
@@ -192,7 +195,7 @@ class DocnaetDocument(orm.Model):
             
             NOTE: maybe expand the services
         '''        
-        doc_proxy = self.browse(cr, uid, item_id, context=context)
+        doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
         if mode == 'open':
             final_url = r"docnaet://[open]%s-%s.%s"%(

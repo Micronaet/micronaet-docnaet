@@ -192,7 +192,7 @@ class DocnaetDocument(orm.Model):
             
             NOTE: maybe expand the services
         '''        
-        doc_proxy = self.browse(cr, uid, item_id, context=context)
+        doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
         if mode == 'open':
             final_url = r"docnaet://[open]%s-%s.%s"%(
@@ -216,6 +216,8 @@ class DocnaetDocument(orm.Model):
         return True
 
     def button_call_url_docnaet(self, cr, uid, ids, context=None):
+        ''' Call url function for prepare address and return for open doc:
+        '''
         return self.call_docnaet_url(cr, uid, ids, 'open', context=context)
                        
     _columns = {        
