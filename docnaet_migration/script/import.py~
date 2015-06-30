@@ -23,7 +23,9 @@ import csv
 import erppeek
 import ConfigParser
 
+# ----------------
 # Read parameters:
+# ----------------
 config = ConfigParser.ConfigParser()
 config.read(['config.cfg'])
 
@@ -37,7 +39,9 @@ path = config.get('csv', 'path')
 header = eval(config.get('csv', 'header'))
 delimiter = config.get('csv', 'delimiter')
 
+# --------------
 # Client erpeek:
+# --------------
 erp = erppeek.Client(
     'http://%s:%s' % (server, port),
     db=dbname,
@@ -59,8 +63,7 @@ def prepare_string(value):
 def prepare_bool(value):
     ''' Return formatted boolean
     '''
-    # TODO controllare con un valore il True
-    return value.strip() == -1
+    return value.strip() == 1 # True
 
 def prepare_int(value):
     ''' Return formatted int
@@ -81,7 +84,6 @@ def prepare_float(value):
 def prepare_date(value):
     ''' Return formatted date from dd/mm/yy in yyyy/mm/dd
     '''    
-    print value
     value = value.strip()    
     if len (value) < 8:
         res = False
@@ -92,23 +94,22 @@ def prepare_date(value):
             value[3:5],
             )
     return res        
-# TODO
 
 # -----------------------------------------------------------------------------
-#                             Manual importations
+#                             Manual importations:
 # -----------------------------------------------------------------------------
-# Importanza 
+# Priority (not used in real docnaet)
 priority = {
-    0: 'highest',
-    1: 'high',
-    2:'normal',
-    3:'low',
-    4: 'lowest',
+    1: 'highest',
+    2: 'high',
+    3: 'normal',
+    4: 'low',
+    5: 'lowest',
     }
 
 # Ditte 
 company = {
-    1: 1, # access, openerp        
+    6: 1, # docnaet, openerp        
     }    
 
 # Spedito << TODO import current
@@ -116,7 +117,9 @@ company = {
 # -----------------------------------------------------------------------------
 #                             Automatic migration
 # -----------------------------------------------------------------------------
+# ------
 # Utenti
+# ------
 filename = 'Utenti.txt'
 user = {}
 erp_pool = erp.ResUsers
@@ -160,10 +163,15 @@ for line in lines:
         print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
     user[docnaet_id] = openerp_id
 
+# ------------
 # Applicazioni 
+# ------------
 application = {}    
 
+
+# ------
 # Lingue 
+# ------
 filename = 'Lingue.txt'
 language = {}
 erp_pool = erp.DocnaetLanguage
@@ -203,7 +211,9 @@ for line in lines:
         print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
     language[docnaet_id] = openerp_id
 
+# ----------
 # Protocolli 
+# ----------
 filename = 'Protocolli.txt'
 protocol = {}
 erp_pool = erp.DocnaetProtocol
@@ -250,7 +260,9 @@ for line in lines:
     except:
         print "%s. Error %s: %s" % (i, csv_file.split('.')[0], name)    
 
+# ---------
 # Tipologie
+# ---------
 filename = 'Tipologie.txt'
 tipology = {}
 erp_pool = erp.DocnaetType
@@ -290,51 +302,9 @@ for line in lines:
         print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
     tipology[docnaet_id] = openerp_id
 
-# Clienti
-filename = 'Clienti.txt'
-jump = True
-partner = {}
-erp_pool = erp.ResPartner
-csv_file = os.path.expanduser(
-    os.path.join(path, filename))
-
-lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
-i = - header   
-tot_cols = False
-for line in lines:
-    if jump:
-        break
-
-    i += 1
-    if i <= 0:
-        continue # jump intestation
-    if not tot_cols: # save for test 
-        tot_cols = len(line)
-    
-    if tot_cols != len(line):
-        print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
-        continue
-    
-    # read fields:    
-    docnaet_id = int(line[0])
-    name = line[1].strip()
-    
-    item_ids = erp_pool.search([('name', '=', name)])
-    data = {
-        'name': name,
-        'docnaet_id': docnaet_id,
-        }
-    if item_ids:
-        openerp_id = item_ids[0]
-        erp_pool.write(openerp_id, data) # No update
-    else:        
-        opener_id = False # TODO
-        #openerp_id = erp_pool.create(data) # No creation only update: IT vs EN
-        print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
-        
-    partner[docnaet_id] = openerp_id
-
+# -------
 # Nazioni
+# -------
 # TODO create a dict for name converter (IT > EN)
 filename = 'Nazioni.txt'
 jump = True
@@ -379,7 +349,55 @@ for line in lines:
         
     country[docnaet_id] = openerp_id
 
+# -------
+# Clienti
+# -------
+filename = 'Clienti.txt'
+jump = True
+partner = {}
+erp_pool = erp.ResPartner
+csv_file = os.path.expanduser(
+    os.path.join(path, filename))
+
+lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
+i = -header   
+tot_cols = False
+for line in lines:
+    if jump:
+        break
+
+    i += 1
+    if i <= 0:
+        continue # jump intestation
+    if not tot_cols: # save for test 
+        tot_cols = len(line)
+    
+    if tot_cols != len(line):
+        print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
+        continue
+    
+    # read fields:    
+    docnaet_id = int(line[0])
+    name = line[1].strip()
+    
+    item_ids = erp_pool.search([('name', '=', name)])
+    data = {
+        'name': name,
+        'docnaet_id': docnaet_id,
+        }
+    if item_ids:
+        openerp_id = item_ids[0]
+        erp_pool.write(openerp_id, data) # No update
+    else:        
+        opener_id = False # TODO
+        #openerp_id = erp_pool.create(data) # No creation only update: IT vs EN
+        print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
+        
+    partner[docnaet_id] = openerp_id
+
+# ---------
 # Documenti 
+# ---------
 filename = 'Documenti.txt'
 document = {}
 erp_pool = erp.DocnaetDocument
@@ -388,7 +406,7 @@ csv_file = os.path.expanduser(
 
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
 lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
-i = - header   
+i = -header   
 tot_cols = False
 for line in lines:
     try:
@@ -407,29 +425,29 @@ for line in lines:
         
         # read fields:    
         docnaet_id = prepare_int(line[0])     
-        protocol_code = prepare_int(line[1].strip())
-        language_id = prepare_int(line[2])
-        type_id = prepare_int(line[3])
-        support_id = prepare_int(line[4])
-        partner_id = prepare_int(line[5])
+        protocol_code = prepare_int(line[1])
+        language_code = prepare_int(line[2])
+        type_code = prepare_int(line[3])
+        support_code = prepare_int(line[4])
+        partner_code = prepare_int(line[5])
         name = prepare_string(line[6])
-        description= prepare_string(line[7])
+        description = prepare_string(line[7])
         note = line[8].strip() #prepare_string(line[8])
         date = prepare_date(line[9])
         file_name = prepare_string(line[10])
         deadline = prepare_date(line[11])
-        #deadlined = prepare_bool(line[12])
+        deadlined = prepare_bool(line[12])
         deadline_reason = prepare_string(line[13])
-        #suspended = prepare_bool(line[14])
-        #access = line[15].strip()
-        company_id = prepare_int(line[16])
+        suspended = prepare_bool(line[14])
+        access = prepare_int(line[15])
+        company_code = prepare_int(line[16])
         number = prepare_int(line[17])
         fax = prepare_int(line[18])
         user_code = prepare_int(line[19])
         date_create = prepare_date(line[20])
         #control = line[21].strip()
         extension = prepare_string(line[22])
-        product_id = prepare_int(line[23])
+        product_code = prepare_int(line[23])
         ## NO old_id = line[24].strip()
         
         protocol_id = protocol.get(protocol_code, False)
