@@ -6,7 +6,7 @@ import sys
 # Parameters:
 import pdb; pdb.set_trace()
 # TODO parametrize:
-image_path = "C:\\Docnaet\\Filestore"
+docnaet_path = "C:\\Docnaet\\FileStore"
 
 if len(sys.argv) != 2:
     print("Not all parameters!")
@@ -17,20 +17,20 @@ if len(sys.argv) != 2:
 # -----------------------------------------------------------------------------
 # Format: docnaet://[operation]parameters
 argument = sys.argv[1].split('//')[-1].split("]")
-operation = argument[0][1:]
-parameter = argument[1]
+operation = argument[0][1:] # remove [
+parameter = argument[1][:-1] # remove /
 
 # -----------------------------------------------------------------------------
 # Web Services:
 # -----------------------------------------------------------------------------
 if operation == 'open':
     # Extract parameters:
-    parameters = paramter.split("-")
+    parameters = parameter.split("-")
     protocol_id = parameters[0]
     document_id = parameters[1]
     
-    document = os.path.join(image_path, document_id)
-    command ="start %s" % docmuent
+    document = os.path.join(docnaet_path, document_id)
+    command ="start %s" % document
     os.system(command)
     
 elif operation == 'home':
