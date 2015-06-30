@@ -6,7 +6,7 @@ import sys
 # Parameters:
 import pdb; pdb.set_trace()
 # TODO parametrize:
-image_path = "C:\\Docnaet\\Filestore"
+image_path = "C:\\Docnaet\\FileStore"
 
 if len(sys.argv) != 2:
     print("Not all parameters!")
