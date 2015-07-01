@@ -420,9 +420,6 @@ for line in lines:
             print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
             continue
         
-        if i%200 == 0:
-            break    
-        
         # read fields:    
         docnaet_id = prepare_int(line[0])     
         protocol_code = prepare_int(line[1])
