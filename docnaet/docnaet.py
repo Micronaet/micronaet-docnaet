@@ -111,6 +111,7 @@ class DocnaetProtocolTemplateProgram(orm.Model):
 class DocnaetProtocolTemplate(orm.Model):
     ''' Object docnaet.protocol.template
     '''    
+    
     _name = 'docnaet.protocol.template'
     _description = 'Docnaet protocol template'
     _rec_name = 'lang_id'

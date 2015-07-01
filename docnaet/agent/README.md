@@ -14,3 +14,5 @@ Windows only:
 Note:
 to convert all image with lower case use:
 for i in *.jpg; do mv "$i" $(echo "$i" | awk -F '.jpg' '{ print tolower($1) FS }'); done
+
+**TODO:** Implement also for linux: https://support.shotgunsoftware.com/entries/86754-How-to-launch-external-applications-using-custom-protocols-rock-instead-of-http-
