@@ -60,18 +60,19 @@ class UlploadDocumentWizard(orm.TransientModel):
         document_pool = self.pool.get('docnaet.document')
         
         # Read document folder and create docunaet.document:
-        data = {
-            'name': 'document 1',
-            'protocol_id': wiz_proxy.default_prodotol_id.id or False,
-            'user_id': uid, 
-            'partner_id': wiz_proxy.default_partner_id.id or 1, 
-            'type_id': wiz_proxy.default_type_id.id or False,
-            'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),
-            'import_date': datetime.now().strftime(
-                DEFAULT_SERVER_DATETIME_FORMAT),
-            'uploaded': True,
-            }
-        document_id = document_pool.create(cr, uid, data, context=context)
+        for loop in range(0,4): # TODO remove loop (testing)
+            data = {
+                'name': 'document %s' % loop,
+                'protocol_id': wiz_proxy.default_protocol_id.id or False,
+                'user_id': uid, 
+                'partner_id': wiz_proxy.default_partner_id.id or 1, 
+                'type_id': wiz_proxy.default_type_id.id or False,
+                'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),
+                'import_date': datetime.now().strftime(
+                    DEFAULT_SERVER_DATETIME_FORMAT),
+                'uploaded': True,
+                }
+            document_pool.create(cr, uid, data, context=context)
 
         return {
             'view_type': 'form',
@@ -79,6 +80,7 @@ class UlploadDocumentWizard(orm.TransientModel):
             'res_model': 'docnaet.document',
             'domain': [('user_id', '=', uid), ('uploaded', '=', True)],
             'type': 'ir.actions.act_window',
+            # TODO create a view for direct writing and a button for open form
             #'res_id': document_id,  # IDs selected
         }
 
