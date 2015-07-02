@@ -64,7 +64,7 @@ class UlploadDocumentWizard(orm.TransientModel):
             data = {
                 'name': 'document %s' % loop,
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
-                'user_id': uid, 
+                'user_id': wiz_proxy.default_user_id.id or uid, 
                 'partner_id': wiz_proxy.default_partner_id.id or 1, 
                 'language_id': wiz_proxy.default_language_id.id or False, 
                 'type_id': wiz_proxy.default_type_id.id or False,
@@ -79,7 +79,10 @@ class UlploadDocumentWizard(orm.TransientModel):
             'view_type': 'form',
             'view_mode': 'tree,form,calendar',
             'res_model': 'docnaet.document',
-            'domain': [('user_id', '=', uid), ('uploaded', '=', True)],
+            'domain': [
+                ('user_id', '=', uid), 
+                ('uploaded', '=', True), 
+                ('state', '=', 'draft')],
             'type': 'ir.actions.act_window',
             # TODO create a view for direct writing and a button for open form
             #'res_id': document_id,  # IDs selected
@@ -89,6 +92,8 @@ class UlploadDocumentWizard(orm.TransientModel):
         'default_partner_id': fields.many2one(
             'res.partner', 'Default partner'),
         'assign_protocol': fields.boolean('Assign protocol'),    
+        'default_user_id': fields.many2one('res.users', 
+            'Default user'),
         'default_protocol_id': fields.many2one('docnaet.protocol', 
             'Default protocol'),
         'default_type_id': fields.many2one('docnaet.type', 
@@ -99,6 +104,7 @@ class UlploadDocumentWizard(orm.TransientModel):
         }
 
     _defaults = {
+        'default_user_id': lambda s, cr, uid, ctx: uid,
         # TODO: default function
         'folder_status': lambda *x: '''
                 <style>

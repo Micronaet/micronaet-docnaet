@@ -15,6 +15,7 @@
                     <sheet>
                         <group colspan="4" col='2'>
                             <field name="default_partner_id" />
+                            <field name="default_user_id" />
                             <field name="default_protocol_id" />
                             <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}"/>
                             <field name="default_type_id" />
