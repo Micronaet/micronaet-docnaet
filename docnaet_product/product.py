@@ -44,14 +44,14 @@ class ProductProduct(orm.Model):
     _inherit = 'docnaet.document'
     
     _columns = {
-        'linked_product_id': fields.one2many(
-            'product.product', 'Linked product')
+        'linked_product_id': fields.many2one(
+            'product.product', 'Linked product'),
         'link_product': fields.boolean('Link', 
-            help='Link document in product form')
+            help='Link document in product form'),
         }
 
     _defaults = {
-        'integrate_product': lambda *x: True,
+        'link_product': lambda *x: True,
         }
 
 class ProductProduct(orm.Model):
@@ -61,7 +61,7 @@ class ProductProduct(orm.Model):
     
     _columns = {
         'docnaet_ids': fields.one2many('docnaet.document', 'linked_product_id',
-            'Docnaet document')
+            'Docnaet document'),
         }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

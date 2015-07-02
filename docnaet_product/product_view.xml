@@ -7,7 +7,7 @@
             <field name="model">docnaet.document</field>        
             <field name="inherit_id" ref="docnaet.docnaet_document_form_view" />
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/group/notebook/page[@name='Linked objects']" position="inner">
+                <xpath expr="/form/sheet/group/notebook/page[@string='Linked objects']/group[@name='master']/separator" position="after">
                     <group colspan="4" col="4">
                         <separator string="Product" colspan="4"/>
                         <field name="link_product" />
@@ -23,13 +23,24 @@
             <field name="model">product.product</field>        
             <field name="inherit_id" ref="product.product_normal_form_view" />
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page[@name='Information']" position="after">
+                <xpath expr="/form/sheet/notebook/page[@string='Information']" position="after">
                     <page string="Docnaet">
                         <group colspan="4" col="4">
-                            <separator string="Documents linked" />
-                            <field name="docnaet_ids" readonly="1" />
-                        </group>
-                    </docnaet>
+                            <separator string="Documents linked" colspan="4"/>
+                            <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4">
+                                <tree string="Docnaet document" colors="grey:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
+                                   <field name="protocol_id" />
+                                   <field name="number" />
+                                   <field name="date" />
+                                   <field name="name" />
+                                   <field name="partner_id" />
+                                   <field name="language_id" readonly="context.get('embedded',False)"/>
+                                   <field name="state" />                                   
+                                   <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
+                                </tree>                            
+                            </field>
+                        </group>                        
+                    </page>
                 </xpath>
             </field>    
         </record>        

@@ -492,6 +492,9 @@
                            </page>
                            
                            <page string="Linked objects">
+                               <group colspan="4" col="4" name="master">
+                                   <separator string="Link OpenERP document" colspan="4"/>
+                               </group>
                            </page>
                            
                            <page string="Linked document">
