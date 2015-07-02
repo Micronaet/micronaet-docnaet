@@ -16,6 +16,23 @@
                 </xpath>
             </field>    
         </record>        
+
+        <!-- INHERITED product.product-->
+        <record model="ir.ui.view" id="product_normal_link_product_form_view">
+            <field name="name">Docnaet link</field>
+            <field name="model">product.product</field>        
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/notebook/page[@name='Information']" position="after">
+                    <page string="Docnaet">
+                        <group colspan="4" col="4">
+                            <separator string="Documents linked" />
+                            <field name="docnaet_ids" readonly="1" />
+                        </group>
+                    </docnaet>
+                </xpath>
+            </field>    
+        </record>        
         
         
     </data>
