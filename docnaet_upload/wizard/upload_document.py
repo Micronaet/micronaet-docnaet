@@ -70,6 +70,7 @@ class UlploadDocumentWizard(orm.TransientModel):
         }
 
     _defaults = {
+        # TODO: default function
         'folder_status': lambda *x: '''
                 <style>
                     .table_bf {
@@ -95,7 +96,14 @@ class UlploadDocumentWizard(orm.TransientModel):
             <p> 
                 <table class="table_bf">
                     <tr>
-                        <td>Date</td><td>File name</td><td>Ext.</td>
+                        <td>&nbsp;Date&nbsp;</td>
+                        <td>&nbsp;File name&nbsp;</td>
+                        <td>&nbsp;Ext.&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>TODO 23/12/1972 11:00:00</td>
+                        <td>Offerta XXX</td>
+                        <td>DOC</td>
                     </tr>
                 </table>
             </p>'''
