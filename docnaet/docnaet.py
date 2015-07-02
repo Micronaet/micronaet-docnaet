@@ -141,7 +141,7 @@ class DocnaetDocument(orm.Model):
     '''    
     _name = 'docnaet.document'
     _description = 'Docnaet document'
-    _order = 'date,name'
+    _order = 'date desc,name'
         
     # -------------------------------------------------------------------------
     # Workflow state event: 
