@@ -2,32 +2,33 @@
 <openerp>
     <data>
         <!-- INHERITED docnaet.document -->
-        <record model="ir.ui.view" id="docnaet_document_link_product_form_view">
-            <field name="name">Docnaet document product linked</field>
+        <record model="ir.ui.view" id="docnaet_document_link_partner_form_view">
+            <field name="name">Docnaet document partner linked</field>
             <field name="model">docnaet.document</field>        
             <field name="inherit_id" ref="docnaet.docnaet_document_form_view" />
             <field name="arch" type="xml">
                 <xpath expr="/form/sheet/group/notebook/page[@string='Linked objects']/group[@name='master']/separator" position="after">
                     <group colspan="4" col="4">
-                        <separator string="Product" colspan="4"/>
-                        <field name="link_product" />
-                        <field name="linked_product_id" attrs="{'invisible': [('link_product','=',False)]}" />
+                        <separator string="Partner" colspan="4"/>
+                        <field name="link_partner" />
+                        <field name="linked_partner_id" attrs="{'invisible': [('link_partner','=',False)]}" />
                     </group>
                 </xpath>
             </field>    
         </record>        
 
-        <!-- INHERITED product.product-->
-        <record model="ir.ui.view" id="product_normal_link_product_form_view">
+        <!-- INHERITED res.partner-->
+        <record model="ir.ui.view" id="product_normal_link_partner_form_view">
             <field name="name">Docnaet link</field>
-            <field name="model">product.product</field>        
-            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="model">res.partner</field>        
+            <field name="inherit_id" ref="" />
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page[@string='Information']" position="after">
+                <xpath expr="/form/sheet/notebook/page[@string='Information']" position="after">                 
                     <page string="Docnaet">
                         <group colspan="4" col="4">
-                            <separator string="Documents linked" colspan="4"/>
+                            <separator string="Documents linked" colspan="4"/>                            
                             <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4">
+                                <!--TODO parametrize in docnaet as a form priority 20-->
                                 <tree string="Docnaet document" colors="grey:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
                                    <field name="protocol_id" />
                                    <field name="number" />
@@ -43,8 +44,7 @@
                     </page>
                 </xpath>
             </field>    
-        </record>        
-        
+        </record>                
         
     </data>
 </openerp>    
