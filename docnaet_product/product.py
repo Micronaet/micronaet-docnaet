@@ -38,7 +38,7 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
-class ProductProduct(orm.Model):
+class DocnaetDocument(orm.Model):
     ''' Add extra fields for integrare a link to docnaet document
     '''
     _inherit = 'docnaet.document'

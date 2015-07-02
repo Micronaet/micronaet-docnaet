@@ -21,9 +21,9 @@
         <record model="ir.ui.view" id="product_normal_link_partner_form_view">
             <field name="name">Docnaet link</field>
             <field name="model">res.partner</field>        
-            <field name="inherit_id" ref="" />
+            <field name="inherit_id" ref="base.view_partner_form" />
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page[@string='Information']" position="after">                 
+                <xpath expr="/form/sheet/notebook/page[@string='Contacts']" position="after">                 
                     <page string="Docnaet">
                         <group colspan="4" col="4">
                             <separator string="Documents linked" colspan="4"/>                            
