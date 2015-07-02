@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <form string="Document upload" version="7.0">
                     <header>
+                            <button string='Home folder' name='button_personal_folder' type='object' icon='gtk-directory-remote'/>
                             <button string="Cancel" special="cancel" icon='STOCK_CANCEL'/>
                             <button string='Upload' name='button_upload' type='object' icon='STOCK_APPLY'/>
                     </header>
@@ -17,6 +18,7 @@
                             <field name="default_protocol_id" />
                             <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}"/>
                             <field name="default_type_id" />
+                            <field name="default_language_id" />
                             <separator string="Folder status" colspan="4"/>
                             <field name="folder_status" widget="html" nolabel="1" readonly="1" colspan="4"/>
                         </group>

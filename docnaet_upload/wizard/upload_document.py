@@ -66,6 +66,7 @@ class UlploadDocumentWizard(orm.TransientModel):
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
                 'user_id': uid, 
                 'partner_id': wiz_proxy.default_partner_id.id or 1, 
+                'language_id': wiz_proxy.default_language_id.id or False, 
                 'type_id': wiz_proxy.default_type_id.id or False,
                 'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),
                 'import_date': datetime.now().strftime(
@@ -92,6 +93,8 @@ class UlploadDocumentWizard(orm.TransientModel):
             'Default protocol'),
         'default_type_id': fields.many2one('docnaet.type', 
             'Default type'),            
+        'default_language_id': fields.many2one('docnaet.language', 
+            'Default language'),
         'folder_status': fields.text('Folder status')
         }
 
