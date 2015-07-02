@@ -19,8 +19,26 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-from openerp.osv import osv, orm, fields
-from datetime import datetime
+import os
+import sys
+import logging
+import openerp
+import openerp.netsvc as netsvc
+import openerp.addons.decimal_precision as dp
+from openerp.osv import fields, osv, expression, orm
+from datetime import datetime, timedelta
+from dateutil.relativedelta import relativedelta
+from openerp import SUPERUSER_ID
+from openerp import tools
+from openerp.tools.translate import _
+from openerp.tools.float_utils import float_round as round
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
+    DEFAULT_SERVER_DATETIME_FORMAT, 
+    DATETIME_FORMATS_MAP, 
+    float_compare)
+
+
+_logger = logging.getLogger(__name__)
 
 
 class UlploadDocumentWizard(orm.TransientModel):
@@ -37,15 +55,21 @@ class UlploadDocumentWizard(orm.TransientModel):
     def button_upload(self, cr, uid, ids, context=None):
         ''' Button event for upload
         '''
-        # TODO complete with file events:
+        # TODO complete the load from folder:
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
         document_pool = self.pool.get('docnaet.document')
         
         # Read document folder and create docunaet.document:
-        
-        
         data = {
-            'name': document_proxy.name, 
+            'name': 'document 1',
+            'protocol_id': wiz_proxy.default_prodotol_id.id or False,
+            'user_id': uid, 
+            'partner_id': wiz_proxy.default_partner_id.id or 1, 
+            'type_id': wiz_proxy.default_type_id.id or False,
+            'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),
+            'import_date': datetime.now().strftime(
+                DEFAULT_SERVER_DATETIME_FORMAT),
+            'uploaded': True,
             }
         document_id = document_pool.create(cr, uid, data, context=context)
 
