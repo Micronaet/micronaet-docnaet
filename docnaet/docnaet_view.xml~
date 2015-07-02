@@ -387,7 +387,7 @@
         <field name="name">Docnaet document</field>
         <field name="model">docnaet.document</field>        
         <field name="arch" type="xml">
-            <tree string="Docnaet document" colors="red:state=='cancel';green:state=='confirmed';grey:state=='timed';blue:state=='draft';'black':state=='suspended'">
+            <tree string="Docnaet document" colors="grey:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
                <field name="protocol_id" />
                <field name="number" />
                <field name="date" />
@@ -489,6 +489,9 @@
                            </page>
                            
                            <page string="Document info">                               
+                           </page>
+                           
+                           <page string="Linked objects">
                            </page>
                            
                            <page string="Linked document">

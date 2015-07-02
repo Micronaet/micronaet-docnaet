@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- INHERITED docnaet.document -->
+        <record model="ir.ui.view" id="docnaet_document_link_product_form_view">
+            <field name="name">Docnaet document product linked</field>
+            <field name="model">docnaet.document</field>        
+            <field name="inherit_id" ref="docnaet.docnaet_document_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/sheet/group/notebook/page[@name='Linked objects']" position="inner">
+                    <group colspan="4" col="4">
+                        <separator string="Product" colspan="4"/>
+                        <field name="link_product" />
+                        <field name="linked_product_id" attrs="{'invisible': [('link_product','=',False)]}" />
+                    </group>
+                </xpath>
+            </field>    
+        </record>        
+        
+        
+    </data>
+</openerp>    
+    

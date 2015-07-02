@@ -491,6 +491,9 @@
                            <page string="Document info">                               
                            </page>
                            
+                           <page string="Linked objects">
+                           </page>
+                           
                            <page string="Linked document">
                                <group colspan="4" col="2">
                                    <field name="original_id" readonly="1" />
