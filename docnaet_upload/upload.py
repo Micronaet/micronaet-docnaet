@@ -44,24 +44,14 @@ class DocnaetDocument(orm.Model):
     _inherit = 'docnaet.document'
     
     _columns = {
-        'linked_partner_id': fields.many2one(
-            'res.partner', 'Linked partner'),
-        'link_partner': fields.boolean('Link', 
-            help='Link document in partner form'),
+        'import_date': fields.datetime('Import date'),
+        'uploaded': fields.boolean('Uploaded'),       
         }
 
     _defaults = {
-        'link_partner': lambda *x: True,
-        }
-
-class ResPartner(orm.Model):
-    ''' Add extra fields for integrare docnaet document
-    '''
-    _inherit = 'res.partner'
-    
-    _columns = {
-        'docnaet_ids': fields.one2many('docnaet.document', 'linked_partner_id',
-            'Docnaet document'),
+        'import_date': lambda *x: datetime.now().strftime(
+            DEFAULT_SERVER_DATETIME_FORMAT),
+        'uploaded': lambda *x: False,
         }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -36,7 +36,8 @@
     'init_xml': [],
     'demo': [],
     'data': [
-        'partner_view.xml',
+        'upload_view.xml',
+        'wizard/upload_document_view.xml',
         ],
     'active': False,
     'installable': True,
