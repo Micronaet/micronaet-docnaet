@@ -93,7 +93,7 @@ class UlploadDocumentWizard(orm.TransientModel):
                      }
                 </style>
             <p> 
-                <table>
+                <table class="table_bf">
                     <tr>
                         <td>Date</td><td>File name</td><td>Ext.</td>
                     </tr>
