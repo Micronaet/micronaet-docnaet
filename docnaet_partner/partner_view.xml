@@ -7,7 +7,7 @@
             <field name="model">docnaet.document</field>        
             <field name="inherit_id" ref="docnaet.docnaet_document_form_view" />
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/group/notebook/page[@string='Linked objects']/group[@name='master']/separator" position="after">
+                <xpath expr="/form//notebook/page[@string='Linked objects']/group[@name='master']/separator" position="after">
                     <group colspan="4" col="4">
                         <separator string="Partner" colspan="4"/>
                         <field name="link_partner" />
@@ -18,7 +18,7 @@
         </record>        
 
         <!-- INHERITED res.partner-->
-        <record model="ir.ui.view" id="product_normal_link_partner_form_view">
+        <record model="ir.ui.view" id="docnaet_normal_link_partner_form_view">
             <field name="name">Docnaet link</field>
             <field name="model">res.partner</field>        
             <field name="inherit_id" ref="base.view_partner_form" />
@@ -45,7 +45,6 @@
                 </xpath>
             </field>    
         </record>                
-        
     </data>
 </openerp>    
     
