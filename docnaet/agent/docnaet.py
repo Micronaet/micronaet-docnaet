@@ -37,9 +37,18 @@ if not os.path.isfile(docnaet_config):
         os.makedirs(os.path.dirname(docnaet_path))
     except:
         pass    
-    
+
     # Create default file:
-    cfg_file = open(docnaet_config, 'w')
+    try:
+        cfg_file = open(docnaet_config, 'w')
+    except:
+        if X_interface:
+            tkMessageBox.showerror(
+                title='Error:', 
+                message='Cannot create config file [%s]' % docnaet_config, 
+                parent=window)
+        sys.exit()    
+        
     cfg_file.write('''
 [log]
 file: c:\\Docnaet\\docnaet.log
