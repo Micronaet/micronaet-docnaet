@@ -4,17 +4,17 @@ import sys
 from datetime import datetime, timedelta
 
 '''
-#!/usr/bin/python
 from Tkinter import *
 import tkMessageBox
 
 window = Tk()
 window.wm_withdraw()
 
-#message at x:200,y:200
-window.geometry('1x1+200+200') # remember its .geometry('WidthxHeight(+or-)X(+or-)Y')
-#window.geometry('1x1+' + str(window.winfo_screenwidth()/2) + '+' + str(window.winfo_screenheight()/2))
-tkMessageBox.showerror(title='Error', message='Error Message', parent=window)
+window.geometry('1x1+%s+%s' % (
+    window.winfo_screenwidth() / 2,
+    window.winfo_screenheight() / 2,
+    ))
+tkMessageBox.showerror(title='Error:', message='Error Message', parent=window)
 '''
 
 # Parameters:
@@ -51,7 +51,9 @@ if operation == 'open':
     document = os.path.join(docnaet_path, protocol_id, document_id) 
     command = 'start %s' % document
     f_log.write('%s [INFO] %s: %s\n' % (date, operation, command))
+    
     try:
+        # TODO Check file presence
         os.system(command)
     except:
         f_log.write('%s [ERROR] Wrong command %s\n' % (date, sys.exc_info()))
