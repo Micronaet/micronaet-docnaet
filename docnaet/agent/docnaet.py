@@ -10,7 +10,7 @@ docnaet_log = 'C:\\Docnaet\\Log\\docnaet.log'
 f_log = open(docnaet_log, 'a')
 
 if len(sys.argv) != 2:
-    f_log.write('Not all parameters: %s' % (sys.argv))
+    f_log.write('Not all parameters: %s\n' % (sys.argv))
     sys.exit()
 
 # -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ if operation == 'open':
     # temp:
     document = os.path.join(docnaet_path, protocol_id, document_id) 
     command = 'start %s' % document
-    f_log.write('Command %s: %s' % (operation, command))
+    f_log.write('Command %s: %s\n' % (operation, command))
     try:
         os.system(command)
     except:
