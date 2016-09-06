@@ -204,7 +204,7 @@ class DocnaetDocument(orm.Model):
                 doc_proxy.docnaet_id \
                     if not doc_proxy.original_id \
                     else doc_proxy.original_id.id,
-                doc_proxy.docnaet_extension,
+                doc_proxy.docnaet_extension or 'doc',
                 )
         elif mode == 'home':
             final_url = r"docnaet://[home]%s" % 'home_folder' #TODO

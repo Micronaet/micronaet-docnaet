@@ -5,17 +5,19 @@ import sys
 
 # Parameters:
 # TODO parametrize:
-docnaet_path = "C:\\Docnaet\\FileStore"
+docnaet_path = 'C:\\Docnaet\\FileStore'
+docnaet_log = 'C:\\Docnaet\\Log\\docnaet.log'
+f_log = open(docnaet_log, 'w')
 
 if len(sys.argv) != 2:
-    print("Not all parameters!")
+    f_log.write('Not all parameters: %s' % (sys.argv))
     sys.exit()
 
 # -----------------------------------------------------------------------------
 # Extract operation from arguments:
 # -----------------------------------------------------------------------------
 # Format: docnaet://[operation]parameters
-argument = sys.argv[1].split('//')[-1].split("]")
+argument = sys.argv[1].split('//')[-1].split(']')
 operation = argument[0][1:] # remove [
 parameter = argument[1][:-1] # remove /
 
@@ -24,14 +26,19 @@ parameter = argument[1][:-1] # remove /
 # -----------------------------------------------------------------------------
 if operation == 'open':
     # Extract parameters:
-    parameters = parameter.split("-")
+    parameters = parameter.split('-')
     protocol_id = parameters[0]
     document_id = parameters[1]
     
     # real: document = os.path.join(docnaet_path, document_id)
     # temp:
     document = os.path.join(docnaet_path, protocol_id, document_id) 
-    os.system("start %s" % document)
+    command = 'start %s' % document
+    f_log.write('Command %s: %s' % (operation, command))
+    try:
+        os.system(command)
+    except:
+        f_log.write('Error launch command %s\n' % (sys.exc_info(), ))
     
 elif operation == 'home':
     pass # TODO
