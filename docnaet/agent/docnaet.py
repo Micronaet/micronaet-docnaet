@@ -20,9 +20,8 @@ except:
     X_interface = False
     
 # -----------------------------------------------------------------------------
-# Parameters:
+# Fixed parameters:
 # -----------------------------------------------------------------------------
-import pdb; pdb.set_trace()
 docnaet_path = 'C:\\Docnaet'
 docnaet_config_file = 'openerp.cfg'
 docnaet_config = os.path.join(docnaet_path, docnaet_config_file)
@@ -32,13 +31,17 @@ docnaet_config = os.path.join(docnaet_path, docnaet_config_file)
 # -----------------------------------------------------------------------------
 # Test if config file exist:
 if not os.path.isfile(docnaet_config):
+    # --------------
     # Create folder:
+    # --------------
     try:
         os.makedirs(os.path.dirname(docnaet_path))
     except:
         pass    
 
+    # --------------------
     # Create default file:
+    # --------------------
     try:
         cfg_file = open(docnaet_config, 'w')
     except:
@@ -47,17 +50,19 @@ if not os.path.isfile(docnaet_config):
                 title='Error:', 
                 message='Cannot create config file [%s]' % docnaet_config, 
                 parent=window)
-        sys.exit()    
+        sys.exit()
         
-    cfg_file.write('''
-[log]
+    cfg_file.write('''[log]
 file: c:\\Docnaet\\docnaet.log
 
 [docnaet]
 path: \\\\Muletto\\Docnaet\\Filestore
 ''')
+    cfg_file.close()
     
+    # ------------------
     # Message to config:    
+    # ------------------
     if X_interface:
         tkMessageBox.showerror(
             title='Error:', 
@@ -65,11 +70,12 @@ path: \\\\Muletto\\Docnaet\\Filestore
             parent=window)
     sys.exit()    
 
-# Read parameters:
+# -----------------------------------------------------------------------------
+# Read parameters from file:
+# -----------------------------------------------------------------------------
 config = ConfigParser.ConfigParser()
 config.read([docnaet_config])
 
-# File parameter:
 docnaet_log = config.get('log', 'file')
 docnaet_path = config.get('docnaet', 'path')
 
@@ -83,7 +89,7 @@ if len(sys.argv) != 2:
 # -----------------------------------------------------------------------------
 # Extract operation from arguments:
 # -----------------------------------------------------------------------------
-# Format: docnaet://[operation]parameters
+# NOTE: Link format  >>>   docnaet://[operation]parameters
 argument = sys.argv[1].split('//')[-1].split(']')
 operation = argument[0][1:] # remove [
 parameter = argument[1][:-1] # remove /
