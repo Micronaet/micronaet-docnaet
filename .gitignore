@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 
 # Gedit temp files:
-*.*~
+*~
 
 # C extensions
 *.so

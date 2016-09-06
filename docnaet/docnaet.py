@@ -199,7 +199,7 @@ class DocnaetDocument(orm.Model):
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
         if mode == 'open':  # TODO rimettere id e togliere docnae_id
-            final_url = r"docnaet://[open]%s-%s.%s"%(
+            final_url = r"docnaet://[open]%s-%s.%s" % (
                 doc_proxy.protocol_id.docnaet_id,
                 doc_proxy.docnaet_id \
                     if not doc_proxy.original_id \

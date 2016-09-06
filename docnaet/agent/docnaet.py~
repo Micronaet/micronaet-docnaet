@@ -7,7 +7,7 @@ import sys
 # TODO parametrize:
 docnaet_path = 'C:\\Docnaet\\FileStore'
 docnaet_log = 'C:\\Docnaet\\Log\\docnaet.log'
-f_log = open(docnaet_log, 'w')
+f_log = open(docnaet_log, 'a')
 
 if len(sys.argv) != 2:
     f_log.write('Not all parameters: %s' % (sys.argv))
@@ -42,5 +42,3 @@ if operation == 'open':
     
 elif operation == 'home':
     pass # TODO
-    
-
