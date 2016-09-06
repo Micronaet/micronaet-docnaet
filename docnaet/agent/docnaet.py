@@ -49,7 +49,7 @@ path: \\\\Muletto\\Docnaet\\Filestore
     if X_interface:
         tkMessageBox.showerror(
             title='Error:', 
-            message='No config file, new create [%s]' % docnaet_config), 
+            message='No config file, new create [%s]' % docnaet_config, 
             parent=window)
     sys.exit()    
 
