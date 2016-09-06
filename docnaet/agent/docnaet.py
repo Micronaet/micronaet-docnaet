@@ -1,26 +1,65 @@
 #!/usr/bin/python
 import os
 import sys
+import ConfigParser
 from datetime import datetime, timedelta
 
-'''
-from Tkinter import *
-import tkMessageBox
-
-window = Tk()
-window.wm_withdraw()
-
-window.geometry('1x1+%s+%s' % (
-    window.winfo_screenwidth() / 2,
-    window.winfo_screenheight() / 2,
-    ))
-tkMessageBox.showerror(title='Error:', message='Error Message', parent=window)
-'''
-
+try:
+    from Tkinter import *
+    import tkMessageBox
+    
+    window = Tk()
+    window.wm_withdraw()
+    window.geometry('1x1+%s+%s' % (
+        window.winfo_screenwidth() / 2,
+        window.winfo_screenheight() / 2,
+        ))
+        
+    X_interface = True
+except:
+    X_interface = False
+    
+# -----------------------------------------------------------------------------
 # Parameters:
-# TODO parametrize:
-docnaet_path = '\\\\MULETTO\\Docnaet\\FileStore'
-docnaet_log = 'C:\\Docnaet\\Log\\docnaet.log'
+# -----------------------------------------------------------------------------
+import pdb; pdb.set_trace()
+docnaet_path = 'C:\\Docnaet'
+docnaet_config_file = 'openerp.cfg'
+docnaet_config = os.path.join(docnaet_path, docnaet_config_file)
+
+# -----------------------------------------------------------------------------
+# Read config:
+# -----------------------------------------------------------------------------
+# Test if config file exist:
+if not os.path.isfile(docnaet_config):
+    # Create folder:
+    os.makedirs(os.path.dirname(docnaet_path), exist_ok=True)
+    
+    # Create default file:
+    cfg_file = open(docnaet_config, 'w')
+    cfg_file.write('''
+[log]
+file: c:\\Docnaet\\docnaet.log
+
+[docnaet]
+path: \\\\Muletto\\Docnaet\\Filestore
+''')
+    
+    # Message to config:    
+    if X_interface:
+        tkMessageBox.showerror(
+            title='Error:', 
+            message='No config file, new create [%s]' % docnaet_config), 
+            parent=window)
+    sys.exit()    
+
+# Read parameters:
+config = ConfigParser.ConfigParser()
+config.read([docnaet_config])
+
+# File parameter:
+docnaet_log = config.get('log', 'file')
+docnaet_path = config.get('docnaet', 'path')
 
 f_log = open(docnaet_log, 'a')
 date = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
