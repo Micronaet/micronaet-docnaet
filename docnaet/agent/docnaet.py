@@ -8,7 +8,8 @@ from datetime import datetime, timedelta
 
 # Parameters:
 # TODO parametrize:
-docnaet_path = 'C:\\Docnaet\\FileStore'
+#docnaet_path = 'C:\\Docnaet\\FileStore'
+docnaet_path = '\\MULETTO\\Docnaet\\FileStore'
 docnaet_log = 'C:\\Docnaet\\Log\\docnaet.log'
 f_log = open(docnaet_log, 'a')
 date = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
