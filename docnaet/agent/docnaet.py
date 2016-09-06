@@ -2,15 +2,26 @@
 import os
 import sys
 from datetime import datetime, timedelta
-#import subprocess
 
+'''
+#!/usr/bin/python
+from Tkinter import *
+import tkMessageBox
 
+window = Tk()
+window.wm_withdraw()
+
+#message at x:200,y:200
+window.geometry('1x1+200+200') # remember its .geometry('WidthxHeight(+or-)X(+or-)Y')
+#window.geometry('1x1+' + str(window.winfo_screenwidth()/2) + '+' + str(window.winfo_screenheight()/2))
+tkMessageBox.showerror(title='Error', message='Error Message', parent=window)
+'''
 
 # Parameters:
 # TODO parametrize:
-#docnaet_path = 'C:\\Docnaet\\FileStore'
 docnaet_path = '\\\\MULETTO\\Docnaet\\FileStore'
 docnaet_log = 'C:\\Docnaet\\Log\\docnaet.log'
+
 f_log = open(docnaet_log, 'a')
 date = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
 
