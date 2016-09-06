@@ -42,5 +42,3 @@ if operation == 'open':
     
 elif operation == 'home':
     pass # TODO
-    
-
