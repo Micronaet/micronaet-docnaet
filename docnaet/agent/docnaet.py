@@ -33,7 +33,10 @@ docnaet_config = os.path.join(docnaet_path, docnaet_config_file)
 # Test if config file exist:
 if not os.path.isfile(docnaet_config):
     # Create folder:
-    os.makedirs(os.path.dirname(docnaet_path), exist_ok=True)
+    try:
+        os.makedirs(os.path.dirname(docnaet_path))
+    except:
+        pass    
     
     # Create default file:
     cfg_file = open(docnaet_config, 'w')
