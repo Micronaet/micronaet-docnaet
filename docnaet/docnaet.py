@@ -44,7 +44,7 @@ class ResCompany(orm.Model):
     _inherit = 'res.company'
     _columns = {
         'docnaet_path': fields.char(
-            'Docnaet path', size=64, 
+            'Docnaet path', size=64, required=True,
             help='Docnaet root path in file system for store docs'), 
         }
 
@@ -87,7 +87,6 @@ class DocnaetProtocol(orm.Model):
         'name': fields.char('Protocol', size=64, required=True),
         'next': fields.integer('Next protocol', required=True), 
         'note': fields.text('Note'),
-        # TODO company_id
         # TODO default_application_id
         }
     _defaults = {
@@ -157,6 +156,12 @@ class DocnaetDocument(orm.Model):
     def document_confirmed(self, cr, uid, ids, context=None):
         ''' WF confirmed state
         '''
+        # Get info if imported document
+        
+        # Get origin and destination path
+        
+        # Move document
+        
         self.write(cr, uid, ids, {
             'state': 'confirmed',
             }, context=context)
@@ -239,7 +244,8 @@ class DocnaetDocument(orm.Model):
 
         # OpenERP many2one 
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol', 
-            required=True),
+            #required=True
+            ),
         'language_id': fields.many2one('docnaet.language', 'Language'),
         'type_id': fields.many2one('docnaet.type', 'Type'),
         'company_id': fields.many2one('res.company', 'Company'),
@@ -249,7 +255,7 @@ class DocnaetDocument(orm.Model):
 
         'original_id': fields.many2one('docnaet.document', 'Original',
             help='Parent orignal document after this duplication'),
-
+        'imported': fields.boolean('Imported'), 
         # Workflow date event:
         #'date_confirmed': fields.text('Confirmed event', required=True),
         #'date_suspended': fields.date('Suspended event', required=True),

@@ -70,29 +70,32 @@ class document_import(orm.TransientModel):
         
         # Search my draft document
         doc_ids = doc_pool.search(cr, uid, [
-            #('user_id=uid','state=draft'), # TODO
+            ('user_id', '=', uid),
+            ('state', '=', 'draft'), 
+            ('imported', '=', True),
             ], context=context)
         
         # Unlink document
-        #doc_pool.unlink(cr, uid, doc_ids, context=context)
+        doc_pool.unlink(cr, uid, doc_ids, context=context)
         
         # ---------------------------------------------------------------------
         # Read file in user folder
         # ---------------------------------------------------------------------
         path = '/home/thebrush/temp/Gloria' # TODO
         filelist = [f for f in listdir(path) if isfile(join(path, f))]
-                
-        
-        print 'Elenco file', filelist
+
         # ---------------------------------------------------------------------
         # Create document in draft for user
         # ---------------------------------------------------------------------
         docnaet_ids = []
-        for f in []: #filelist: # TODO
-            oc_id = doc_pool.create(cr, uid, {
+        for f in filelist:
+            doc_id = doc_pool.create(cr, uid, {
                 'name': f,
                 'filename': f, 
                 'user_id': uid,
+                'partner_id': 1,
+                'imported': True,
+                #'protocol_id': 1,
                 }, context=context)
             docnaet_ids.append(doc_id)    
         

@@ -361,7 +361,7 @@
                 <field name="priority" />
                 <field name="docnaet_extension" />
                 <field name="partner_id" filter_domain="[('partner_id','=',self)]"/>
-                <field name="protocol_id" filter_domain="[('protocol_id','=',self)]"/>
+                <field name="protocol_id" filter_domain="[('protocol_id','=',self)]" required="1"/>
                 <field name="type_id" filter_domain="[('type_id','=',self)]"/>
                 <field name="language_id" filter_domain="[('language_id','=',self)]"/>
                 
@@ -388,7 +388,7 @@
         <field name="model">docnaet.document</field>        
         <field name="arch" type="xml">
             <tree string="Docnaet document" colors="grey:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
-               <field name="protocol_id" />
+               <field name="protocol_id" required="1" />
                <field name="number" />
                <field name="date" />
                <field name="name" />
