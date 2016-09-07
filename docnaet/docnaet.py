@@ -226,7 +226,7 @@ class DocnaetDocument(orm.Model):
                        
     _columns = {        
         'name': fields.char('Subject', size=80, required=True),
-        'filename': fields.char('File name', size=100),
+        'filename': fields.char('File name', size=200),
         'description': fields.text('Description'),
         'note': fields.text('Note'),
         
@@ -271,6 +271,8 @@ class DocnaetDocument(orm.Model):
         }
         
     _defaults = {
+        'date': lambda *x: datetime.now().strftime(
+            DEFAULT_SERVER_DATE_FORMAT),
         'priority': lambda *x: 'normal',
         'state': lambda *x: 'draft',        
         }    
