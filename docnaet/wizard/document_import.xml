@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+    <!--docnaet.document.import.wizard-->
+    <record id="document_import_form" model="ir.ui.view">
+        <field name="name">docnaet.document.import.wizard.form</field>
+        <field name="model">docnaet.document.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Document import" version="7.0">
+                <header>
+                        <button string="Cancel" special="cancel" icon="STOCK_CANCEL"/>                        
+                        <button string="Import" name="document_import" type="object" icon="STOCK_APPLY"/>
+                </header>
+                <sheet>
+                    <group colspan="4" col="2">
+                        <button string="Personal forder" name="document_folder" type="object" />                        
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_docnaet_document_import" model="ir.actions.act_window">
+            <field name="name">Docnaet import docs</field>
+            <field name="res_model">docnaet.document.import.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="document_import_form"/>
+            <field name="target">new</field>
+    </record>
+    
+    <menuitem 
+        parent="docnaet_document_my_document" 
+        id="menu_docnaet_document_import" 
+        action="action_docnaet_document_import"/>    
+    </data>
+</openerp>

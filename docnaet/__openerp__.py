@@ -37,9 +37,10 @@
     'update_xml': [
         'security/docnaet_group.xml',
         'security/ir.model.access.csv',
-        'wizard/document_duplication_view.xml',
         'docnaet_view.xml',
         'docnaet_workflow.xml',
+        'wizard/document_duplication_view.xml',
+        'wizard/document_import_view.xml',
         ],
     'demo_xml': [],
     'active': False, 
