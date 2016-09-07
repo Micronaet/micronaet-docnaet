@@ -42,6 +42,36 @@ class ResCompany(orm.Model):
     ''' Docnaet company extra fields
     '''
     _inherit = 'res.company'
+    
+    def get_docnaet_folder_path(self, cr, uid, subfolder=None, context=None):
+        ''' Function for get (or create) root docnaet folder 
+            (also create extra subfolder)
+            subfolder: string value for sub root folder, valid value:
+                > 'store'
+                > 'private'
+        '''
+        subfolder = subfolder or 'root'
+        
+        # Get docnaet path from company element
+        company_ids = self.search(cr, uid, [], context=context)
+        company_proxy = self.browse(cr, uid, company_ids, context=context)[0]
+        docnaet_path = company_proxy.docnaet_path
+        
+        # Folder structure:
+        path = {}
+        path['root'] = docnaet_path
+        path['store'] = os.path.join(docnaet_path, 'store')
+        path['private'] = os.path.join(docnaet_path, 'private')
+        
+        # Create folder structure # TODO test if present
+        for folder in path:
+            os.system('mkdir -p %s' % path[folder])
+        
+        # Check folder presence (instead create one's)
+        
+        # Check or create subfolder        
+        return path[subfolder]
+        
     _columns = {
         'docnaet_path': fields.char(
             'Docnaet path', size=64, required=True,
@@ -156,7 +186,7 @@ class DocnaetDocument(orm.Model):
     def document_confirmed(self, cr, uid, ids, context=None):
         ''' WF confirmed state
         '''
-        # Get info if imported document
+        # Get info if imported document 
         
         # Get origin and destination path
         

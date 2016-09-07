@@ -62,11 +62,19 @@ class document_import(orm.TransientModel):
         ''' Button event for duplication
         '''
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
-        
+
         # ---------------------------------------------------------------------
         # Clean current draft document for user
         # ---------------------------------------------------------------------
         doc_pool = self.pool.get('docnaet.document')
+        company_pool = self.pool.get('res.company')
+        
+        private_folder = company_pool.get_docnaet_folder_path(
+            cr, uid, subfolder='private', context=context)
+        os.system('mkdir -p %s' % os.path.join(private_folder, str(uid)))    
+            
+        store_folder = company_pool.get_docnaet_folder_path(
+            cr, uid, subfolder='store', context=context)
         
         # Search my draft document
         doc_ids = doc_pool.search(cr, uid, [
