@@ -171,6 +171,35 @@ class DocnaetDocument(orm.Model):
     _name = 'docnaet.document'
     _description = 'Docnaet document'
     _order = 'date desc,name'
+
+    # -------------------------------------------------------------------------
+    # Utility: 
+    # -------------------------------------------------------------------------
+    def move_private_file(self, cr, uid, ids, data, context=None):
+        ''' check if document is in private area, so move in docnaet folder
+            and mark private = False
+            modify data dict for this operation
+        '''
+        company_pool = self.pool.get('res.company')
+
+        doc_proxy = self.browse(cr, uid, ids, context=context)[0]
+        if doc_proxy.private and not doc_proxy.imported:
+            # Get source and destination folder
+            private_folder = company_pool.get_docnaet_folder_path(
+                cr, uid, subfolder='private', context=context)
+            private_folder = os.path.join(private_folder, str(doc_proxy.user_id.id))
+            store_folder = company_pool.get_docnaet_folder_path(
+                cr, uid, subfolder='store', context=context)
+            
+            f_private = os.path.join(private_folder, doc_proxy.filename)
+            f_store = '%s.%s' % (
+                os.path.join(store_folder, str(doc_proxy.id)),
+                doc_proxy.docnaet_extension,
+                )
+            os.rename(f_private, f_store)
+            data['private'] = False
+            data['imported'] = True
+        return    
         
     # -------------------------------------------------------------------------
     # Workflow state event: 
@@ -185,42 +214,32 @@ class DocnaetDocument(orm.Model):
 
     def document_confirmed(self, cr, uid, ids, context=None):
         ''' WF confirmed state
-        '''
-        # Get info if imported document 
-        
-        # Get origin and destination path
-        
-        # Move document
-        
-        self.write(cr, uid, ids, {
-            'state': 'confirmed',
-            }, context=context)
-        return True
+        '''        
+        data = {'state': 'confirmed'}
+        self.move_private_file(cr, uid, ids, data, context=context)        
+        return self.write(cr, uid, ids, data, context=context)
 
     def document_suspended(self, cr, uid, ids, context=None):
         ''' WF suspended state
         '''
-        self.write(cr, uid, ids, {
-            'state': 'suspended',
-            }, context=context)
-        return True
+        data = {'state': 'suspended'}
+        self.move_private_file(cr, uid, ids, data, context=context)        
+        return self.write(cr, uid, ids, data, context=context)
 
     def document_timed(self, cr, uid, ids, context=None):
         ''' WF timed state
         '''
-        self.write(cr, uid, ids, {
-            'state': 'timed',
-            }, context=context)
-        return True
+        data = {'state': 'timed'}
+        self.move_private_file(cr, uid, ids, data, context=context)        
+        return self.write(cr, uid, ids, data, context=context)
 
     def document_cancel(self, cr, uid, ids, context=None):
         ''' WF cancel state
         '''
-        self.write(cr, uid, ids, {
-            'state': 'cancel',
-            }, context=context)
-        return True
-        
+        data = {'state': 'cancel'}
+        self.move_private_file(cr, uid, ids, data, context=context)        
+        return self.write(cr, uid, ids, data, context=context)
+
     # -------------------------------------------------------------------------
     # Utility:
     # -------------------------------------------------------------------------
@@ -281,11 +300,12 @@ class DocnaetDocument(orm.Model):
         'company_id': fields.many2one('res.company', 'Company'),
         'user_id': fields.many2one('res.users', 'User', required=True),
         'partner_id': fields.many2one('res.partner', 'Partner', required=True),
-        'docnaet_extension': fields.char('Ext.', size=5),
+        'docnaet_extension': fields.char('Ext.', size=10),
 
         'original_id': fields.many2one('docnaet.document', 'Original',
             help='Parent orignal document after this duplication'),
         'imported': fields.boolean('Imported'), 
+        'private': fields.boolean('Private'), 
         # Workflow date event:
         #'date_confirmed': fields.text('Confirmed event', required=True),
         #'date_suspended': fields.date('Suspended event', required=True),

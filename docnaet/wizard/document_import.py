@@ -71,7 +71,8 @@ class document_import(orm.TransientModel):
         
         private_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='private', context=context)
-        os.system('mkdir -p %s' % os.path.join(private_folder, str(uid)))    
+        private_folder = os.path.join(private_folder, str(uid))
+        os.system('mkdir -p %s' % private_folder)    
             
         store_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='store', context=context)
@@ -80,7 +81,7 @@ class document_import(orm.TransientModel):
         doc_ids = doc_pool.search(cr, uid, [
             ('user_id', '=', uid),
             ('state', '=', 'draft'), 
-            ('imported', '=', True),
+            ('private', '=', True),
             ], context=context)
         
         # Unlink document
@@ -89,20 +90,25 @@ class document_import(orm.TransientModel):
         # ---------------------------------------------------------------------
         # Read file in user folder
         # ---------------------------------------------------------------------
-        path = '/home/thebrush/temp/Gloria' # TODO
-        filelist = [f for f in listdir(path) if isfile(join(path, f))]
+        
+        filelist = [f for f in listdir(private_folder) if isfile(join(
+            private_folder, f))]
 
         # ---------------------------------------------------------------------
         # Create document in draft for user
         # ---------------------------------------------------------------------
         docnaet_ids = []
         for f in filelist:
+            docnaet_extension = f.split('.')[-1]    # Get extension:
+           
+            # Write private record document:
             doc_id = doc_pool.create(cr, uid, {
                 'name': f,
                 'filename': f, 
                 'user_id': uid,
                 'partner_id': 1,
-                'imported': True,
+                'private': True,
+                'docnaet_extension': docnaet_extension,
                 #'protocol_id': 1,
                 }, context=context)
             docnaet_ids.append(doc_id)    
