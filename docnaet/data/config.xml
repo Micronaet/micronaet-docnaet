@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<openerp>
+    <data> 
+        <record model="ir.config_parameter" id="parameter_default_docnaet_root_folder">
+            <field name="key">docnaet_root_folder</field>
+            <field name="value">~/datastore/docnaet</field>
+        </record>
+    </data>
+</openerp>
+

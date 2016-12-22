@@ -34,9 +34,12 @@
         'base',
         ],
     'init_xml': [], 
-    'update_xml': [
+    'data': [
         'security/docnaet_group.xml',
         'security/ir.model.access.csv',
+
+        'data/config.xml',
+
         'wizard/document_duplication_view.xml',
         'docnaet_view.xml',
         'docnaet_workflow.xml',

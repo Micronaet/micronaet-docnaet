@@ -181,13 +181,13 @@ class DocnaetDocument(orm.Model):
             modify data dict for this operation
         '''
         company_pool = self.pool.get('res.company')
-
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
         if doc_proxy.private and not doc_proxy.imported:
             # Get source and destination folder
             private_folder = company_pool.get_docnaet_folder_path(
                 cr, uid, subfolder='private', context=context)
-            private_folder = os.path.join(private_folder, str(doc_proxy.user_id.id))
+            private_folder = os.path.join(
+                private_folder, str(doc_proxy.user_id.id))
             store_folder = company_pool.get_docnaet_folder_path(
                 cr, uid, subfolder='store', context=context)
             
@@ -199,7 +199,7 @@ class DocnaetDocument(orm.Model):
             os.rename(f_private, f_store)
             data['private'] = False
             data['imported'] = True
-        return    
+        return
         
     # -------------------------------------------------------------------------
     # Workflow state event: 

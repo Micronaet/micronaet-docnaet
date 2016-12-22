@@ -9,8 +9,8 @@
         <field name="arch" type="xml">
             <form string="Document duplication" version="7.0">
                 <header>
-                        <button string="Cancel" special="cancel" icon='STOCK_CANCEL'/>
-                        <button string='Create' name='duplication' type='object' icon='STOCK_APPLY'/>
+                    <button string="Cancel" special="cancel" icon='STOCK_CANCEL'/>
+                    <button string='Create' name='duplication' type='object' icon='STOCK_APPLY'/>
                 </header>
                 <sheet>
                     <group colspan="4" col='2'>
