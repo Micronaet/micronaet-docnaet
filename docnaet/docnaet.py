@@ -263,7 +263,13 @@ class DocnaetDocument(orm.Model):
         elif mode == 'home':
             final_url = r"docnaet://[home]%s" % 'home_folder' #TODO
 
-        return {'type': 'ir.actions.act_url', 'url':final_url, 'target': 'new'}
+        return {
+            'name': 'Docnaet document',
+            #res_model': 'ir.actions.act_url',
+            'type': 'ir.actions.act_url', 
+            'url': final_url, 
+            'target': 'new', # self
+            }
 
     # -------------------------------------------------------------------------
     # Button event:
