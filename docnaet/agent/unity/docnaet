@@ -1,0 +1,12 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+import os
+import sys
+
+protocol = 'docnaet://'
+path = '/home/thebrush/'
+name = sys.argv[1][len(protocol):]
+filename = os.path.join(path, name)
+
+os.system('xdg-open %s' % filename)
+

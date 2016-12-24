@@ -136,6 +136,7 @@ if operation == 'open':
     # temp:
     document = os.path.join(docnaet_path, protocol_id, document_id) 
     command = 'start %s' % document
+    # Linux use: xdg-open 
     f_log.write('%s [INFO] %s: %s\n' % (date, operation, command))
     
     try:

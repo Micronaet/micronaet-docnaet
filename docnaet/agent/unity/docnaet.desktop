@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Docnaet protocol handled
+GenericName=Launcher for open documents
+Comment=Handle URL Scheme docnaet://
+Exec=/usr/local/bin/docnaet %u
+Terminal=false
+Type=Application
+MimeType=x-scheme-handler/docnaet;
+Icon=gedit
+Categories=TextEditor;Development;Utility;
