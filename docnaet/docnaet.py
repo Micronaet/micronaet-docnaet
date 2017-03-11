@@ -67,11 +67,25 @@ class ResCompany(orm.Model):
             if not os.path.isdir(path[folder]):
                 os.system('mkdir -p %s' % path[folder])        
         return path[subfolder]
+
+    def assign_fax_fax(self, cr, uid, context=None):
+        ''' Assign protocol and update number in record
+        '''
+        company_id = self.search(cr, uid, [], context=context)[0] # TODO
+        
+        
+        company_proxy = self.browse(cr, uid, company_id, context=context)
+        number = company_proxy.next_fax
+        self.write(cr, uid, company_id, {
+            'next_fax': number + 1,
+            }, context=context)
+        return number
         
     _columns = {
         'docnaet_path': fields.char(
             'Docnaet path', size=64, required=True,
             help='Docnaet root path in file system for store docs'), 
+        'next_fax': fields.integer('Next fax number'),
         }
 
 class DocnaetLanguage(orm.Model):
@@ -285,7 +299,11 @@ class DocnaetDocument(orm.Model):
     def button_assign_fax_number(self, cr, uid, ids, context=None):
         ''' Assign fax number to document (next counter)
         '''
-        return True
+        number = self.pool.get('res.company').assign_fax_fax(
+            cr, uid, context=context)
+        return self.write(cr, uid, ids, {
+            'fax_number': number,
+            }, context=context)
 
     def button_call_url_docnaet(self, cr, uid, ids, context=None):
         ''' Call url function for prepare address and return for open doc:
