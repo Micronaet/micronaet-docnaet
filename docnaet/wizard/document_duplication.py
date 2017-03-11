@@ -77,10 +77,8 @@ class document_duplication(orm.TransientModel):
             'priority': original_proxy.priority,        
             'state': 'draft',
             # XXX remember when add new fields to update this record!
+            'original_id': original_id if mode == 'link' else False,
             }
-        if mode == 'link':
-            # link document
-            data['original_id'] = original_id # so document stay here!
 
         destination_id = document_pool.create(cr, uid, data, context=context)
         destination_proxy = document_pool.browse(    

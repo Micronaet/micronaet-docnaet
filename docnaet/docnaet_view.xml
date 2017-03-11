@@ -500,7 +500,6 @@
                        <field name="program_id" readonly="1"/>
                        <field name="docnaet_extension" readonly="1"/>
 
-                       <field name="original_id" />
                        <field name="company_id" />
 
                        <notebook colspan="4">
