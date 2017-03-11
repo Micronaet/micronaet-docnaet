@@ -65,7 +65,9 @@ class UlploadDocumentWizard(orm.TransientModel):
 
     def button_personal_folder(self, cr, uid, ids, context=None):
         # TODO complete open folder with agent procedure
-        return True
+        document_pool = self.pool.get('docnaet.document')
+        return document_pool.call_docnaet_url(
+            cr, uid, ids, mode='home', context=context)
 
     def button_upload(self, cr, uid, ids, context=None):
         ''' Button event for upload
