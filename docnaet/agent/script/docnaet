@@ -1,0 +1,60 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+import os
+import sys
+
+# ----------------------------------------------------------------------------
+# Parameters:
+# ----------------------------------------------------------------------------
+protocol = 'docnaet://'
+store_path = '/home/thebrush/etl/docnaet/store'
+private_path = '/home/thebrusn/etl/docnaet/private'
+
+separator = '|'
+log_file = '/tmp/docnaet.log'
+log_f = open(log_file, 'a')
+
+# ----------------------------------------------------------------------------
+# Parse elements:
+# ----------------------------------------------------------------------------
+command = sys.argv[1][len(protocol):].split(separator)
+if len(command) != 2:
+    log_f.write('Not enought parameters\n')
+    log_f.close()
+    sys.exit()
+
+operation, argument = command
+
+# ----------------------------------------------------------------------------
+# Operations: 
+# ----------------------------------------------------------------------------
+# -------------
+# 1. Open file:
+# -------------
+if operation == 'document':
+    filename = os.path.join(store_path, argument)
+    log_f.write('Open doc: %s' % filename)
+    log_f.close()
+    os.system('xdg-open %s' % filename)
+
+# ---------------
+# 2. Open folder:
+# ---------------
+elif operation == 'folder':
+    folder = os.path.join(private_path, argument)       
+    log_f.write('Open user folder: %s' % folder)
+    log_f.close()
+    os.system('xdg-open %s' % folder)
+
+# -----------------------------
+# E: Error no correct operation
+# -----------------------------
+else:
+    log_f.write('Error not managed operation: %s' % operation)
+    log_f.close()
+    
+
+
+
+
+
