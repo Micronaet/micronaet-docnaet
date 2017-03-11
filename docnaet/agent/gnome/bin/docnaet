@@ -9,6 +9,7 @@ import sys
 protocol = 'docnaet://'
 store_path = '/home/thebrush/etl/docnaet/store'
 private_path = '/home/thebrusn/etl/docnaet/private'
+folder_command = 'nautilus'
 
 separator = '|'
 log_file = '/tmp/docnaet.log'
@@ -44,7 +45,7 @@ elif operation == 'folder':
     folder = os.path.join(private_path, argument)       
     log_f.write('Open user folder: %s\n' % folder)
     log_f.close()
-    os.system('xdg-open %s' % folder)
+    os.system('%s %s' % (folder_command, folder)
 
 # -----------------------------
 # E: Error no correct operation
