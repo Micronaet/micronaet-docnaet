@@ -33,7 +33,7 @@ operation, argument = command
 # -------------
 if operation == 'document':
     filename = os.path.join(store_path, argument)
-    log_f.write('Open doc: %s' % filename)
+    log_f.write('Open doc: %s\n' % filename)
     log_f.close()
     os.system('xdg-open %s' % filename)
 
@@ -42,7 +42,7 @@ if operation == 'document':
 # ---------------
 elif operation == 'folder':
     folder = os.path.join(private_path, argument)       
-    log_f.write('Open user folder: %s' % folder)
+    log_f.write('Open user folder: %s\n' % folder)
     log_f.close()
     os.system('xdg-open %s' % folder)
 
@@ -50,7 +50,7 @@ elif operation == 'folder':
 # E: Error no correct operation
 # -----------------------------
 else:
-    log_f.write('Error not managed operation: %s' % operation)
+    log_f.write('Error not managed operation: %s\n' % operation)
     log_f.close()
     
 

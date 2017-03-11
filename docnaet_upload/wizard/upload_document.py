@@ -75,6 +75,7 @@ class UlploadDocumentWizard(orm.TransientModel):
         company_pool = self.pool.get('res.company')
         document_pool = self.pool.get('docnaet.document')
         protocol_pool = self.pool.get('docnaet.protocol')
+        program_pool = self.pool.get('docnaet.protocol.template.program')
 
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
         store_folder = company_pool.get_docnaet_folder_path(
@@ -94,8 +95,7 @@ class UlploadDocumentWizard(orm.TransientModel):
                     _('Extension check'), 
                     _('Extension of file must be <= 4 char!'),
                     )
-            #if extension in file_type:
-            
+
             data = {
                 'name': 'Document %s' % f,
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
@@ -108,7 +108,8 @@ class UlploadDocumentWizard(orm.TransientModel):
                     DEFAULT_SERVER_DATETIME_FORMAT),
                 'uploaded': True,
                 'docnaet_extension': extension,
-                #'file_type': 
+                'program_id': program_pool.get_program_from_extension(
+                    cr, uid, extension, context=context)
                 }
             if wiz_proxy.assign_protocol:
                 data['number'] = protocol_pool.assign_protocol_number(

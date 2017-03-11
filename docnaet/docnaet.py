@@ -135,9 +135,21 @@ class DocnaetProtocolTemplateProgram(orm.Model):
     _name = 'docnaet.protocol.template.program'
     _description = 'Docnaet program'
     _order = 'name'
-                    
+                   
+    def get_program_from_extension(self, cr, uid, extension, context=None):
+        ''' Return program ID from extension
+        ''' 
+        program_ids = self.search(cr, uid, [
+            ('extension', 'ilike', extension)
+            ], context=context)
+            
+        if program_ids:
+            return program_ids[0]
+        else: 
+            return False
+            
     _columns = {        
-        'name': fields.char('Language', size=64, required=True),
+        'name': fields.char('Program', size=64, required=True),
         'extension': fields.char('Extension', size=5),
         'note': fields.text('Note'),
         }
@@ -303,6 +315,8 @@ class DocnaetDocument(orm.Model):
         'user_id': fields.many2one('res.users', 'User', required=True),
         'partner_id': fields.many2one('res.partner', 'Partner', required=True),
         'docnaet_extension': fields.char('Ext.', size=10),
+        'program_id': fields.many2one(
+            'docnaet.protocol.template.program', 'Type of document'),
 
         'original_id': fields.many2one('docnaet.document', 'Original',
             help='Parent orignal document after this duplication'),

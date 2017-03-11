@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
-    <data>
+    <data>   
+
     <!--docnaet.protocol.template.language--> 
     <record model="ir.ui.view" id="view_docnaet_protocol_template_program_form">
         <field name="name">Docnaet program</field>
@@ -30,6 +31,15 @@
             </tree>
         </field>
     </record>    
+    <record model="ir.actions.act_window" id="action_docnaet_protocol_template_program">
+        <field name="name">Programs type</field>
+        <field name="res_model">docnaet.protocol.template.program</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_docnaet_protocol_template_program_tree"/>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+    </record>
 
     <!--docnaet.protocol.template--> 
     <record model="ir.ui.view" id="view_docnaet_protocol_template_form">
@@ -360,6 +370,7 @@
                 <field name="state" />
                 <field name="priority" />
                 <field name="docnaet_extension" />
+                <field name="program_id" />
                 <field name="partner_id" filter_domain="[('partner_id','=',self)]"/>
                 <field name="protocol_id" filter_domain="[('protocol_id','=',self)]" required="1"/>
                 <field name="type_id" filter_domain="[('type_id','=',self)]"/>
@@ -377,6 +388,8 @@
                     <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
                     <filter name="group_user" string="User" context="{'group_by': 'user_id'}"/>
                     <filter name="group_protocol" string="Protocol" context="{'group_by': 'protocol_id'}"/>
+                    <filter name="group_program" string="Program" context="{'group_by': 'program_id'}"/>
+                    <filter name="group_extension" string="Extension" context="{'group_by': 'docnaet_extension'}"/>
                     <filter name="group_type" string="Type" context="{'group_by': 'type_id'}"/>
                     <filter name="group_language" string="Language" context="{'group_by': 'language_id'}"/>
                     <filter string="Status" context="{'group_by': 'state'}" icon="terp-stock_effects-object-colorize"/>
@@ -401,6 +414,7 @@
                <field name="deadline" />
                <field name="deadline_info" invisible="1"/>
                <field name="docnaet_extension" readonly="context.get('embedded',False)"/>
+               <field name="program_id" invisible="1"/>
 
                <!--WORKFLOW BUTTON-->
                <!--draft-->
@@ -477,8 +491,10 @@
                        <field name="user_id" />
                        <field name="partner_id" />
 
+                        <field name="program_id" readonly="1"/>
+                       <field name="docnaet_extension" readonly="1"/>
+
                        <field name="company_id" />
-                       <field name="docnaet_extension" />
 
                        <notebook colspan="4">
                            <page string="Extra info">
@@ -566,6 +582,7 @@
             <menuitem parent="docnaet_administration" id="docnaet_administration_country" string="Country" sequence="7" action="action_docnaet_country_form" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_partner" string="Partner" sequence="1" action="action_docnaet_partner_form" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_protocol" name="Protocol" sequence="10" action="action_docnaet_protocol"/>
+            <menuitem parent="docnaet_administration" id="docnaet_administration_program" name="Program" sequence="15" action="action_docnaet_protocol_template_program"/>            
             <menuitem parent="docnaet_administration" id="docnaet_administration_type" name="Tipology" sequence="20" action="action_docnaet_type" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_language" name="Language" sequence="30" action="action_docnaet_language" />
     
