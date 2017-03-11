@@ -20,7 +20,7 @@
 #
 ###############################################################################
 import document_duplication
-import document_import
+#import document_import
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -43,7 +43,7 @@
         'wizard/document_duplication_view.xml',
         'docnaet_view.xml',
         'docnaet_workflow.xml',
-        'wizard/document_import_view.xml',
+        #'wizard/document_import_view.xml',
         ],
     'demo_xml': [],
     'active': False, 

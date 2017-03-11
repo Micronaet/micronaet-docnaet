@@ -108,6 +108,16 @@ class DocnaetProtocol(orm.Model):
     _description = 'Docnaet protocol'
     _order = 'name'
 
+    def assign_protocol_number(self, cr, uid, protocol_id, context=None):
+        ''' Assign protocol and update number in record
+        '''
+        protocol_proxy = self.browse(cr, uid, protocol_id, context=context)
+        number = protocol.next
+        self.write(cr, uid, protocol_id, {
+            'next': number + 1,
+            }, context=context)
+        return number
+        
     _columns = {        
         'name': fields.char('Protocol', size=64, required=True),
         'next': fields.integer('Next protocol', required=True), 
@@ -211,10 +221,10 @@ class DocnaetDocument(orm.Model):
         ''' WF confirmed state
         '''        
         assert len(ids) == 1, 'Works only with one record a time'
-        current_proxy = self.browse(cr, uid, ids, context=context)[0]
         data = {'state': 'confirmed'}
         
         protocol_pool = self.pool.get('docnaet.protocol')
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
         if not current_proxy.number:
             protocol = current_proxy.protocol_id:
             if not protocol:
@@ -222,11 +232,8 @@ class DocnaetDocument(orm.Model):
                     _('Protocol'), 
                     _('No protocol assigned, choose one before and confirm!'),
                     )
-            number = protocol.next
-            docnaet_protocol.write(cr, uid, protocol.id, {
-                'next': number + 1,
-                }, context=context)
-            data['number'] = number
+            data['number'] = protocol_pool.assign_protocol_number(
+                cr, uid, protocol.id, context=context)
         return self.write(cr, uid, ids, data, context=context)
 
     def document_suspended(self, cr, uid, ids, context=None):

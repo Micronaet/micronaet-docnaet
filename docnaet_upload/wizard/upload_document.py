@@ -74,6 +74,7 @@ class UlploadDocumentWizard(orm.TransientModel):
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
         company_pool = self.pool.get('res.company')
         document_pool = self.pool.get('docnaet.document')
+        protocol_pool = self.pool.get('docnaet.protocol')
 
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
         store_folder = company_pool.get_docnaet_folder_path(
@@ -96,6 +97,10 @@ class UlploadDocumentWizard(orm.TransientModel):
                     DEFAULT_SERVER_DATETIME_FORMAT),
                 'uploaded': True,
                 }
+            if wiz_proxy.assign_protocol:
+                data['number'] = protocol_pool.assign_protocol_number(
+                    cr, uid, data['protocol_id'], context=context)
+                
             item_id = document_pool.create(cr, uid, data, context=context)
 
             fullstore = '%s.%s' % (
