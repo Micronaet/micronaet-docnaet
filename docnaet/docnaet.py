@@ -43,15 +43,13 @@ class ResCompany(orm.Model):
     '''
     _inherit = 'res.company'
     
-    def get_docnaet_folder_path(self, cr, uid, subfolder=None, context=None):
+    def get_docnaet_folder_path(self, cr, uid, subfolder='root', context=None):
         ''' Function for get (or create) root docnaet folder 
             (also create extra subfolder)
             subfolder: string value for sub root folder, valid value:
                 > 'store'
                 > 'private'
         '''
-        subfolder = subfolder or 'root'
-        
         # Get docnaet path from company element
         company_ids = self.search(cr, uid, [], context=context)
         company_proxy = self.browse(cr, uid, company_ids, context=context)[0]
@@ -62,14 +60,12 @@ class ResCompany(orm.Model):
         path['root'] = docnaet_path
         path['store'] = os.path.join(docnaet_path, 'store')
         path['private'] = os.path.join(docnaet_path, 'private')
+        path['user'] = os.path.join(path['private'], str(uid))
         
         # Create folder structure # TODO test if present
         for folder in path:
-            os.system('mkdir -p %s' % path[folder])
-        
-        # Check folder presence (instead create one's)
-        
-        # Check or create subfolder        
+            if not os.path.isdir(path[folder]):
+                os.system('mkdir -p %s' % path[folder])        
         return path[subfolder]
         
     _columns = {
@@ -81,7 +77,6 @@ class ResCompany(orm.Model):
 class DocnaetLanguage(orm.Model):
     ''' Object docnaet.language
     '''    
-    
     _name = 'docnaet.language'
     _description = 'Docnaet language'
     _order = 'name'
@@ -175,31 +170,31 @@ class DocnaetDocument(orm.Model):
     # -------------------------------------------------------------------------
     # Utility: 
     # -------------------------------------------------------------------------
-    def move_private_file(self, cr, uid, ids, data, context=None):
-        ''' check if document is in private area, so move in docnaet folder
-            and mark private = False
-            modify data dict for this operation
-        '''
-        company_pool = self.pool.get('res.company')
-        doc_proxy = self.browse(cr, uid, ids, context=context)[0]
-        if doc_proxy.private and not doc_proxy.imported:
-            # Get source and destination folder
-            private_folder = company_pool.get_docnaet_folder_path(
-                cr, uid, subfolder='private', context=context)
-            private_folder = os.path.join(
-                private_folder, str(doc_proxy.user_id.id))
-            store_folder = company_pool.get_docnaet_folder_path(
-                cr, uid, subfolder='store', context=context)
+    #def move_private_file(self, cr, uid, ids, data, context=None):
+    #    ''' check if document is in private area, so move in docnaet folder
+    #        and mark private = False
+    #        modify data dict for this operation
+    #    '''
+    #    company_pool = self.pool.get('res.company')
+    #    doc_proxy = self.browse(cr, uid, ids, context=context)[0]
+    #    if doc_proxy.private and not doc_proxy.imported:
+    #        # Get source and destination folder
+    #        private_folder = company_pool.get_docnaet_folder_path(
+    #            cr, uid, subfolder='private', context=context)
+    #        private_folder = os.path.join(
+    #            private_folder, str(doc_proxy.user_id.id))
+    #        store_folder = company_pool.get_docnaet_folder_path(
+    #            cr, uid, subfolder='store', context=context)
             
-            f_private = os.path.join(private_folder, doc_proxy.filename)
-            f_store = '%s.%s' % (
-                os.path.join(store_folder, str(doc_proxy.id)),
-                doc_proxy.docnaet_extension,
-                )
-            os.rename(f_private, f_store)
-            data['private'] = False
-            data['imported'] = True
-        return
+    #        f_private = os.path.join(private_folder, doc_proxy.filename)
+    #        f_store = '%s.%s' % (
+    #            os.path.join(store_folder, str(doc_proxy.id)),
+    #            doc_proxy.docnaet_extension,
+    #            )
+    #        os.rename(f_private, f_store)
+    #        data['private'] = False
+    #        data['imported'] = True
+    #    return
         
     # -------------------------------------------------------------------------
     # Workflow state event: 
@@ -215,29 +210,41 @@ class DocnaetDocument(orm.Model):
     def document_confirmed(self, cr, uid, ids, context=None):
         ''' WF confirmed state
         '''        
+        assert len(ids) == 1, 'Works only with one record a time'
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
         data = {'state': 'confirmed'}
-        self.move_private_file(cr, uid, ids, data, context=context)        
+        
+        protocol_pool = self.pool.get('docnaet.protocol')
+        if not current_proxy.number:
+            protocol = current_proxy.protocol_id:
+            if not protocol:
+                raise osv.except_osv(
+                    _('Protocol'), 
+                    _('No protocol assigned, choose one before and confirm!'),
+                    )
+            number = protocol.next
+            docnaet_protocol.write(cr, uid, protocol.id, {
+                'next': number + 1,
+                }, context=context)
+            data['number'] = number
         return self.write(cr, uid, ids, data, context=context)
 
     def document_suspended(self, cr, uid, ids, context=None):
         ''' WF suspended state
         '''
         data = {'state': 'suspended'}
-        self.move_private_file(cr, uid, ids, data, context=context)        
         return self.write(cr, uid, ids, data, context=context)
 
     def document_timed(self, cr, uid, ids, context=None):
         ''' WF timed state
         '''
         data = {'state': 'timed'}
-        self.move_private_file(cr, uid, ids, data, context=context)        
         return self.write(cr, uid, ids, data, context=context)
 
     def document_cancel(self, cr, uid, ids, context=None):
         ''' WF cancel state
         '''
         data = {'state': 'cancel'}
-        self.move_private_file(cr, uid, ids, data, context=context)        
         return self.write(cr, uid, ids, data, context=context)
 
     # -------------------------------------------------------------------------

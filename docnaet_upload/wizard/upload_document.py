@@ -54,10 +54,8 @@ class UlploadDocumentWizard(orm.TransientModel):
         
         company_pool = self.pool.get('res.company')
         private_folder = company_pool.get_docnaet_folder_path(
-            cr, uid, subfolder='private', context=context)
-
-        #private_folder = os.path.join(private_folder, str(uid)) # TODO keep in private folder
- 
+            cr, uid, subfolder='user', context=context)
+        
         for f in os.listdir(private_folder):
             fullpath = os.path.join(private_folder, f)
             if not os.path.isfile(fullpath):
@@ -118,7 +116,7 @@ class UlploadDocumentWizard(orm.TransientModel):
             'type': 'ir.actions.act_window',
             # TODO create a view for direct writing and a button for open form
             #'res_id': document_id,  # IDs selected
-        }
+            }
 
     def default_read_upload_folder(
             self, cr, uid, ids, context=None):
