@@ -299,6 +299,12 @@ class DocnaetDocument(orm.Model):
     def button_assign_fax_number(self, cr, uid, ids, context=None):
         ''' Assign fax number to document (next counter)
         '''
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        if current_proxy.fax_number:
+            raise osv.except_osv(
+                _('Fax error'), 
+                _('Fax yet present!'),
+                )
         number = self.pool.get('res.company').assign_fax_fax(
             cr, uid, context=context)
         return self.write(cr, uid, ids, {
