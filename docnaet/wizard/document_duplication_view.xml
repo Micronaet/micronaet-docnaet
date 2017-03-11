@@ -10,12 +10,10 @@
             <form string="Document duplication" version="7.0">
                 <header>
                     <button string="Cancel" special="cancel" icon='STOCK_CANCEL'/>
-                    <button string='Create' name='duplication' type='object' icon='STOCK_APPLY'/>
                 </header>
                 <sheet>
-                    <group colspan="4" col='2'>
-                        <field name="mode" />
-                    </group>
+                    <button string='Duplicate document' name='duplication_document' type='object' icon='gtk-justify-fill' />
+                    <button string='Link document' name='linked_document' type='object' icon='gtk-revert-to-saved' />
                 </sheet>
             </form>
         </field>

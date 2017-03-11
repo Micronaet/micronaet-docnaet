@@ -419,6 +419,7 @@
                <field name="deadline_info" invisible="1"/>
                <field name="docnaet_extension" readonly="context.get('embedded',False)"/>
                <field name="program_id" invisible="1"/>
+               <field name="original_id" invisible="1"/>
 
                <!--WORKFLOW BUTTON-->
                <!--draft-->
@@ -440,6 +441,7 @@
                
                <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" />
                <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
+               <button type="object" name="dummy" string="Document linked!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"/>
             </tree>
         </field>
     </record>    
@@ -495,9 +497,10 @@
                        <field name="user_id" />
                        <field name="partner_id" />
 
-                        <field name="program_id" readonly="1"/>
+                       <field name="program_id" readonly="1"/>
                        <field name="docnaet_extension" readonly="1"/>
 
+                       <field name="original_id" />
                        <field name="company_id" />
 
                        <notebook colspan="4">

@@ -201,7 +201,7 @@ class DocnaetDocument(orm.Model):
     '''    
     _name = 'docnaet.document'
     _description = 'Docnaet document'
-    _order = 'date desc,name'
+    _order = 'protocol_id,number desc'
         
     # -------------------------------------------------------------------------
     # Workflow state event: 
@@ -264,6 +264,9 @@ class DocnaetDocument(orm.Model):
     # -------------------------------------------------------------------------
     # Utility:
     # -------------------------------------------------------------------------
+    def dummy(self, cr, uid, ids, context=None):
+        return True
+        
     def call_docnaet_url(self, cr, uid, ids, mode, context=None):    
         ''' Call url in format: docnaet://operation|argument 
             Cases:
@@ -275,13 +278,9 @@ class DocnaetDocument(orm.Model):
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
         if mode == 'open':  # TODO rimettere id e togliere docnae_id
-            final_url = r'docnaet://document|%s.%s' % (
-                doc_proxy.id,
-                #doc_proxy.docnaet_id \
-                #    if not doc_proxy.original_id \
-                #    else doc_proxy.original_id.id,
-                doc_proxy.docnaet_extension or 'doc', # default doc
-                )
+            filename = self.get_document_filename(
+                cr, uid, doc_proxy, mode='filename', context=context)
+            final_url = r'docnaet://document|%s' % filename
         elif mode == 'home':
             final_url = r'docnaet://folder|%s' % uid
 
@@ -315,7 +314,27 @@ class DocnaetDocument(orm.Model):
         ''' Call url function for prepare address and return for open doc:
         '''
         return self.call_docnaet_url(cr, uid, ids, 'open', context=context)
-                       
+
+
+    def get_document_filename(
+            self, cr, uid, document, mode='fullname', context=None):
+        ''' Recursive function for get filename        
+            document: browse obj
+            mode: fullname or filename only
+        '''
+        company_pool = self.pool.get('res.company')
+        if document.original_id:
+            return self.get_document_filename(
+                cr, uid, document.original_id, mode=mode, context=context)
+        
+        # Duplicate also file:
+        store_folder = company_pool.get_docnaet_folder_path(
+            cr, uid, subfolder='store', context=context)
+        filename = '%s.%s' % (document.id, document.docnaet_extension)
+        if mode == 'filename':
+            return filename
+        return os.path.join(store_folder, filename)
+
     _columns = {        
         'name': fields.char('Subject', size=80, required=True),
         'filename': fields.char('File name', size=200),
