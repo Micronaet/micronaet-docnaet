@@ -85,8 +85,11 @@ class UlploadDocumentWizard(orm.TransientModel):
 
         for fullpath, f in private_folder:
         
+            # -----------------------------------------------------------------
+            # Create record for document:
+            # -----------------------------------------------------------------       
             data = {
-                'name': 'document %s' % f,
+                'name': 'Document %s' % f,
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
                 'user_id': wiz_proxy.default_user_id.id or uid, 
                 'partner_id': wiz_proxy.default_partner_id.id or 1, 
@@ -99,10 +102,12 @@ class UlploadDocumentWizard(orm.TransientModel):
                 }
             if wiz_proxy.assign_protocol:
                 data['number'] = protocol_pool.assign_protocol_number(
-                    cr, uid, data['protocol_id'], context=context)
-                
+                    cr, uid, data['protocol_id'], context=context)                
             item_id = document_pool.create(cr, uid, data, context=context)
 
+            # -----------------------------------------------------------------
+            # Import file in store:
+            # -----------------------------------------------------------------
             fullstore = '%s.%s' % (
                 os.path.join(store_folder, str(item_id)),
                 f.split('.')[-1],
@@ -119,8 +124,6 @@ class UlploadDocumentWizard(orm.TransientModel):
                 ('state', '=', 'draft'),
                 ],
             'type': 'ir.actions.act_window',
-            # TODO create a view for direct writing and a button for open form
-            #'res_id': document_id,  # IDs selected
             }
 
     def default_read_upload_folder(
