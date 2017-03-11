@@ -365,16 +365,17 @@
                 <field name="type_id" filter_domain="[('type_id','=',self)]"/>
                 <field name="language_id" filter_domain="[('language_id','=',self)]"/>
                 
-                <filter name="state" string="Draft state" domain="[('state','=','draft')]"/>
-                <filter name="state" string="Confirmed state" domain="[('state','=','confirmed')]"/>
-                <filter name="state" string="Suspended state" domain="[('state','=','suspended')]"/>
-                <filter name="state" string="Timed state" domain="[('state','=','timed')]"/>
-                <filter name="state" string="Cancel state" domain="[('state','=','cancel')]"/>
+                <filter name="state_draft" string="Draft state" domain="[('state','=','draft')]"/>
+                <filter name="state_confirmed" string="Confirmed state" domain="[('state','=','confirmed')]"/>
+                <filter name="state_suspended" string="Suspended state" domain="[('state','=','suspended')]"/>
+                <filter name="state_timed" string="Timed state" domain="[('state','=','timed')]"/>
+                <filter name="state_cancel" string="Cancel state" domain="[('state','=','cancel')]"/>
                 
                 <group expand="0" string="Group By">
                     <filter name="group_date" string="Date" context="{'group_by': 'date'}"/>
                     <filter name="group_deadline" string="Deadline" context="{'group_by': 'deadline'}"/>
                     <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_user" string="User" context="{'group_by': 'user_id'}"/>
                     <filter name="group_protocol" string="Protocol" context="{'group_by': 'protocol_id'}"/>
                     <filter name="group_type" string="Type" context="{'group_by': 'type_id'}"/>
                     <filter name="group_language" string="Language" context="{'group_by': 'language_id'}"/>
@@ -530,7 +531,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_calendar_view"/>
-        <field name="context">{}</field>
+        <field name="context">{'search_default_state_timed': True}</field>
         <field name="domain">[('user_id','=',uid)]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_my_document_tree">

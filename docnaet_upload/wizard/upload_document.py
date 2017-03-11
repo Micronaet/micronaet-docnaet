@@ -87,7 +87,15 @@ class UlploadDocumentWizard(orm.TransientModel):
         
             # -----------------------------------------------------------------
             # Create record for document:
-            # -----------------------------------------------------------------       
+            # -----------------------------------------------------------------  
+            extension = f.split('.')[-1].lower()
+            if len(extension) > 4:
+                raise osv.except_osv(
+                    _('Extension check'), 
+                    _('Extension of file must be <= 4 char!'),
+                    )
+            #if extension in file_type:
+            
             data = {
                 'name': 'Document %s' % f,
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
@@ -99,6 +107,8 @@ class UlploadDocumentWizard(orm.TransientModel):
                 'import_date': datetime.now().strftime(
                     DEFAULT_SERVER_DATETIME_FORMAT),
                 'uploaded': True,
+                'docnaet_extension': extension,
+                #'file_type': 
                 }
             if wiz_proxy.assign_protocol:
                 data['number'] = protocol_pool.assign_protocol_number(
@@ -110,7 +120,7 @@ class UlploadDocumentWizard(orm.TransientModel):
             # -----------------------------------------------------------------
             fullstore = '%s.%s' % (
                 os.path.join(store_folder, str(item_id)),
-                f.split('.')[-1],
+                extension,
                 )
             os.rename(fullpath, fullstore)
 

@@ -1,0 +1,3 @@
+gconftool-2 -t string -s /desktop/gnome/url-handlers/docnaet/command '/home/thebrush/handler/docnaet.sh "%s"'
+gconftool-2 -t bool -s /desktop/gnome/url-handlers/docnaet/needs_terminal false
+gconftool-2 -t bool -s /desktop/gnome/url-handlers/docnaet/enabled true

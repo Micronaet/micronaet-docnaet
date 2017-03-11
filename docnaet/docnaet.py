@@ -112,7 +112,7 @@ class DocnaetProtocol(orm.Model):
         ''' Assign protocol and update number in record
         '''
         protocol_proxy = self.browse(cr, uid, protocol_id, context=context)
-        number = protocol.next
+        number = protocol_proxy.next
         self.write(cr, uid, protocol_id, {
             'next': number + 1,
             }, context=context)
@@ -176,35 +176,6 @@ class DocnaetDocument(orm.Model):
     _name = 'docnaet.document'
     _description = 'Docnaet document'
     _order = 'date desc,name'
-
-    # -------------------------------------------------------------------------
-    # Utility: 
-    # -------------------------------------------------------------------------
-    #def move_private_file(self, cr, uid, ids, data, context=None):
-    #    ''' check if document is in private area, so move in docnaet folder
-    #        and mark private = False
-    #        modify data dict for this operation
-    #    '''
-    #    company_pool = self.pool.get('res.company')
-    #    doc_proxy = self.browse(cr, uid, ids, context=context)[0]
-    #    if doc_proxy.private and not doc_proxy.imported:
-    #        # Get source and destination folder
-    #        private_folder = company_pool.get_docnaet_folder_path(
-    #            cr, uid, subfolder='private', context=context)
-    #        private_folder = os.path.join(
-    #            private_folder, str(doc_proxy.user_id.id))
-    #        store_folder = company_pool.get_docnaet_folder_path(
-    #            cr, uid, subfolder='store', context=context)
-            
-    #        f_private = os.path.join(private_folder, doc_proxy.filename)
-    #        f_store = '%s.%s' % (
-    #            os.path.join(store_folder, str(doc_proxy.id)),
-    #            doc_proxy.docnaet_extension,
-    #            )
-    #        os.rename(f_private, f_store)
-    #        data['private'] = False
-    #        data['imported'] = True
-    #    return
         
     # -------------------------------------------------------------------------
     # Workflow state event: 
@@ -212,6 +183,7 @@ class DocnaetDocument(orm.Model):
     def document_draft(self, cr, uid, ids, context=None):
         ''' WF draft state
         '''
+        assert len(ids) == 1, 'Works only with one record a time'
         self.write(cr, uid, ids, {
             'state': 'draft',
             }, context=context)
@@ -226,7 +198,7 @@ class DocnaetDocument(orm.Model):
         protocol_pool = self.pool.get('docnaet.protocol')
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         if not current_proxy.number:
-            protocol = current_proxy.protocol_id:
+            protocol = current_proxy.protocol_id
             if not protocol:
                 raise osv.except_osv(
                     _('Protocol'), 
@@ -245,12 +217,21 @@ class DocnaetDocument(orm.Model):
     def document_timed(self, cr, uid, ids, context=None):
         ''' WF timed state
         '''
+        assert len(ids) == 1, 'Works only with one record a time'
         data = {'state': 'timed'}
+        
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        if not current_proxy.deadline:
+            raise osv.except_osv(
+                _('Timed document'), 
+                _('For timed document need a deadline!'),
+                )
         return self.write(cr, uid, ids, data, context=context)
 
     def document_cancel(self, cr, uid, ids, context=None):
         ''' WF cancel state
         '''
+        assert len(ids) == 1, 'Works only with one record a time'
         data = {'state': 'cancel'}
         return self.write(cr, uid, ids, data, context=context)
 
@@ -258,24 +239,25 @@ class DocnaetDocument(orm.Model):
     # Utility:
     # -------------------------------------------------------------------------
     def call_docnaet_url(self, cr, uid, ids, mode, context=None):    
-        ''' Call url in format: docnaet://[operation] cases:
-            [open] protocol - id.ext > open document
-            [home] folder > open personal folder (for updload)
+        ''' Call url in format: docnaet://operation|argument 
+            Cases:
+            document|document_id.extension > open document
+            folder|uid > open personal folder (for updload document)
             
             NOTE: maybe expand the services
         '''        
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
         if mode == 'open':  # TODO rimettere id e togliere docnae_id
-            final_url = r"docnaet://[open]%s-%s.%s" % (
-                doc_proxy.protocol_id.docnaet_id,
-                doc_proxy.docnaet_id \
-                    if not doc_proxy.original_id \
-                    else doc_proxy.original_id.id,
+            final_url = r'docnaet://document|%s.%s' % (
+                doc_proxy.id,
+                #doc_proxy.docnaet_id \
+                #    if not doc_proxy.original_id \
+                #    else doc_proxy.original_id.id,
                 doc_proxy.docnaet_extension or 'doc', # default doc
                 )
         elif mode == 'home':
-            final_url = r"docnaet://[home]%s" % 'home_folder' #TODO
+            final_url = r'docnaet://folder|%s' % uid
 
         return {
             'name': 'Docnaet document',
