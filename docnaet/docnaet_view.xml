@@ -519,8 +519,8 @@
                                <field name="note" colspan="4" nolabel="1"/>                               
                            </page>
                            
-                           <page string="Document info">                               
-                           </page>
+                           <!--<page string="Document info">                               
+                           </page>-->
                            
                            <page string="Linked objects">
                                <group colspan="4" col="4" name="master">
