@@ -483,7 +483,7 @@
                <sheet>               
                   <group colspan="4" col="4"> 
                        <button type="object" name="button_call_url_docnaet" string="Open document" class="oe_highlight"/>
-                       <button type="object" name="button_assign_fax_number" string="Assign fax" attrs="{'invisible':[('fax_number','=',True)]}"/>
+                       <!--<button type="object" name="button_assign_fax_number" string="Assign fax" attrs="{'invisible':[('fax_number','=',True)]}"/>-->
                        <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" />
                        <newline />
                        
@@ -492,8 +492,7 @@
                        <field name="protocol_id" />
                        <field name="number" />
 
-                       <field name="fax_number" />
-                       <field name="priority"/>
+                       <!--<field name="fax_number" />-->
 
                        <field name="date" />
                        <field name="deadline" />
@@ -508,6 +507,7 @@
                        <field name="program_id" readonly="1"/>
                        <field name="docnaet_extension" readonly="1"/>
 
+                       <field name="priority"/>
                        <field name="company_id" />
 
                        <notebook colspan="4">
