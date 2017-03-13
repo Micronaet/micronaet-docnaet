@@ -387,6 +387,9 @@
                 <filter name="state_timed" string="Timed state" domain="[('state','=','timed')]"/>
                 <filter name="state_cancel" string="Cancel state" domain="[('state','=','cancel')]"/>
                 
+                <filter name="linked_document" string="Linked document" domain="[('original_id','!=',False)]"/>
+                <filter name="original_document" string="Original document" domain="[('original_id','=',False)]"/>
+                
                 <group expand="0" string="Group By">
                     <filter name="group_date" string="Date" context="{'group_by': 'date'}"/>
                     <filter name="group_deadline" string="Deadline" context="{'group_by': 'deadline'}"/>
