@@ -52,16 +52,21 @@ class document_duplication(orm.TransientModel):
             
         # Pool used:
         document_pool = self.pool.get('docnaet.document')
-
+        protocol_pool = self.pool.get('docnaet.protocol')
+        
+        with_number = context.get('with_number', False)
+        linked_document = context.get('linked_document', False)
+        
         # Record data management:
         original_id = context.get('active_id')
         original_proxy = document_pool.browse(    
             cr, uid, original_id, context=context)
+            
         data = {
             'name': original_proxy.name,             
             'description': original_proxy.description,
             'note': original_proxy.note,            
-            'number': False,
+            #'number': False,
             'fax_number': False,
             'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),
             'deadline': False,
@@ -79,7 +84,16 @@ class document_duplication(orm.TransientModel):
             # XXX remember when add new fields to update this record!
             'original_id': original_id if mode == 'link' else False,
             }
-
+        # Manage protocol number (3 cases):
+        if with_number and original_proxy.protocol_id:
+            data['number'] = protocol_pool.assign_protocol_number(
+                cr, uid, original_proxy.protocol_id.id, context=context)
+        elif linked_document: 
+            data['number'] = original_proxy.number
+            data['fax_number'] = original_proxy.fax_number
+        else:
+            data['number'] = False
+            
         destination_id = document_pool.create(cr, uid, data, context=context)
         destination_proxy = document_pool.browse(    
             cr, uid, destination_id, context=context)
@@ -105,13 +119,29 @@ class document_duplication(orm.TransientModel):
     def duplication_document(self, cr, uid, ids, context=None):
         ''' Duplicate document and file
         '''
+        if context is None:
+            context = {}
+
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        context['with_number'] = current_proxy.with_number
         return self.duplicate_operation(
             cr, uid, ids, mode='document', context=context)
         
     def linked_document(self, cr, uid, ids, context=None):
         ''' Duplicate record but not file
         '''
+        if context is None:
+            context = {}
+
+        context['linked_document'] = True
         return self.duplicate_operation(
             cr, uid, ids, mode='link', context=context)
-        
+    
+    _columns = {
+        'with_number': fields.boolean('With number'),
+        }
+    
+    _defaults = {
+        'with_number': lambda *x: True,
+        }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
