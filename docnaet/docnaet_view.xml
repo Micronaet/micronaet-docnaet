@@ -406,7 +406,9 @@
         <field name="name">Docnaet document</field>
         <field name="model">docnaet.document</field>        
         <field name="arch" type="xml">
-            <tree string="Docnaet document" colors="grey:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
+            <tree string="Docnaet document" colors="grey:original_id!=False;black:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
+               <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}"/>
+               <button type="object" name="button_call_url_docnaet" string="Document linked!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"/>
                <field name="protocol_id" required="1" />
                <field name="number" />
                <field name="date" />
@@ -437,12 +439,12 @@
                <button name="document_suspended_cancel" string="Cancel" type="workflow" states="suspended" icon="gtk-cancel"/>
                <!--timed-->
                <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
-               <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
+               <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>               
+
+               <button name="document_cancel_draft" string="Reactivate" type="workflow" states="cancel" icon="gtk-redo"/>
                <field name="state" />
                
                <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" />
-               <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
-               <button type="object" name="dummy" string="Document linked!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"/>
             </tree>
         </field>
     </record>    
@@ -470,6 +472,8 @@
                    <!--timed-->
                    <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
                    <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
+
+                   <button name="document_cancel_draft" string="Reactivate" type="workflow" states="cancel" icon="gtk-redo"/>
 
                    <field name="state" widget="statusbar" readonly="1" />
                </header>

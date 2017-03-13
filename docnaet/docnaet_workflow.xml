@@ -36,7 +36,7 @@
         </record>
         <record id="act_cancel" model="workflow.activity">
             <field name="wkf_id" ref="wkf_docnaet_document" />
-            <field name="flow_sop">True</field>
+            <!--<field name="flow_sop">True</field>-->
             <field name="name">cancel</field>
             <field name="kind">function</field>
             <field name="action">document_cancel()</field>
@@ -104,6 +104,13 @@
             <field name="act_from" ref="act_timed" />
             <field name="act_to" ref="act_cancel" />
             <field name="signal">document_timed_cancel</field>
+        </record>
+
+          <!--From timed transition: -->        
+        <record id="document_t5a" model="workflow.transition">
+            <field name="act_from" ref="act_cancel" />
+            <field name="act_to" ref="act_draft" />
+            <field name="signal">document_cancel_draft</field>
         </record>
     </data>
 </openerp>
