@@ -106,6 +106,12 @@ class document_duplication(orm.TransientModel):
             destination_file = document_pool.get_document_filename(
                 cr, uid, destination_proxy, mode='fullname', context=context)            
             shutil.copyfile(original_file, destination_file)
+            try:            
+                os.system('chown openerp7:openerp7 %s' % destination_file)
+                os.system('chmod 775 %s' % destination_file)
+            except:
+                _logger.error('Cannot set property of file')
+            
         
         return {
             'view_type': 'form',
