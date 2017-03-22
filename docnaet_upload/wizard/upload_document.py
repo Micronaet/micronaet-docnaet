@@ -126,6 +126,7 @@ class UlploadDocumentWizard(orm.TransientModel):
                 extension,
                 )
             os.rename(fullpath, fullstore)
+            os.system('chown openerp7:openerp7 %s' % fullstore)
             os.system('chmod 775 %s' % fullstore)
 
         return {
