@@ -126,6 +126,7 @@ class UlploadDocumentWizard(orm.TransientModel):
                 extension,
                 )
             os.rename(fullpath, fullstore)
+            os.system('chmod 775 %s' % fullstore)
 
         return {
             'view_type': 'form',

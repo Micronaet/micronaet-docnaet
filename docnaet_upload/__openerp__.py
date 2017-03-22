@@ -18,7 +18,7 @@
 ###############################################################################
 
 {
-    'name': 'Docnaet: Partner integration',
+    'name': 'Docnaet: Partner upload document',
     'version': '0.1',
     'category': 'Document / Partner',
     'description': '''        
