@@ -334,6 +334,7 @@ csv_file = os.path.expanduser(
 lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
 i = - header   
 tot_cols = False
+code_temp = 0
 for line in lines:
     if jump:
         break
@@ -341,6 +342,7 @@ for line in lines:
     i += 1
     if i <= 0:
         continue # jump intestation
+    code_temp += 1
     if not tot_cols: # save for test 
         tot_cols = len(line)
     
@@ -355,14 +357,15 @@ for line in lines:
     item_ids = erp_pool.search([('name', '=', name)])
     data = {
         'name': name,
+        'code': '%02d' % code_temp,
         'docnaet_id': docnaet_id,
         }
     if item_ids:
         openerp_id = item_ids[0]
         erp_pool.write(openerp_id, data) # No update
     else:        
-        opener_id = False # TODO
-        #openerp_id = erp_pool.create(data) # No creation only update: IT vs EN
+        opener_id = False 
+        openerp_id = erp_pool.create(data) # No creation only update: IT vs EN
         print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
         
     country[docnaet_id] = openerp_id
