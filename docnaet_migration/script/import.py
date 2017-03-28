@@ -353,19 +353,23 @@ for line in lines:
     # read fields:    
     docnaet_id = int(line[0])
     name = line[1].strip()
+    code = '%02d' % code_temp
     
     item_ids = erp_pool.search([('name', '=', name)])
     data = {
         'name': name,
-        'code': '%02d' % code_temp,
+        'code': code,
         'docnaet_id': docnaet_id,
         }
     if item_ids:
         openerp_id = item_ids[0]
         erp_pool.write(openerp_id, data) # No update
     else:        
-        opener_id = False 
-        openerp_id = erp_pool.create(data) # No creation only update: IT vs EN
+        try:
+            openerp_id = erp_pool.create(data) # No creation only update: IT vs EN
+        except:
+            _logger.error('Error creating: %s' % code    
+            #continue
         print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
         
     country[docnaet_id] = openerp_id
