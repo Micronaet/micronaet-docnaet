@@ -339,7 +339,7 @@ class DocnaetDocument(orm.Model):
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         
         number = self.pool.get('docnaet.protocol').assign_protocol_number(
-            cr, curreny_proxy.protocol_id.id, context=context)
+            cr, uid, current_proxy.protocol_id.id, context=context)
         return self.write(cr, uid, ids, {
             'number': number,
             }, context=context)
