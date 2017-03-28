@@ -531,10 +531,13 @@ for line in lines:
             openerp_id = erp_pool.create(data).id           
             # Force same ID:
             import pdb; pdb.set_trace()
-            cr.execute(
-                'update docnaet_document set id = %s where id = %s' % (
-                    docnaet_id, opener_id, 
-                ))
+            #cr.execute(
+            #    'update docnaet_document set id = %s where id = %s' % (
+            #        docnaet_id, opener_id, 
+            #    ))
+            erp_pool.write(openerp_id, {
+                'id': docnaet_id,
+                })    
             print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)            
         document[docnaet_id] = openerp_id
     except:
