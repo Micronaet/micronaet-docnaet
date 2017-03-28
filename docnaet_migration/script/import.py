@@ -420,6 +420,7 @@ for line in lines:
         erp_pool.write(openerp_id, data)
     else:        
         opener_id = False # TODO
+        data['from_docnaet'] = True # for mark customer
         openerp_id = erp_pool.create(data).id # No creation only update: IT vs EN
         print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
         

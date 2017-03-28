@@ -72,6 +72,7 @@ class ResPartner(orm.Model):
     
     _columns = {
         'docnaet_id': fields.integer('Docnaet ID migration'), 
+        'from_docnaet': fields.boolean('Import from docnaet'),
         }
     
 class DocnaetLanguage(orm.Model):
