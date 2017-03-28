@@ -527,14 +527,21 @@ for line in lines:
             erp_pool.write(openerp_id, data) # No update
             print "%s. Update %s: %s" % (i, csv_file.split('.')[0], name)    
         else:        
-            data['id'] = openerp_id # preserve ID
+            #data['id'] = openerp_id # preserve ID
             openerp_id = erp_pool.create(data).id           
-            print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
+            # Force same ID:
+            import pdb; pdb.set_trace()
+            cr.execute(
+                'update docnaet_document set id = %s where id = %s' % (
+                    docnaet_id, opener_id, 
+                ))
+            print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)            
         document[docnaet_id] = openerp_id
     except:
         print "%s. Error document import: %s" % (i, data)
         print sys.exc_info()
-            
+
+# alter sequence docnaet_document_id_seq restart with 601;
 
 # -----------------------------------------------------------------------------
 #                                Not migration
