@@ -174,7 +174,7 @@ for line in lines:
         openerp_id = item_ids[0]
         #erp_pool.write(openerp_id, data) # No update
     else:        
-        openerp_id = erp_pool.create(data)
+        openerp_id = erp_pool.create(data).id
         print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
     user[docnaet_id] = openerp_id
 
@@ -222,7 +222,7 @@ for line in lines:
         openerp_id = item_ids[0]
         #erp_pool.write(openerp_id, data) # No update
     else:
-        openerp_id = erp_pool.create(data)            
+        openerp_id = erp_pool.create(data).id      
         print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
     language[docnaet_id] = openerp_id
 
@@ -270,7 +270,7 @@ for line in lines:
             openerp_id = item_ids[0]
             erp_pool.write(openerp_id, data) # TODO No update
         else:        
-            openerp_id = erp_pool.create(data)            
+            openerp_id = erp_pool.create(data).id          
             print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
         protocol[docnaet_id] = openerp_id
     except:
@@ -314,7 +314,7 @@ for line in lines:
         openerp_id = item_ids[0]
         #erp_pool.write(openerp_id, data) # No update
     else:        
-        openerp_id = erp_pool.create(data)            
+        openerp_id = erp_pool.create(data).id      
         print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
     tipology[docnaet_id] = openerp_id
 
@@ -366,7 +366,7 @@ for line in lines:
         erp_pool.write(openerp_id, data) # No update
     else:        
         try:
-            openerp_id = erp_pool.create(data) # No creation only update: IT vs EN
+            openerp_id = erp_pool.create(data).id # No creation only update: IT vs EN
         except:
             _logger.error('Error creating: %s' % code)
             #continue
@@ -415,7 +415,7 @@ for line in lines:
         erp_pool.write(openerp_id, data) # No update
     else:        
         opener_id = False # TODO
-        #openerp_id = erp_pool.create(data) # No creation only update: IT vs EN
+        openerp_id = erp_pool.create(data).id # No creation only update: IT vs EN
         print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
         
     partner[docnaet_id] = openerp_id
@@ -515,7 +515,7 @@ for line in lines:
             erp_pool.write(openerp_id, data) # No update
             print "%s. Updte %s: %s" % (i, csv_file.split('.')[0], name)    
         else:        
-            openerp_id = erp_pool.create(data)            
+            openerp_id = erp_pool.create(data).id           
             print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
         document[docnaet_id] = openerp_id
     except:
