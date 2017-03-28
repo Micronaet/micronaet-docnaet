@@ -334,7 +334,7 @@ csv_file = os.path.expanduser(
 lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
 i = - header   
 tot_cols = False
-code_temp = 0
+code_temp = 0 # TODO run direct first time!!
 for line in lines:
     if jump:
         break
@@ -353,7 +353,7 @@ for line in lines:
     # read fields:    
     docnaet_id = int(line[0])
     name = line[1].strip()
-    code = '%02d' % code_temp
+    code =  hex(code_temp)[2:]
     
     item_ids = erp_pool.search([('name', '=', name)])
     data = {
