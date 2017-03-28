@@ -133,6 +133,7 @@ company_id = 1
 # Utenti
 # ------
 filename = 'Utenti.txt'
+_logger.info('Import %s' % filename)
 user = {}
 erp_pool = erp.ResUsers
 csv_file = os.path.expanduser(
@@ -188,6 +189,7 @@ application = {}
 # Lingue 
 # ------
 filename = 'Lingue.txt'
+_logger.info('Import %s' % filename)
 language = {}
 erp_pool = erp.DocnaetLanguage
 csv_file = os.path.expanduser(
@@ -230,6 +232,7 @@ for line in lines:
 # Protocolli 
 # ----------
 filename = 'Protocolli.txt'
+_logger.info('Import %s' % filename)
 protocol = {}
 erp_pool = erp.DocnaetProtocol
 csv_file = os.path.expanduser(
@@ -280,6 +283,7 @@ for line in lines:
 # Tipologie
 # ---------
 filename = 'Tipologie.txt'
+_logger.info('Import %s' % filename)
 tipology = {}
 erp_pool = erp.DocnaetType
 csv_file = os.path.expanduser(
@@ -324,6 +328,7 @@ for line in lines:
 # -------
 # TODO create a dict for name converter (IT > EN)
 filename = 'Nazioni.txt'
+_logger.info('Import %s' % filename)
 jump = False#True
 country = {}
 erp_pool = erp.ResCountry
@@ -377,6 +382,7 @@ for line in lines:
 # Clienti
 # -------
 filename = 'Clienti.txt'
+_logger.info('Import %s' % filename)
 jump = False
 partner = {}
 erp_pool = erp.ResPartner
@@ -395,6 +401,8 @@ for line in lines:
         continue # jump intestation
     if not tot_cols: # save for test 
         tot_cols = len(line)
+    if i % 100 == 0:
+        _logger.info('Import %s #%s' % (filename, i))
     
     if tot_cols != len(line):
         print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
@@ -430,6 +438,7 @@ for line in lines:
 # ---------
 import pdb; pdb.set_trace()
 filename = 'Documenti.txt'
+_logger.info('Import %s' % filename)
 document = {}
 erp_pool = erp.DocnaetDocument
 csv_file = os.path.expanduser(
