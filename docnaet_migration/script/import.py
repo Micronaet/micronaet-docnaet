@@ -486,15 +486,12 @@ for line in lines:
             continue # TODO use a "Not found" protocol
 
         language_id = language.get(language_code, False) # no warn if error
-
         type_id = tipology.get(type_code, False) # no warn if error
-
         user_id = protocol.get(user_code, 1) # No warning or error (set admin)
-        
+        partner_id = partner.get(partner_code, 1)
         #company_id = company.get(company_code, 1)    
         
         # Create / Update operations:
-        item_ids = erp_pool.search([('name', '=', name)])
         data = {
             'company_id': company_id,
             'user_id': user_id,
@@ -511,15 +508,15 @@ for line in lines:
             'fax_number': fax,
             'docnaet_extension': extension,
             'filename': file_name,
-            'docnaet_id': docnaet_id,
-            
+            'docnaet_id': docnaet_id,           
             # TODO:
-            'partner_id': 1,
+            'partner_id': partner_od,
             }
+        item_ids = erp_pool.search([('docnaet_id', '=', docnaet_id)])
         if item_ids:
             openerp_id = item_ids[0]
             erp_pool.write(openerp_id, data) # No update
-            print "%s. Updte %s: %s" % (i, csv_file.split('.')[0], name)    
+            print "%s. Update %s: %s" % (i, csv_file.split('.')[0], name)    
         else:        
             openerp_id = erp_pool.create(data).id           
             print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
