@@ -122,6 +122,23 @@ class DocnaetProtocol(orm.Model):
     _description = 'Docnaet protocol'
     _order = 'name'
 
+    # -------------------------------------------------------------------------
+    # Button event:
+    # -------------------------------------------------------------------------
+    def set_invisibile(self, cr, uid, ids, context=None):
+        ''' Set as invisible protocol
+        '''
+        return self.write(cr, uid, ids, {
+            'invisible': True,            
+            }, context=context)
+            
+    def set_visibile(self, cr, uid, ids, context=None):
+        ''' Set as invisible protocol
+        '''
+        return self.write(cr, uid, ids, {
+            'invisible': False,
+            }, context=context)
+            
     def assign_protocol_number(self, cr, uid, protocol_id, context=None):
         ''' Assign protocol and update number in record
         '''
@@ -137,7 +154,9 @@ class DocnaetProtocol(orm.Model):
         'next': fields.integer('Next protocol', required=True), 
         'note': fields.text('Note'),
         # TODO default_application_id
+        'invisible': fields.boolean('Not used'),
         }
+
     _defaults = {
         'next': lambda *x: 1,
         }    

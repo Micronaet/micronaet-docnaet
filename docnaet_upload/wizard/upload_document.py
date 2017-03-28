@@ -130,6 +130,7 @@ class UlploadDocumentWizard(orm.TransientModel):
             try:            
                 os.system('chown openerp7:openerp7 %s' % fullstore)
                 os.system('chmod 775 %s' % fullstore)
+                _logger.info('Change permission to new file')
             except:
                 _logger.error('Cannot set property of file')
 

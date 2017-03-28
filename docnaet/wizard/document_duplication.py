@@ -109,6 +109,7 @@ class document_duplication(orm.TransientModel):
             try:            
                 os.system('chown openerp7:openerp7 %s' % destination_file)
                 os.system('chmod 775 %s' % destination_file)
+                _logger.info('Change permission to new file')
             except:
                 _logger.error('Cannot set property of file')
             

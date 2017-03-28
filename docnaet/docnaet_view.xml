@@ -80,12 +80,17 @@
         <field name="model">docnaet.protocol</field>
         <field name="arch" type="xml">
             <form string="Docnaet protocol" version="7.0">
+                <header>
+                    <button name="set_invisibile" string="Set invisible" type="object" attrs="{'invisible': [('invisible','=',True)]}" icon="gtk-no" />
+                    <button name="set_visibile" string="Set visible" type="object" attrs="{'invisible': [('invisible','=',False)]}" icon="gtk-yes"/>
+                </header>
                 <sheet>
                     <group colspan="4" col="4">
                         <field name="name" />
                         <field name="next" />
-                        <separator string="Template" colspan="4"/>
-                        <field name="template_ids" colspan="4" nolabel="1" context="{'embedded':True}"/>
+                        <field name="invisible" invisible="1"/>
+                        <!--<separator string="Template" colspan="4"/>
+                        <field name="template_ids" colspan="4" nolabel="1" context="{'embedded':True}"/>-->
                         <separator string="Note" colspan="4"/>
                         <field name="note" colspan="4" nolabel="1"/>
                     </group>
@@ -99,9 +104,12 @@
         <field name="model">docnaet.protocol</field>
         <field name="arch" type="xml">
             <tree string="Docnaet protocol">
+                <field name="invisible" invisible="1"/>
                 <field name="name" />
                 <field name="next" />
                 <field name="note" />
+                <button name="set_invisibile" string="Set invisible" type="object" attrs="{'invisible': [('invisible','=',True)]}" icon="gtk-no" />
+                <button name="set_visibile" string="Set visible" type="object" attrs="{'invisible': [('invisible','=',False)]}" icon="gtk-yes"/>
             </tree>
         </field>
     </record>
