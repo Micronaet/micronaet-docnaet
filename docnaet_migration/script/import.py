@@ -263,7 +263,7 @@ for line in lines:
             'name': name,
             'note': note,
             'docnaet_id': docnaet_id,
-            'company_id': company_id
+            'company_id': company_id,
             'next': next,
             }
         if item_ids:
