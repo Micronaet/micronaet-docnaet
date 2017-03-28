@@ -402,7 +402,7 @@ for line in lines:
     if not tot_cols: # save for test 
         tot_cols = len(line)
     if i % 100 == 0:
-        print 'Import %s #%s' % (filename, i))
+        print 'Import %s #%s' % (filename, i)
     
     if tot_cols != len(line):
         print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
