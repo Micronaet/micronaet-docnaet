@@ -323,7 +323,6 @@ for line in lines:
 # Nazioni
 # -------
 # TODO create a dict for name converter (IT > EN)
-import pdb; pdb.set_trace()
 filename = 'Nazioni.txt'
 jump = False#True
 country = {}
@@ -377,6 +376,7 @@ for line in lines:
 # -------
 # Clienti
 # -------
+import pdb; pdb.set_trace()
 filename = 'Clienti.txt'
 jump = True
 partner = {}
@@ -404,11 +404,16 @@ for line in lines:
     # read fields:    
     docnaet_id = int(line[0])
     name = line[1].strip()
+    id_nazione = int(line[9].strip() or '0')
+    id_tipo = int(line[10].strip() or '0')
     
     item_ids = erp_pool.search([('name', '=', name)])
     data = {
         'name': name,
         'docnaet_id': docnaet_id,
+        'country_id': country.get(id_nazione, False)
+        'docnaet_category_id': id_tipo, # direct
+        'company_id': company_id,
         }
     if item_ids:
         openerp_id = item_ids[0]
