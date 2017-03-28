@@ -368,7 +368,7 @@ for line in lines:
         try:
             openerp_id = erp_pool.create(data) # No creation only update: IT vs EN
         except:
-            _logger.error('Error creating: %s' % code    
+            _logger.error('Error creating: %s' % code)
             #continue
         print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
         
