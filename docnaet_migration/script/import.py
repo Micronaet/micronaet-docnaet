@@ -155,7 +155,7 @@ for line in lines:
     
     # read fields:    
     docnaet_id = int(line[0])
-    name = line[1].strip()
+    name = line[1].strip().lower()
     password = line[2].strip()
     
     if name == "Administrator":
