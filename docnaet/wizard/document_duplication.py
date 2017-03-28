@@ -67,7 +67,7 @@ class document_duplication(orm.TransientModel):
             'description': original_proxy.description,
             'note': original_proxy.note,            
             #'number': False,
-            'fax_number': False,
+            #'fax_number': False,
             'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),
             'deadline': False,
             'deadline_info': False,
@@ -90,7 +90,7 @@ class document_duplication(orm.TransientModel):
                 cr, uid, original_proxy.protocol_id.id, context=context)
         elif linked_document: 
             data['number'] = original_proxy.number
-            data['fax_number'] = original_proxy.fax_number
+            #data['fax_number'] = original_proxy.fax_number
         else:
             data['number'] = False
             
@@ -111,8 +111,7 @@ class document_duplication(orm.TransientModel):
                 os.system('chmod 775 %s' % destination_file)
                 _logger.info('Change permission to new file')
             except:
-                _logger.error('Cannot set property of file')
-            
+                _logger.error('Cannot set property of file')            
         
         return {
             'view_type': 'form',

@@ -100,17 +100,29 @@ def prepare_date(value):
 # -----------------------------------------------------------------------------
 # Priority (not used in real docnaet)
 priority = {
-    1: 'highest',
-    2: 'high',
-    3: 'normal',
-    4: 'low',
-    5: 'lowest',
+    # Direct:
+    #1: 'highest',
+    #2: 'high',
+    #3: 'normal',
+    #4: 'low',
+    #5: 'lowest',
     }
 
+partner_type = {
+    # direct:
+    #1. client
+    #2. fornitori
+    #3. interna
+    #4. agenti
+    #5. contatti vari
+    #6. concorrenti    
+    }
+    
 # Ditte 
-company = {
-    6: 1, # docnaet, openerp        
-    }    
+#company = {
+#    6: 1, # docnaet, openerp        
+#    }    
+company_id = 6
 
 # Spedito << TODO import current
 
@@ -120,6 +132,7 @@ company = {
 # ------
 # Utenti
 # ------
+import pdb; pdb.set_trace()
 filename = 'Utenti.txt'
 user = {}
 erp_pool = erp.ResUsers
@@ -167,11 +180,12 @@ for line in lines:
 # Applicazioni 
 # ------------
 application = {}    
-
+# TODO create from extension in OpenERP
 
 # ------
 # Lingue 
 # ------
+import pdb; pdb.set_trace()
 filename = 'Lingue.txt'
 language = {}
 erp_pool = erp.DocnaetLanguage
@@ -214,6 +228,7 @@ for line in lines:
 # ----------
 # Protocolli 
 # ----------
+import pdb; pdb.set_trace()
 filename = 'Protocolli.txt'
 protocol = {}
 erp_pool = erp.DocnaetProtocol
@@ -248,6 +263,7 @@ for line in lines:
             'name': name,
             'note': note,
             'docnaet_id': docnaet_id,
+            'company_id': company_id
             'next': next,
             }
         if item_ids:
@@ -263,6 +279,7 @@ for line in lines:
 # ---------
 # Tipologie
 # ---------
+import pdb; pdb.set_trace()
 filename = 'Tipologie.txt'
 tipology = {}
 erp_pool = erp.DocnaetType
@@ -306,6 +323,7 @@ for line in lines:
 # Nazioni
 # -------
 # TODO create a dict for name converter (IT > EN)
+import pdb; pdb.set_trace()
 filename = 'Nazioni.txt'
 jump = True
 country = {}
@@ -398,6 +416,7 @@ for line in lines:
 # ---------
 # Documenti 
 # ---------
+import pdb; pdb.set_trace()
 filename = 'Documenti.txt'
 document = {}
 erp_pool = erp.DocnaetDocument
@@ -437,7 +456,7 @@ for line in lines:
         deadline_reason = prepare_string(line[13])
         suspended = prepare_bool(line[14])
         access = prepare_int(line[15])
-        company_code = prepare_int(line[16])
+        #company_code = prepare_int(line[16])
         number = prepare_int(line[17])
         fax = prepare_int(line[18])
         user_code = prepare_int(line[19])
@@ -459,7 +478,7 @@ for line in lines:
 
         user_id = protocol.get(user_code, 1) # No warning or error (set admin)
         
-        company_id = company.get(company_code, 1)    
+        #company_id = company.get(company_code, 1)    
         
         # Create / Update operations:
         item_ids = erp_pool.search([('name', '=', name)])
