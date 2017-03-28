@@ -161,6 +161,9 @@ for line in lines:
     if name == 'administrator':
         name = 'admin'
 
+    if name == 'edgadro':
+        name = 'edgardo'
+
     item_ids = erp_pool.search([('login', '=', name)])
     data = {
         'login': name,
