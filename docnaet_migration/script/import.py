@@ -158,8 +158,8 @@ for line in lines:
     name = line[1].strip().lower()
     password = line[2].strip()
     
-    if name == "Administrator":
-        name = "admin"
+    if name == 'administrator':
+        name = 'admin'
 
     item_ids = erp_pool.search([('login', '=', name)])
     data = {
