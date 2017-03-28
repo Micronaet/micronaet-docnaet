@@ -105,11 +105,22 @@ class DocnaetLanguage(orm.Model):
 class ResPartnerDocnaet(orm.Model):
     ''' Object res.partner.docnaet
     '''    
-    _inherit = 'res.partner.docnaet'
+    _name = 'res.partner.docnaet'
+    _description = 'Partner category'
                     
     _columns = {        
         'name': fields.char('Docnaet type', size=64, required=True),
         'note': fields.text('Note'),
+        }
+
+class ResPartner(orm.Model):
+    """ Model name: ResPartner
+    """    
+    _inherit = 'res.partner'
+    
+    _columns = {
+        'docnaet_category_id': fields.many2one(
+            'res.partner.docnaet', 'Docnaet category'),
         }
 
 class DocnaetType(orm.Model):
@@ -438,6 +449,22 @@ class DocnaetDocument(orm.Model):
         return self.pool.get('docnaet.document').search(cr, uid, [
             ('partner_id', 'in', ids)], context=context)
 
+    def _refresh_partner_category_change(self, cr, uid, ids, context=None):
+        ''' When change partner in category change in document
+        '''        
+        return self.pool.get('docnaet.document').search(cr, uid, [
+            ('partner_id', 'in', ids)], context=context)
+
+    def _refresh_category_auto_change(self, cr, uid, ids, context=None):
+        ''' When change partner in category change in document
+        '''        
+        return ids
+
+    def _refresh_country_auto_change(self, cr, uid, ids, context=None):
+        ''' When change partner in category change in document
+        '''        
+        return ids
+
     _columns = {        
         'name': fields.char('Subject', size=80, required=True),
         'filename': fields.char('File name', size=200),
@@ -467,7 +494,18 @@ class DocnaetDocument(orm.Model):
             store={
                 'res.partner': (
                     _refresh_partner_country_change, ['country_id'], 10),
-            ),
+                'docnaet.document': (
+                    _refresh_country_auto_change, ['partner_id'], 10),
+                }),
+        'docnaet_category_id': fields.related(
+            'partner_id', 'docnaet_category_id', type='many2one',
+            relation='res.partner.docnaet', string='Partner category',
+            store={
+                'res.partner': (
+                    _refresh_partner_category_change, ['docnaet_category_id'], 10),
+                'docnaet.document': (
+                    _refresh_category_auto_change, ['partner_id'], 10),
+                }),
         'docnaet_extension': fields.char('Ext.', size=10),
         'program_id': fields.many2one(
             'docnaet.protocol.template.program', 'Type of document'),
