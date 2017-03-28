@@ -325,7 +325,7 @@ for line in lines:
 # TODO create a dict for name converter (IT > EN)
 import pdb; pdb.set_trace()
 filename = 'Nazioni.txt'
-jump = True
+jump = False#True
 country = {}
 erp_pool = erp.ResCountry
 csv_file = os.path.expanduser(
