@@ -508,8 +508,9 @@ for line in lines:
             'docnaet_extension': extension,
             'filename': file_name,
             'docnaet_id': docnaet_id,           
-            # TODO:
-            'partner_id': partner_od,
+            'partner_id': partner_id,
+            
+            # TODO linked document!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             }
         item_ids = erp_pool.search([('docnaet_id', '=', docnaet_id)])
         if item_ids:
