@@ -411,13 +411,13 @@ for line in lines:
     data = {
         'name': name,
         'docnaet_id': docnaet_id,
-        'country_id': country.get(id_nazione, False)
+        'country_id': country.get(id_nazione, False),
         'docnaet_category_id': id_tipo, # direct
         'company_id': company_id,
         }
     if item_ids:
         openerp_id = item_ids[0]
-        erp_pool.write(openerp_id, data) # No update
+        erp_pool.write(openerp_id, data)
     else:        
         opener_id = False # TODO
         openerp_id = erp_pool.create(data).id # No creation only update: IT vs EN
