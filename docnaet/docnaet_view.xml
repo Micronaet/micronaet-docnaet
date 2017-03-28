@@ -206,6 +206,40 @@
         <field name="view_id" ref="view_docnaet_language_tree"/>
     </record>
     
+    <!--res.partner.docnaet--> 
+    <record model="ir.ui.view" id="view_res_partner_docnaet_form">
+        <field name="name">Docnaet partner category</field>
+        <field name="model">res.partner.docnaet</field>
+        <field name="arch" type="xml">
+            <form string="Docnaet partner category" version="7.0">
+                <sheet>
+                    <group colspan="4" col="4">
+                        <field name="name" colspan="4"/>
+                        <separator string="Note" colspan="4"/>
+                        <field name="note" colspan="4" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_docnaet_partner_tree">
+        <field name="name">Docnaet partner category</field>
+        <field name="model">res.partner.docnaet</field>
+        <field name="arch" type="xml">
+            <tree string="Docnaet partner category">
+                <field name="name" />
+                <field name="note" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_res_partner_docnaet">
+        <field name="name">Partner docnaet category</field>
+        <field name="res_model">res.partner.docnaet</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_docnaet_partner_tree"/>
+    </record>
+
     <!--res.users--> 
     <record model="ir.ui.view" id="res_users_form_docnaet_view">
         <field name="name">User Docnaet</field>
@@ -399,7 +433,6 @@
                 
                 <filter name="state_draft" string="Draft state" domain="[('state','=','draft')]"/>
                 <filter name="state_confirmed" string="Confirmed state" domain="[('state','=','confirmed')]"/>
-                <filter name="state_suspended" string="Suspended state" domain="[('state','=','suspended')]"/>
                 <filter name="state_timed" string="Timed state" domain="[('state','=','timed')]"/>
                 <filter name="state_cancel" string="Cancel state" domain="[('state','=','cancel')]"/>
                 
@@ -425,13 +458,14 @@
         <field name="name">Docnaet document</field>
         <field name="model">docnaet.document</field>        
         <field name="arch" type="xml">
-            <tree string="Docnaet document" colors="grey:original_id!=False;black:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
+            <tree string="Docnaet document" colors="grey:original_id!=False;black:state=='draft';orange:state=='timed';green:state=='confirmed';red:state=='cancel'">
                <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}"/>
                <button type="object" name="button_call_url_docnaet" string="Document linked!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"/>
                <field name="protocol_id" required="1" />
                <field name="number" />
                <field name="date" />
                <field name="name" />
+               <field name="description" />
                <field name="partner_id" />
                <field name="user_id" readonly="context.get('embedded',False)"/>
                <field name="type_id" />
@@ -446,16 +480,11 @@
                <!--WORKFLOW BUTTON-->
                <!--draft-->
                <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply"/>
-               <button name="document_draft_suspended" string="Suspended" type="workflow" states="draft" icon="terp-calendar"/>
                <button name="document_draft_timed" string="Timed" type="workflow" states="draft" icon="terp-go-today"/>
-               <button name="document_draft_cancel" string="Cancel" type="workflow" states="draft" icon="gtk-cancel"/>
+               <!--<button name="document_draft_cancel" string="Cancel" type="workflow" states="draft" icon="gtk-cancel"/>-->
                <!--confirmed-->
-               <button name="document_confirmed_suspended" string="Suspended" type="workflow" states="confirmed" icon="terp-calendar"/>
                <button name="document_confirmed_timed" string="Timed" type="workflow" states="confirmed" icon="terp-go-today"/>
                <button name="document_confirmed_cancel" string="Cancel" type="workflow" states="confirmed" icon="gtk-cancel"/>
-               <!--suspended-->
-               <button name="document_suspended_confirmed" string="Confirmed" type="workflow" states="suspended" icon="gtk-apply"/>
-               <button name="document_suspended_cancel" string="Cancel" type="workflow" states="suspended" icon="gtk-cancel"/>
                <!--timed-->
                <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
                <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>               
@@ -475,18 +504,12 @@
                <header> 
                    <!--draft-->
                    <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply"/>
-                   <button name="document_draft_suspended" string="Suspended" type="workflow" states="draft" icon="terp-calendar"/>
                    <button name="document_draft_timed" string="Timed" type="workflow" states="draft" icon="terp-go-today"/>
-                   <button name="document_draft_cancel" string="Cancel" type="workflow" states="draft" icon="gtk-cancel"/>
+                   <!--<button name="document_draft_cancel" string="Cancel" type="workflow" states="draft" icon="gtk-cancel"/>-->
 
                    <!--confirmed-->
-                   <button name="document_confirmed_suspended" string="Suspended" type="workflow" states="confirmed" icon="terp-calendar"/>
                    <button name="document_confirmed_timed" string="Timed" type="workflow" states="confirmed" icon="terp-go-today"/>
                    <button name="document_confirmed_cancel" string="Cancel" type="workflow" states="confirmed" icon="gtk-cancel"/>
-
-                   <!--suspended-->
-                   <button name="document_suspended_confirmed" string="Confirmed" type="workflow" states="suspended" icon="gtk-apply"/>
-                   <button name="document_suspended_cancel" string="Cancel" type="workflow" states="suspended" icon="gtk-cancel"/>
 
                    <!--timed-->
                    <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
@@ -610,14 +633,17 @@
 
         <menuitem parent="docnaet_root" id="docnaet_document" name="Document" sequence="20" />
             <menuitem parent="docnaet_document" id="docnaet_document_my_document" name="My document" sequence="10" action="action_docnaet_my_document_tree"/>
+                <menuitem parent="docnaet_document_my_document" id="docnaet_document_deadline" name="Deadline" sequence="30" action="action_docnaet_deadline_document_tree" />            
+
             <menuitem parent="docnaet_document" id="docnaet_document_document" name="Document" sequence="20" action="action_docnaet_document_tree" />            
-            <menuitem parent="docnaet_document" id="docnaet_document_deadline" name="Deadline" sequence="30" action="action_docnaet_deadline_document_tree" />            
 
         <menuitem parent="docnaet_root" id="docnaet_administration" name="Administration" sequence="90" groups="group_docnaet_admin"/>
             <menuitem parent="docnaet_administration" id="docnaet_administration_company" string="Company" sequence="1" action="action_docnaet_company_form" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_user" string="User" sequence="5" action="action_docnaet_users_form" />
-            <menuitem parent="docnaet_administration" id="docnaet_administration_country" string="Country" sequence="7" action="action_docnaet_country_form" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_partner" string="Partner" sequence="1" action="action_docnaet_partner_form" />
+                <menuitem parent="docnaet_administration_partner" id="docnaet_administration_country" string="Country" sequence="10" action="action_docnaet_country_form" />
+                <menuitem parent="docnaet_administration_partner" id="docnaet_administration_partner_docnaet" string="Category" sequence="20" action="action_res_partner_docnaet" />
+            
             <menuitem parent="docnaet_administration" id="docnaet_administration_protocol" name="Protocol" sequence="10" action="action_docnaet_protocol"/>
             <menuitem parent="docnaet_administration" id="docnaet_administration_program" name="Program" sequence="15" action="action_docnaet_protocol_template_program"/>            
             <menuitem parent="docnaet_administration" id="docnaet_administration_type" name="Tipology" sequence="20" action="action_docnaet_type" />

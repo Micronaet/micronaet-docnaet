@@ -5,4 +5,5 @@
 "access_docnaet_type_user","docnaet.type","model_docnaet_type","base.group_user",1,1,1,1
 "access_docnaet_language_user","docnaet.language","model_docnaet_language","base.group_user",1,1,1,1
 "access_docnaet_document_user","docnaet.document","model_docnaet_document","base.group_user",1,1,1,1
+"access_res_partner_docnaet_user","res.partner.docnaet","model_res_partner_docnaet","base.group_user",1,1,1,1
 

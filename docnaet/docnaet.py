@@ -102,6 +102,16 @@ class DocnaetLanguage(orm.Model):
         'note': fields.text('Note'),
         }
 
+class ResPartnerDocnaet(orm.Model):
+    ''' Object res.partner.docnaet
+    '''    
+    _inherit = 'res.partner.docnaet'
+                    
+    _columns = {        
+        'name': fields.char('Docnaet type', size=64, required=True),
+        'note': fields.text('Note'),
+        }
+
 class DocnaetType(orm.Model):
     ''' Object docnaet.type
     '''    
@@ -239,7 +249,45 @@ class DocnaetDocument(orm.Model):
     _name = 'docnaet.document'
     _description = 'Docnaet document'
     _order = 'protocol_id,number desc'
+
+    # -------------------------------------------------------------------------        
+    # Override ORM
+    # -------------------------------------------------------------------------
+    '''def search(self, cr, user, args, offset=0, limit=None, order=None, 
+            context=None, count=False):
+        """
+        Override search ORM method splitting name if there's * char in it, es.:
+        searching: "name1*name2" = search name ilike name1 and name ilike name2 
+    
+        @param cr: cursor to database
+        @param user: id of current user
+        @param args: list of conditions to be applied in search opertion
+        @param offset: default from first record, you can start from n records
+        @param limit: # of records to be comes in answer from search opertion
+        @param order: ordering on any field(s)
+        @param context: context arguments, like lang, time zone
+        @param count: 
+        @return: a list of integers based on search domain
+        """
+        split_element = "*" # TODO parametrize for set up in a view!
         
+        new_args = []
+        for search_item in args:
+            if len(search_item) == 3 and search_item[0] == 'name':
+                multi_search = search_item[2].split(split_element)
+                if multi_search > 1:
+                    total_split = len(multi_search)
+                    for i in range(0, total_split):
+                        if i != total_split - 1:
+                            new_args.append("&")
+                        new_args.append(('name', 'ilike', multi_search[i]))                    
+                else:
+                    new_args.append(search_item)
+            else:
+                new_args.append(search_item)
+        return super(product_product_override_search, self).search(
+            cr, user, new_args, offset, limit, order, context, count)'''
+    
     # -------------------------------------------------------------------------
     # Workflow state event: 
     # -------------------------------------------------------------------------
@@ -384,6 +432,12 @@ class DocnaetDocument(orm.Model):
             return filename
         return os.path.join(store_folder, filename)
 
+    def _refresh_partner_country_change(self, cr, uid, ids, context=None):
+        ''' When change partner in country change in document
+        '''        
+        return self.pool.get('docnaet.document').search(cr, uid, [
+            ('partner_id', 'in', ids)], context=context)
+
     _columns = {        
         'name': fields.char('Subject', size=80, required=True),
         'filename': fields.char('File name', size=200),
@@ -407,6 +461,13 @@ class DocnaetDocument(orm.Model):
         'company_id': fields.many2one('res.company', 'Company'),
         'user_id': fields.many2one('res.users', 'User', required=True),
         'partner_id': fields.many2one('res.partner', 'Partner', required=True),
+        'country_id': fields.related(
+            'partner_id', 'country_id', type='many2one', 
+            relation='res.country', string='Country',
+            store={
+                'res.partner': (
+                    _refresh_partner_country_change, ['country_id'], 10),
+            ),
         'docnaet_extension': fields.char('Ext.', size=10),
         'program_id': fields.many2one(
             'docnaet.protocol.template.program', 'Type of document'),
