@@ -319,6 +319,7 @@ for line in lines:
         print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
     tipology[docnaet_id] = openerp_id
 
+
 # -------
 # Nazioni
 # -------
