@@ -132,7 +132,6 @@ company_id = 6
 # ------
 # Utenti
 # ------
-import pdb; pdb.set_trace()
 filename = 'Utenti.txt'
 user = {}
 erp_pool = erp.ResUsers
@@ -188,7 +187,6 @@ application = {}
 # ------
 # Lingue 
 # ------
-import pdb; pdb.set_trace()
 filename = 'Lingue.txt'
 language = {}
 erp_pool = erp.DocnaetLanguage
@@ -231,7 +229,6 @@ for line in lines:
 # ----------
 # Protocolli 
 # ----------
-import pdb; pdb.set_trace()
 filename = 'Protocolli.txt'
 protocol = {}
 erp_pool = erp.DocnaetProtocol
@@ -282,7 +279,6 @@ for line in lines:
 # ---------
 # Tipologie
 # ---------
-import pdb; pdb.set_trace()
 filename = 'Tipologie.txt'
 tipology = {}
 erp_pool = erp.DocnaetType
