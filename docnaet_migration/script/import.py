@@ -122,7 +122,7 @@ partner_type = {
 #company = {
 #    6: 1, # docnaet, openerp        
 #    }    
-company_id = 6
+company_id = 1
 
 # Spedito << TODO import current
 
