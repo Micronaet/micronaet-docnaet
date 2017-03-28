@@ -383,7 +383,7 @@ for line in lines:
 # -------
 filename = 'Clienti.txt'
 print 'Import %s' % filename
-jump = False
+jump = True
 partner = {}
 erp_pool = erp.ResPartner
 csv_file = os.path.expanduser(
