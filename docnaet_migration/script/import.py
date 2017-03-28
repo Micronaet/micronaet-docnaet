@@ -378,7 +378,7 @@ for line in lines:
 # -------
 import pdb; pdb.set_trace()
 filename = 'Clienti.txt'
-jump = True
+jump = False
 partner = {}
 erp_pool = erp.ResPartner
 csv_file = os.path.expanduser(
