@@ -376,7 +376,6 @@ for line in lines:
 # -------
 # Clienti
 # -------
-import pdb; pdb.set_trace()
 filename = 'Clienti.txt'
 jump = False
 partner = {}
@@ -492,7 +491,7 @@ for line in lines:
         #company_id = company.get(company_code, 1)    
         
         # Create / Update operations:
-        data = {
+        data = {        
             'company_id': company_id,
             'user_id': user_id,
             'protocol_id': protocol_id,
@@ -518,6 +517,7 @@ for line in lines:
             erp_pool.write(openerp_id, data) # No update
             print "%s. Update %s: %s" % (i, csv_file.split('.')[0], name)    
         else:        
+            data['id'] = openerp_id # preserve ID
             openerp_id = erp_pool.create(data).id           
             print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
         document[docnaet_id] = openerp_id
