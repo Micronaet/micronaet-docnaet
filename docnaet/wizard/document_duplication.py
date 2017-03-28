@@ -54,7 +54,7 @@ class document_duplication(orm.TransientModel):
         document_pool = self.pool.get('docnaet.document')
         protocol_pool = self.pool.get('docnaet.protocol')
         
-        with_number = context.get('with_number', False)
+        #with_number = context.get('with_number', False)
         linked_document = context.get('linked_document', False)
         
         # Record data management:
@@ -85,7 +85,7 @@ class document_duplication(orm.TransientModel):
             'original_id': original_id if mode == 'link' else False,
             }
         # Manage protocol number (3 cases):
-        if with_number and original_proxy.protocol_id:
+        if original_proxy.protocol_id: # remove with_number
             data['number'] = protocol_pool.assign_protocol_number(
                 cr, uid, original_proxy.protocol_id.id, context=context)
         elif linked_document: 
@@ -130,7 +130,7 @@ class document_duplication(orm.TransientModel):
             context = {}
 
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
-        context['with_number'] = current_proxy.with_number
+        #context['with_number'] = current_proxy.with_number
         return self.duplicate_operation(
             cr, uid, ids, mode='document', context=context)
         
@@ -145,10 +145,11 @@ class document_duplication(orm.TransientModel):
             cr, uid, ids, mode='link', context=context)
     
     _columns = {
-        'with_number': fields.boolean('With number'),
+        # To remove
+        #'with_number': fields.boolean('With number'),
         }
     
     _defaults = {
-        'with_number': lambda *x: True,
+        #'with_number': lambda *x: False,
         }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

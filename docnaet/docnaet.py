@@ -109,9 +109,26 @@ class DocnaetType(orm.Model):
     _description = 'Docnaet type'
     _order = 'name'
     
+    # -------------------------------------------------------------------------
+    # Button event:
+    # -------------------------------------------------------------------------
+    def set_invisibile(self, cr, uid, ids, context=None):
+        ''' Set as invisible protocol
+        '''
+        return self.write(cr, uid, ids, {
+            'invisible': True,            
+            }, context=context)
+            
+    def set_visibile(self, cr, uid, ids, context=None):
+        ''' Set as invisible protocol
+        '''
+        return self.write(cr, uid, ids, {
+            'invisible': False,
+            }, context=context)
 
     _columns = {        
         'name': fields.char('Type', size=64, required=True),
+        'invisible': fields.boolean('Not used'),
         'note': fields.text('Note'),
         }
 
@@ -142,6 +159,7 @@ class DocnaetProtocol(orm.Model):
     def assign_protocol_number(self, cr, uid, protocol_id, context=None):
         ''' Assign protocol and update number in record
         '''
+                
         protocol_proxy = self.browse(cr, uid, protocol_id, context=context)
         number = protocol_proxy.next
         self.write(cr, uid, protocol_id, {
@@ -314,6 +332,18 @@ class DocnaetDocument(orm.Model):
     # -------------------------------------------------------------------------
     # Button event:
     # -------------------------------------------------------------------------
+    def assign_protocol_number(self, cr, uid, ids, context=None):
+        ''' Reassign protocol number (enabled only if protocol and number
+            is present (in view)
+        '''
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        
+        number = self.pool.get('docnaet.protocol').assign_protocol_number(
+            cr, curreny_proxy.protocol_id.id, context=context)
+        return self.write(cr, uid, ids, {
+            'number': number,
+            }, context=context)
+        
     def button_assign_fax_number(self, cr, uid, ids, context=None):
         ''' Assign fax number to document (next counter)
         '''
@@ -369,10 +399,11 @@ class DocnaetDocument(orm.Model):
 
         # OpenERP many2one 
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol', 
-            #required=True
+            domain=[('invisible', '=', False)], #required=True
             ),
         'language_id': fields.many2one('docnaet.language', 'Language'),
-        'type_id': fields.many2one('docnaet.type', 'Type'),
+        'type_id': fields.many2one('docnaet.type', 'Type', 
+            domain=[('invisible', '=', False)]),
         'company_id': fields.many2one('res.company', 'Company'),
         'user_id': fields.many2one('res.users', 'User', required=True),
         'partner_id': fields.many2one('res.partner', 'Partner', required=True),

@@ -103,7 +103,7 @@
         <field name="name">Docnaet protocol</field>
         <field name="model">docnaet.protocol</field>
         <field name="arch" type="xml">
-            <tree string="Docnaet protocol">
+            <tree string="Docnaet protocol" colors="grey:invisible==True">
                 <field name="invisible" invisible="1"/>
                 <field name="name" />
                 <field name="next" />
@@ -128,11 +128,16 @@
         <field name="model">docnaet.type</field>
         <field name="arch" type="xml">
             <form string="Docnaet type" version="7.0">
+                <header>
+                    <button name="set_invisibile" string="Set invisible" type="object" attrs="{'invisible': [('invisible','=',True)]}" icon="gtk-no" />
+                    <button name="set_visibile" string="Set visible" type="object" attrs="{'invisible': [('invisible','=',False)]}" icon="gtk-yes"/>                
+                </header>
                 <sheet>
                     <group colspan="4" col="4">
                         <field name="name" colspan="4"/>
                         <separator string="Note" colspan="4"/>
                         <field name="note" colspan="4" nolabel="1"/>
+                        <field name="invisible" invisible="1" />
                     </group>
                 </sheet>
             </form>
@@ -143,9 +148,12 @@
         <field name="name">Docnaet type</field>
         <field name="model">docnaet.type</field>
         <field name="arch" type="xml">
-            <tree string="Docnaet type">
+            <tree string="Docnaet type" colors="grey:invisible==True">
+                <field name="invisible" invisible="1" />
                 <field name="name" />
                 <field name="note" />
+                <button name="set_invisibile" string="Set invisible" type="object" attrs="{'invisible': [('invisible','=',True)]}" icon="gtk-no" />
+                <button name="set_visibile" string="Set visible" type="object" attrs="{'invisible': [('invisible','=',False)]}" icon="gtk-yes"/>                
             </tree>
         </field>
     </record>    
@@ -489,55 +497,62 @@
                    <field name="state" widget="statusbar" readonly="1" />
                </header>
                <sheet>               
-                  <group colspan="4" col="4"> 
+                  <group colspan="4" col="5"> 
                        <button type="object" name="button_call_url_docnaet" string="Open document" class="oe_highlight"/>
                        <!--<button type="object" name="button_assign_fax_number" string="Assign fax" attrs="{'invisible':[('fax_number','=',True)]}"/>-->
                        <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" />
                        <newline />
                        
-                       <field name="name" colspan="4"/>
+                       <field name="name" colspan="5"/>
 
                        <field name="protocol_id" />
                        <field name="number" />
+                       <button name="assign_protocol_number" string="Reassign" type="object" attrs="{'invisible': ['|',('protocol_id','=',False),('number','=',False)]}" colspan="1" icon="gtk-refresh"/>
 
-                       <!--<field name="fax_number" />-->
+
+                       <field name="partner_id" />
+                       <field name="user_id" />
+                       <newline/>
 
                        <field name="date" />
                        <field name="deadline" />
                        <!--<field name="deadline_info" />-->
+                       <!--<field name="fax_number" />-->
+                       <newline/>
 
                        <field name="type_id" />
                        <field name="language_id" />
+                       <newline/>
 
-                       <field name="user_id" />
-                       <field name="partner_id" />
 
                        <field name="program_id" readonly="1"/>
                        <field name="docnaet_extension" readonly="1"/>
+                       <newline/>
 
                        <field name="priority"/>
                        <field name="company_id" />
+                       <newline/>
 
-                       <notebook colspan="4">
+                       <notebook colspan="5">
                            <page string="Extra info">
-                               <separator string="Description" colspan="4"/>
-                               <field name="description" colspan="4" nolabel="1"/>
+                               <separator string="Description" colspan="5"/>
+                               <field name="description" colspan="5" nolabel="1"/>
 
-                               <separator string="Note" colspan="4"/>
-                               <field name="note" colspan="4" nolabel="1"/>                               
+                               <separator string="Note" colspan="5"/>
+                               <field name="note" colspan="5" nolabel="1"/>                               
                            </page>
                            
                            <!--<page string="Document info">                               
                            </page>-->
                            
                            <page string="Linked objects">
-                               <group colspan="4" col="4" name="master">
+                               <group colspan="5" col="5" name="master">
                                    <separator string="Link OpenERP document" colspan="4"/>
                                </group>
                            </page>
                            
                            <page string="Linked document">
-                               <group colspan="4" col="2">
+                               <group colspan="5" col="2">
                                    <field name="original_id" readonly="1" />
                                </group>    
                                    
