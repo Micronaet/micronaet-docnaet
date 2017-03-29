@@ -364,7 +364,7 @@ class DocnaetDocument(orm.Model):
         return True
         
     def call_docnaet_url(self, cr, uid, ids, mode, context=None):    
-        ''' Call url in format: docnaet://operation|argument 
+        ''' Call url in format: openerp://operation|argument 
             Cases:
             document|document_id.extension > open document
             folder|uid > open personal folder (for updload document)
@@ -376,9 +376,9 @@ class DocnaetDocument(orm.Model):
         if mode == 'open':  # TODO rimettere id e togliere docnae_id
             filename = self.get_document_filename(
                 cr, uid, doc_proxy, mode='filename', context=context)
-            final_url = r'docnaet://document|%s' % filename
+            final_url = r'openerp://document|%s' % filename
         elif mode == 'home':
-            final_url = r'docnaet://folder|%s' % uid
+            final_url = r'openerp://folder|%s' % uid
 
         return {
             'name': 'Docnaet document',
