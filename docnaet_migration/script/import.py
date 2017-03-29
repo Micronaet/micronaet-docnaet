@@ -507,7 +507,7 @@ for line in lines:
             'language_id': language_id,
             'type_id': type_id,
             'name': name,
-            'date': date,
+            'date': date or '1900/01/01',
             #'deadline': deadline, # not implemented in docnaet
             #'deadline_info': deadline_reason, # not implemented in docnaet
             'description': description,
