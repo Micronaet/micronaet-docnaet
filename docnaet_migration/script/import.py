@@ -495,7 +495,7 @@ for line in lines:
 
         language_id = language.get(language_code, False) # no warn if error
         type_id = tipology.get(type_code, False) # no warn if error
-        user_id = protocol.get(user_code, 1) # No warning or error (set admin)
+        user_id = user.get(user_code, 1) # No warning or error (set admin)
         partner_id = partner.get(partner_code, 1)
         #company_id = company.get(company_code, 1)    
         
