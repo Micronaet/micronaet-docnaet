@@ -330,7 +330,7 @@ for line in lines:
 # TODO create a dict for name converter (IT > EN)
 filename = 'Nazioni.txt'
 print 'Import %s' % filename
-jump = False#True
+jump = False
 country = {}
 erp_pool = erp.ResCountry
 csv_file = os.path.expanduser(
@@ -531,9 +531,9 @@ for line in lines:
             openerp_id = erp_pool.create(data).id           
             # Force same ID:
             erp_pool.force_id_from_docnaet(openerp_id, docnaet_id)
-            erp_pool.write(openerp_id, {
-                'id': docnaet_id,
-                })    
+            #erp_pool.write(openerp_id, {
+            #    'id': docnaet_id,
+            #    })    
             print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)            
         document[docnaet_id] = openerp_id # XXX change if works!!!!!!!!!!!!!!!!
     except:
