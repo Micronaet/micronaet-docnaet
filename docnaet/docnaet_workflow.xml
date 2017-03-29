@@ -3,7 +3,7 @@
     <data>
         <!--Create Workflow-->
         <record id="wkf_docnaet_document" model="workflow">
-            <field name="name">wkf</field>
+            <field name="name">docnaet.document.workflow</field>
             <field name="osv">docnaet.document</field>
             <field name="on_create">True</field>
         </record>
