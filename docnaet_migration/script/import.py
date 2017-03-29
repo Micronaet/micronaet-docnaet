@@ -540,15 +540,13 @@ for line in lines:
         print "%s. Error document import: %s" % (i, data)
         print sys.exc_info()
 
-# alter sequence docnaet_document_id_seq restart with 601;
+# alter sequence docnaet_document_id_seq restart with 1;
 
 # -----------------------------------------------------------------------------
 #                                Not migration
 # -----------------------------------------------------------------------------
-# NOTE: not imported (see res.partner category)
-# Categorie 
-# Tipi 
+# NOTE: 
+# not imported (see res.partner category)
 # Supporti 
 # Prodotti
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
