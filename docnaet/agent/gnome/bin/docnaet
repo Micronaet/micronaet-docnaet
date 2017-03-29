@@ -2,22 +2,36 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+import ConfigParser
 
-# ----------------------------------------------------------------------------
-# Parameters:
-# ----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+#                                Parameters
+# -----------------------------------------------------------------------------
+# Config file:
+cfg_file = 'openerp.cfg'
+config = ConfigParser.ConfigParser()
+config.read([cfg_file])
+
 # Folder:
-protocol = 'docnaet://'
-store_path = '/home/thebrush/etl/docnaet/store'
-private_path = '/home/thebrush/etl/docnaet/private'
+store_path = config.get('folder', 'store_path')
+private_path = config.get('folder', 'private_path')
+#store_path = '/home/thebrush/etl/docnaet/store'
+#private_path = '/home/thebrush/etl/docnaet/private'
+
+# Command
+protocol = config.get('command', 'protocol')
+separator = config.get('command', 'separator')
+folder_command = config.get('command', 'folder_command')
+openfile_command = config.get('command', 'openfile_command')
+#protocol = 'docnaet://'
+#separator = '|'
+#folder_command = 'nautilus'
+#openfile_command = 'xdg-open %s'
 
 # Log:
-separator = '|'
-log_file = '/tmp/docnaet.log'
+log_file = config.get('log', 'file')
+#log_file = '/tmp/docnaet.log'
 
-# Mask:
-folder_command = 'nautilus'
-openfile_command = 'xdg-open %s'
 
 log_f = open(log_file, 'a')
 
