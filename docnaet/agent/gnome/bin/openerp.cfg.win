@@ -1,9 +1,9 @@
 [folder]
-store_path: o:\store
-private_path: o:\private
+store_path: x:\store
+private_path: x:\private
 
 [command]
-protocol: docnaet://
+protocol: openerp://
 separator: |
 folder_command: explorer
 openfile_command: start %s
