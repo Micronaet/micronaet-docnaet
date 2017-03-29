@@ -384,7 +384,7 @@ for line in lines:
 # -------
 filename = 'Clienti.txt'
 print 'Import %s' % filename
-jump = True
+jump = False
 partner = {}
 erp_pool = erp.ResPartner
 csv_file = os.path.expanduser(
@@ -437,7 +437,6 @@ for line in lines:
 # ---------
 # Documenti 
 # ---------
-import pdb; pdb.set_trace()
 filename = 'Documenti.txt'
 print 'Import %s' % filename
 document = {}
