@@ -6,13 +6,19 @@ import sys
 # ----------------------------------------------------------------------------
 # Parameters:
 # ----------------------------------------------------------------------------
+# Folder:
 protocol = 'docnaet://'
 store_path = '/home/thebrush/etl/docnaet/store'
 private_path = '/home/thebrush/etl/docnaet/private'
-folder_command = 'nautilus'
 
+# Log:
 separator = '|'
 log_file = '/tmp/docnaet.log'
+
+# Mask:
+folder_command = 'nautilus'
+openfile_command = 'xdg-open %s'
+
 log_f = open(log_file, 'a')
 
 # ----------------------------------------------------------------------------
@@ -36,7 +42,7 @@ if operation == 'document':
     filename = os.path.join(store_path, argument)
     log_f.write('Open doc: %s\n' % filename)
     log_f.close()
-    os.system('xdg-open %s' % filename)
+    os.system(openfile_command % filename)
 
 # ---------------
 # 2. Open folder:

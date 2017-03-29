@@ -55,6 +55,7 @@ erp = erppeek.Client(
 def prepare_string(value):
     ''' Return formatted string
     '''
+    value = value or ''
     try:
         return value.strip()
     except:
@@ -483,7 +484,7 @@ for line in lines:
         user_code = prepare_int(line[19])
         date_create = prepare_date(line[20])
         #control = line[21].strip()
-        extension = prepare_string(line[22])
+        extension = prepare_string(line[22]).lower()
         product_code = prepare_int(line[23])
         ## NO old_id = line[24].strip()
         
