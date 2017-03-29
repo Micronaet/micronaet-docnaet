@@ -224,7 +224,7 @@ msgstr "Lingua docnaet"
 #. module: docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_document_my_document
 msgid "My document"
-msgstr "Mio documento"
+msgstr "Miei documenti"
 
 #. module: docnaet
 #: view:docnaet.document.duplication.wizard:0
