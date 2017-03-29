@@ -15,23 +15,15 @@ config.read([cfg_file])
 # Folder:
 store_path = config.get('folder', 'store_path')
 private_path = config.get('folder', 'private_path')
-#store_path = '/home/thebrush/etl/docnaet/store'
-#private_path = '/home/thebrush/etl/docnaet/private'
 
 # Command
 protocol = config.get('command', 'protocol')
 separator = config.get('command', 'separator')
 folder_command = config.get('command', 'folder_command')
 openfile_command = config.get('command', 'openfile_command')
-#protocol = 'docnaet://'
-#separator = '|'
-#folder_command = 'nautilus'
-#openfile_command = 'xdg-open %s'
 
 # Log:
 log_file = config.get('log', 'file')
-#log_file = '/tmp/docnaet.log'
-
 
 log_f = open(log_file, 'a')
 
