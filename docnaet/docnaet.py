@@ -529,7 +529,7 @@ class DocnaetDocument(orm.Model):
         'state': fields.selection([
             ('draft', 'Draft'),
             ('confirmed', 'Confirmed'),
-            ('suspended', 'Suspended'),
+            #('suspended', 'Suspended'),
             ('timed', 'Timed'),
             ('cancel', 'Cancel'), ], 'State', readonly=True),
         }
