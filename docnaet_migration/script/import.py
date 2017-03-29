@@ -468,7 +468,7 @@ for line in lines:
         type_code = prepare_int(line[3])
         support_code = prepare_int(line[4])
         partner_code = prepare_int(line[5])
-        name = prepare_string(line[6])
+        name = prepare_string(line[6]) or '...'
         description = prepare_string(line[7])
         note = line[8].strip() #prepare_string(line[8])
         date = prepare_date(line[9])
