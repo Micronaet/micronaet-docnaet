@@ -1,0 +1,13 @@
+[folder]
+store_path: o:\store
+private_path: o:\private
+
+[command]
+protocol: docnaet://
+separator: |
+folder_command: explorer
+openfile_command: start %s
+
+[log]
+file: c:\Micronaet\docnaet.log
+
