@@ -107,6 +107,17 @@ class DocnaetDocument(orm.Model):
     '''
     _inherit = 'docnaet.document'
     
+    def force_id_from_docnaet(self, cr, uid, from_id, to_id, context=None):
+        ''' Force ID
+        '''
+        import pdb; pdb.set_trace()
+        cr.execute(
+            'update docnaet_document set id = %s where id = %s' % (
+                to_id, # docnaet_id
+                from_id, # openerp_id
+            ))
+        return True
+    
     _columns = {
         'docnaet_id': fields.integer('Docnaet ID migration'), 
         }

@@ -383,7 +383,7 @@ for line in lines:
 # -------
 filename = 'Clienti.txt'
 print 'Import %s' % filename
-jump = False
+jump = True
 partner = {}
 erp_pool = erp.ResPartner
 csv_file = os.path.expanduser(
@@ -530,15 +530,12 @@ for line in lines:
             #data['id'] = openerp_id # preserve ID
             openerp_id = erp_pool.create(data).id           
             # Force same ID:
-            #cr.execute(
-            #    'update docnaet_document set id = %s where id = %s' % (
-            #        docnaet_id, opener_id, 
-            #    ))
+            erp_pool.force_id_from_docnaet(openerp_id, docnaet_id)
             erp_pool.write(openerp_id, {
                 'id': docnaet_id,
                 })    
             print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)            
-        document[docnaet_id] = openerp_id # XXX change if works!!!!!!!!!!!!!!!
+        document[docnaet_id] = openerp_id # XXX change if works!!!!!!!!!!!!!!!!
     except:
         print "%s. Error document import: %s" % (i, data)
         print sys.exc_info()
