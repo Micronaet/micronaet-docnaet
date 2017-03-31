@@ -537,9 +537,10 @@
                </header>
                <sheet>               
                   <group colspan="4" col="5"> 
-                       <button type="object" name="button_call_url_docnaet" string="Open document" class="oe_highlight"/>
+                       <button type="object" name="button_call_url_docnaet" string="Open document" class="oe_highlight" colspan="1"/>
                        <!--<button type="object" name="button_assign_fax_number" string="Assign fax" attrs="{'invisible':[('fax_number','=',True)]}"/>-->
-                       <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" />
+                       <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" colspan="1" />
+                       <button type="object" name="button_doc_info_docnaet" string="Doc info" colspan="1" />
                        <newline />
                        
                        <field name="name" colspan="5"/>

@@ -404,6 +404,26 @@ class DocnaetDocument(orm.Model):
             'number': number,
             }, context=context)
         
+
+    def button_doc_info_docnaet(self, cr, uid, ids, context=None):
+        ''' Document info
+        '''
+        assert len(ids) == 1, 'Works only with one record a time'
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        filename = self.get_document_filename(
+            cr, uid, document, mode='fullname', context=context)
+        message = _(
+            'ID: %s\nOrigin ID: %s\nOld filename: %s\nDocument: %s') % (
+                current_proxy.id,
+                current_proxy.original_id,
+                current_proxy.filename or '',
+                filename,
+                )
+             
+        raise osv.except_osv(
+            _('Document info'), 
+            message,
+            )
     def button_assign_fax_number(self, cr, uid, ids, context=None):
         ''' Assign fax number to document (next counter)
         '''
@@ -424,7 +444,6 @@ class DocnaetDocument(orm.Model):
         '''
         return self.call_docnaet_url(cr, uid, ids, 'open', context=context)
 
-
     def get_document_filename(
             self, cr, uid, document, mode='fullname', context=None):
         ''' Recursive function for get filename        
@@ -432,17 +451,28 @@ class DocnaetDocument(orm.Model):
             mode: fullname or filename only
         '''
         company_pool = self.pool.get('res.company')
-        if document.original_id:
+        if document.filename:
+            store_folder = company_pool.get_docnaet_folder_path(
+                cr, uid, subfolder='store', context=context)
+            filename = '%s.%s' % (
+                document.filename, 
+                document.docnaet_extension,
+                )
+            if mode == 'filename':
+               return filename
+            else: #fullname:
+               return os.path.join(store_folder, filename)
+        elif document.original_id:
             return self.get_document_filename(
                 cr, uid, document.original_id, mode=mode, context=context)
-        
-        # Duplicate also file:
-        store_folder = company_pool.get_docnaet_folder_path(
-            cr, uid, subfolder='store', context=context)
-        filename = '%s.%s' % (document.id, document.docnaet_extension)
-        if mode == 'filename':
-            return filename
-        return os.path.join(store_folder, filename)
+        else: # Duplicate also file:
+            store_folder = company_pool.get_docnaet_folder_path(
+                cr, uid, subfolder='store', context=context)
+            filename = '%s.%s' % (document.id, document.docnaet_extension)
+            if mode == 'filename':
+                return filename
+            else:# fullname mode:
+                return os.path.join(store_folder, filename)
 
     def _refresh_partner_country_change(self, cr, uid, ids, context=None):
         ''' When change partner in country change in document
