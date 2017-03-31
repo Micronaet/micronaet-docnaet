@@ -378,6 +378,7 @@ for line in lines:
         print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
         
     country[docnaet_id] = openerp_id
+sys.exit()
 
 # -------
 # Clienti
