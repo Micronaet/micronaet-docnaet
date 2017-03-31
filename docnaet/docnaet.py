@@ -259,7 +259,7 @@ class DocnaetDocument(orm.Model):
     '''    
     _name = 'docnaet.document'
     _description = 'Docnaet document'
-    _order = 'protocol_id,number desc'
+    _order = 'date desc,number desc'
 
     # -------------------------------------------------------------------------        
     # Override ORM
@@ -371,14 +371,15 @@ class DocnaetDocument(orm.Model):
             
             NOTE: maybe expand the services
         '''        
+        handle = 'docnaet' # put in company
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
         if mode == 'open':  # TODO rimettere id e togliere docnaet_id
             filename = self.get_document_filename(
                 cr, uid, doc_proxy, mode='filename', context=context)
-            final_url = r'docnaet://document|%s' % filename
+            final_url = r'%s://document|%s' % (handle, filename)
         elif mode == 'home':
-            final_url = r'docnaet://folder|%s' % uid
+            final_url = r'%s://folder|%s' % (handle, uid)
 
         return {
             'name': 'Docnaet document',
