@@ -472,10 +472,9 @@
         <field name="name">Docnaet document</field>
         <field name="model">docnaet.document</field>        
         <field name="arch" type="xml">
-            <tree string="Docnaet document" colors="grey:original_id!=False;black:state=='draft';orange:state=='timed';green:state=='confirmed';red:state=='cancel'">
+            <tree string="Docnaet document" colors="grey:original_id!=False;black:state=='draft';blue:state=='timed';green:state=='confirmed';red:state=='cancel'">
                <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}"/>
                <button type="object" name="button_call_url_docnaet" string="Document linked!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"/>
-               <field name="docnaet_extension" readonly="context.get('embedded',False)"/>
                <field name="protocol_id" required="1" />
                <field name="number" />
                <field name="date" />
@@ -492,6 +491,7 @@
                <field name="original_id" invisible="1"/>
                <field name="country_id" invisible="1"/>
                <field name="docnaet_category_id" invisible="1"/>
+               <field name="docnaet_extension" readonly="context.get('embedded',False)"/>
 
                <!--WORKFLOW BUTTON-->
                <!--draft-->
