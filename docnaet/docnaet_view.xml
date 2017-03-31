@@ -550,7 +550,7 @@
                        <button name="assign_protocol_number" string="Reassign" type="object" attrs="{'invisible': ['|',('protocol_id','=',False),('number','=',False)]}" colspan="1" icon="gtk-refresh"/>
 
 
-                       <field name="partner_id" domain="[('is_address','=',False)]"/>
+                       <field name="partner_id" /> <!--domain="[('is_address','=',False)]"-->
                        <field name="user_id" />
                        <newline/>
 
@@ -613,7 +613,7 @@
         <field name="arch" type="xml">
             <calendar color="protocol_id" date_start="deadline" string="Document deadline">
                 <field name="name"/>
-                <field name="partner_id" domain="[('is_address','=',False)]"/>
+                <field name="partner_id" /><!--domain="[('is_address','=',False)]"-->
                 <field name="priority"/>
             </calendar>
         </field>
