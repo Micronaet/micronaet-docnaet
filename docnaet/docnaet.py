@@ -371,7 +371,8 @@ class DocnaetDocument(orm.Model):
             
             NOTE: maybe expand the services
         '''        
-        handle = 'docnaet' # put in company
+        #handle = 'docnaet' # put in company
+        handle = 'openerp' # put in company
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
         if mode == 'open':  # TODO rimettere id e togliere docnaet_id
