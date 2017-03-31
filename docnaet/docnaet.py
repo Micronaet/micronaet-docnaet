@@ -411,7 +411,7 @@ class DocnaetDocument(orm.Model):
         assert len(ids) == 1, 'Works only with one record a time'
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         filename = self.get_document_filename(
-            cr, uid, document, mode='fullname', context=context)
+            cr, uid, current_proxy, mode='fullname', context=context)
         message = _(
             'ID: %s\nOrigin ID: %s\nExtension: %s\nOld filename: %s\nDocument: %s') % (
                 current_proxy.id,
