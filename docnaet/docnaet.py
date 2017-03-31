@@ -415,10 +415,11 @@ class DocnaetDocument(orm.Model):
         message = _(
             'ID: %s\nOrigin ID: %s\nExtension: %s\nOld filename: %s\nDocument: %s') % (
                 current_proxy.id,
-                current_proxy.original_id,
-                current_proxy.docnaet_extension,
+                current_proxy.original_id.id if \
+                    current_proxy.original_id else '',
+                current_proxy.docnaet_extension or '',
                 current_proxy.filename or '',
-                filename,
+                filename or '',
                 )
              
         raise osv.except_osv(
