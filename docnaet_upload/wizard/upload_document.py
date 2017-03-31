@@ -102,7 +102,7 @@ class UlploadDocumentWizard(orm.TransientModel):
                 'name': 'Document %s' % f,
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
                 'user_id': wiz_proxy.default_user_id.id or uid, 
-                'partner_id': wiz_proxy.default_partner_id.id or 1, 
+                'partner_id': wiz_proxy.default_partner_id.id or False, 
                 'language_id': wiz_proxy.default_language_id.id or False, 
                 'type_id': wiz_proxy.default_type_id.id or False,
                 'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),

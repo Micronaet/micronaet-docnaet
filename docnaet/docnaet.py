@@ -326,6 +326,11 @@ class DocnaetDocument(orm.Model):
                     _('Protocol'), 
                     _('No protocol assigned, choose one before and confirm!'),
                     )
+            if not current_proxy.partner_id:
+                raise osv.except_osv(
+                    _('Partner'), 
+                    _('No partner assigned, choose one before and confirm!'),
+                    )
             data['number'] = protocol_pool.assign_protocol_number(
                 cr, uid, protocol.id, context=context)
         return self.write(cr, uid, ids, data, context=context)
@@ -521,7 +526,7 @@ class DocnaetDocument(orm.Model):
             domain=[('invisible', '=', False)]),
         'company_id': fields.many2one('res.company', 'Company'),
         'user_id': fields.many2one('res.users', 'User', required=True),
-        'partner_id': fields.many2one('res.partner', 'Partner', required=True),
+        'partner_id': fields.many2one('res.partner', 'Partner'),
         'country_id': fields.related(
             'partner_id', 'country_id', type='many2one', 
             relation='res.country', string='Country',
