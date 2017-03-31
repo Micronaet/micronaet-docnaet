@@ -413,9 +413,10 @@ class DocnaetDocument(orm.Model):
         filename = self.get_document_filename(
             cr, uid, document, mode='fullname', context=context)
         message = _(
-            'ID: %s\nOrigin ID: %s\nOld filename: %s\nDocument: %s') % (
+            'ID: %s\nOrigin ID: %s\nExtension: %s\nOld filename: %s\nDocument: %s') % (
                 current_proxy.id,
                 current_proxy.original_id,
+                current_proxy.docnaet_extension,
                 current_proxy.filename or '',
                 filename,
                 )
