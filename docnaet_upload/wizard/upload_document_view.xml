@@ -14,7 +14,7 @@
                     </header>
                     <sheet>
                         <group colspan="4" col='2'>
-                            <field name="default_partner_id" domain="[('is_company', '=', True)]" />
+                            <field name="default_partner_id" domain="[('docnaet_enable', '=', True)]" />
                             <field name="default_user_id" />
                             <field name="default_protocol_id" />
                             <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}"/> <!--,('is_address','=',False)-->

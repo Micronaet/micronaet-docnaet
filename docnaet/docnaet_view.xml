@@ -435,7 +435,7 @@
                 <field name="priority" />
                 <field name="docnaet_extension" />
                 <field name="program_id" />
-                <field name="partner_id" filter_domain="[('partner_id','=',self)]"/>
+                <field name="partner_id" filter_domain="[('partner_id','=',self)]" />
                 <field name="country_id" />
                 <field name="docnaet_category_id" />
                 <field name="user_id" filter_domain="[('user_id','=',self)]"/>
@@ -550,7 +550,7 @@
                        <button name="assign_protocol_number" string="Reassign" type="object" attrs="{'invisible': ['|',('protocol_id','=',False),('number','=',False)]}" colspan="1" icon="gtk-refresh"/>
 
 
-                       <field name="partner_id" /> <!--domain="[('is_address','=',False)]"-->
+                       <field name="partner_id" domain="[('docnaet_enable','=',True)]" /> <!--domain="[('is_address','=',False)]"-->
                        <field name="user_id" />
                        <newline/>
 
