@@ -505,7 +505,7 @@ class DocnaetDocument(orm.Model):
         return ids
 
     _columns = {        
-        'name': fields.char('Subject', size=80, required=True),
+        'name': fields.char('Subject', size=180, required=True),
         'filename': fields.char('File name', size=200),
         'description': fields.text('Description'),
         'note': fields.text('Note'),
