@@ -119,6 +119,7 @@ class ResPartner(orm.Model):
     _inherit = 'res.partner'
     
     _columns = {
+        'docnaet_enable': fields.boolean('Docnaet partner'),
         'docnaet_category_id': fields.many2one(
             'res.partner.docnaet', 'Docnaet category'),
         }
