@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+    <!--docnaet.document.advanced.search.wizard-->
+    <record id="document_advanced_search_form" model="ir.ui.view">
+        <field name="name">docnaet.document.advanced.search.wizard.form</field>
+        <field name="model">docnaet.document.advanced.search.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Advanced search" version="7.0">
+                <header>
+                    <button string="Cancel" special="cancel" icon='STOCK_CANCEL'/>
+                    <button string="Search" name="advanced_search" type="object" icon="gtk-find" />
+                </header>
+                <sheet>
+                    <group colspan="4" col="4">
+                        <field name="keywords" />
+                        <field name="partner_name" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_document_advanced_search" model="ir.actions.act_window">
+            <field name="name">Advanced search</field>
+            <field name="res_model">docnaet.document.advanced.search.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="document_advanced_search_form"/>
+            <field name="target">new</field>
+    </record>
+
+   <menuitem parent="docnaet_document" id="docnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search" />            
+    
+    </data>
+</openerp>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-29 11:25+0000\n"
-"PO-Revision-Date: 2017-03-29 13:38+0100\n"
+"POT-Creation-Date: 2017-04-04 11:46+0000\n"
+"PO-Revision-Date: 2017-04-04 13:47+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -50,7 +50,6 @@ msgstr "Modello"
 
 #. module: docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_document
-#: model:ir.ui.menu,name:docnaet.docnaet_document_document
 msgid "Document"
 msgstr "Documento"
 
@@ -60,9 +59,12 @@ msgid "Docnaet agent"
 msgstr "Agente docnaet"
 
 #. module: docnaet
-#: field:docnaet.document,fax_number:0
-msgid "Fax n."
-msgstr "Fax n."
+#: view:docnaet.document.advanced.search.wizard:0
+#: model:ir.actions.act_window,name:docnaet.action_document_advanced_search
+#: model:ir.model,name:docnaet.model_docnaet_document_advanced_search_wizard
+#: model:ir.ui.menu,name:docnaet.docnaet_document_advanced_search
+msgid "Advanced search"
+msgstr "Ricerca avanzata"
 
 #. module: docnaet
 #: field:docnaet.document,duplicated_ids:0
@@ -224,7 +226,7 @@ msgstr "Lingua docnaet"
 #. module: docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_document_my_document
 msgid "My document"
-msgstr "Miei documenti"
+msgstr "Mio documento"
 
 #. module: docnaet
 #: view:docnaet.document.duplication.wizard:0
@@ -232,9 +234,9 @@ msgid "Link document"
 msgstr "Documento collegato"
 
 #. module: docnaet
-#: view:docnaet.protocol:0 view:docnaet.type:0
-msgid "Set visible"
-msgstr "Imposta visibile"
+#: field:docnaet.document,fax_number:0
+msgid "Fax n."
+msgstr "Fax n."
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -258,6 +260,13 @@ msgid "Extension"
 msgstr "Estensione"
 
 #. module: docnaet
+#: view:docnaet.document:0 selection:docnaet.document,state:0
+#: view:docnaet.document.advanced.search.wizard:0
+#: view:docnaet.document.duplication.wizard:0
+msgid "Cancel"
+msgstr "Annulla"
+
+#. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,language_id:0
 #: field:docnaet.language,name:0 field:docnaet.protocol.template,lang_id:0
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_language
@@ -273,6 +282,11 @@ msgstr "A tempo"
 #: view:res.users:0
 msgid "User docnaet"
 msgstr "Utente docnaet"
+
+#. module: docnaet
+#: view:docnaet.protocol:0 view:docnaet.type:0
+msgid "Set visible"
+msgstr "Imposta visibile"
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -315,6 +329,11 @@ msgstr "Protocollo docnaet"
 #: model:ir.ui.menu,name:docnaet.docnaet_administration
 msgid "Administration"
 msgstr "Amministrazione"
+
+#. module: docnaet
+#: view:docnaet.document:0
+msgid "Doc info"
+msgstr "Doc info"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,note:0
@@ -373,9 +392,14 @@ msgid "User"
 msgstr "Utente"
 
 #. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,date:0
-msgid "Date"
-msgstr "Data"
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_protocol_template_program
+msgid "Programs type"
+msgstr "Tipi di programma"
+
+#. module: docnaet
+#: view:docnaet.document.advanced.search.wizard:0
+msgid "Search"
+msgstr "Search"
 
 #. module: docnaet
 #: field:docnaet.document,number:0
@@ -394,9 +418,14 @@ msgid "Docnaet protocol template"
 msgstr "Modello protocollo"
 
 #. module: docnaet
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_protocol_template_program
-msgid "Programs type"
-msgstr "Tipi di programma"
+#: view:docnaet.document:0 field:docnaet.document,date:0
+msgid "Date"
+msgstr "Data"
+
+#. module: docnaet
+#: view:docnaet.document:0
+msgid "Timed state"
+msgstr "Stato a tempo"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_res_partner_docnaet
@@ -425,10 +454,9 @@ msgid "Code"
 msgstr "Codice"
 
 #. module: docnaet
-#: view:docnaet.document:0 selection:docnaet.document,state:0
-#: view:docnaet.document.duplication.wizard:0
-msgid "Cancel"
-msgstr "Annulla"
+#: field:docnaet.document.advanced.search.wizard,keywords:0
+msgid "Keywords"
+msgstr "Keywords"
 
 #. module: docnaet
 #: field:res.company,next_fax:0
@@ -474,9 +502,14 @@ msgid "Original document"
 msgstr "Documento originale"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Timed state"
-msgstr "Stato a tempo"
+#: model:ir.ui.menu,name:docnaet.docnaet_document_document
+msgid "Documenti"
+msgstr "Documenti"
+
+#. module: docnaet
+#: field:docnaet.document.advanced.search.wizard,partner_name:0
+msgid "Partner name"
+msgstr "Partner name"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,description:0
