@@ -85,12 +85,12 @@ class document_duplication(orm.TransientModel):
             'original_id': original_id if mode == 'link' else False,
             }
         # Manage protocol number (3 cases):
-        if original_proxy.protocol_id: # remove with_number
+        if linked_document:
+            data['number'] = original_proxy.number or False
+            #data['fax_number'] = original_proxy.fax_number
+        elif original_proxy.protocol_id: # remove with_number
             data['number'] = protocol_pool.assign_protocol_number(
                 cr, uid, original_proxy.protocol_id.id, context=context)
-        elif linked_document: 
-            data['number'] = original_proxy.number
-            #data['fax_number'] = original_proxy.fax_number
         else:
             data['number'] = False
             
