@@ -486,7 +486,7 @@
                <field name="type_id" />
                <field name="language_id" readonly="context.get('embedded',False)"/>
                <field name="priority" invisible="1"/>
-               <field name="deadline" />
+               <field name="deadline" string="Scad." />
                <field name="deadline_info" invisible="1"/>
                <field name="program_id" invisible="1"/>
                <field name="original_id" invisible="1"/>
@@ -551,7 +551,7 @@
                        <button name="assign_protocol_number" string="Reassign" type="object" attrs="{'invisible': ['|',('protocol_id','=',False),('number','=',False)]}" colspan="1" icon="gtk-refresh"/>
 
 
-                       <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'default_docnaet_enable': True}"/> <!--domain="[('is_address','=',False)]"-->
+                       <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'default_docnaet_enable': True}"/>
                        <field name="user_id" />
                        <newline/>
 
