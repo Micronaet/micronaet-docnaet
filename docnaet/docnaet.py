@@ -118,6 +118,20 @@ class ResPartner(orm.Model):
     """    
     _inherit = 'res.partner'
     
+    def set_docnaet_on(self, cr, uid, ids, context=None):
+        ''' Enalble docnaet partner
+        '''
+        return self.write(cr, uid, ids, {
+            'docnaet_enable': True,
+            }, context=context)
+
+    def set_docnaet_off(self, cr, uid, ids, context=None):
+        ''' Disalble docnaet partner
+        '''
+        return self.write(cr, uid, ids, {
+            'docnaet_enable': False,
+            }, context=context)
+            
     _columns = {
         'docnaet_enable': fields.boolean('Docnaet partner'),
         'docnaet_category_id': fields.many2one(

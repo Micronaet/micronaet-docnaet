@@ -312,6 +312,13 @@
             <field name="email" position="after">
                  <field name="docnaet_category_id" />
             </field>
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button name="set_docnaet_on" string="Set Docnaet ON" type="object" attrs="{'invisible': [('docnaet_enable','=',True)]}" icon="star-off" groups="docnaet.group_docnaet_admin"/>
+                    <button name="set_docnaet_off" string="Set Docnaet OFF" type="object" attrs="{'invisible': [('docnaet_enable','=',False)]}" icon="star-on" groups="docnaet.group_docnaet_admin"/>
+                    <field name="docnaet_enable" invisible="1"/>
+                </header>
+            </xpath>
         </field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_partner_form">
