@@ -14,13 +14,13 @@
                     </header>
                     <sheet>
                         <group colspan="4" col='2'>
-                            <field name="default_partner_id" domain="[('docnaet_enable', '=', True)]" />
-                            <field name="default_user_id" />
-                            <field name="default_protocol_id" />
+                            <field name="default_partner_id" domain="[('docnaet_enable', '=', True)]" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                            <field name="default_user_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                            <field name="default_protocol_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
                             <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}"/> <!--,('is_address','=',False)-->
-                            <field name="default_type_id" />
-                            <field name="default_language_id" />
-                            <separator string="Folder status" colspan="4"/>1
+                            <field name="default_type_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                            <field name="default_language_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                            <separator string="Folder status" colspan="4"/>
                             <field name="folder_status" widget="html" nolabel="1" readonly="1" colspan="4"/>
                         </group>
                     </sheet>

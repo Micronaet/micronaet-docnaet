@@ -31,8 +31,7 @@
     'website': 'http://www.micronaet.it',
     'depends': [
         'base',
-        #'web_m2o_enhanced',
-        #'web_m2x_options', # XXX error if updated
+        #'web_m2o_enhanced', # XXX not work if enabled!
         ],
     'init_xml': [], 
     'data': [

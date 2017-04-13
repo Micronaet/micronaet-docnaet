@@ -546,13 +546,13 @@
                        
                        <field name="name" colspan="5"/>
 
-                       <field name="protocol_id" />
+                       <field name="protocol_id" options="{'limit': 10, 'create': false}"/>
                        <field name="number" />
                        <button name="assign_protocol_number" string="Reassign" type="object" attrs="{'invisible': ['|',('protocol_id','=',False),('number','=',False)]}" colspan="1" icon="gtk-refresh"/>
 
 
-                       <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'default_docnaet_enable': True}" /><!--options="{'limit': 10, 'create': false, 'create_edit': false}"-->
-                       <field name="user_id" />
+                       <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'default_docnaet_enable': True}" options="{'limit': 10, 'create': false, 'create_edit': false}" />
+                       <field name="user_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
                        <newline/>
 
                        <field name="date" />
@@ -561,17 +561,17 @@
                        <!--<field name="fax_number" />-->
                        <newline/>
 
-                       <field name="type_id" />
-                       <field name="language_id" />
+                       <field name="type_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                       <field name="language_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
                        <newline/>
 
 
-                       <field name="program_id" readonly="1"/>
+                       <field name="program_id" readonly="1" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
                        <field name="docnaet_extension" readonly="1"/>
                        <newline/>
 
-                       <field name="priority"/>
-                       <field name="company_id" />
+                       <field name="priority" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                       <field name="company_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
                        <newline/>
 
                        <notebook colspan="5">

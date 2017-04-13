@@ -32,6 +32,7 @@
     'depends': [
         'base',
         'docnaet',
+        #'web_m2o_enhanced', # XXX not work if enabled!
         ],
     'init_xml': [],
     'demo': [],
