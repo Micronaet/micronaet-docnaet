@@ -551,7 +551,7 @@
                        <button name="assign_protocol_number" string="Reassign" type="object" attrs="{'invisible': ['|',('protocol_id','=',False),('number','=',False)]}" colspan="1" icon="gtk-refresh"/>
 
 
-                       <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'default_docnaet_enable': True}"/>
+                       <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'default_docnaet_enable': True}" /><!--options="{'limit': 10, 'create': false, 'create_edit': false}"-->
                        <field name="user_id" />
                        <newline/>
 
@@ -654,7 +654,6 @@
             <menuitem parent="docnaet_document" id="docnaet_document_my_document" name="My document" sequence="20" action="action_docnaet_my_document_tree"/>
                 <menuitem parent="docnaet_document_my_document" id="docnaet_document_deadline" name="Deadline" sequence="30" action="action_docnaet_deadline_document_tree" />            
 
-
         <menuitem parent="docnaet_root" id="docnaet_administration" name="Administration" sequence="90" groups="group_docnaet_admin"/>
             <menuitem parent="docnaet_administration" id="docnaet_administration_company" string="Company" sequence="1" action="action_docnaet_company_form" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_user" string="User" sequence="5" action="action_docnaet_users_form" />
@@ -666,7 +665,6 @@
             <menuitem parent="docnaet_administration" id="docnaet_administration_program" name="Program" sequence="15" action="action_docnaet_protocol_template_program"/>            
             <menuitem parent="docnaet_administration" id="docnaet_administration_type" name="Tipology" sequence="20" action="action_docnaet_type" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_language" name="Language" sequence="30" action="action_docnaet_language" />
-    
     </data>    
 </openerp>    
     

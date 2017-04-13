@@ -28,7 +28,7 @@ import openerp.addons.decimal_precision as dp
 from openerp.osv import fields, osv, expression, orm
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-from openerp import SUPERUSER_ID, api
+from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
@@ -74,9 +74,9 @@ class DocnaetProtocolEmail(orm.Model):
             mail.login(address.user, address.password)
             mail.select(address.folder)
             esit, data = mail.search(None, 'ALL')
-            for num in data[0].split():
+            for msg_id in data[0].split():
                 # Read and parse data:
-                esit, data = mail.fetch(num, '(RFC822)')
+                esit, data = mail.fetch(msg_id, '(RFC822)')
                 eml_string = data[0][1]
                 message = email.message_from_string(eml_string)
                 record = {
@@ -100,7 +100,7 @@ class DocnaetProtocolEmail(orm.Model):
                 if email:
                     # Search user:
                     user_id = user_pool.search(cr, uid, [
-                        ('email', '=', email], context=context)
+                        ('email', '=', email)], context=context)
                 else:
                     user_id = 1 # better not go there!
                 protocol_id = address.protocol_id.id or False
@@ -127,7 +127,9 @@ class DocnaetProtocolEmail(orm.Model):
                     record['To'],
                     record['From'],
                     record['Subject'],
-                    )
+                    ))
+                # Mark as deleted:    
+                mail.store(msg_id, '+FLAGS', '\\Deleted')    
 
                 # -------------------------------------------------------------
                 # Write on file:
@@ -144,20 +146,22 @@ class DocnaetProtocolEmail(orm.Model):
         # -----------------------------------------------------------------
         # Close operations:    
         # -----------------------------------------------------------------
+        #mail.expunge() # TODO clean trash bin
         mail.close()
         mail.logout()
     
     _columns = {  
-        'name': fields.char('Address', size=64, required=True),
+        'is_active': fields.boolean('Is active'),
+        'name': fields.char('Email', size=64, required=True),
         'host': fields.char(
-            'host', size=, help='Email IMAP server'),
+            'host', size=64, help='Email IMAP server'),
         'port': fields.integer('Port'),
         'user': fields.char(
-            'host', size=, help='Email user'),
+            'host', size=64, help='Email user'),
         'password': fields.char(
-            'host', size=, help='Email password'),
+            'host', size=64, help='Email password'),
         'folder': fields.char(
-            'host', size=, help='Email IMAP folder'),
+            'host', size=64, help='Email IMAP folder'),
         'SSL': fields.boolean('SSL'),
         'auto_number': fields.boolean('Auto protocol number'),
         'remove': fields.boolean('Remove after import'),
@@ -167,7 +171,19 @@ class DocnaetProtocolEmail(orm.Model):
     
     _defaults = {
        'port': lambda *a: 993,
-       'SSL': lambda *a: True
+       'SSL': lambda *a: True,
        'folder': lambda *a: 'INBOX',
        }
+
+class DocnaetProtocol(orm.Model):
+    """ Model name: DocnaetProtocol
+    """
+    _inherit = 'docnaet.protocol'
+    
+    _columns = {
+        'auto_email': fields.boolean('Auto email'),
+        'account_ids': fields.one2many(
+            'docnaet.protocol.email', 'protocol_id', 'Account'),
+        }
+       
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:1111111

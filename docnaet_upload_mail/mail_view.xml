@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!--<record model="ir.ui.view" id="view_docnaet_protocol_email_form">
+            <field name="name">Docnaet protocol email</field>
+            <field name="model">docnaet.protocol</field>
+            <field name="inherit_id" ref="docnaet.view_docnaet_protocol_form"/>
+            <field name="arch" type="xml">
+                <separator string="Note" colspan="4">
+                    <field name="account_ids"> 
+                        
+                    </field>
+                </separator>
+            </field>
+        </record>    
+    
+        <record model="ir.ui.view" id="view_docnaet_protocol_email_tree">
+            <field name="name">docnaet.protocol.email.tree</field>
+            <field name="model">docnaet.protocol.email</field>
+            <field name="arch" type="xml">
+                <tree string="Account" colors="red:is_active==True">        
+                    <field name="is_active" />
+                    <field name="protocol_id" />
+                    <field name="name" />
+                    <field name="host" />
+                    <field name="port" />
+                    <field name="user" />
+                    <field name="folder" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_docnaet_protocol_email_form">
+            <field name="name">docnaet.protocol.email.form</field>
+            <field name="model">docnaet.protocol.email</field>
+            <field name="arch" type="xml">
+                <form string="Account">
+                    <field name="is_active" />
+                    <field name="protocol_id" />
+                    <field name="name" />
+                    <field name="host" />
+                    <field name="port" />
+                    <field name="user" />
+                    <field name="password" />
+                    <field name="folder" />
+                    <field name="SSL" />
+                    <field name="auto_number" />
+                    <field name="remove" />
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_protocol_email_form">
+            <field name="name">Email account</field>
+            <field name="res_model">docnaet.protocol.email</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_docnaet_protocol_email_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+        </record>
+        <menuitem 
+            parent="docnaet.docnaet_administration_protocol" 
+            id="menu_protocol_email_form" 
+            action="action_protocol_email_form"/>        -->
+    </data>
+</openerp>
+

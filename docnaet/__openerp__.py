@@ -19,7 +19,6 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-
 {
     'name': 'Docnaet',
     'version': '0.0.1',
@@ -32,6 +31,8 @@
     'website': 'http://www.micronaet.it',
     'depends': [
         'base',
+        #'web_m2o_enhanced',
+        #'web_m2x_options', # XXX error if updated
         ],
     'init_xml': [], 
     'data': [

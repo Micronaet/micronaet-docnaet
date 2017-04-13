@@ -18,22 +18,25 @@
 ###############################################################################
 
 {
-    'name': '',
+    'name': 'Upload document via email',
     'version': '0.1',
-    'category': '',
-    'description': '''        
+    'category': 'Docnaet',
+    'description': '''  
+        Add email to protocol for auto upload documents in upload list      
         ''',
     'author': 'Micronaet S.r.l. - Nicola Riolini',
     'website': 'http://www.micronaet.it',
     'license': 'AGPL-3',
     'depends': [
         'base',
+        'docnaet',
+        'docnaet_upload',
         ],
     'init_xml': [],
     'demo': [],
     'data': [
-        #'security/ir.model.access.csv',    
-        #'_view.xml',
+        'security/ir.model.access.csv',    
+        'mail_view.xml',
         ],
     'active': False,
     'installable': True,
