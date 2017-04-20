@@ -97,7 +97,7 @@ cr = connection.cursor()
 
 # extract all the data
 import pdb; pdb.set_trace()
-query = 'INSERT INTO %s (%s) VALUES (%s)' % (
+query = 'INSERT INTO %s %s VALUES %s' % (
     table,
     ('ID_importanza', 'impDescrizione'),
     (1, 'Importante'),
