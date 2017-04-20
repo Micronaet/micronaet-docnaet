@@ -60,7 +60,6 @@ mdb = {
 for key, value in mdb.iteritems():
     mdb[key] = os.path.join(path_database, value)
 
-
 # ODBC string:
 odbc_string = 'Provider=Microsoft.Jet.OLEDB.4.0; Data Source=%s' % (
     mdb['execute'])
@@ -76,7 +75,7 @@ odbc_string = 'Provider=Microsoft.Jet.OLEDB.4.0; Data Source=%s' % (
 # Migration of data:
 # -----------------------------------------------------------------------------
 # Copy default access database for start:
-#shutil.copyfile(mdb['start'], mdb['execute'])
+shutil.copyfile(mdb['start'], mdb['execute'])
 
 # Connect to the database:
 connection = adodbapi.connect(odbc_string)
@@ -85,7 +84,7 @@ connection = adodbapi.connect(odbc_string)
 table = 'Protocolli'
 
 # create a cursor
-cr = conn.cursor()
+cr = connection.cursor()
 
 # extract all the data
 query = 'INSERT INTO %s (%s) VALUES (%s)' % (
@@ -101,5 +100,5 @@ cr.close()
 connection.close()
 
 # Final rename for agent copy:
-#shutil.move(mdb['execute'], mdb['agent'])
+shutil.move(mdb['execute'], mdb['agent'])
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
