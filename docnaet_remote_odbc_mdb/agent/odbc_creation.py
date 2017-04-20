@@ -37,6 +37,11 @@ config = ConfigParser.ConfigParser()
 config.read([cfg_file])
 
 # ODOO:
+host = config.get('openerp', 'host')
+port = config.get('openerp', 'port')
+database = config.get('openerp', 'database')
+username = config.get('openerp', 'username')
+password = config.get('openerp', 'password')
 
 # Access:
 path_database = config.get('mdb', 'path')
