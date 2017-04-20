@@ -97,9 +97,10 @@ cr = connection.cursor()
 
 # extract all the data
 import pdb; pdb.set_trace()
+fields = '%s' % ('ID_importanza', 'impDescrizione').replace('\'', '')
 query = 'INSERT INTO %s %s VALUES %s' % (
     table,
-    ('ID_importanza', 'impDescrizione'),
+    fields,
     (1, 'Importante'),
     )
 cr.execute(query)
