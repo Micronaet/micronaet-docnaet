@@ -79,7 +79,17 @@ shutil.copyfile(mdb['start'], mdb['execute'])
 
 # Connect to the database:
 try:
-    connection = adodbapi.connect(odbc_string)
+    #connection = adodbapi.connect(odbc_string)
+    import pyodbc
+    connection = pyodbc.connect(
+        'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % mdb['execute'])
+    cursor = connection.cursor()
+
+    SQL = 'SELECT * FROM Protocolli;'
+    for row in cursor.execute(SQL): # cursors are iterable
+        print row
+    cursor.close()
+    conn.close()
 except:
     print '[ERROR] Connection to database %s\nString: %s\n[%s]' % (
         mdb['execute'],
