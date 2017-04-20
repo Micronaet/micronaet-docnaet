@@ -100,7 +100,7 @@ import pdb; pdb.set_trace()
 query = 'INSERT INTO %s (%s) VALUES (%s)' % (
     table,
     ('ID_importanza', 'impDescrizione'),
-    (1, 'Importante),
+    (1, 'Importante'),
     )
 cr.execute(query)
 cr.commit()
