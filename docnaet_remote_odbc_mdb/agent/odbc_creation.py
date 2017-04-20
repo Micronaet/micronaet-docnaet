@@ -122,7 +122,8 @@ for table, item in convert_db.iteritems():
     erp_pool = eval('erp.%s' % obj) # Connect with Oerp Obj    
     
     # Loop on all record:
-    for record in erp_pool.search(domain):        
+    erp_ids erp_pool.search(domain)
+    for record in erp_pool.browse(erp_ids):
         values = tuple([eval(v) for v in oerp_fields])
         query = 'INSERT INTO %s %s VALUES %s' % (
             table,
