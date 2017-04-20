@@ -114,7 +114,6 @@ convert_db = {
 #        ]
     }
 
-import pdb; pdb.set_trace()
 for table, item in convert_db.iteritems():
     obj, domain, oerp_fields, mdb_fields = item    
 
