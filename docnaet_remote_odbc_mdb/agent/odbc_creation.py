@@ -57,7 +57,7 @@ mdb = {
     'execute': mdb_execute,
     'agent': mdb_agent,
     }
-for key, value in mdb.iteriterms():
+for key, value in mdb.iteritems():
     mdb[key] = os.path.join(path_database, value)
 
 
