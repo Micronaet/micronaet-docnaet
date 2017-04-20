@@ -21,9 +21,8 @@ import os
 import sys
 import ConfigParser
 import erppeek
-#import pyodbc
-import adodbapi
-import shutil # for copyfile
+import pyodbc
+import shutil
 from datetime import datetime, timedelta
 
 # -----------------------------------------------------------------------------
@@ -79,17 +78,9 @@ shutil.copyfile(mdb['start'], mdb['execute'])
 
 # Connect to the database:
 try:
-    #connection = adodbapi.connect(odbc_string)
-    import pyodbc
     connection = pyodbc.connect(
         'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % mdb['execute'])
     cursor = connection.cursor()
-
-    SQL = 'SELECT * FROM Protocolli;'
-    for row in cursor.execute(SQL): # cursors are iterable
-        print row
-    cursor.close()
-    conn.close()
 except:
     print '[ERROR] Connection to database %s\nString: %s\n[%s]' % (
         mdb['execute'],
@@ -99,19 +90,20 @@ except:
     sys.exit()    
 
 # Populate database:
-table = 'Protocolli'
+table = 'Importanza'
 
 # create a cursor
 cr = connection.cursor()
 
 # extract all the data
+import pdb; pdb.set_trace()
 query = 'INSERT INTO %s (%s) VALUES (%s)' % (
     table,
-    ('nome', 'prossimo'),
-    ('prova', 5),
+    ('ID_importanza', 'impDescrizione'),
+    (1, 'Importante),
     )
 cr.execute(query)
-#cr.commit()
+cr.commit()
 
 # close the cursor and connection
 cr.close()
