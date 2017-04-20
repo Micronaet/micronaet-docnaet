@@ -100,7 +100,7 @@ cr = connection.cursor()
 
 # Populate database:
 convert_db = {
-    'Lingua': [
+    'Lingue': [
         'DocnaetLanguage', # OpenERP Object for Erppeek
         [], # OpenERP domain filter
         ('record.id', 'record.name', 'record.note'), # OpenERP fields
