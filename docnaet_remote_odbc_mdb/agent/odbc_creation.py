@@ -30,7 +30,7 @@ from datetime import datetime, timedelta
 # Parameters:
 # -----------------------------------------------------------------------------
 # Config file (home folder of current user):
-cfg_file = os.path.expanduser(os.path.join('~', 'odbc.cfg'))
+cfg_file = os.path.join('.', 'odbc.cfg')
 config = ConfigParser.ConfigParser()
 config.read([cfg_file])
 
