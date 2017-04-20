@@ -128,7 +128,7 @@ for table, item in convert_db.iteritems():
         query = 'INSERT INTO %s %s VALUES %s' % (
             table,
             fields,            
-            (1, 'Importante'),
+            values,
             )
         cr.execute(query)
         cr.commit()
