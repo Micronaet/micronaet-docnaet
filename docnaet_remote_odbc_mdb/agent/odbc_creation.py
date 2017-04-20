@@ -25,8 +25,6 @@ import erppeek
 import adodbapi
 import shutil # for copyfile
 from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
-
 
 # -----------------------------------------------------------------------------
 # Parameters:
@@ -62,6 +60,7 @@ mdb = {
 for key, value in mdb.iteriterms():
     mdb[key] = os.path.join(path_database, value)
 
+
 # ODBC string:
 odbc_string = 'Provider=Microsoft.Jet.OLEDB.4.0; Data Source=%s' % (
     mdb['execute'])
@@ -77,7 +76,7 @@ odbc_string = 'Provider=Microsoft.Jet.OLEDB.4.0; Data Source=%s' % (
 # Migration of data:
 # -----------------------------------------------------------------------------
 # Copy default access database for start:
-shutil.copyfile(mdb['start'], mdb['execute'])
+#shutil.copyfile(mdb['start'], mdb['execute'])
 
 # Connect to the database:
 connection = adodbapi.connect(odbc_string)
@@ -102,6 +101,5 @@ cr.close()
 connection.close()
 
 # Final rename for agent copy:
-shutil.move(mdb['execute'], mdb['agent'])
-
+#shutil.move(mdb['execute'], mdb['agent'])
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

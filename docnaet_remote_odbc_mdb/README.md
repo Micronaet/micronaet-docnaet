@@ -9,7 +9,7 @@ Configuration:
 ===============================
 Install dependency for agent: 
 
-pyadodbapi
-
-erppeek
+In Python scripts folder download pip and install dependency with:
+**pip install pyadodbapi**
+**pip install erppeek**
 
