@@ -78,7 +78,14 @@ odbc_string = 'Provider=Microsoft.Jet.OLEDB.4.0; Data Source=%s' % (
 shutil.copyfile(mdb['start'], mdb['execute'])
 
 # Connect to the database:
-connection = adodbapi.connect(odbc_string)
+try:
+    connection = adodbapi.connect(odbc_string)
+except:
+    print '[ERROR] Connection to database %s\nString: %s\n[%s]' % (
+        mdb['execute'],
+        odbc_string,
+        sys.exc_info(),
+        )
 
 # Populate database:
 table = 'Protocolli'
