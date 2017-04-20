@@ -67,7 +67,6 @@ odbc_string = 'Provider=Microsoft.Jet.OLEDB.4.0; Data Source=%s' % (
 # Open connection via ERP Peek with ODOO
 # -----------------------------------------------------------------------------
 # Connect:
-import pdb; pdb.set_trace()
 erp = erppeek.Client(
     'http://%s:%s' % (host, port),
     db=database,
