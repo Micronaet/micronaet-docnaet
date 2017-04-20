@@ -67,6 +67,12 @@ odbc_string = 'Provider=Microsoft.Jet.OLEDB.4.0; Data Source=%s' % (
 # Open connection via ERP Peek with ODOO
 # -----------------------------------------------------------------------------
 # Connect:
+erp = erppeek.Client(
+    'http://%s:%s' % (host, port),
+    db=database,
+    user=username,
+    password=password,
+    )
 
 # Read data:
 
@@ -89,22 +95,41 @@ except:
         )
     sys.exit()    
 
-# Populate database:
-table = 'Importanza'
-
-# create a cursor
+# Create cursor:
 cr = connection.cursor()
 
-# extract all the data
+# Populate database:
+convert_db = {
+    'Lingua': [
+        'DocnaetLanguage', # OpenERP Object for Erppeek
+        [], # OpenERP domain filter
+        ('record.id', 'record.name', 'record.note'), # OpenERP fields
+        ('ID_lingua', 'linDescrizione', 'linNote'), # MDB fields (same order)
+        ]
+        
+    #TODO     
+#    'Importanza': [
+#        'docnaet.import
+#        ('ID_importanza', 'impDescrizione'), # MDB Fields:
+#        ]
+    }
 import pdb; pdb.set_trace()
-fields = ('%s' % (('ID_importanza', 'impDescrizione'), )).replace('\'', '')
-query = 'INSERT INTO %s %s VALUES %s' % (
-    table,
-    fields,
-    (1, 'Importante'),
-    )
-cr.execute(query)
-cr.commit()
+for table, item in convert_db.iteritems():
+    obj, domain, oerp_fields, mdb_fields = item    
+
+    fields = ('%s' % (mdb_fields, )).replace('\'', '')
+    erp_pool = eval('erp.%s' % obj) # Connect with Oerp Obj    
+    
+    # Loop on all record:
+    for record in erp_pool.search(domain):        
+        values = tuple([eval(v) for v in oerp_fields])
+        query = 'INSERT INTO %s %s VALUES %s' % (
+            table,
+            fields,            
+            (1, 'Importante'),
+            )
+        cr.execute(query)
+        cr.commit()
 
 # close the cursor and connection
 cr.close()
