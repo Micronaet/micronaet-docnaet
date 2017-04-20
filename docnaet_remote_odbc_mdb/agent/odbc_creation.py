@@ -86,6 +86,7 @@ except:
         odbc_string,
         sys.exc_info(),
         )
+    sys.exit()    
 
 # Populate database:
 table = 'Protocolli'
