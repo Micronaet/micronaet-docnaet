@@ -129,7 +129,7 @@ import_table = [
     #'Tipi',
     #'Nazioni',
     #'Utenti',
-    #'Clienti',
+    'Clienti',
     #'Documenti',
     ]
 priority_db = {
