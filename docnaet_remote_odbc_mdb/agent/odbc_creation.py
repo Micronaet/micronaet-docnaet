@@ -203,9 +203,7 @@ convert_db = {
 #        ('ID_importanza', 'impDescrizione'), # MDB Fields:
 #        ]
     }
-i = 0
 for table, item in convert_db.iteritems():
-    i += 1
     verbose, obj, domain, oerp_fields, mdb_fields = item    
     if verbose and i % verbose == 0:
         print '\n\n\n\n\n[INFO] %s record %s\n\n\n\n\n' % (table, i)
@@ -216,7 +214,9 @@ for table, item in convert_db.iteritems():
     
     # Loop on all record:
     erp_ids = erp_pool.search(domain)
+    i = 0
     for record in erp_pool.browse(erp_ids):
+        i += 1
         values = tuple([eval(v) for v in oerp_fields])
         query = 'INSERT INTO %s %s VALUES %s' % (
             table,
