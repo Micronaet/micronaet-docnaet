@@ -151,6 +151,13 @@ convert_db = {
         ('record.id', 'record.name', 'record.note'),
         ('ID_nazione', 'nazDescrizione', 'nazNote'),
         ],
+        
+    'Clienti': [
+        'ResPartner',
+        [('docnaet_enable','=', True)],
+        ('record.id'),
+        ('ID_cliente'),
+        ],  
               
     #TODO (fare dopo, è diventata una selection)
 #    'Importanza': [
