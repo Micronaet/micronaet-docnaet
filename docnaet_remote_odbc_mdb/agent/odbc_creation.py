@@ -180,8 +180,8 @@ convert_db = {
         'ResUsers',
         [],
         (
-            'record.id', 's(record.name)', 's(record.login)', 
-            '10', 's(record.note)',
+            'record.id', 's(record.login)', 's(record.password)', 
+            '10', 's(record.name)',
             '-1', '-1', 
             s('111'), '-1', 
             ),
