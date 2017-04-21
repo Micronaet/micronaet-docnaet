@@ -171,7 +171,7 @@ convert_db = {
         [],
         (
             'record.id', 's(record.name)', 's(record.login)', 
-            s('10'), 's(record.note), 
+            '10', 's(record.note)', 
             '-1', '-1', 
             s('111'), '-1', ),
         (
