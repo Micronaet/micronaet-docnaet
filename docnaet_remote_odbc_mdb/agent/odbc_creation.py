@@ -138,7 +138,6 @@ convert_db = {
 #        ]
     }
 for table, item in convert_db.iteritems():
-    import pdb; pdb.set_trace()
     obj, domain, oerp_fields, mdb_fields = item    
 
     fields = ('%s' % (mdb_fields, )).replace('\'', '')
@@ -147,6 +146,7 @@ for table, item in convert_db.iteritems():
     # Loop on all record:
     erp_ids = erp_pool.search(domain)
     for record in erp_pool.browse(erp_ids):
+        import pdb; pdb.set_trace()
         values = tuple([clean_ascii(eval(v)) for v in oerp_fields])
         query = 'INSERT INTO %s %s VALUES %s' % (
             table,
