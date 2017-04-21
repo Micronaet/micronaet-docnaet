@@ -132,7 +132,7 @@ priority_db = {
 
 convert_db = {
     'Lingue': [
-        0
+        0,
         'DocnaetLanguage', # OpenERP Object for Erppeek
         [], # OpenERP domain filter
         ('record.id', 's(record.name)', 's(record.note)'), # OpenERP fields
