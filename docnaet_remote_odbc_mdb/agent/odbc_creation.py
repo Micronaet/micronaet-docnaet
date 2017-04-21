@@ -166,7 +166,22 @@ convert_db = {
         [('docnaet_enable','=', True)],
         ('record.id', 'record.name', 'record.street'),
         ('ID_cliente', 'cliRagioneSociale', 'cliIndirizzo'),
-        ],  
+        ],
+        
+    'Documenti': [
+        'DocnaetDocument',
+        [],
+        (
+            'record.id', 'record.protocol_id.id', 'record.partner_id.id', 
+            'record.name', 'record.description', 'record.note', 
+            'record.number', 
+            ),
+        (
+            'ID_documento', 'ID_protocollo', 'ID_cliente', 
+            'docOggetto', 'docDescrizione', 'docNote', 
+            'docNumero', 
+            ),
+        ],
               
     #TODO (fare dopo, è diventata una selection)
 #    'Importanza': [
