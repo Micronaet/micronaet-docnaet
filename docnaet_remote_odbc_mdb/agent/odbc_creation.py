@@ -52,7 +52,7 @@ mdb_agent = config.get('mdb', 'agent') #'docnaet.mdb'
 def clean_ascii(value):
     ''' Remove not ascii char
     '''
-    if type(value) != str:
+    if type(value) not in (unicode, str):
         return value
     
     if not value:
@@ -117,18 +117,18 @@ cr = connection.cursor()
 
 # Populate database:
 convert_db = {
-    'Tipologie': [
-        'DocnaetType',
-        [],
-        ('record.id', 'record.name', 'record.note'),
-        ('ID_tipologia', 'tipDescrizione', 'tipNote'),
-        ],
-
     'Lingue': [
         'DocnaetLanguage', # OpenERP Object for Erppeek
         [], # OpenERP domain filter
         ('record.id', 'record.name', 'record.note'), # OpenERP fields
         ('ID_lingua', 'linDescrizione', 'linNote'), # MDB fields (same order)
+        ],
+
+    'Tipologie': [
+        'DocnaetType',
+        [],
+        ('record.id', 'record.name', 'record.note'),
+        ('ID_tipologia', 'tipDescrizione', 'tipNote'),
         ],
         
     #TODO (fare dopo, è diventata una selection)
