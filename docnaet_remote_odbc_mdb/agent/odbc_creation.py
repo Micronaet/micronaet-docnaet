@@ -52,6 +52,7 @@ mdb_agent = config.get('mdb', 'agent') #'docnaet.mdb'
 def clean_ascii(value):
     ''' Remove not ascii char
     '''
+    import pdb; pdb.set_trace()
     if not value:
         return ''
     res = ''
