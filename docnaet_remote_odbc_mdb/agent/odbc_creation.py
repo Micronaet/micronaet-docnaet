@@ -214,7 +214,8 @@ convert_db = {
             'mo(record.language_id)', 'mo(record.user_id)', 
             's(record.name)', 's(record.description)', 's(record.note)',
             'record.number', 'record.fax_number', 
-            's(record.docnaet_extension)', 's(record.date)',            
+            's(record.docnaet_extension)', 's(record.date)', 
+            'mo(record.original_id)',          
             ),
         (
             'ID_documento', 'ID_protocollo', 'ID_cliente', 
@@ -222,6 +223,7 @@ convert_db = {
             'docOggetto', 'docDescrizione', 'docNote',
             'docNumero', 'docFax', 
             'docEstensione', 'docData', 
+            'docFile',
             ),
         ],
               
