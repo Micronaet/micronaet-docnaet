@@ -125,8 +125,8 @@ cr = connection.cursor()
 import_table = [
     #'Lingue',
     #'Tipologie',
-    'Protocolli',
-    #'Tipi',
+    #'Protocolli',
+    'Tipi',
     #'Nazioni',
     #'Utenti',
     #'Clienti',
