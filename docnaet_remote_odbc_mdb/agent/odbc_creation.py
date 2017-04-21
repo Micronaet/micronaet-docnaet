@@ -129,8 +129,8 @@ import_table = [
     #'Tipi',
     #'Nazioni',
     #'Utenti',
-    'Clienti',
-    #'Documenti',
+    #'Clienti',
+    'Documenti',
     ]
 priority_db = {
     'lowest': 1,
