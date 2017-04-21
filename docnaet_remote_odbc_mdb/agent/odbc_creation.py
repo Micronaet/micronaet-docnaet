@@ -195,13 +195,13 @@ convert_db = {
             'record.id', 'mo(record.protocol_id)', 'mo(record.partner_id)', 
             'mo(record.language_id)', 'mo(record.user_id)',
             's(record.description)', 's(record.note)',
-            'record.number', 'record.fax',              
+            'record.number',              
             ),
         (
             'ID_documento', 'ID_protocollo', 'ID_cliente', 
             'ID_lingua', 'ID_utente', 
             'docOggetto', 'docDescrizione', 
-            'docNote', 'docNumero', 'docFax', 
+            'docNote', 'docNumero',  
             ),
         ],
               
