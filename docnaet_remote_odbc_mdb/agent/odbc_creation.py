@@ -117,13 +117,6 @@ cr = connection.cursor()
 
 # Populate database:
 convert_db = {
-    'Lingue': [
-        'DocnaetLanguage', # OpenERP Object for Erppeek
-        [], # OpenERP domain filter
-        ('record.id', 'record.name', 'record.note'), # OpenERP fields
-        ('ID_lingua', 'linDescrizione', 'linNote'), # MDB fields (same order)
-        ],
-        
     'Tipologie': [
         'DocnaetType',
         [],
@@ -131,6 +124,12 @@ convert_db = {
         ('ID_tipologia', 'tipDescrizione', 'tipNote'),
         ],
 
+    'Lingue': [
+        'DocnaetLanguage', # OpenERP Object for Erppeek
+        [], # OpenERP domain filter
+        ('record.id', 'record.name', 'record.note'), # OpenERP fields
+        ('ID_lingua', 'linDescrizione', 'linNote'), # MDB fields (same order)
+        ],
         
     #TODO (fare dopo, è diventata una selection)
 #    'Importanza': [
@@ -138,8 +137,8 @@ convert_db = {
 #        ('ID_importanza', 'impDescrizione'), # MDB Fields:
 #        ]
     }
-import pdb; pdb.set_trace()
 for table, item in convert_db.iteritems():
+    import pdb; pdb.set_trace()
     obj, domain, oerp_fields, mdb_fields = item    
 
     fields = ('%s' % (mdb_fields, )).replace('\'', '')
