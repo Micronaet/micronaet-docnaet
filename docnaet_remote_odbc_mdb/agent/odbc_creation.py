@@ -138,6 +138,12 @@ convert_db = {
         ('ID_protocollo', 'proDescrizione', 'proNote'),
         ],
         
+    'Tipi': [
+        'ResPartnerDocnaet',
+        [],
+        ('record.id', 'record.name', 'record.note'),
+        ('ID_tipo', 'tipDescrizione', 'tipNote'),
+        ], 
     #TODO (fare dopo, è diventata una selection)
 #    'Importanza': [
 #        'docnaet.import
