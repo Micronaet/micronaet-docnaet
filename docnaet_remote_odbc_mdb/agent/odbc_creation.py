@@ -127,7 +127,7 @@ import_table = [
     #'Tipologie',
     #'Protocolli',
     #'Tipi',
-    'Nazioni',
+    #'Nazioni',
     #'Utenti',
     #'Clienti',
     #'Documenti',
