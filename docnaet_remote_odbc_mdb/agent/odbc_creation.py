@@ -132,7 +132,6 @@ priority_db = {
 
 convert_db = {
     'Lingue': [
-        0,
         'DocnaetLanguage', # OpenERP Object for Erppeek
         [], # OpenERP domain filter
         ('record.id', 's(record.name)', 's(record.note)'), # OpenERP fields
@@ -140,7 +139,6 @@ convert_db = {
         ],
 
     'Tipologie': [
-        0,
         'DocnaetType',
         [],
         ('record.id', 's(record.name)', 's(record.note)'),
@@ -148,7 +146,6 @@ convert_db = {
         ],
         
     'Protocolli': [
-        0,
         'DocnaetProtocol',
         [],
         ('record.id', 's(record.name)', 's(record.note)'),
@@ -156,7 +153,6 @@ convert_db = {
         ],
         
     'Tipi': [
-        0,
         'ResPartnerDocnaet',
         [],
         ('record.id', 's(record.name)', 's(record.note)'),
@@ -164,7 +160,6 @@ convert_db = {
         ],
         
     'Nazioni': [
-        0,
         'ResCountry',
         [],
         ('record.id', 's(record.name)'),
@@ -172,7 +167,6 @@ convert_db = {
         ],
         
     'Clienti': [
-        500,
         'ResPartner',
         [('docnaet_enable','=', True)],
         ('record.id', 's(record.name)', 's(record.street)'),
@@ -180,7 +174,6 @@ convert_db = {
         ],
         
     'Documenti': [
-        500,
         'DocnaetDocument',
         [],
         (
@@ -204,11 +197,7 @@ convert_db = {
 #        ]
     }
 for table, item in convert_db.iteritems():
-    verbose, obj, domain, oerp_fields, mdb_fields = item    
-    if verbose and i % verbose == 0:
-        print '\n\n\n\n\n[INFO] %s record %s\n\n\n\n\n' % (table, i)
-    
-
+    obj, domain, oerp_fields, mdb_fields = item    
     fields = ('%s' % (mdb_fields, )).replace('\'', '')
     erp_pool = eval('erp.%s' % obj) # Connect with Oerp Obj    
     
