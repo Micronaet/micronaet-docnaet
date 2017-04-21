@@ -124,8 +124,8 @@ cr = connection.cursor()
 # Populate database:
 import_table = [
     #'Lingue',
-    'Tipologie',
-    #'Protocolli',
+    #'Tipologie',
+    'Protocolli',
     #'Tipi',
     #'Nazioni',
     #'Utenti',
