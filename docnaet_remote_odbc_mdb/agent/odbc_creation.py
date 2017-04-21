@@ -173,7 +173,7 @@ convert_db = {
             'record.id', 's(record.name)', 's(record.login)', 
             '10', 's(record.note), 
             '-1', '-1', 
-            s('111'), '-1'),
+            s('111'), '-1', ),
         (
             'ID_utente', 'uteUserName', 'utePassword', 
             'uteLivello', 'uteDescrizione', 
