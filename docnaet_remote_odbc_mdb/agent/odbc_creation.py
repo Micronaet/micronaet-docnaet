@@ -57,12 +57,9 @@ def mo(field):
     else:
         return False
 
-def clean_ascii(value):
+def s(value):
     ''' Remove not ascii char
     '''    
-    if type(value) not in (unicode, str):
-        return value
-    
     if not value:
         return ''
 
@@ -135,54 +132,61 @@ priority_db = {
 
 convert_db = {
     'Lingue': [
+        0
         'DocnaetLanguage', # OpenERP Object for Erppeek
         [], # OpenERP domain filter
-        ('record.id', 'record.name', 'record.note or ""'), # OpenERP fields
+        ('record.id', 's(record.name)', 's(record.note)'), # OpenERP fields
         ('ID_lingua', 'linDescrizione', 'linNote'), # MDB fields (same order)
         ],
 
     'Tipologie': [
+        0,
         'DocnaetType',
         [],
-        ('record.id', 'record.name', 'record.note or ""'),
+        ('record.id', 's(record.name)', 's(record.note)'),
         ('ID_tipologia', 'tipDescrizione', 'tipNote'),
         ],
         
     'Protocolli': [
+        0,
         'DocnaetProtocol',
         [],
-        ('record.id', 'record.name', 'record.note or ""'),
+        ('record.id', 's(record.name)', 's(record.note)'),
         ('ID_protocollo', 'proDescrizione', 'proNote'),
         ],
         
     'Tipi': [
+        0,
         'ResPartnerDocnaet',
         [],
-        ('record.id', 'record.name', 'record.note or ""'),
+        ('record.id', 's(record.name)', 's(record.note)'),
         ('ID_tipo', 'tipDescrizione', 'tipNote'),
         ],
         
     'Nazioni': [
+        0,
         'ResCountry',
         [],
-        ('record.id', 'record.name'),
+        ('record.id', 's(record.name)'),
         ('ID_nazione', 'nazDescrizione'),
         ],
         
     'Clienti': [
+        500,
         'ResPartner',
         [('docnaet_enable','=', True)],
-        ('record.id', 'record.name', 'record.street or ""'),
+        ('record.id', 's(record.name)', 's(record.street)'),
         ('ID_cliente', 'cliRagioneSociale', 'cliIndirizzo'),
         ],
         
     'Documenti': [
+        500,
         'DocnaetDocument',
         [],
         (
             'record.id', 'mo(record.protocol_id)', 'mo(record.partner_id)', 
-            'record.name or ""', 'record.description or ""', 
-            'record.note or ""', 
+            's(record.name)', 's(record.description)', 
+            's(record.note)', 
             'record.number', 
             ),
         (
@@ -199,8 +203,13 @@ convert_db = {
 #        ('ID_importanza', 'impDescrizione'), # MDB Fields:
 #        ]
     }
+i = 0
 for table, item in convert_db.iteritems():
-    obj, domain, oerp_fields, mdb_fields = item    
+    i += 1
+    verbose, obj, domain, oerp_fields, mdb_fields = item    
+    if verbose and i % verbose == 0:
+        print '\n\n\n\n\n[INFO] %s record %s\n\n\n\n\n' % (table, i)
+    
 
     fields = ('%s' % (mdb_fields, )).replace('\'', '')
     erp_pool = eval('erp.%s' % obj) # Connect with Oerp Obj    
@@ -208,7 +217,7 @@ for table, item in convert_db.iteritems():
     # Loop on all record:
     erp_ids = erp_pool.search(domain)
     for record in erp_pool.browse(erp_ids):
-        values = tuple([clean_ascii(eval(v)) for v in oerp_fields])
+        values = tuple([eval(v) for v in oerp_fields])
         query = 'INSERT INTO %s %s VALUES %s' % (
             table,
             fields,            
