@@ -62,6 +62,7 @@ def clean_ascii(value):
     for c in value:
         if ord(c) <= 127:
               res += c
+    res = res.replace('\'', ' ')          
     return str(res)
 
 # -----------------------------------------------------------------------------
@@ -116,6 +117,14 @@ except:
 cr = connection.cursor()
 
 # Populate database:
+priority_db = {
+    'lowest': 1,
+    'low': 2, 
+    'normal': 3,
+    'high': 4,
+    'highest': 5,
+    }
+
 convert_db = {
     'Lingue': [
         'DocnaetLanguage', # OpenERP Object for Erppeek
@@ -148,8 +157,8 @@ convert_db = {
     'Nazioni': [
         'ResCountry',
         [],
-        ('record.id', 'record.name', 'record.note'),
-        ('ID_nazione', 'nazDescrizione', 'nazNote'),
+        ('record.id', 'record.name'),
+        ('ID_nazione', 'nazDescrizione'),
         ],
         
     'Clienti': [
