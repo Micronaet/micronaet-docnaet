@@ -55,8 +55,6 @@ def clean_ascii(value):
     if type(value) not in (unicode, str):
         return value
     
-    if value.startswith('Pub'):
-        import pdb; pdb.set_trace()
     if not value:
         return ''
 
@@ -64,7 +62,7 @@ def clean_ascii(value):
     for c in value:
         if ord(c) <= 127:
               res += c
-    return res          
+    return str(res)
 
 # -----------------------------------------------------------------------------
 # Add calculated parameters:
