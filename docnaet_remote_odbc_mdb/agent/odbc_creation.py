@@ -180,8 +180,12 @@ for table, item in convert_db.iteritems():
             fields,            
             values,
             )
-        cr.execute(query)
-        cr.commit()
+        print '[INFO] Query: %s' % query
+        try:    
+            cr.execute(query)
+            cr.commit()
+        except:
+            print '[ERROR] Error: %s' % (sys.exc_info(), )
 
 # close the cursor and connection
 cr.close()
