@@ -129,7 +129,7 @@ import_table = [
     #'Tipi',
     #'Nazioni',
     #'Utenti',
-    'Clienti',
+    #'Clienti',
     #'Documenti',
     ]
 priority_db = {
@@ -214,14 +214,14 @@ convert_db = {
             'mo(record.language_id)', 'mo(record.user_id)', 
             's(record.name)', 's(record.description)', 's(record.note)',
             'record.number', 'record.fax_number', 
-            's(record.docnaet_extension)',            
+            's(record.docnaet_extension)', 's(record.date)',            
             ),
         (
             'ID_documento', 'ID_protocollo', 'ID_cliente', 
             'ID_lingua', 'ID_utente', 
             'docOggetto', 'docDescrizione', 'docNote',
             'docNumero', 'docFax', 
-            'docEstensione',
+            'docEstensione', 'docData', 
             ),
         ],
               
