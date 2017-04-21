@@ -47,6 +47,20 @@ mdb_execute = config.get('mdb', 'execute') #'execute.docnaet.mdb'
 mdb_agent = config.get('mdb', 'agent') #'docnaet.mdb'
 
 # -----------------------------------------------------------------------------
+# Utility:
+# -----------------------------------------------------------------------------
+def clean_ascii(value):
+    ''' Remove not ascii char
+    '''
+    if not value:
+        return ''
+    res = ''
+    for c in value:
+        if ord(c) <= 127:
+              res += c
+    return res          
+
+# -----------------------------------------------------------------------------
 # Add calculated parameters:
 # -----------------------------------------------------------------------------
 # Generate fullname:    
@@ -120,7 +134,7 @@ convert_db = {
 #        ('ID_importanza', 'impDescrizione'), # MDB Fields:
 #        ]
     }
-
+import pdb; pdb.set_trace()
 for table, item in convert_db.iteritems():
     obj, domain, oerp_fields, mdb_fields = item    
 
@@ -130,7 +144,7 @@ for table, item in convert_db.iteritems():
     # Loop on all record:
     erp_ids = erp_pool.search(domain)
     for record in erp_pool.browse(erp_ids):
-        values = tuple([eval(v) for v in oerp_fields])
+        values = tuple([clean_ascii(eval(v)) for v in oerp_fields])
         query = 'INSERT INTO %s %s VALUES %s' % (
             table,
             fields,            
