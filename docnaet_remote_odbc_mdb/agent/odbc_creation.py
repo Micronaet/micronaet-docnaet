@@ -51,10 +51,12 @@ mdb_agent = config.get('mdb', 'agent') #'docnaet.mdb'
 # -----------------------------------------------------------------------------
 def clean_ascii(value):
     ''' Remove not ascii char
-    '''
+    '''    
     if type(value) not in (unicode, str):
         return value
     
+    if value.startswith('Pub'):
+        import pdb; pdb.set_trace()
     if not value:
         return ''
 
@@ -146,7 +148,6 @@ for table, item in convert_db.iteritems():
     # Loop on all record:
     erp_ids = erp_pool.search(domain)
     for record in erp_pool.browse(erp_ids):
-        import pdb; pdb.set_trace()
         values = tuple([clean_ascii(eval(v)) for v in oerp_fields])
         query = 'INSERT INTO %s %s VALUES %s' % (
             table,
