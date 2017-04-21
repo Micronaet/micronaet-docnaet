@@ -85,8 +85,7 @@ shutil.copyfile(mdb['start'], mdb['execute'])
 # Connect to the database:
 try:
     connection = pyodbc.connect(
-        'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % mdb['execute'])
-    cursor = connection.cursor()
+        'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % mdb['execute'])    
 except:
     print '[ERROR] Connection to database %s\nString: %s\n[%s]' % (
         mdb['execute'],
@@ -105,9 +104,17 @@ convert_db = {
         [], # OpenERP domain filter
         ('record.id', 'record.name', 'record.note'), # OpenERP fields
         ('ID_lingua', 'linDescrizione', 'linNote'), # MDB fields (same order)
-        ]
+        ],
         
-    #TODO     
+    'Tipologie': [
+        'DocnaetType',
+        [],
+        ('record.id', 'record.name', 'record.note'),
+        ('ID_tipologia', 'tipDescrizione', 'tipNote'),
+        ],
+
+        
+    #TODO (fare dopo, è diventata una selection)
 #    'Importanza': [
 #        'docnaet.import
 #        ('ID_importanza', 'impDescrizione'), # MDB Fields:
