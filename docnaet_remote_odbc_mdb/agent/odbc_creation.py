@@ -49,6 +49,14 @@ mdb_agent = config.get('mdb', 'agent') #'docnaet.mdb'
 # -----------------------------------------------------------------------------
 # Utility:
 # -----------------------------------------------------------------------------
+def mo(field):
+    ''' Clean many2one fields
+    '''
+    if field:
+        return field.id
+    else:
+        return False
+
 def clean_ascii(value):
     ''' Remove not ascii char
     '''    
@@ -129,28 +137,28 @@ convert_db = {
     'Lingue': [
         'DocnaetLanguage', # OpenERP Object for Erppeek
         [], # OpenERP domain filter
-        ('record.id', 'record.name', 'record.note'), # OpenERP fields
+        ('record.id', 'record.name', 'record.note or ""'), # OpenERP fields
         ('ID_lingua', 'linDescrizione', 'linNote'), # MDB fields (same order)
         ],
 
     'Tipologie': [
         'DocnaetType',
         [],
-        ('record.id', 'record.name', 'record.note'),
+        ('record.id', 'record.name', 'record.note or ""'),
         ('ID_tipologia', 'tipDescrizione', 'tipNote'),
         ],
         
     'Protocolli': [
         'DocnaetProtocol',
         [],
-        ('record.id', 'record.name', 'record.note'),
+        ('record.id', 'record.name', 'record.note or ""'),
         ('ID_protocollo', 'proDescrizione', 'proNote'),
         ],
         
     'Tipi': [
         'ResPartnerDocnaet',
         [],
-        ('record.id', 'record.name', 'record.note'),
+        ('record.id', 'record.name', 'record.note or ""'),
         ('ID_tipo', 'tipDescrizione', 'tipNote'),
         ],
         
@@ -164,7 +172,7 @@ convert_db = {
     'Clienti': [
         'ResPartner',
         [('docnaet_enable','=', True)],
-        ('record.id', 'record.name', 'record.street'),
+        ('record.id', 'record.name', 'record.street or ""'),
         ('ID_cliente', 'cliRagioneSociale', 'cliIndirizzo'),
         ],
         
@@ -172,13 +180,15 @@ convert_db = {
         'DocnaetDocument',
         [],
         (
-            'record.id', 'record.protocol_id.id', 'record.partner_id.id', 
-            'record.name', 'record.description', 'record.note', 
+            'record.id', 'mo(record.protocol_id)', 'mo(record.partner_id)', 
+            'record.name or ""', 'record.description or ""', 
+            'record.note or ""', 
             'record.number', 
             ),
         (
             'ID_documento', 'ID_protocollo', 'ID_cliente', 
-            'docOggetto', 'docDescrizione', 'docNote', 
+            'docOggetto', 'docDescrizione', 
+            'docNote', 
             'docNumero', 
             ),
         ],
