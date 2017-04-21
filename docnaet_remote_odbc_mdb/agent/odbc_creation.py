@@ -143,7 +143,15 @@ convert_db = {
         [],
         ('record.id', 'record.name', 'record.note'),
         ('ID_tipo', 'tipDescrizione', 'tipNote'),
-        ], 
+        ],
+        
+    'Nazioni': [
+        'ResCountry',
+        [],
+        ('record.id', 'record.name', 'record.note'),
+        ('ID_nazione', 'nazDescrizione', 'nazNote'),
+        ],
+              
     #TODO (fare dopo, è diventata una selection)
 #    'Importanza': [
 #        'docnaet.import
