@@ -223,7 +223,7 @@ for table, item in convert_db.iteritems():
             fields,            
             values,
             )
-        print '[INFO] Query: %s' % query
+        print '[INFO] %s. Query: %s' % (i, query)
         try:    
             cr.execute(query)
             cr.commit()
