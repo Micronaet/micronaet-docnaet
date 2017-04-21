@@ -122,6 +122,16 @@ except:
 cr = connection.cursor()
 
 # Populate database:
+import_table = [
+    #'Lingue',
+    #'Tipologie',
+    #'Protocolli',
+    #'Tipi',
+    #'Nazioni',
+    'Utenti',
+    #'Clienti',
+    #'Documenti',
+    ]
 priority_db = {
     'lowest': 1,
     'low': 2, 
@@ -214,6 +224,10 @@ convert_db = {
 #        ]
     }
 for table, item in convert_db.iteritems():
+    if table not in import_table:
+        print '[INFO] Table not import: %s' % table
+        continue
+        
     obj, domain, oerp_fields, mdb_fields = item    
     fields = ('%s' % (mdb_fields, )).replace('\'', '')
     erp_pool = eval('erp.%s' % obj) # Connect with Oerp Obj    
