@@ -183,7 +183,7 @@ convert_db = {
             'record.id', 's(record.login)', 's(record.password)', 
             '10', 's(record.name)',
             '-1', '-1', 
-            s('111'), '-1', 
+            's(\'111\')', '-1', 
             ),
         (
             'ID_utente', 'uteUserName', 'utePassword', 
@@ -239,7 +239,6 @@ for table, item in convert_db.iteritems():
     i = 0
     for record in erp_pool.browse(erp_ids):
         i += 1
-        import pdb; pdb.set_trace()
         values = tuple([eval(v) for v in oerp_fields])
         query = 'INSERT INTO %s %s VALUES %s' % (
             table,
