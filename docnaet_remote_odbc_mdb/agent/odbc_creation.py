@@ -52,9 +52,12 @@ mdb_agent = config.get('mdb', 'agent') #'docnaet.mdb'
 def clean_ascii(value):
     ''' Remove not ascii char
     '''
-    import pdb; pdb.set_trace()
+    if type(value) != str:
+        return value
+    
     if not value:
         return ''
+
     res = ''
     for c in value:
         if ord(c) <= 127:
