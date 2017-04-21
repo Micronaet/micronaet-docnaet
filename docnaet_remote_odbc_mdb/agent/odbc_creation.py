@@ -155,8 +155,8 @@ convert_db = {
     'Clienti': [
         'ResPartner',
         [('docnaet_enable','=', True)],
-        ('record.id'),
-        ('ID_cliente'),
+        ('record.id', 'record.name', 'record.street'),
+        ('ID_cliente', 'cliRagioneSociale', 'cliIndirizzo'),
         ],  
               
     #TODO (fare dopo, è diventata una selection)
