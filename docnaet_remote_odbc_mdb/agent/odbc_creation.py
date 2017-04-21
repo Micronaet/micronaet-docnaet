@@ -196,8 +196,14 @@ convert_db = {
     'Clienti': [
         'ResPartner',
         [('docnaet_enable','=', True)],
-        ('record.id', 's(record.name)', 's(record.street)', 'mo(record.country_id)', 'mo(record.docnaet_category_id)',
-        ('ID_cliente', 'cliRagioneSociale', 'cliIndirizzo', 'ID_nazione', 'ID_tipo'),
+        (
+            'record.id', 's(record.name)', 's(record.street)', 
+            'mo(record.country_id)', 'mo(record.docnaet_category_id)',
+            ),
+        (
+            'ID_cliente', 'cliRagioneSociale', 'cliIndirizzo', 
+            'ID_nazione', 'ID_tipo',
+            ),
         ],
         
     'Documenti': [
