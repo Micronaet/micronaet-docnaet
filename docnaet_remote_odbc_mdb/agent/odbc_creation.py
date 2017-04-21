@@ -165,7 +165,22 @@ convert_db = {
         ('record.id', 's(record.name)'),
         ('ID_nazione', 'nazDescrizione'),
         ],
-        
+
+    'Utenti': [
+        'ResUsers',
+        [],
+        (
+            'record.id', 's(record.name)', 's(record.login)', 
+            '10', 's(record.note), 
+            '-1', '-1', 
+            s('111'), '-1'),
+        (
+            'ID_utente', 'uteUserName', 'utePassword', 
+            'uteLivello', 'uteDescrizione', 
+            'uteNonEliminabile', 'uteAdministrator', 
+            'uteConfigurazione', 'uteGestore'),
+        ],
+                
     'Clienti': [
         'ResPartner',
         [('docnaet_enable','=', True)],
@@ -178,15 +193,16 @@ convert_db = {
         [],
         (
             'record.id', 'mo(record.protocol_id)', 'mo(record.partner_id)', 
-            's(record.name)', 's(record.description)', 
-            's(record.note)', 
-            'record.number', 
+            'mo(record.language_id)', 'mo(record.user_id'),
+            's(record.description)', 's(record.note)',
+            'record.number', 'record.fax', 
+             
             ),
         (
             'ID_documento', 'ID_protocollo', 'ID_cliente', 
+            'ID_lingua', 'ID_utente', 
             'docOggetto', 'docDescrizione', 
-            'docNote', 
-            'docNumero', 
+            'docNote', 'docNumero', 'docFax', 
             ),
         ],
               
