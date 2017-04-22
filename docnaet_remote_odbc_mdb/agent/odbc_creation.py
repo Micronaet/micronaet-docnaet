@@ -236,10 +236,9 @@ convert_db = {
 #        ('ID_importanza', 'impDescrizione'), # MDB Fields:
 #        ]
     }
-for table, item in convert_db.iteritems():
-    if table not in import_table:
-        print '[INFO] Table not import: %s' % table
-        continue
+
+for table in import_table:
+    item = import_table[table]
         
     obj, domain, oerp_fields, mdb_fields = item    
     fields = ('%s' % (mdb_fields, )).replace('\'', '')
