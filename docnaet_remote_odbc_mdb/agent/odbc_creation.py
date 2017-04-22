@@ -242,6 +242,9 @@ for table in import_table:
     # Loop on all record:
     erp_ids = erp_pool.search(domain)
     i = 0
+    
+    print '[INFO] Start export %s [record: %s]' % (
+        table, len(erp_ids))        
     for record in erp_pool.browse(erp_ids):
         i += 1
         if i % 100 == 0:
