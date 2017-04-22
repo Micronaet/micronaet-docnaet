@@ -216,7 +216,8 @@ convert_db = {
             's(record.name)', 's(record.description)', 's(record.note)',
             'record.number', 'record.fax_number', 
             's(record.docnaet_extension)', 's(record.date)', 
-            'mo(record.original_id)',          
+            'mo(record.original_id)', 'mo(record.type_id)',
+            #'priority_db.get(record.priority, 3)'
             ),
         (
             'ID_documento', 'ID_protocollo', 'ID_cliente', 
@@ -224,7 +225,8 @@ convert_db = {
             'docOggetto', 'docDescrizione', 'docNote',
             'docNumero', 'docFax', 
             'docEstensione', 'docData', 
-            'docFile',
+            'docFile', 'ID_tipologia',
+            #'ID_'
             ),
         ],
               
