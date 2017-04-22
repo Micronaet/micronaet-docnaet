@@ -123,15 +123,16 @@ cr = connection.cursor()
 
 # Populate database:
 import_table = [
-    #'Lingue',
-    #'Tipologie',
-    #'Protocolli',
-    #'Tipi',
-    #'Nazioni',
-    #'Utenti',
-    #'Clienti',
-    #'Documenti',
+    'Lingue',
+    'Tipologie',
+    'Protocolli',
+    'Tipi',
+    'Nazioni',
+    'Utenti',
+    'Clienti',
+    'Documenti',
     ]
+    
 priority_db = {
     'lowest': 1,
     'low': 2, 
