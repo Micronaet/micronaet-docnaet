@@ -122,6 +122,7 @@ except:
 cr = connection.cursor()
 
 # Populate database:
+verbose = False # TODO True log query export
 import_table = [
     'Lingue',
     'Tipologie',
@@ -243,18 +244,24 @@ for table in import_table:
     i = 0
     for record in erp_pool.browse(erp_ids):
         i += 1
+        if i % 100 == 0:
+            _logger.info('[INFO] %s record exported: %s' % (table, i))
+            
         values = tuple([eval(v) for v in oerp_fields])
         query = 'INSERT INTO %s %s VALUES %s' % (
             table,
             fields,            
             values,
             )
-        print '[INFO] %s. Query: %s' % (i, query)
+        if verbose:
+            print '[INFO] %s. Query: %s' % (i, query)
         try:    
             cr.execute(query)
             cr.commit()
         except:
-            print '[ERROR] Error: %s' % (sys.exc_info(), )
+            print '[ERROR] %s export: %s' % (
+                table, sys.exc_info(), 
+                )
 
 # close the cursor and connection
 cr.close()
