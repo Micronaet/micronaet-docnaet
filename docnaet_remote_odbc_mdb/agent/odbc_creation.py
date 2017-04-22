@@ -229,12 +229,6 @@ convert_db = {
             #'ID_'
             ),
         ],
-              
-    #TODO (fare dopo, è diventata una selection)
-#    'Importanza': [
-#        'docnaet.import
-#        ('ID_importanza', 'impDescrizione'), # MDB Fields:
-#        ]
     }
 
 for table in import_table:
