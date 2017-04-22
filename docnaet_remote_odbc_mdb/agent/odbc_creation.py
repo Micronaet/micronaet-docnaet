@@ -245,7 +245,7 @@ for table in import_table:
     for record in erp_pool.browse(erp_ids):
         i += 1
         if i % 100 == 0:
-            _logger.info('[INFO] %s record exported: %s' % (table, i))
+            print '[INFO] %s record exported: %s' % (table, i)
             
         values = tuple([eval(v) for v in oerp_fields])
         query = 'INSERT INTO %s %s VALUES %s' % (
