@@ -269,7 +269,6 @@ for table in import_table:
 # close the cursor and connection
 cr.close()
 connection.close()
-
 # Final rename for agent copy:
 shutil.move(mdb['execute'], mdb['agent'])
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
