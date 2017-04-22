@@ -238,7 +238,7 @@ convert_db = {
     }
 
 for table in import_table:
-    item = import_table[table]
+    item = convert_db[table]
         
     obj, domain, oerp_fields, mdb_fields = item    
     fields = ('%s' % (mdb_fields, )).replace('\'', '')
