@@ -69,6 +69,52 @@ class UlploadDocumentWizard(orm.TransientModel):
         return document_pool.call_docnaet_url(
             cr, uid, ids, mode='home', context=context)
 
+    def button_reassign(self, cr, uid, ids, context=None):
+        ''' Button reassign wizard
+        '''
+        if context is None:
+            context = {}
+        active_ids = context.get('active_ids', [])    
+        if not active_ids:
+            raise osv.except_osv(
+                _('No selection'), 
+                _('Select document to reassign'),
+                )
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        data = {}
+        if current_proxy.default_partner_id:
+            data['partner_id'] = current_proxy.default_partner_id.id
+        if current_proxy.default_user_id:
+            data['user_id'] = current_proxy.default_user_id.id
+        if current_proxy.default_protocol_id:
+            data['protocol_id'] = current_proxy.default_protocol_id.id
+        # TODO manage: assign protocol!
+        
+        if current_proxy.default_type_id:
+            data['type_id'] = current_proxy.default_type_id.id
+        if current_proxy.default_language_id:
+            data['language_id'] = current_proxy.default_language_id.id
+        # TODO manage reassign_confirm for change status        
+        
+        document_pool = self.pool.get('docnaet.document')
+        document_pool.write(cr, uid, active_ids, data, context=context)  
+        
+        model_pool = self.pool.get('ir.model.data')
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Reassign characteristics'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            #'res_id': 1,
+            'res_model': 'docnaet.document',
+            #'view_id': view_id, # Fale
+            'views': [(False, 'tree'), (False, 'form')],
+            'domain': [('id', 'in', active_ids)],
+            'context': context,
+            'target': 'current',
+            'nodestroy': False,
+            }      
+        
     def button_upload(self, cr, uid, ids, context=None):
         ''' Button event for upload
         '''
@@ -196,9 +242,14 @@ class UlploadDocumentWizard(orm.TransientModel):
         
     
     _columns = {
+        'mode': fields.selection([
+            ('upload', 'Upload mode'),
+            ('reassign', 'Reassign mode'),
+            ], 'Mode'),            
         'default_partner_id': fields.many2one(
             'res.partner', 'Default partner'),
-        'assign_protocol': fields.boolean('Assign protocol'),    
+        'assign_protocol': fields.boolean('Assign protocol', 
+            help='In upload mode assign protocol and next number'),    
         'default_user_id': fields.many2one('res.users', 
             'Default user'),
         'default_protocol_id': fields.many2one('docnaet.protocol', 
@@ -207,10 +258,13 @@ class UlploadDocumentWizard(orm.TransientModel):
             'Default type'),            
         'default_language_id': fields.many2one('docnaet.language', 
             'Default language'),
-        'folder_status': fields.text('Folder status')
+        'folder_status': fields.text('Folder status'),
+        'reassign_confirm': fields.boolean('Confirm after reassign',
+            help='After reassign feature confirm all draft elements'),
         }
 
     _defaults = {
+        'mode': lambda *x: 'upload',
         'default_user_id': lambda s, cr, uid, ctx: uid,
         # TODO: default function
         'folder_status': default_read_upload_folder, 
