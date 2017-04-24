@@ -6,7 +6,7 @@ private_path: x:\private
 protocol: openerp://
 separator: |
 folder_command: explorer
-openfile_command: start %s
+openfile_command: start %s /MAX
 
 [log]
 file: c:\Micronaet\docnaet.log

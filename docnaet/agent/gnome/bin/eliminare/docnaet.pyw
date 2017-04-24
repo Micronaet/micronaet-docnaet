@@ -55,6 +55,8 @@ if operation == 'document':
 # ---------------
 elif operation == 'folder':
     folder = os.path.join(private_path, argument)       
+    if folder[-1] == '/':
+        folder = folder[:-1]
     log_f.write('Open user folder: %s\n' % folder)
     log_f.close()
     os.system('%s %s' % (folder_command, folder))
