@@ -480,8 +480,10 @@
         <field name="model">docnaet.document</field>        
         <field name="arch" type="xml">
             <tree string="Docnaet document" colors="grey:original_id!=False;black:state=='draft';blue:state=='timed';green:state=='confirmed';red:state=='cancel'">
-               <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}"/>
-               <button type="object" name="button_call_url_docnaet" string="Document linked!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"/>
+               <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}" invisible="context.get('remote_document', False)"/>
+               <button type="object" name="button_call_url_docnaet" string="Document linked!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"  invisible="context.get('remote_document', False)"/>
+               <button type="object" name="button_call_url_remote_docnaet" string="Open document [R]" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}" invisible="not context.get('remote_document', False)"/>
+               <button type="object" name="button_call_url_remote_docnaet" string="Document linked [R]!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"  invisible="not context.get('remote_document', False)"/>
                <field name="protocol_id" required="1" />
                <field name="number" />
                <field name="date" />
@@ -545,10 +547,11 @@
                </header>
                <sheet>               
                   <group colspan="4" col="5"> 
-                       <button type="object" name="button_call_url_docnaet" string="Open document" class="oe_highlight" colspan="1"/>
+                       <button type="object" name="button_call_url_docnaet" string="Open document" class="oe_highlight" colspan="1" invisible="context.get('remote_document', False)"/>
+                       <button type="object" name="button_call_url_remote_docnaet" string="Open document [R]" class="oe_highlight" colspan="1" invisible="not context.get('remote_document', False)"/>
                        <!--<button type="object" name="button_assign_fax_number" string="Assign fax" attrs="{'invisible':[('fax_number','=',True)]}"/>-->
-                       <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" colspan="1" />
-                       <button type="object" name="button_doc_info_docnaet" string="Doc info" colspan="1" />
+                       <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" colspan="1" invisible="context.get('remote_document', False)" />
+                       <button type="object" name="button_doc_info_docnaet" string="Doc info" colspan="1" invisible="context.get('remote_document', False)" />
                        <newline />
                        
                        <field name="name" colspan="5"/>
@@ -653,11 +656,21 @@
         <field name="context">{}</field>
         <field name="domain">[]</field>
     </record>
+    <record model="ir.actions.act_window" id="action_docnaet_remote_document_tree">
+        <field name="name">Remote documents</field>
+        <field name="res_model">docnaet.document</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="context">{'remote_document':True}</field>
+        <field name="domain">[]</field>
+    </record>
     
     <menuitem id="docnaet_root" name="Docnaet" sequence="20" groups="group_docnaet_user,group_docnaet_admin,group_docnaet_agent"/>
 
         <menuitem parent="docnaet_root" id="docnaet_document" name="Document" sequence="20" />
             <menuitem parent="docnaet_document" id="docnaet_document_document" name="Documenti" sequence="10" action="action_docnaet_document_tree" />            
+            <menuitem parent="docnaet_document" id="docnaet_document_remote_ocument" name="Documenti remoti" sequence="10" action="action_docnaet_remote_document_tree" groups="group_docnaet_remote_user"/>            
             <menuitem parent="docnaet_document" id="docnaet_document_my_document" name="My document" sequence="20" action="action_docnaet_my_document_tree"/>
                 <menuitem parent="docnaet_document_my_document" id="docnaet_document_deadline" name="Deadline" sequence="30" action="action_docnaet_deadline_document_tree" />            
 

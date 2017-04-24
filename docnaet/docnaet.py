@@ -383,7 +383,7 @@ class DocnaetDocument(orm.Model):
     def dummy(self, cr, uid, ids, context=None):
         return True
         
-    def call_docnaet_url(self, cr, uid, ids, mode, context=None):    
+    def call_docnaet_url(self, cr, uid, ids, mode, remote=False, context=None):    
         ''' Call url in format: openerp://operation|argument 
             Cases:
             document|document_id.extension > open document
@@ -398,9 +398,13 @@ class DocnaetDocument(orm.Model):
         if mode == 'open':  # TODO rimettere id e togliere docnaet_id
             filename = self.get_document_filename(
                 cr, uid, doc_proxy, mode='filename', context=context)
-            final_url = r'%s://document|%s' % (handle, filename)
+            final_url = r'%s://document|%s' % (
+                handle, filename)
         elif mode == 'home':
-            final_url = r'%s://folder|%s' % (handle, uid)
+            final_url = r'%s://folder|%s' % (
+                handle, uid)
+        if remote:
+            final_url = '%s[R]' % final_url
 
         return {
             'name': 'Docnaet document',
@@ -466,6 +470,13 @@ class DocnaetDocument(orm.Model):
         ''' Call url function for prepare address and return for open doc:
         '''
         return self.call_docnaet_url(cr, uid, ids, 'open', context=context)
+    
+    def button_call_url_remote_docnaet(self, cr, uid, ids, context=None):
+        ''' Call url function for prepare address and return for open doc:
+            (in remote mode)
+        '''
+        return self.call_docnaet_url(
+            cr, uid, ids, 'open', remote=True, context=context)
 
     def get_document_filename(
             self, cr, uid, document, mode='fullname', context=None):
