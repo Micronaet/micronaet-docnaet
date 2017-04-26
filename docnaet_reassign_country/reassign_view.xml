@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+       <!-- res.country.unique.name.wizard -->
+       <record id="res_country_unique_name_wizard_view" model="ir.ui.view">
+            <field name="name">Reassign country</field>
+            <field name="model">res.country.unique.name.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Wizard for reassign country" version="7.0">
+                   <header>
+                       <button string="Cancel" special="cancel" />
+                       <button name="unify_country" string="Unify" type="object" icon="gtk-jump-to" class="oe_highlight" />
+                   </header>                   
+                   <group colspan="4" col="4">
+                        <field name="new_country_id" />
+                   </group>
+                </form>
+            </field>
+      </record>
+      <record model="ir.actions.act_window" id="action_res_country_unique_name_wizard">
+          <field name="name">Unify country</field>
+          <field name="res_model">res.country.unique.name.wizard</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">form</field>
+          <field name="target">new</field>
+          <field name="view_id" ref="res_country_unique_name_wizard_view"/>
+      </record>
+      
+      <act_window
+          id="act_reassign_country_item"
+          name="Reassign country"
+          res_model="res.country.unique.name.wizard"
+          src_model="res.country"
+          view_mode="form"
+          view_type="form"
+          target="new"
+          key2="client_action_multi"
+          multi="True"          
+          />
+      
+      <!--<record model="ir.ui.view" id="view_unify_country_button_tree">
+          <field name="name">res.country.unify.button.tree</field>
+          <field name="model">res.country</field>
+          <field name="inherit_id" ref="docnaet.res_country_tree_docnaet_view"/>
+          <field name="arch" type="xml">
+              <field name="code" position="before">
+                    <button name="%(action_res_country_unique_name_wizard)d" string="Unify wizard" icon="gtk-dnd-multiplex" type="action" groups="docnaet.group_docnaet_admin" confirm="Select elements to unify and press unify button for element that will be keeped!"/>
+              </field> 
+          </field>
+      </record>-->
+    </data>
+</openerp>
