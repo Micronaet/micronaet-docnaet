@@ -94,10 +94,15 @@ class UlploadDocumentWizard(orm.TransientModel):
             data['type_id'] = current_proxy.default_type_id.id
         if current_proxy.default_language_id:
             data['language_id'] = current_proxy.default_language_id.id
-        # TODO manage reassign_confirm for change status        
         
         document_pool = self.pool.get('docnaet.document')
         document_pool.write(cr, uid, active_ids, data, context=context)  
+
+        # Reassign protocol number:    
+        if current_proxy.assign_protocol:
+            document_pool.assign_protocol_number(
+                cr, uid, active_ids, context=context)
+        # reassign_confirm for change status in confirmed
         
         model_pool = self.pool.get('ir.model.data')
         return {

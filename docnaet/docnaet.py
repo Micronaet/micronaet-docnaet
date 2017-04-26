@@ -420,15 +420,15 @@ class DocnaetDocument(orm.Model):
     def assign_protocol_number(self, cr, uid, ids, context=None):
         ''' Reassign protocol number (enabled only if protocol and number
             is present (in view)
+            Used also for N records
         '''
-        current_proxy = self.browse(cr, uid, ids, context=context)[0]
-        
-        number = self.pool.get('docnaet.protocol').assign_protocol_number(
-            cr, uid, current_proxy.protocol_id.id, context=context)
-        return self.write(cr, uid, ids, {
-            'number': number,
-            }, context=context)
-        
+        for document in self.browse(cr, uid, ids, context=context):        
+            number = self.pool.get('docnaet.protocol').assign_protocol_number(
+                cr, uid, document.protocol_id.id, context=context)
+            self.write(cr, uid, document.id, {
+                'number': number,
+                }, context=context)
+        return True                
 
     def button_doc_info_docnaet(self, cr, uid, ids, context=None):
         ''' Document info
