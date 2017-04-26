@@ -107,8 +107,8 @@ class ResCountryUniqueNameWizard(orm.TransientModel):
 
         # Remove old country:
         # TODO after testing:
-        #if not error:
-        #    country_pool.unlink(cr, uid, old_country_ids, context=context) 
+        if not error:
+            country_pool.unlink(cr, uid, old_country_ids, context=context) 
         return True
         
     _columns = {
