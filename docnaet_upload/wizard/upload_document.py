@@ -102,7 +102,7 @@ class UlploadDocumentWizard(orm.TransientModel):
         if current_proxy.assign_protocol:
             document_pool.assign_protocol_number(
                 cr, uid, active_ids, context=context)
-        # reassign_confirm for change status in confirmed
+        # TODO reassign_confirm for change status in confirmed
         
         model_pool = self.pool.get('ir.model.data')
         return {
