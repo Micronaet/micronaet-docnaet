@@ -124,13 +124,13 @@ cr = connection.cursor()
 # Populate database:
 verbose = False # TODO True log query export
 import_table = [
-    #'Lingue',
-    #'Tipologie',
-    #'Protocolli',
-    #'Tipi',
-    #'Nazioni',
-    #'Utenti',
-    #'Clienti',
+    'Lingue',
+    'Tipologie',
+    'Protocolli',
+    'Tipi',
+    'Nazioni',
+    'Utenti',
+    'Clienti',
     'Documenti',
     ]
     
@@ -248,7 +248,6 @@ for table in import_table:
     for record in erp_pool.browse(erp_ids):
         i += 1
         if i % 100 == 0:
-            break
             print '[INFO] ... %s record exported: %s' % (table, i)
             
         values = tuple([eval(v) for v in oerp_fields])
