@@ -55,7 +55,7 @@ def mo(field):
     if field:
         return field.id
     else:
-        return False
+        return 'null'
 
 def s(value):
     ''' Remove not ascii char
