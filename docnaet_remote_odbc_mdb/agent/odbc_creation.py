@@ -124,13 +124,13 @@ cr = connection.cursor()
 # Populate database:
 verbose = False # TODO True log query export
 import_table = [
-    'Lingue',
-    'Tipologie',
-    'Protocolli',
-    'Tipi',
-    'Nazioni',
-    'Utenti',
-    'Clienti',
+    #'Lingue',
+    #'Tipologie',
+    #'Protocolli',
+    #'Tipi',
+    #'Nazioni',
+    #'Utenti',
+    #'Clienti',
     'Documenti',
     ]
     
