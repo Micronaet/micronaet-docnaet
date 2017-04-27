@@ -269,12 +269,12 @@ for table in import_table:
                 
 if 'Documenti' in import_table:
     # Change for problem:
-    print '[INFO] docFile null when 0'
     query = '''
         UPDATE Documenti SET docFile = '' WHERE docFile = '0';
         '''
     cr.execute(query)
     cr.commit()
+    print '[INFO] docFile null when 0'
 
 # close the cursor and connection
 cr.close()
