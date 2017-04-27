@@ -55,7 +55,7 @@ def mo(field):
     if field:
         return field.id
     else:
-        return 'null'
+        return False
 
 def s(value):
     ''' Remove not ascii char
@@ -217,7 +217,7 @@ convert_db = {
             's(record.name)', 's(record.description)', 's(record.note)',
             'record.number', 'record.fax_number', 
             's(record.docnaet_extension)', 's(record.date)', 
-            'mo(record.original_id) or ""', 'mo(record.type_id)',
+            'mo(record.original_id)', 'mo(record.type_id)',
             #'priority_db.get(record.priority, 3)'
             ),
         (
@@ -248,6 +248,7 @@ for table in import_table:
     for record in erp_pool.browse(erp_ids):
         i += 1
         if i % 100 == 0:
+            break
             print '[INFO] ... %s record exported: %s' % (table, i)
             
         values = tuple([eval(v) for v in oerp_fields])
@@ -265,6 +266,15 @@ for table in import_table:
             print '[ERROR] %s export: %s' % (
                 table, sys.exc_info(), 
                 )
+                
+if 'Documenti' in import_table:
+    # Change for problem:
+    print '[INFO] docFile null when 0'
+    query = '''
+        UPDATE Documenti SET docFile = '' WHERE docFile = '0';
+        '''
+    cr.execute(query)
+    cr.commit()
 
 # close the cursor and connection
 cr.close()
