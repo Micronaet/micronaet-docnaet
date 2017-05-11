@@ -52,12 +52,18 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         domain = []
         keywords = current_proxy.keywords or False
         partner_name = current_proxy.partner_name or False
+        partner_id = current_proxy.partner_id.id or False
+        country_id = current_proxy.country_id.id or False
         
         if keywords:
             for key in keywords.split(): 
                 domain.append(('name', 'ilike', key))      
         if partner_name:
             domain.append(('partner_id.name', 'ilike', partner_name))
+        if country_id:
+            domain.append(('country_id', '=', country_id))
+        if partner_id:
+            domain.append(('partner_id', '=', partner_id))            
 
         return {
             'view_type': 'form',
@@ -71,6 +77,8 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
     _columns = {
         'keywords': fields.char('Keywords', size=80),
         'partner_name': fields.char('Partner name', size=80),
+        'partner_id': fields.many2one('res.partner', 'Partner'),
+        'country_id': fields.many2one('res.country', 'Country'),
         }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
