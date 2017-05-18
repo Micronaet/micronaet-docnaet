@@ -51,19 +51,21 @@ class DocnaetProtocolEmail(orm.Model):
     # -------------------------------------------------------------------------
     # Schedule procedure:
     # -------------------------------------------------------------------------
-    def schedule_import_email_document(self, cr, iud, ids, context=None):
+    def force_import_email_document(self, cr, uid, ids, context=None):
+        ''' Force current protocol import used for button or list
+        '''
         ''' Read all mail activated
         '''
+        import pdb; pdb.set_trace()
+        
         # Pool used:
         doc_pool = self.pool.get('docnaet.document')
         protocol_pool = self.pool.get('docnaet.protocol')
         company_pool = self.pool.get('res.company')
 
-        address_ids = self.search(cr, uid, [], context=context)
-
         store_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='store', context=context)
-        for address in self.browse(cr, iud, address_ids, context=context):
+        for address in self.browse(cr, iud, ids, context=context):
             server = '%s:%s' % (address.host, address.port)
             ssl = address.SSL
             
@@ -150,23 +152,33 @@ class DocnaetProtocolEmail(orm.Model):
         mail.close()
         mail.logout()
     
+    def schedule_import_email_document(self, cr, uid, context=None):
+        ''' Search schedule address and launch importation:
+        '''
+        address_ids = self.search(cr, uid, [
+             ('is_acrtive', '=', True),
+             ], context=context)
+        
+        return self.force_import_email_document(
+            cr, uid, address_ids, context=context)
+    
     _columns = {  
         'is_active': fields.boolean('Is active'),
         'name': fields.char('Email', size=64, required=True),
         'host': fields.char(
-            'host', size=64, help='Email IMAP server'),
-        'port': fields.integer('Port'),
+            'IMAP server', size=64, help='Email IMAP server', required=True),
+        'port': fields.integer('Port', required=True),
         'user': fields.char(
-            'host', size=64, help='Email user'),
+            'Username', size=64, help='Email user', required=True),
         'password': fields.char(
-            'host', size=64, help='Email password'),
+            'Password', size=64, help='Email password', required=True),
         'folder': fields.char(
-            'host', size=64, help='Email IMAP folder'),
+            'Folder', size=64, help='Email IMAP folder'),
         'SSL': fields.boolean('SSL'),
         'auto_number': fields.boolean('Auto protocol number'),
         'remove': fields.boolean('Remove after import'),
         'protocol_id': fields.many2one(
-            'docnaet.protocol', 'Protocol'),
+            'docnaet.protocol', 'Protocol', required=True),
         }
     
     _defaults = {
@@ -185,5 +197,5 @@ class DocnaetProtocol(orm.Model):
         'account_ids': fields.one2many(
             'docnaet.protocol.email', 'protocol_id', 'Account'),
         }
-       
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:1111111

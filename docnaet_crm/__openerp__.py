@@ -24,13 +24,15 @@
     'name' : 'Docnaet CRM',
     'version' : '0.0.1',
     'category' : 'Generic Modules/Customization',
-    'description' : """Interface for manage CRM where information are keep in
-                       Docnaet system
-                       1. Manage a calendar view for show docnaet documents
-                          and deadlines
-                       2. Manage a scheduled operation for send mail with 
-                          details link for docnaet documents
-                    """,
+    'description' : """
+        OBSOLETE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        Interface for manage CRM where information are keep in
+           Docnaet system
+           1. Manage a calendar view for show docnaet documents
+              and deadlines
+           2. Manage a scheduled operation for send mail with 
+              details link for docnaet documents
+        """,
     'author' : 'Micronaet s.r.l.',
     'website' : 'http://www.micronaet.it',
     'depends' : ['base', 

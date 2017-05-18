@@ -1,19 +1,24 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        <!--<record model="ir.ui.view" id="view_docnaet_protocol_email_form">
+        <!--docnaet.protocol-->
+        <record model="ir.ui.view" id="view_docnaet_protocol_upload_email_form">
             <field name="name">Docnaet protocol email</field>
             <field name="model">docnaet.protocol</field>
             <field name="inherit_id" ref="docnaet.view_docnaet_protocol_form"/>
-            <field name="arch" type="xml">
-                <separator string="Note" colspan="4">
-                    <field name="account_ids"> 
-                        
-                    </field>
-                </separator>
+            <field name="arch" type="xml">            
+                <xpath expr="//page[1]" position="after">
+                    <page string="Upload mail">
+                        <group colspan="4" col="4">
+                            <separator string="Account" colspan="4"/>
+                            <field name="account_ids" colspan="4" nolabel="1"/>
+                        </group>                                
+                    </page>
+                </xpath>
             </field>
-        </record>    
-    
+        </record>
+            
+        <!--docnaet.protocol.email-->    
         <record model="ir.ui.view" id="view_docnaet_protocol_email_tree">
             <field name="name">docnaet.protocol.email.tree</field>
             <field name="model">docnaet.protocol.email</field>
@@ -26,6 +31,7 @@
                     <field name="port" />
                     <field name="user" />
                     <field name="folder" />
+                    <button name="force_import_email_document" string="Force import" type="object" icon="terp-mail-message-new"/>
                 </tree>
             </field>
         </record>
@@ -33,18 +39,25 @@
             <field name="name">docnaet.protocol.email.form</field>
             <field name="model">docnaet.protocol.email</field>
             <field name="arch" type="xml">
-                <form string="Account">
-                    <field name="is_active" />
-                    <field name="protocol_id" />
-                    <field name="name" />
-                    <field name="host" />
-                    <field name="port" />
-                    <field name="user" />
-                    <field name="password" />
-                    <field name="folder" />
-                    <field name="SSL" />
-                    <field name="auto_number" />
-                    <field name="remove" />
+                <form string="Account" version="7.0">
+                    <header>
+                        <button name="force_import_email_document" string="Force import" type="object" icon="terp-mail-message-new"/>
+                    </header>
+                    <sheet>
+                        <group colspan="4" col="4">
+                            <field name="is_active" />
+                            <field name="protocol_id" />
+                            <field name="name" />
+                            <field name="host" />
+                            <field name="port" />
+                            <field name="user" />
+                            <field name="password" />
+                            <field name="folder" />
+                            <field name="SSL" />
+                            <field name="auto_number" />
+                            <field name="remove" />
+                        </group>                                
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -60,7 +73,7 @@
         <menuitem 
             parent="docnaet.docnaet_administration_protocol" 
             id="menu_protocol_email_form" 
-            action="action_protocol_email_form"/>        -->
+            action="action_protocol_email_form"/>
     </data>
 </openerp>
 
