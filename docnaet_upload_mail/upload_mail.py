@@ -55,9 +55,7 @@ class DocnaetProtocolEmail(orm.Model):
         ''' Force current protocol import used for button or list
         '''
         ''' Read all mail activated
-        '''
-        import pdb; pdb.set_trace()
-        
+        '''        
         # Pool used:
         doc_pool = self.pool.get('docnaet.document')
         protocol_pool = self.pool.get('docnaet.protocol')
@@ -65,14 +63,17 @@ class DocnaetProtocolEmail(orm.Model):
 
         store_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='store', context=context)
-        for address in self.browse(cr, iud, ids, context=context):
+        for address in self.browse(cr, uid, ids, context=context):
             server = '%s:%s' % (address.host, address.port)
-            ssl = address.SSL
-            
+
             # -----------------------------------------------------------------
             # Read all email:
             # -----------------------------------------------------------------
-            mail = imaplib.IMAP4_SSL(server) # TODO SSL
+            if address.SSL:
+                mail = imaplib.IMAP4_SSL(server) # TODO SSL
+            else:
+                mail = imaplib.IMAP4(server) # TODO SSL
+            import pdb; pdb.set_trace()    
             mail.login(address.user, address.password)
             mail.select(address.folder)
             esit, data = mail.search(None, 'ALL')
