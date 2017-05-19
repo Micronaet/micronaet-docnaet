@@ -147,6 +147,7 @@ class DocnaetProtocolEmail(orm.Model):
                             # Search user:
                             partner_ids = partner_pool.search(cr, uid, [
                                 ('email', '=', email_address),
+                                #('docnaet_enable', '=', True), # only doc part
                                 ], context=context)
                             if partner_ids:
                                 partner_id = partner_ids[0]
