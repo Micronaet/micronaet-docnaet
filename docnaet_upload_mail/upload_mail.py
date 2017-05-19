@@ -124,6 +124,11 @@ class DocnaetProtocolEmail(orm.Model):
                 # -------------------------------------------------------------
                 # Add new document Docnaet:
                 # -------------------------------------------------------------
+                # Auto type:
+                # Use if set up in address:
+                type_id = address.type_id.id or False
+                
+                # Auto user:
                 # Try to search user from 'from address':
                 email_address = (
                     record.get('From') or '').split('<')[-1].split('>')[0]
@@ -136,6 +141,7 @@ class DocnaetProtocolEmail(orm.Model):
                     if user_ids:
                         user_id = user_ids[0]
                         
+                # Auto partner:        
                 # Try to search partner from 'to address':
                 partner_id = False
                 if address.auto_partner:
@@ -163,8 +169,8 @@ class DocnaetProtocolEmail(orm.Model):
                     'user_id': user_id,
                     'name': record['Subject'] or '...',
                     'partner_id': partner_id,
+                    'type_id': type_id,
                     #'language_id': 
-                    #'type_id': 
                     #'date': 
                     'import_date': now,
                     'uploaded': True,
@@ -240,6 +246,9 @@ class DocnaetProtocolEmail(orm.Model):
         'remove': fields.boolean('Remove after import'),
         'protocol_id': fields.many2one(
             'docnaet.protocol', 'Protocol', required=True),
+        'type_id': fields.many2one(
+            'docnaet.type', 'Type', 
+            help='Assign auto type of docnaet document'),    
         }
     
     _defaults = {
