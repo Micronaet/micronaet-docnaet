@@ -62,6 +62,7 @@ class DocnaetProtocolEmail(orm.Model):
         program_pool = self.pool.get('docnaet.protocol.template.program')
         company_pool = self.pool.get('res.company')
         user_pool = self.pool.get('res.users')
+        partner_pool = self.pool.get('res.partner')
 
         store_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='store', context=context)
@@ -70,7 +71,11 @@ class DocnaetProtocolEmail(orm.Model):
             store_folder,
             ))
         
+        now = datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+        eml_program_id = program_pool.get_program_from_extension(
+            cr, uid, 'eml', context=context)
         for address in self.browse(cr, uid, ids, context=context):
+            protocol_id = address.protocol_id.id or False
             server = address.host #'%s:%s' % (address.host, address.port)
 
             # -----------------------------------------------------------------
@@ -117,8 +122,9 @@ class DocnaetProtocolEmail(orm.Model):
                         record[param] = value
                 
                 # -------------------------------------------------------------
-                # Add new documento Docnaet:
+                # Add new document Docnaet:
                 # -------------------------------------------------------------
+                # Try to search user from 'from address':
                 email_address = (
                     record.get('From') or '').split('<')[-1].split('>')[0]
                 user_id = 1
@@ -128,23 +134,39 @@ class DocnaetProtocolEmail(orm.Model):
                         ('email', '=', email_address),
                         ], context=context)
                     if user_ids:
-                        user_id = user_ids[0]    
+                        user_id = user_ids[0]
+                        
+                # Try to search partner from 'to address':
+                partner_id = False
+                to_address = (record.get('To') or '').split(', ')
+                if to_address: # Take only the first                   
+                    email_address = to_address[0].split('<')[-1].split('>')[0]
+                    if email_address:
+                        # Search user:
+                        partner_ids = partner_pool.search(cr, uid, [
+                            ('email', '=', email_address),
+                            ], context=context)
+                        if partner_ids:
+                            partner_id = partner_ids[0]
+                            if len(partner_ids) > 1:
+                                _logger.warning(
+                                    'More partner [%s] with address: %s' % (
+                                        len(partner_ids),
+                                        email_address,
+                                        ))
 
-                protocol_id = address.protocol_id.id or False
                 data = {
                     'protocol_id': protocol_id,
                     'user_id': user_id,
                     'name': record['Subject'] or '...',
-                    #'partner_id': wiz_proxy.default_partner_id.id or False, 
-                    #'language_id': wiz_proxy.default_language_id.id or False, 
-                    #'type_id': wiz_proxy.default_type_id.id or False,
-                    #'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),
-                    'import_date': datetime.now().strftime(
-                        DEFAULT_SERVER_DATETIME_FORMAT),
+                    'partner_id': partner_id,
+                    #'language_id': 
+                    #'type_id': 
+                    #'date': 
+                    'import_date': now,
                     'uploaded': True,
                     'docnaet_extension': 'eml',
-                    'program_id': program_pool.get_program_from_extension(
-                        cr, uid, 'eml', context=context)
+                    'program_id': eml_program_id,
                     }
                 if protocol_id and address.auto_number:
                     data['number'] = protocol_pool.assign_protocol_number(
