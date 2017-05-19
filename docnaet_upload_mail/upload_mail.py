@@ -138,22 +138,24 @@ class DocnaetProtocolEmail(orm.Model):
                         
                 # Try to search partner from 'to address':
                 partner_id = False
-                to_address = (record.get('To') or '').split(', ')
-                if to_address: # Take only the first                   
-                    email_address = to_address[0].split('<')[-1].split('>')[0]
-                    if email_address:
-                        # Search user:
-                        partner_ids = partner_pool.search(cr, uid, [
-                            ('email', '=', email_address),
-                            ], context=context)
-                        if partner_ids:
-                            partner_id = partner_ids[0]
-                            if len(partner_ids) > 1:
-                                _logger.warning(
-                                    'More partner [%s] with address: %s' % (
-                                        len(partner_ids),
-                                        email_address,
-                                        ))
+                if address.auto_partner:
+                    to_address = (record.get('To') or '').split(', ')
+                    if to_address: # Take only the first                   
+                        email_address = \
+                            to_address[0].split('<')[-1].split('>')[0]
+                        if email_address:
+                            # Search user:
+                            partner_ids = partner_pool.search(cr, uid, [
+                                ('email', '=', email_address),
+                                ], context=context)
+                            if partner_ids:
+                                partner_id = partner_ids[0]
+                                if len(partner_ids) > 1:
+                                    _logger.warning(
+                                        '%s partner with address: %s' % (
+                                            len(partner_ids),
+                                            email_address,
+                                            ))
 
                 data = {
                     'protocol_id': protocol_id,
@@ -230,7 +232,10 @@ class DocnaetProtocolEmail(orm.Model):
         'folder': fields.char(
             'Folder', size=64, help='Email IMAP folder'),
         'SSL': fields.boolean('SSL'),
-        'auto_number': fields.boolean('Auto protocol number'),
+        'auto_number': fields.boolean('Auto protocol number', 
+            help='Assign next number of protocol after import'),
+        'auto_partner': fields.boolean('Auto partner',
+            help='Try to assign partner from email address'),        
         'remove': fields.boolean('Remove after import'),
         'protocol_id': fields.many2one(
             'docnaet.protocol', 'Protocol', required=True),

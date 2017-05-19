@@ -57,6 +57,7 @@
                             <field name="SSL" />
                             <field name="folder" />
                             <field name="auto_number" />
+                            <field name="auto_partner" />
                             <field name="remove" />
                         </group>                                
                     </sheet>
