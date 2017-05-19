@@ -59,28 +59,48 @@ class DocnaetProtocolEmail(orm.Model):
         # Pool used:
         doc_pool = self.pool.get('docnaet.document')
         protocol_pool = self.pool.get('docnaet.protocol')
+        program_pool = self.pool.get('docnaet.protocol.template.program')
         company_pool = self.pool.get('res.company')
+        user_pool = self.pool.get('res.users')
 
         store_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='store', context=context)
+        _logger.info('Start read # %s IMAP server [stored in: %s]' % (
+            len(ids), 
+            store_folder,
+            ))
+        
         for address in self.browse(cr, uid, ids, context=context):
-            server = '%s:%s' % (address.host, address.port)
+            server = address.host #'%s:%s' % (address.host, address.port)
 
             # -----------------------------------------------------------------
             # Read all email:
             # -----------------------------------------------------------------
-            if address.SSL:
-                mail = imaplib.IMAP4_SSL(server) # TODO SSL
-            else:
-                mail = imaplib.IMAP4(server) # TODO SSL
-            import pdb; pdb.set_trace()    
-            mail.login(address.user, address.password)
-            mail.select(address.folder)
-            esit, data = mail.search(None, 'ALL')
-            for msg_id in data[0].split():
-                # Read and parse data:
-                esit, data = mail.fetch(msg_id, '(RFC822)')
-                eml_string = data[0][1]
+            try:
+                if_error = _('Error find imap server: %s' % server)
+                if address.SSL:
+                    mail = imaplib.IMAP4_SSL(server) # TODO SSL
+                else:
+                    mail = imaplib.IMAP4(server) # TODO SSL
+                
+                if_error = _('Error login access user: %s' % address.user)
+                mail.login(address.user, address.password)
+                
+                if_error = _('Error access start folder: %s' % address.folder)
+                mail.select(address.folder)
+            except:
+                raise osv.except_osv(
+                    _('IMAP server error:'), 
+                    if_error,
+                    )        
+                    
+            esit, result = mail.search(None, 'ALL')
+            tot = 0
+            for msg_id in result[0].split():
+                tot += 1
+                # Read and parse result:
+                esit, result = mail.fetch(msg_id, '(RFC822)')
+                eml_string = result[0][1]
                 message = email.message_from_string(eml_string)
                 record = {
                     'To': False,
@@ -99,15 +119,19 @@ class DocnaetProtocolEmail(orm.Model):
                 # -------------------------------------------------------------
                 # Add new documento Docnaet:
                 # -------------------------------------------------------------
-                email = (record.get('From') or '').split('<')[-1].split('>')[0]
-                if email:
+                email_address = (
+                    record.get('From') or '').split('<')[-1].split('>')[0]
+                user_id = 1
+                if email_address:
                     # Search user:
-                    user_id = user_pool.search(cr, uid, [
-                        ('email', '=', email)], context=context)
-                else:
-                    user_id = 1 # better not go there!
+                    user_ids = user_pool.search(cr, uid, [
+                        ('email', '=', email_address),
+                        ], context=context)
+                    if user_ids:
+                        user_id = user_ids[0]    
+
                 protocol_id = address.protocol_id.id or False
-                doc_id = doc_pool.create(cr, uid, {
+                data = {
                     'protocol_id': protocol_id,
                     'user_id': user_id,
                     'name': record['Subject'] or '...',
@@ -121,30 +145,36 @@ class DocnaetProtocolEmail(orm.Model):
                     'docnaet_extension': 'eml',
                     'program_id': program_pool.get_program_from_extension(
                         cr, uid, 'eml', context=context)
-                    }, context=context)
+                    }
                 if protocol_id and address.auto_number:
                     data['number'] = protocol_pool.assign_protocol_number(
                         cr, uid, data['protocol_id'], context=context)                
-                
+                    
+                doc_id = doc_pool.create(cr, uid, data, context=context)
                 _logger.info('Read mail: To: %s - From: %s - Subject: %s' % (
                     record['To'],
                     record['From'],
                     record['Subject'],
                     ))
-                # Mark as deleted:    
-                mail.store(msg_id, '+FLAGS', '\\Deleted')    
 
                 # -------------------------------------------------------------
                 # Write on file:
                 # -------------------------------------------------------------
                 eml_file = '%s.eml' % (os.path.join(
                     store_folder, 
-                    doc_id,
+                    str(doc_id),
                     ))                
                 f_eml = open(eml_file, 'w')
                 f_eml.write(eml_string)
                 # TODO remove file after confirm
                 f_eml.close()
+
+                # Mark as deleted:    
+                mail.store(msg_id, '+FLAGS', '\\Deleted')    
+            _logger.info('End read IMAP %s [tot msg: %s]' % (
+                address.name,
+                tot,
+                ))
 
         # -----------------------------------------------------------------
         # Close operations:    
@@ -152,12 +182,14 @@ class DocnaetProtocolEmail(orm.Model):
         #mail.expunge() # TODO clean trash bin
         mail.close()
         mail.logout()
+        _logger.info('End read IMAP server')
+        return True
     
     def schedule_import_email_document(self, cr, uid, context=None):
         ''' Search schedule address and launch importation:
         '''
         address_ids = self.search(cr, uid, [
-             ('is_acrtive', '=', True),
+             ('is_active', '=', True),
              ], context=context)
         
         return self.force_import_email_document(
