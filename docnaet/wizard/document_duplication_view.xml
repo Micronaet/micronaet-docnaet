@@ -14,9 +14,9 @@
                 <sheet>
                     <button string='Duplicate document' name='duplication_document' type='object' icon='gtk-justify-fill' />
                     <button string='Link document' name='linked_document' type='object' icon='gtk-revert-to-saved' />
-                    <!--<group>
-                        <field name="with_number" />
-                    </group>-->
+                    <group>
+                        <field name="protocol_id" />
+                    </group>
                 </sheet>
             </form>
         </field>

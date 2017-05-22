@@ -50,6 +50,8 @@ class document_duplication(orm.TransientModel):
                 _('Cannot found original document'),
                 )
             
+        wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
+            
         # Pool used:
         document_pool = self.pool.get('docnaet.document')
         protocol_pool = self.pool.get('docnaet.protocol')
@@ -61,6 +63,9 @@ class document_duplication(orm.TransientModel):
         original_id = context.get('active_id')
         original_proxy = document_pool.browse(    
             cr, uid, original_id, context=context)
+        reassign_protocol = True if wiz_proxy.protocol_id else False
+        protocol_id = \
+            wiz_proxy.protocol_id.id or original_proxy.protocol_id.id or False
             
         data = {
             'name': original_proxy.name,             
@@ -71,7 +76,7 @@ class document_duplication(orm.TransientModel):
             'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),
             'deadline': False,
             'deadline_info': False,
-            'protocol_id': original_proxy.protocol_id.id,
+            'protocol_id': protocol_id,
             'language_id': original_proxy.language_id.id,
             'type_id': original_proxy.type_id.id,
             'company_id': original_proxy.company_id.id,
@@ -85,12 +90,11 @@ class document_duplication(orm.TransientModel):
             'original_id': original_id if mode == 'link' else False,
             }
         # Manage protocol number (3 cases):
-        if linked_document:
-            data['number'] = original_proxy.number or False
-            #data['fax_number'] = original_proxy.fax_number
-        elif original_proxy.protocol_id: # remove with_number
+        if reassign_protocol or not linked_document: # always if reassigned 
             data['number'] = protocol_pool.assign_protocol_number(
-                cr, uid, original_proxy.protocol_id.id, context=context)
+                cr, uid, protocol_id, context=context)
+        elif linked_document: # linked not reassigned keep the number
+            data['number'] = original_proxy.number or False
         else:
             data['number'] = False
             
@@ -146,6 +150,7 @@ class document_duplication(orm.TransientModel):
     _columns = {
         # To remove
         #'with_number': fields.boolean('With number'),
+        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
         }
     
     _defaults = {
