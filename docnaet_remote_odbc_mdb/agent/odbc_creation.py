@@ -50,7 +50,6 @@ mdb_execute = config.get('mdb', 'execute') #'execute.docnaet.mdb'
 mdb_agent = config.get('mdb', 'agent') #'docnaet.mdb'
 
 # Launch parameter:
-import pdb; pdb.set_trace()
 try:
     mode = sys.argv[1] # update, new
 except:
@@ -95,7 +94,6 @@ mdb = {
     'execute': mdb_execute,
     'agent': mdb_agent,
     }
-import pdb; pdb.set_trace()
 if mode == 'update':
     mdb['start'] = mdb_agent # use previous generated (not empty)
     
@@ -256,7 +254,7 @@ if mode == 'update':
     
     # Modify domain for DocnaetDocument:
     convert_db['Documenti'][1] = [
-        ('write_date', '=', last_update.strftime('%Y-%m-%d')),
+        ('write_date', '>=', last_update.strftime('%Y-%m-%d')),
         ]
     
     # Clean anagrafic tables not Documenti:
