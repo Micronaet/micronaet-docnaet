@@ -57,7 +57,7 @@ except:
     mode = 'new'
     
 try:
-    update_period = sys.argv[2] # days
+    update_period = int(sys.argv[2]) # days
 except:
     mode = 10 
 
