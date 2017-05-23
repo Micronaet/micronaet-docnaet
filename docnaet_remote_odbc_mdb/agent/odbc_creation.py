@@ -17,6 +17,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
+# Launch python ./odbc_creation new # For create new database from empty
+# Launch python ./odbc_creation update # For update database from current
+
 import os
 import sys
 import ConfigParser
@@ -45,6 +48,18 @@ path_database = config.get('mdb', 'path')
 mdb_start = config.get('mdb', 'start') #'start.docnaet.mdb'
 mdb_execute = config.get('mdb', 'execute') #'execute.docnaet.mdb'
 mdb_agent = config.get('mdb', 'agent') #'docnaet.mdb'
+
+# Launch parameter:
+import pdb; pdb.set_trace()
+try:
+    mode = sys.argv[1] # update, new
+except:
+    mode = 'new'
+    
+try:
+    update_period = sys.argv[2] # days
+except:
+    mode = 10 
 
 # -----------------------------------------------------------------------------
 # Utility:
@@ -80,6 +95,10 @@ mdb = {
     'execute': mdb_execute,
     'agent': mdb_agent,
     }
+import pdb; pdb.set_trace()
+if mode == 'update':
+    mdb['start'] = mdb_agent # use previous generated (not empty)
+    
 for key, value in mdb.iteritems():
     mdb[key] = os.path.join(path_database, value)
 
@@ -134,7 +153,7 @@ import_table = [
     'Documenti',
     ]
     
-priority_db = {
+priority_db = { # not used for now
     'lowest': 1,
     'low': 2, 
     'normal': 3,
@@ -231,7 +250,33 @@ convert_db = {
             ),
         ],
     }
-
+import pdb; pdb.set_trace()
+if mode == 'update':
+    last_update = datetime.now() - timedelta(days=update_period)
+    
+    # Modify domain for DocnaetDocument:
+    convert_db['Documenti'][1] = [
+        ('write_date', '=', last_update.strftime('%Y-%m-%d')),
+        ]
+    
+    # Clean anagrafic tables not Documenti:
+    for table in import_table:
+        if table == 'Documenti':
+            continue
+            
+        # Remove document if update:        
+        query = 'DELETE FROM %s;' % table
+        if verbose:
+            print '[INFO] %s. Delete query: %s' % (i, query)
+        try:    
+            cr.execute(query)
+            cr.commit()
+        except:
+            print '[ERROR] %s remove items: %s' % (
+                table, sys.exc_info(), 
+                )
+                
+    
 for table in import_table:
     item = convert_db[table]
         
@@ -243,6 +288,15 @@ for table in import_table:
     erp_ids = erp_pool.search(domain)
     i = 0
     
+    # Delete previous documents if update period
+    if mode == 'update' and table == 'Documenti':
+        print '[INFO] Delete document of update period: [record: %s]' % (
+            len(erp_ids), 
+            )
+        query = 'DELETE FROM %s WHERE id in %s;' % (
+            table, erp_ids,
+            )
+        
     print '[INFO] Start export %s [record: %s]' % (
         table, len(erp_ids))        
     for record in erp_pool.browse(erp_ids):
