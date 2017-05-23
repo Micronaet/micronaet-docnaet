@@ -248,7 +248,6 @@ convert_db = {
             ),
         ],
     }
-import pdb; pdb.set_trace()
 if mode == 'update':
     last_update = datetime.now() - timedelta(days=update_period)
     
@@ -274,7 +273,6 @@ if mode == 'update':
                 table, sys.exc_info(), 
                 )
                 
-    
 for table in import_table:
     item = convert_db[table]
         
