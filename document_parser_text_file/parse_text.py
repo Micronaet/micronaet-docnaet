@@ -26,8 +26,7 @@ import openerp.addons.decimal_precision as dp
 from openerp.osv import fields, osv, expression, orm
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-from os import walk
-from openerp import SUPERUSER_ID, api
+from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
@@ -48,13 +47,35 @@ class FileDocument(orm.Model):
     _order = 'name'
     
     def schedule_load_file_list(
-            self, cr, uid, path, doc_filter, context=context):
+            self, cr, uid, path, doc_filter, context=None):
         ''' Load path passed and create file as record
         '''
-        f = []
-        for (dirpath, dirnames, filenames) in walk(path):
-            f.extend(filenames)
+        company_pool = self.pool.get('res.company'),
+        path = os.path.expanduser(path)
+
+        for (dirpath, dirnames, filenames) in os.walk(path):
+            for filename in filenames:
+                fullname = os.path.join(dirpath, filename)
+                content = company_pool.document_parse_doc_to_text
+                    (filename, fullname) 
+                if not content: 
+                    _logger.warning('Empty file: %s' % fullname)
+                    continue 
+                data = { 
+                    'name': filename,
+                    'fullname': fullname,
+                    'content': content, 
+                    }
             
+                file_ids = self.search(cr, uid, [
+                    ('fullname', '=', fullname), 
+                    ], context=context)                 
+                if file_ids:
+                    self.write(cr, uid, file_ids, data, context=context)
+                else:
+                    self.create(cr, uid, data, context=context)
+
+                _logger.info('Import: %s' % fullname)
         return True
         
     _columns = {
@@ -64,8 +85,11 @@ class FileDocument(orm.Model):
         'name': fields.char(
             'Name', size=80, required=True, readonly=True),
         'fullname': fields.char(
-            'Fullname', size=180, required=False, readonly=True),
+            'Fullname', size=280, required=False, readonly=True),
         'content': fields.text('Content', readonly=True) ,
         }
-    
+        
+    _defaults = {
+        'active', lambda *x: True,
+        }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

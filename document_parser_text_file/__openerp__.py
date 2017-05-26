@@ -35,6 +35,7 @@
     'demo': [],
     'data': [
         'text_file_view.xml',
+        'scheduler.xml',
         ],
     'active': False,
     'installable': True,
