@@ -50,14 +50,21 @@ class FileDocument(orm.Model):
             self, cr, uid, path, doc_filter, context=None):
         ''' Load path passed and create file as record
         '''
-        company_pool = self.pool.get('res.company'),
+        company_pool = self.pool.get('res.company')
+        _logger.info('Start import file: folder [%s] extension [%s]' % (
+             path, doc_filter))
+             
         path = os.path.expanduser(path)
 
         for (dirpath, dirnames, filenames) in os.walk(path):
             for filename in filenames:
+                extension = company_pool.get_file_extension(filename)
+                if extension not in doc_filter:
+                    _logger.warning('Wrong extension: %s' % filename)
+                    continue
                 fullname = os.path.join(dirpath, filename)
-                content = company_pool.document_parse_doc_to_text
-                    (filename, fullname) 
+                content = company_pool.document_parse_doc_to_text(
+                    filename, fullname) 
                 if not content: 
                     _logger.warning('Empty file: %s' % fullname)
                     continue 
@@ -72,10 +79,11 @@ class FileDocument(orm.Model):
                     ], context=context)                 
                 if file_ids:
                     self.write(cr, uid, file_ids, data, context=context)
+                    _logger.info('Updated: %s' % fullname)
                 else:
                     self.create(cr, uid, data, context=context)
+                    _logger.info('Created: %s' % fullname)
 
-                _logger.info('Import: %s' % fullname)
         return True
         
     _columns = {
@@ -90,6 +98,6 @@ class FileDocument(orm.Model):
         }
         
     _defaults = {
-        'active', lambda *x: True,
+        'active': lambda *x: True,
         }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

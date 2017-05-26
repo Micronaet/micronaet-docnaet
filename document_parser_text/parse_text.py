@@ -56,6 +56,14 @@ class ResCompany(orm.Model):
     # -------------------------------------------------------------------------
     # Utility function for parse text:
     # -------------------------------------------------------------------------
+    def get_file_extension(self, filename):
+        ''' Return file extension
+        '''
+        file_list = filename.split('.')
+        if len(file_list) <= 1:
+            return ''
+        return file_list[-1].lower()
+        
     def document_parse_doc_to_text(self, filename, fullname):
         ''' Convert utility for docx, doc, pdf, odt document
         '''
@@ -85,25 +93,27 @@ class ResCompany(orm.Model):
             retstr.close()
             return str
         
-        # Check file type from extension:    
-        if filename[-4:] == '.doc':
+        # Check file type from extension: 
+        extension = self.get_file_extension(filename)
+           
+        if extension == 'doc':
             cmd = ['antiword', fullname]
             p = Popen(cmd, stdout=PIPE)
             stdout, stderr = p.communicate()
             return stdout.decode('ascii', 'ignore')
-        elif filename[-5:] == '.docx':
+        elif extension == 'docx':
             document = opendocx(fullname)
             paratextlist = getdocumenttext(document)
             newparatextlist = []
             for paratext in paratextlist:
                 newparatextlist.append(paratext.encode('utf-8'))
             return '\n\n'.join(newparatextlist)
-        elif filename[-4:] == '.odt':
+        elif extension == 'odt':
             cmd = ['odt2txt', fullname]
             p = Popen(cmd, stdout=PIPE)
             stdout, stderr = p.communicate()
             return stdout.decode('ascii', 'ignore')
-        elif filename[-4:] == '.pdf':
+        elif extension == 'pdf':
             return document_parse_pdf_to_txt(fullname)
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

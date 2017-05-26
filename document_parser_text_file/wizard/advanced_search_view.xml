@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+       <!-- file.document.advanced.search.wizard -->
+       <record id="file_document_advanced_search_wizard_view" model="ir.ui.view">
+            <field name="name">Advanced search</field>
+            <field name="model">file.document.advanced.search.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Wizard" version="7.0">
+                   <header>
+                       <button string="Cancel" special="cancel" />
+                       <button name="action_search" string="Search" type="object" icon="terp-stock_zoom" class="oe_highlight" />
+                   </header>
+                   <group colspan="4" col="4">
+                        <field name="keywords" />
+                   </group>
+                </form>
+            </field>
+      </record>
+      <record model="ir.actions.act_window" id="action_file_document_advanced_search_wizard">
+          <field name="name">Advanced search</field>
+          <field name="res_model">file.document.advanced.search.wizard</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">form</field>
+          <field name="target">new</field>
+          <field name="view_id" ref="file_document_advanced_search_wizard_view"/>
+      </record>      
+      <menuitem 
+             parent="sale.menu_sale_order" 
+             id="menu_file_document_advanced_search_wizard" 
+             action="action_file_document_advanced_search_wizard"
+             sequence="20"
+             />
+      
+    </data>
+</openerp>
