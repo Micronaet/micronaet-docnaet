@@ -97,10 +97,14 @@ class ResCompany(orm.Model):
         extension = self.get_file_extension(filename)
            
         if extension == 'doc':
-            cmd = ['antiword', fullname]
-            p = Popen(cmd, stdout=PIPE)
-            stdout, stderr = p.communicate()
-            return stdout.decode('ascii', 'ignore')
+            try:
+                cmd = ['antiword', fullname]
+                p = Popen(cmd, stdout=PIPE)
+                stdout, stderr = p.communicate()
+                return stdout.decode('ascii', 'ignore')
+            except:
+                _logger.error('Error access file: %s' % filename)
+                return ''    
         elif extension == 'docx':
             document = opendocx(fullname)
             paratextlist = getdocumenttext(document)
