@@ -33,6 +33,7 @@
     'init_xml': [],
     'demo': [],
     'data': [
+        'security/document_group.xml',
         'text_view.xml',
         ],
     'active': False,

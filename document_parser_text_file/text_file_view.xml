@@ -66,6 +66,7 @@
              id="menu_file_document" 
              action="action_file_document"
              sequence="10"
+             groups="document_parser_text.group_document_manager"
              />
          
     </data>

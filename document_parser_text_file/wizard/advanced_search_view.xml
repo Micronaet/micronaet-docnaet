@@ -30,6 +30,7 @@
              id="menu_file_document_advanced_search_wizard" 
              action="action_file_document_advanced_search_wizard"
              sequence="20"
+             groups="document_parser_text.group_document_manager"
              />
       
     </data>
