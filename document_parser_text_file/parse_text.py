@@ -69,7 +69,7 @@ class FileDocument(orm.Model):
                     _logger.warning('Empty file: %s' % fullname)
                     continue 
                     
-                # Get partner and agent information:
+                # Get partner and agent information from master folder:
                 try:                
                     master_folder = dirpath[path_len:].split('/')[1]
                     if '(' in master_folder:
@@ -79,11 +79,9 @@ class FileDocument(orm.Model):
                     else:
                         partner_name = master_folder.strip()
                         agent_name = False
-                except:
-                    # Cannot read master folder
+                except: # File in root folder dont' have mater folder
                     partner_name = False
-                    agent_name = False 
-                
+                    agent_name = False                 
                 
                 # Create / update record:
                 data = { 
