@@ -54,8 +54,18 @@ class FileDocumentAdvancedSearchWizard(orm.TransientModel):
         '''
         if context is None: 
             context = {}        
+        
+        # Read wizard parameters:
         wiz_browse = self.browse(cr, uid, ids, context=context)[0]
         keywords = wiz_browse.keywords
+        partner_name = wiz_browse.partner_name
+        agent_name = wiz_browse.agent_name
+        from_create_date = wiz_browse.from_create_date
+        to_create_date = wiz_browse.to_create_date
+        from_modify_date = wiz_browse.from_modify_date
+        to_modify_date = wiz_browse.to_modify_date
+        
+        # Complex query search for keywords (not use domain)
         query = '''SELECT id FROM file_document WHERE %s;'''
         where = ''    
 
@@ -67,8 +77,27 @@ class FileDocumentAdvancedSearchWizard(orm.TransientModel):
         query = query % where        
         cr.execute(query)
         _logger.info('Run query: %s' % query)
-        
+
+        # Create domain filter:        
         file_ids = [f[0] for f in cr.fetchall()]
+        domain = [('id', 'in', file_ids)]
+        if partner_name:
+            domain.append(('partner_name', 'ilike', partner_name))
+        if agent_name:
+            domain.append(('agent_name', 'ilike', agent_name))
+        if from_create_date:
+            domain.append(
+                ('file_create', '>=', '%s 00:00:00' % from_create_date))
+        if to_create_date:
+            domain.append(
+                ('file_create', '<=', '%s 23:59:59' % to_create_date))
+        if from_modify_date:
+            domain.append(
+                ('file_modify', '>=', '%s 00:00:00' % from_modify_date))
+        if to_modify_date:
+            domain.append(
+                ('file_modify', '<=', '%s 23:59:59' % to_modify_date))
+        
         return {
             'type': 'ir.actions.act_window',
             'name': _('Keywords search'),
@@ -78,7 +107,7 @@ class FileDocumentAdvancedSearchWizard(orm.TransientModel):
             'res_model': 'file.document',
             #'view_id': view_id, # False
             'views': [(False, 'tree'), (False, 'form')],
-            'domain': [('id', 'in', file_ids)],
+            'domain': domain,
             'context': context,
             'target': 'current', # 'new'
             'nodestroy': False,
@@ -86,6 +115,12 @@ class FileDocumentAdvancedSearchWizard(orm.TransientModel):
         
     _columns = {
         'keywords': fields.char('Keyword', size=180, required=True),
+        'partner_name': fields.char('Partner name', size=180),
+        'agent_name': fields.char('Agent name', size=180),
+        'from_create_date': fields.date('From create date'),
+        'to_create_date': fields.date('To create date'),
+        'from_modify_date': fields.date('From modify date'),
+        'to_modify_date': fields.date('To modify date'),
         }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
