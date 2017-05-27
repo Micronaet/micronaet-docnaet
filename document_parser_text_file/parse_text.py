@@ -70,14 +70,19 @@ class FileDocument(orm.Model):
                     continue 
                     
                 # Get partner and agent information:
-                master_folder = dirpath[path_len:].split('/')[1]
-                if '(' in master_folder:
-                    master_list = master_folder.split('(')
-                    partner_name = master_list[0].strip()
-                    agent_name = master_list[-1].split(')')[0].strip()
-                else:
-                    partner_name = master_folder.strip()
-                    agent_name = False
+                try:                
+                    master_folder = dirpath[path_len:].split('/')[1]
+                    if '(' in master_folder:
+                        master_list = master_folder.split('(')
+                        partner_name = master_list[0].strip()
+                        agent_name = master_list[-1].split(')')[0].strip()
+                    else:
+                        partner_name = master_folder.strip()
+                        agent_name = False
+                except:
+                    # Cannot read master folder
+                    partner_name = False
+                    agent_name = False 
                 
                 
                 # Create / update record:
