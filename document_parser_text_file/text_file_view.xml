@@ -8,9 +8,11 @@
                  <tree string="File document" colors="red:active==False">
                      <field name="active" />
                      <field name="name" />
+                     <field name="partner_name" />
+                     <field name="agent_name" />
                      <field name="fullname" />
-                     <field name="create_date" />
-                     <field name="write_date" />
+                     <field name="file_create" />
+                     <field name="file_modify" />
                  </tree>
              </field>
          </record>
@@ -25,8 +27,10 @@
                              <newline/>
                              <field name="name" />
                              <field name="fullname" />
-                             <field name="create_date" />
-                             <field name="write_date" />
+                             <field name="partner_name" />
+                             <field name="agent_name" />
+                             <field name="file_create" />
+                             <field name="file_modify" />
                              <separator string="Content" colspan="4"/>
                              <field name="content" colspan="4" nolabel="1"/>
                          </group>    
@@ -40,13 +44,17 @@
              <field name="arch" type="xml">
                  <search string="Search file" version="7.0">        
                      <field name="name" />
+                     <field name="partner_name" />
+                     <field name="agent_name" />
                      <field name="fullname" />
                      <field name="content" />
                      <!--<field name="partner_id" filter_domain="[('partner_id','=',self)]"/>
                      <filter name="state_draft" string="Draft state" domain="[('state','=','draft')]"/>-->
                      <group expand="0" string="Group By...">
-                         <filter name="group_create_date" string="Create date" context="{'group_by': 'create_date'}"/>
-                         <filter name="group_write_date" string="Write date" context="{'group_by': 'write_date'}"/>
+                         <filter name="group_file_create" string="Create date" context="{'group_by': 'file_create'}"/>
+                         <filter name="group_file_modify" string="Modify date" context="{'group_by': 'file_modify'}"/>
+                         <filter name="group_partner_name" string="Partner name" context="{'group_by': 'partner_name'}"/>
+                         <filter name="group_agent_name" string="Agent name" context="{'group_by': 'agent_name'}"/>
                      </group>                
                  </search>
              </field>

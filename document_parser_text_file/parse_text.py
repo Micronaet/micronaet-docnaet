@@ -55,7 +55,7 @@ class FileDocument(orm.Model):
              path, doc_filter))
              
         path = os.path.expanduser(path)
-
+        path_len = len(path)
         for (dirpath, dirnames, filenames) in os.walk(path):
             for filename in filenames:
                 extension = company_pool.get_file_extension(filename)
@@ -68,10 +68,29 @@ class FileDocument(orm.Model):
                 if not content: 
                     _logger.warning('Empty file: %s' % fullname)
                     continue 
+                    
+                # Get partner and agent information:
+                master_folder = dirpath[path_len:].split('/')[1]
+                if '(' in master_folder:
+                    master_list = master_folder.split('(')
+                    partner_name = master_list[0].strip()
+                    agent_name = master_list[-1].split(')')[0].strip()
+                else:
+                    partner_name = master_folder.strip()
+                    agent_name = False
+                
+                
+                # Create / update record:
                 data = { 
                     'name': filename,
                     'fullname': fullname,
+                    'partner_name': partner_name,
+                    'agent_name': agent_name,
                     'content': content, 
+                    'file_create':
+                        datetime.fromtimestamp(os.path.getctime(fullname)),
+                    'file_modify': 
+                        datetime.fromtimestamp(os.path.getmtime(fullname)),
                     }
             
                 file_ids = self.search(cr, uid, [
@@ -87,14 +106,18 @@ class FileDocument(orm.Model):
         return True
         
     _columns = {
-        'active': fields.boolean('Active'),
-        'create_date': fields.date('Create date'),
-        'write_date': fields.date('Create date'),
+        'active': fields.boolean('Active', readonly=True),
+        'file_create': fields.datetime('Create date', readonly=True),
+        'file_modify': fields.datetime('Modify date', readonly=True),
         'name': fields.char(
             'Name', size=80, required=True, readonly=True),
+        'partner_name': fields.char('Partner name', size=80, 
+            readonly=True),
+        'agent_name': fields.char('Agent name', size=80, 
+            readonly=True),
         'fullname': fields.char(
             'Fullname', size=280, required=False, readonly=True),
-        'content': fields.text('Content', readonly=True) ,
+        'content': fields.text('Content', readonly=True),
         }
         
     _defaults = {
