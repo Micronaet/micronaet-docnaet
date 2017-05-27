@@ -105,7 +105,6 @@ class FileDocument(orm.Model):
                 else:
                     self.create(cr, uid, data, context=context)
                     _logger.info('Created: %s' % fullname)
-
         return True
         
     _columns = {
