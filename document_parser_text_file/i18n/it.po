@@ -1,0 +1,170 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* document_parser_text_file
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-30 14:26+0000\n"
+"PO-Revision-Date: 2017-05-30 16:30+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: it\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#. module: document_parser_text_file
+#: field:file.document,active:0
+msgid "Active"
+msgstr "Attivo"
+
+#. module: document_parser_text_file
+#: model:ir.actions.act_window,name:document_parser_text_file.action_file_document_advanced_search_wizard
+#: model:ir.ui.menu,name:document_parser_text_file.menu_file_document_advanced_search_wizard
+msgid "Advanced search"
+msgstr "Ricerca avanzata"
+
+#. module: document_parser_text_file
+#: view:file.document:document_parser_text_file.view_file_document_search
+#: field:file.document,agent_name:0
+#: field:file.document.advanced.search.wizard,agent_name:0
+msgid "Agent name"
+msgstr "Nome agente"
+
+#. module: document_parser_text_file
+#: view:file.document.advanced.search.wizard:document_parser_text_file.file_document_advanced_search_wizard_view
+msgid "Cancel"
+msgstr "Annulla"
+
+#. module: document_parser_text_file
+#: view:file.document:document_parser_text_file.view_file_document_form
+#: field:file.document,content:0
+msgid "Content"
+msgstr "Contenuto"
+
+#. module: document_parser_text_file
+#: view:file.document:document_parser_text_file.view_file_document_search
+#: field:file.document,file_create:0
+msgid "Create date"
+msgstr "Data creazione"
+
+#. module: document_parser_text_file
+#: field:file.document,create_uid:0
+#: field:file.document.advanced.search.wizard,create_uid:0
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: document_parser_text_file
+#: field:file.document,create_date:0
+#: field:file.document.advanced.search.wizard,create_date:0
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: document_parser_text_file
+#: view:file.document.advanced.search.wizard:document_parser_text_file.file_document_advanced_search_wizard_view
+msgid "Date filter:"
+msgstr "Filtro data:"
+
+#. module: document_parser_text_file
+#: view:file.document:document_parser_text_file.view_file_document_form
+#: view:file.document:document_parser_text_file.view_file_document_tree
+#: model:ir.actions.act_window,name:document_parser_text_file.action_file_document
+#: model:ir.model,name:document_parser_text_file.model_file_document
+#: model:ir.ui.menu,name:document_parser_text_file.menu_file_document
+msgid "File document"
+msgstr "Documento file"
+
+#. module: document_parser_text_file
+#: field:file.document.advanced.search.wizard,from_create_date:0
+msgid "From create date"
+msgstr "Dalla data creazione"
+
+#. module: document_parser_text_file
+#: field:file.document.advanced.search.wizard,from_modify_date:0
+msgid "From modify date"
+msgstr "Dalla data modifica"
+
+#. module: document_parser_text_file
+#: field:file.document,fullname:0
+msgid "Fullname"
+msgstr "Nome completo"
+
+#. module: document_parser_text_file
+#: view:file.document:document_parser_text_file.view_file_document_search
+msgid "Group By..."
+msgstr "Raggruppa per..."
+
+#. module: document_parser_text_file
+#: field:file.document,id:0 field:file.document.advanced.search.wizard,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: document_parser_text_file
+#: field:file.document.advanced.search.wizard,keywords:0
+msgid "Keyword"
+msgstr "Chiavi di ricerca"
+
+#. module: document_parser_text_file
+#: code:addons/document_parser_text_file/wizard/advanced_search.py:111
+#, python-format
+msgid "Keywords search"
+msgstr "Ricerca chiavi"
+
+#. module: document_parser_text_file
+#: field:file.document,write_uid:0
+#: field:file.document.advanced.search.wizard,write_uid:0
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: document_parser_text_file
+#: field:file.document,write_date:0
+#: field:file.document.advanced.search.wizard,write_date:0
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: document_parser_text_file
+#: view:file.document:document_parser_text_file.view_file_document_search
+#: field:file.document,file_modify:0
+msgid "Modify date"
+msgstr "Data modifica"
+
+#. module: document_parser_text_file
+#: field:file.document,name:0
+msgid "Name"
+msgstr "Nome"
+
+#. module: document_parser_text_file
+#: view:file.document:document_parser_text_file.view_file_document_search
+#: field:file.document,partner_name:0
+#: field:file.document.advanced.search.wizard,partner_name:0
+msgid "Partner name"
+msgstr "Nome cliente"
+
+#. module: document_parser_text_file
+#: view:file.document.advanced.search.wizard:document_parser_text_file.file_document_advanced_search_wizard_view
+msgid "Search"
+msgstr "Ricerca"
+
+#. module: document_parser_text_file
+#: view:file.document:document_parser_text_file.view_file_document_search
+msgid "Search file"
+msgstr "Ricerca file"
+
+#. module: document_parser_text_file
+#: field:file.document.advanced.search.wizard,to_create_date:0
+msgid "To create date"
+msgstr "Alla data creazione"
+
+#. module: document_parser_text_file
+#: field:file.document.advanced.search.wizard,to_modify_date:0
+msgid "To modify date"
+msgstr "Alla data modifica"
+
+#. module: document_parser_text_file
+#: view:file.document.advanced.search.wizard:document_parser_text_file.file_document_advanced_search_wizard_view
+msgid "Wizard"
+msgstr "Wizard"
