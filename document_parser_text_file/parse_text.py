@@ -47,15 +47,19 @@ class FileDocument(orm.Model):
     _order = 'name'
     
     def schedule_load_file_list(
-            self, cr, uid, path, doc_filter, context=None):
+            self, cr, uid, path, doc_filter, period=False, context=None):
         ''' Load path passed and create file as record
         '''
+        # Pool used:
         company_pool = self.pool.get('res.company')
         _logger.info('Start import file: folder [%s] extension [%s]' % (
              path, doc_filter))
              
         path = os.path.expanduser(path)
         path_len = len(path)
+        if period:
+            period_date = datetime.now() - timedelta(days=period)
+            period_date = period_date.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         for (dirpath, dirnames, filenames) in os.walk(path):
             for filename in filenames:
                 extension = company_pool.get_file_extension(filename)
@@ -84,16 +88,22 @@ class FileDocument(orm.Model):
                     agent_name = False                 
                 
                 # Create / update record:
+                file_create = datetime.fromtimestamp(
+                    os.path.getctime(fullname))
+                file_modify = datetime.fromtimestamp(
+                    os.path.getmtime(fullname))
+                if period and file_modify < period_date:
+                    _logger.info('Jump file (date file %s < %s): %s' % (
+                         file_modify, period_date, filename))
+                    continue    
                 data = { 
                     'name': filename,
                     'fullname': fullname,
                     'partner_name': partner_name,
                     'agent_name': agent_name,
                     'content': content, 
-                    'file_create':
-                        datetime.fromtimestamp(os.path.getctime(fullname)),
-                    'file_modify': 
-                        datetime.fromtimestamp(os.path.getmtime(fullname)),
+                    'file_create': file_create,
+                    'file_modify': file_modify,                        
                     }
             
                 file_ids = self.search(cr, uid, [
