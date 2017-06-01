@@ -47,7 +47,7 @@ class FileDocument(orm.Model):
     _order = 'name'
     
     def schedule_load_file_list(
-            self, cr, uid, path, doc_filter, period=False, context=None):
+            self, cr, uid, path, doc_filter, unlink=True, period=False, context=None):
         ''' Load path passed and create file as record
         '''
         # Pool used:
@@ -60,6 +60,7 @@ class FileDocument(orm.Model):
         if period:
             period_date = datetime.now() - timedelta(days=period)
             period_date = period_date.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+
         for (dirpath, dirnames, filenames) in os.walk(path):
             for filename in filenames:
                 extension = company_pool.get_file_extension(filename)
@@ -89,9 +90,11 @@ class FileDocument(orm.Model):
                 
                 # Create / update record:
                 file_create = datetime.fromtimestamp(
-                    os.path.getctime(fullname))
+                    os.path.getctime(fullname)).strftime(
+                        DEFAULT_SERVER_DATETIME_FORMAT)
                 file_modify = datetime.fromtimestamp(
-                    os.path.getmtime(fullname))
+                    os.path.getmtime(fullname)).strftime(
+                        DEFAULT_SERVER_DATETIME_FORMAT)
                 if period and file_modify < period_date:
                     _logger.info('Jump file (date file %s < %s): %s' % (
                          file_modify, period_date, filename))
