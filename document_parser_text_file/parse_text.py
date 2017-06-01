@@ -61,6 +61,12 @@ class FileDocument(orm.Model):
             period_date = datetime.now() - timedelta(days=period)
             period_date = period_date.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
 
+        if unlink:
+            unlink_db = {}
+            unlink_ids = self.search(cr, uid, [], context=context)
+            for f in self.browse(cr, uid, unlink_ids, context=context): 
+                unlink_db[f.fullname] = f.id
+                
         for (dirpath, dirnames, filenames) in os.walk(path):
             for filename in filenames:
                 extension = company_pool.get_file_extension(filename)
@@ -88,6 +94,10 @@ class FileDocument(orm.Model):
                     partner_name = False
                     agent_name = False                 
                 
+                # Remove fullname from unlink
+                if unlink and fullname in unlink_db:
+                    del(unlink_db[fullname])
+                    
                 # Create / update record:
                 file_create = datetime.fromtimestamp(
                     os.path.getctime(fullname)).strftime(
@@ -109,7 +119,7 @@ class FileDocument(orm.Model):
                     'file_modify': file_modify,                        
                     }
             
-                file_ids = self.search(cr, uid, [
+                file_ids = self.search(cr, uid, [ # TODO remove use unlink_db
                     ('fullname', '=', fullname), 
                     ], context=context)                 
                 if file_ids:
@@ -118,6 +128,12 @@ class FileDocument(orm.Model):
                 else:
                     self.create(cr, uid, data, context=context)
                     _logger.info('Created: %s' % fullname)
+                
+        if unlink and unlink_db:
+            self.write(cr, uid, unlink_db.value(), {
+                'active': False,
+                }, context=context)
+                
         return True
         
     _columns = {
