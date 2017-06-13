@@ -219,6 +219,7 @@ class DocnaetProtocolEmail(orm.Model):
     def schedule_import_email_document(self, cr, uid, context=None):
         ''' Search schedule address and launch importation:
         '''
+        import pdb; pdb.set_trace()
         address_ids = self.search(cr, uid, [
              ('is_active', '=', True),
              ], context=context)
