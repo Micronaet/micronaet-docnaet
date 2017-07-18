@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="docnaet_document_tree_view">
+            <field name="name">Docnaet document</field>
+            <field name="model">docnaet.document</field>
+            <field name="inherit_id" ref="docnaet.docnaet_document_tree_view"/>
+            <field name="arch" type="xml">
+                <button name="button_call_url_docnaet" position="before">
+                    <button name="document_text_preview" string="Text preview" type="object" icon="terp-stock_zoom"/>
+                </button>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_document_text_preview_form">
+            <field name="name">docnaet.document.form</field>
+            <field name="model">docnaet.document</field>
+            <field name="priority" eval="50" />
+            <field name="arch" type="xml">
+                <form string="Text preview" version="7.0">        
+                    <sheet>
+                        <group col="4" colspan="4">
+                            <field name="name" colspan="4"/>
+                            <field name="protocol_id" />
+                            <field name="number" />
+                            <field name="partner_id" />
+                            <field name="date" />
+                            <separator string="Text preview" colspan="4"/>
+                            <field name="text_preview" colspan="4" nolabel="1"/>
+                        </group>
+                    </sheet>        
+                </form>
+            </field>
+        </record> 
+    </data>
+</openerp>
+
