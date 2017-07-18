@@ -77,8 +77,12 @@ class DocnaetDocument(orm.Model):
         res = {}
         for document in self.browse(cr, uid, ids, context=context):
             filename = self.get_document_filename(
-                cr, uid, document, mode='filename', context=context)            
-            res[document.id] = company_pool.get_file_extension(filename)
+                cr, uid, document, mode='filename', context=context)
+            fullname = self.get_document_filename(
+                cr, uid, document, mode='fullname', context=context)
+                
+            res[document.id] = company_pool.document_parse_doc_to_text(
+                filename, fullname)
         return res
         
     _columns = {
