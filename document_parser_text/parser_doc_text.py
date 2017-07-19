@@ -36,6 +36,7 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
     float_compare)
 
 # Parse library:
+import pdb; pdb.set_trace()
 from subprocess import Popen, PIPE
 from docx import opendocx, getdocumenttext
 #http://stackoverflow.com/questions/5725278/python-help-using-pdfminer-as-a-library
