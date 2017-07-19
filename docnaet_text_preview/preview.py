@@ -35,16 +35,23 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
     DATETIME_FORMATS_MAP, 
     float_compare)
 
+# -----------------------------------------------------------------------------
 # Parse library:
+# -----------------------------------------------------------------------------
+# Lauch in shell:
 from subprocess import Popen, PIPE
+# Install: antiword, odt2txt
+from cStringIO import StringIO
+
+# DocX:
 #from docx import opendocx, getdocumenttext
+
+# PDF:
 #http://stackoverflow.com/questions/5725278/python-help-using-pdfminer-as-a-library
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
-from cStringIO import StringIO
-
 
 _logger = logging.getLogger(__name__)
 
@@ -113,7 +120,7 @@ class ResCompany(orm.Model):
         #        newparatextlist.append(paratext.encode('utf-8'))
         #    return '\n\n'.join(newparatextlist)
         elif extension == 'odt':
-            cmd = ['odt2txt', fullname]
+            cmd = ['odt2txt', '--stdout', fullname]
             p = Popen(cmd, stdout=PIPE)
             stdout, stderr = p.communicate()
             return stdout.decode('ascii', 'ignore')
