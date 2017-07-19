@@ -37,7 +37,7 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 # Parse library:
 from subprocess import Popen, PIPE
-from docx import opendocx, getdocumenttext
+#from docx import opendocx, getdocumenttext
 #http://stackoverflow.com/questions/5725278/python-help-using-pdfminer-as-a-library
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
@@ -105,13 +105,13 @@ class ResCompany(orm.Model):
             except:
                 _logger.error('Error access file: %s' % filename)
                 return ''    
-        elif extension == 'docx':
-            document = opendocx(fullname)
-            paratextlist = getdocumenttext(document)
-            newparatextlist = []
-            for paratext in paratextlist:
-                newparatextlist.append(paratext.encode('utf-8'))
-            return '\n\n'.join(newparatextlist)
+        #elif extension == 'docx':
+        #    document = opendocx(fullname)
+        #    paratextlist = getdocumenttext(document)
+        #    newparatextlist = []
+        #    for paratext in paratextlist:
+        #        newparatextlist.append(paratext.encode('utf-8'))
+        #    return '\n\n'.join(newparatextlist)
         elif extension == 'odt':
             cmd = ['odt2txt', fullname]
             p = Popen(cmd, stdout=PIPE)
