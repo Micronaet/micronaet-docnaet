@@ -30,7 +30,7 @@
     'depends': [
         'base',
         'docnaet',
-        'document_parser_text',
+        #'document_parser_text',
         ],
     'init_xml': [],
     'demo': [],

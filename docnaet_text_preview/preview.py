@@ -35,9 +35,91 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
     DATETIME_FORMATS_MAP, 
     float_compare)
 
+# Parse library:
+from subprocess import Popen, PIPE
+from docx import opendocx, getdocumenttext
+#http://stackoverflow.com/questions/5725278/python-help-using-pdfminer-as-a-library
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from pdfminer.pdfpage import PDFPage
+from cStringIO import StringIO
+
 
 _logger = logging.getLogger(__name__)
 
+class ResCompany(orm.Model):
+    """ Model name: ResCompany
+    """    
+    _inherit = 'res.company'
+    
+    # -------------------------------------------------------------------------
+    # Utility function for parse text:
+    # -------------------------------------------------------------------------
+    def get_file_extension(self, filename):
+        ''' Return file extension
+        '''
+        file_list = filename.split('.')
+        if len(file_list) <= 1:
+            return ''
+        return file_list[-1].lower()
+        
+    def document_parse_doc_to_text(self, filename, fullname):
+        ''' Convert utility for docx, doc, pdf, odt document
+        '''
+        # ---------------------------------------------------------------------
+        # Utility for PDF:
+        # ---------------------------------------------------------------------
+        def document_parse_pdf_to_txt(fullname):
+            rsrcmgr = PDFResourceManager()
+            retstr = StringIO()
+            codec = 'utf-8'
+            laparams = LAParams()
+            device = TextConverter(
+                rsrcmgr, retstr, codec=codec, laparams=laparams)
+            fp = file(fullname, 'rb')
+            interpreter = PDFPageInterpreter(rsrcmgr, device)
+            password = ''
+            maxpages = 0
+            caching = True
+            pagenos=set()
+            for page in PDFPage.get_pages(
+                    fp, pagenos, maxpages=maxpages, password=password, 
+                    caching=caching, check_extractable=True):
+                interpreter.process_page(page)
+            fp.close()
+            device.close()
+            str = retstr.getvalue()
+            retstr.close()
+            return str
+        
+        # Check file type from extension: 
+        extension = self.get_file_extension(filename)
+           
+        if extension == 'doc':
+            try:
+                cmd = ['antiword', fullname]
+                p = Popen(cmd, stdout=PIPE)
+                stdout, stderr = p.communicate()
+                return stdout.decode('ascii', 'ignore')
+            except:
+                _logger.error('Error access file: %s' % filename)
+                return ''    
+        elif extension == 'docx':
+            document = opendocx(fullname)
+            paratextlist = getdocumenttext(document)
+            newparatextlist = []
+            for paratext in paratextlist:
+                newparatextlist.append(paratext.encode('utf-8'))
+            return '\n\n'.join(newparatextlist)
+        elif extension == 'odt':
+            cmd = ['odt2txt', fullname]
+            p = Popen(cmd, stdout=PIPE)
+            stdout, stderr = p.communicate()
+            return stdout.decode('ascii', 'ignore')
+        elif extension == 'pdf':
+            return document_parse_pdf_to_txt(fullname)
+            
 class DocnaetDocument(orm.Model):
     """ Model name: DocnaetDocument
     """
