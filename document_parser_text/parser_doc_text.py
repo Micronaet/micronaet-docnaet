@@ -113,7 +113,7 @@ class ResCompany(orm.Model):
                 newparatextlist.append(paratext.encode('utf-8'))
             return '\n\n'.join(newparatextlist)
         elif extension == 'odt':
-            cmd = ['odt2txt', fullname]
+            cmd = ['odt2txt', '--stdout', fullname]
             p = Popen(cmd, stdout=PIPE)
             stdout, stderr = p.communicate()
             return stdout.decode('ascii', 'ignore')
