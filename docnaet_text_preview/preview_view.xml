@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="docnaet.docnaet_document_tree_view"/>
             <field name="arch" type="xml">
                 <button name="button_call_url_docnaet" position="before">
-                    <button name="document_text_preview" string="Text preview" type="object" icon="terp-stock_zoom"/>
+                    <button name="document_text_preview" string="Text preview" type="object" icon="terp-stock_zoom" attrs="{'invisible': [('extension','in',('doc', 'pdf')]}"/>
                 </button>
             </field>
         </record>
