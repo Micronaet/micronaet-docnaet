@@ -35,6 +35,8 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
     DATETIME_FORMATS_MAP, 
     float_compare)
 
+_logger = logging.getLogger(__name__)
+
 # -----------------------------------------------------------------------------
 # Parse library:
 # -----------------------------------------------------------------------------
@@ -44,16 +46,23 @@ from subprocess import Popen, PIPE
 from cStringIO import StringIO
 
 # DocX:
-#from docx import opendocx, getdocumenttext
+try:
+    from docx import opendocx, getdocumenttext
+except:
+    _logger('DocX converter not found!')
 
 # PDF:
-#http://stackoverflow.com/questions/5725278/python-help-using-pdfminer-as-a-library
+#http://stackoverflow.com/questions/5725278/\
+#python-help-using-pdfminer-as-a-library
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfpage import PDFPage
 
-_logger = logging.getLogger(__name__)
+# EML:
+import email
+import os
+
 
 class ResCompany(orm.Model):
     """ Model name: ResCompany
@@ -99,7 +108,62 @@ class ResCompany(orm.Model):
             str = retstr.getvalue()
             retstr.close()
             return str
-        
+
+        # ---------------------------------------------------------------------
+        # Utility for EML:
+        # ---------------------------------------------------------------------
+        '''def extract (msgfile, key):
+            """ 
+            Extracts all data from e-mail, including From, To, etc., and 
+            returns it as a dictionary.
+            msgfile -- A file-like readable object
+            key     -- Some ID string for that particular Message. Can be a 
+                file name or anything.
+            Returns dict()
+            Keys: from, to, subject, date, text, html, parts[, files]
+            Key files will be present only when message contained binary files.
+            For more see __doc__ for pullout() and caption() functions.
+            """
+            m = message_from_file(msgfile)
+            From, To, Subject, Date = caption(m)
+            Text, Html, Files, Parts = pullout(m, key)
+            Text = Text.strip(); Html = Html.strip()
+            msg = {
+                'subject': Subject, 
+                'from': From, 
+                'to': To, 
+                'date': Date,
+                'text': Text, 
+                'html': Html, 
+                'parts': Parts,
+                }
+            if Files: 
+                msg['files'] = Files
+            return msg
+
+        def caption(origin):
+            """
+            Extracts: To, From, Subject and Date from email.Message() or 
+                mailbox.Message()
+            origin -- Message() object
+            Returns tuple(From, To, Subject, Date)
+            If message doesn't contain one/more of them, the empty strings will
+            be returned.
+            """
+            Date = ''
+            if origin.has_key('date'): 
+                Date = origin['date'].strip()
+            From = ''
+            if origin.has_key('from'): 
+                From = origin['from'].strip()
+            To = ''
+            if origin.has_key('to'): 
+                To = origin['to'].strip()
+            Subject = ''
+            if origin.has_key('subject'): 
+                Subject = origin['subject'].strip()
+            return From, To, Subject, Date '''
+            
         # Check file type from extension: 
         extension = self.get_file_extension(filename)
            
@@ -112,18 +176,78 @@ class ResCompany(orm.Model):
             except:
                 _logger.error('Error access file: %s' % filename)
                 return ''    
-        #elif extension == 'docx':
-        #    document = opendocx(fullname)
-        #    paratextlist = getdocumenttext(document)
-        #    newparatextlist = []
-        #    for paratext in paratextlist:
-        #        newparatextlist.append(paratext.encode('utf-8'))
-        #    return '\n\n'.join(newparatextlist)
+                
+        elif extension == 'docx':
+            try:
+                document = opendocx(fullname)
+                paratextlist = getdocumenttext(document)
+                newparatextlist = []
+                for paratext in paratextlist:
+                    newparatextlist.append(paratext.encode('utf-8'))
+                return '\n\n'.join(newparatextlist)
+            except:
+                return 'Problem read file: %s (or converter not installed)' %\
+                    filename    
+                    
         elif extension == 'odt':
             cmd = ['odt2txt', '--stdout', fullname]
             p = Popen(cmd, stdout=PIPE)
             stdout, stderr = p.communicate()
             return stdout.decode('ascii', 'ignore')
+            
+        elif extension == 'eml':
+            #f = open(fullname, 'rb')
+            #res = '%s' % (extract(f, f.name), )
+            #f.close()
+            #return res
+
+            f = open(fullname)
+            msg = email.message_from_file(f)
+            #attachments = msg.get_payload()
+            #for attachment in attachments:
+            #    try:
+            #        fnam=attachment.get_filename()
+            #        f = open(fnam, 'wb').write(attachment.get_payload(decode=True,))
+            #        f.close()
+            #    except Exception as detail:
+            #        #print detail
+            #        pass            
+            data = {
+                'Return-Path': '',
+                'Delivered-To': '', 
+                'Received': '',
+                'Delivered-To': '', 
+                'Received': '',
+                'Date': '',
+                'Message-ID': '',
+                'From': '',
+                'To': '',
+                #'X-Originating-IP': '',
+                #'X-Qmail-Scanner-Diagnostics': '',
+                #'X-Spam-Status': '',
+                #'Received-SPF': '',
+                #'DKIM-Signature': '',
+                #'X-Google-DKIM-Signature': '',
+                #'X-Gm-Message-State': '',
+                #'X-Received': '',
+                #'MIME-Version': '',
+                'References': '',
+                'In-Reply-To': '', 
+                'Subject': '',
+                'Content-Type': '',
+                }
+
+            for key, value in msg.items():
+                if key not in data:
+                    continue
+                data[key] += value
+            return _('''
+                Date: %(Date)s\n
+                From: %(From)s To: %(Delivered-To)s\n
+                Subject: %(Subject)s\n
+                Content: %(Content-Type)s\n                
+                ''') % data                
+            
         elif extension == 'pdf':
             return document_parse_pdf_to_txt(fullname)
             
