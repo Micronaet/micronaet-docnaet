@@ -35,7 +35,7 @@ for process in c.Win32_Process():
         # Read parameters:
         pid = process.ProcessId        
         shell.AppActivate(pid)
-        caption = GetWindowText(pid)
+        caption = GetWindowText(GetForegroundWindow())
         
         print 'Firefox process ID: %s [%s]' % (pid, caption)
         if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
@@ -49,6 +49,9 @@ if new_form:
         print 'Close Firefox tab ID: %s' % firefox_id
 else:
     print 'No Firefox open'    
+    
+# Activate before window:
+shell.AppActivate(current_pid)
 
 #print 'Windows active ID: %s' % GetWindowText(GetForegroundWindow())
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
