@@ -28,7 +28,7 @@ shell = win32com.client.Dispatch('WScript.Shell')
 
         
 current_pid = GetForegroundWindow()
-pid_ids = [p.id for p in psutil.process_iter() if 'firefox' in p.name()][-1]
+pid_ids = [p.pid for p in psutil.process_iter() if 'firefox' in p.name()][-1]
 if pid_ids:
    pid = pid_ids[-1] # last
    shell.AppActivate(pid)
