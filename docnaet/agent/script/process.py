@@ -43,6 +43,7 @@ for p in psutil.process_iter():
         continue
     pid = p.pid
     caption = GetWindowText(pid)
+    print 'Firefox ID: %s Caption: %s' % (pid, caption)
     if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
          shell.SendKeys('^{F4}') # CTRL + F4
          print 'Close Firefox tab ID: %s' % pid
