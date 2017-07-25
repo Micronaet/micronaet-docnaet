@@ -30,8 +30,10 @@ shell = win32com.client.Dispatch('WScript.Shell')
 argv = sys.argv
 if len(argv) == 2:
     mode = 'print'
+    print 'Print mode'
 else:
     mode = 'delete'
+    print 'Delete mode'
         
 c = wmi.WMI()
 new_form = []
