@@ -42,6 +42,7 @@ for p in psutil.process_iter():
     if 'firefox' not in p.name():
         continue
     pid = p.pid
+    shell.AppActivate(pid)
     caption = GetWindowText(GetForegroundWindow())
     print 'Firefox ID: %s Caption: %s' % (pid, caption)
     if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
