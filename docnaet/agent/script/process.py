@@ -21,7 +21,7 @@ import os
 import sys
 import wmi
 
-
+import pdb; pdb.set_trace()
 c = wmi.WMI()
 for process in c.Win32_Process():
     print process.ProcessId, process.Name
