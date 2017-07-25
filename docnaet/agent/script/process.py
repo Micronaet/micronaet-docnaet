@@ -20,6 +20,7 @@
 import os
 import sys
 import wmi
+import psutil
 import win32com.client    
 from win32gui import GetWindowText, GetForegroundWindow
 
