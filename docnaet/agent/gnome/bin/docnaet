@@ -5,12 +5,6 @@ import sys
 import subprocess
 import ConfigParser
     
-try:
-    from win32gui import GetWindowText, GetForegroundWindow
-    current_pid = GetForegroundWindow() # Firefox
-except: 
-    current_pid = False    
-
 # -----------------------------------------------------------------------------
 # Test remote or LAN mode (for choose config file):
 # -----------------------------------------------------------------------------
@@ -83,15 +77,13 @@ operation, argument = command
 # -------------
 # 1. Open file:
 # -------------
-#proc = subprocess.Popen(['python', 'bar.py', argument], shell=True)
-#pid = proc.pid # <--- access `pid` attribute to get the pid of the child process.
 if operation == 'document':
     filename = os.path.join(store_path, argument)
     log_f.write('Open doc: %s\n' % filename)
     log_f.close()
     cmd = openfile_command % filename
-    proc = subprocess.Popen(cmd.split(), shell=False)
-    document_pid = prod.pid
+    proc = subprocess.Popen(cmd.split(), shell=True)
+    document_pid = proc.pid
     #os.system(cmd)
 
 # ---------------
@@ -126,9 +118,9 @@ try:
     shell = win32com.client.Dispatch('WScript.Shell')            
     pid_ids = [p.pid for p in psutil.process_iter() if 'firefox' in p.name()]
     if pid_ids:
-       pid = pid_ids[-1] # last
-       shell.AppActivate(pid)
-       shell.SendKeys('^{F4}') # CTRL + F4
+        pid = pid_ids[-1] # last
+        shell.AppActivate(pid)
+        shell.SendKeys('^{F4}') # CTRL + F4
        
 except:
     log_f.write('No Win 32 com library (so no close TAB)')
