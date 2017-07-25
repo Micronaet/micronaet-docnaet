@@ -17,8 +17,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-#import os
-#import sys
+import os
+import sys
 import wmi
 import win32com.client    
 from win32gui import GetWindowText, GetForegroundWindow
@@ -27,6 +27,12 @@ shell = win32com.client.Dispatch('WScript.Shell')
 #shell.Run('firefox')
 #shell.AppActivate('firefox')
 
+argv = sys.argv
+if len(argv) == 2:
+    mode = 'print'
+else:
+    mode = 'delete'
+        
 c = wmi.WMI()
 new_form = []
 current_pid = GetForegroundWindow()
@@ -34,14 +40,14 @@ for process in c.Win32_Process():
     if process.Name.lower() == 'firefox.exe':
         # Read parameters:
         pid = process.ProcessId        
-        shell.AppActivate(pid)
-        caption = GetWindowText(GetForegroundWindow())
+        #shell.AppActivate(pid)
+        #caption = GetWindowText(GetForegroundWindow())
         
-        print 'Firefox process ID: %s [%s]' % (pid, caption)
-        if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
-           new_form.append(pid)
+        #print 'Firefox process ID: %s [%s]' % (pid, caption)
+        #if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
+        new_form.append(pid)
 
-if new_form:
+if mode == 'delete' and new_form:
     print 'Firefox total ID: %s' % (new_form, ) 
     for firefox_id in new_form:
         shell.AppActivate(firefox_id)
