@@ -48,6 +48,7 @@ for p in psutil.process_iter():
     if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
          shell.SendKeys('^{F4}') # CTRL + F4
          print 'Close Firefox tab ID: %s' % pid
+         break
 
 #for process in c.Win32_Process():
 #    if process.Name.lower() == 'firefox.exe':
