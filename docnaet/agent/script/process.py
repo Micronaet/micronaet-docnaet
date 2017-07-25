@@ -46,18 +46,21 @@ for process in c.Win32_Process():
         caption = GetWindowText(GetForegroundWindow())
         
         #print 'Firefox process ID: %s [%s]' % (pid, caption)
-        #if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
-        new_form.append(pid)
-        print 'Firefox PID: %s [%s]' % (pid, caption)
+        if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
+            shell.SendKeys('^{F4}') # CTRL + F4
+            print 'Close Firefox tab ID: %s' % firefox_id
+            break
+        #new_form.append(pid)
+        #print 'Firefox PID: %s [%s]' % (pid, caption)
 
-if mode == 'delete' and new_form:
-    print 'Firefox total ID: %s' % (new_form, ) 
-    for firefox_id in new_form:
-        shell.AppActivate(firefox_id)
-        shell.SendKeys('^{F4}') # CTRL + F4
-        print 'Close Firefox tab ID: %s' % firefox_id
-else:
-    print 'No Firefox open'    
+#if mode == 'delete' and new_form:
+#    print 'Firefox total ID: %s' % (new_form, )
+#    for firefox_id in new_form:
+#        shell.AppActivate(firefox_id)
+#        shell.SendKeys('^{F4}') # CTRL + F4
+#        print 'Close Firefox tab ID: %s' % firefox_id
+#else:
+#    print 'No Firefox open'    
     
 # Activate before window:
 shell.AppActivate(current_pid)
