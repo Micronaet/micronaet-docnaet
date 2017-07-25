@@ -42,12 +42,13 @@ for process in c.Win32_Process():
     if process.Name.lower() == 'firefox.exe':
         # Read parameters:
         pid = process.ProcessId        
-        #shell.AppActivate(pid)
-        #caption = GetWindowText(GetForegroundWindow())
+        shell.AppActivate(pid)
+        caption = GetWindowText(GetForegroundWindow())
         
         #print 'Firefox process ID: %s [%s]' % (pid, caption)
         #if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
         new_form.append(pid)
+        print 'Firefox PID: %s [%s]' % (pid, caption)
 
 if mode == 'delete' and new_form:
     print 'Firefox total ID: %s' % (new_form, ) 
