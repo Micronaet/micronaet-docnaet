@@ -32,8 +32,12 @@ c = wmi.WMI()
 new_form = []
 for process in c.Win32_Process():
     if process.Name.lower() == 'firefox.exe':
-        print 'Firefox process ID: %s' % process.ProcessId
-        if 'Nuova scheda' in GetWindowText(process.ProcessId):
+        caption = GetWindowText(process.ProcessId)
+        print 'Firefox process ID: %s [%s]' % (
+            process.ProcessId,
+            caption,
+            )
+        if 'Nuova scheda' in caption:
            new_form.append(process.ProcessId)
            
     #else:        
