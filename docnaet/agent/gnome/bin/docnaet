@@ -82,7 +82,7 @@ if operation == 'document':
     log_f.write('Open doc: %s\n' % filename)
     log_f.close()
     cmd = openfile_command % filename
-    proc = subprocess.Popen(cmd.split(), shell=True)
+    proc = subprocess.Popen(cmd.split(), shell=True) # XXX no extra space!!
     document_pid = proc.pid
     print 'Current Document PID: %s' % document_pid
     #os.system(cmd)
