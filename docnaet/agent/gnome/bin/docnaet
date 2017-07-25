@@ -68,7 +68,6 @@ if len(command) != 2:
     log_f.write('Not enought parameters\n')
     log_f.close()
     sys.exit()
-
 operation, argument = command
 
 # ----------------------------------------------------------------------------
@@ -110,6 +109,7 @@ else:
 # T: Try closing TAB in Firefox
 # -----------------------------
 try:
+    # Need to be installed
     import psutil
     import win32com.client    
     from win32gui import GetWindowText, GetForegroundWindow
@@ -126,5 +126,10 @@ try:
        
 except:
     log_f.write('No Win 32 com library (so no close TAB)')
+
+# --------------------------
+# S: Show windows with focus
+# --------------------------
 if document_pid:
     shell.AppActivate(document_pid)
+    
