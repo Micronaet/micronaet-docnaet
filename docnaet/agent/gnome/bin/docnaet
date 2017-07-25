@@ -3,6 +3,7 @@
 import os
 import sys
 import ConfigParser
+    
 
 # -----------------------------------------------------------------------------
 # Test remote or LAN mode (for choose config file):
@@ -100,3 +101,23 @@ else:
     log_f.write('Error not managed operation: %s (%s)\n' % (
         operation, 'remote' if remote else 'LAN'))
     log_f.close()
+
+try:
+    import psutil
+    import win32com.client    
+    #import wmi
+    #from win32gui import GetWindowText, GetForegroundWindow
+    
+    # Create scripting shell:
+    shell = win32com.client.Dispatch('WScript.Shell')            
+    current_pid = GetForegroundWindow()
+    pid_ids = [p.pid for p in psutil.process_iter() if 'firefox' in p.name()]
+    if pid_ids:
+       pid = pid_ids[-1] # last
+       shell.AppActivate(pid)
+       shell.SendKeys('^{F4}') # CTRL + F4
+       shell.AppActivate(current_pid)
+       
+except:
+    log_f.write('No Win 32 com library (so no close TAB)')
+    
