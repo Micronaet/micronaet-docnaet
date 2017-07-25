@@ -22,17 +22,19 @@
 import wmi
 import win32com.client    
 
+shell = win32com.client.Dispatch('WScript.Shell')
+#shell.Run('firefox')
+#shell.AppActivate('firefox')
+
 c = wmi.WMI()
 firefox_id = False
 for process in c.Win32_Process():
     if process.Name.lower() == 'firefox.exe':
-        firefox_id = process.ProcessId
-        print process.ProcessId, process.Name
-
-if firefox_id:
-    shell = win32com.client.Dispatch('WScript.Shell')
-    #shell.Run('firefox')
-    shell.AppActivate('firefox')
-    shell.AppActivate(firefox_id)
-    shell.SendKeys('^{F4}') # CTRL + F4
+        firefox_id = process.ProcessId        
+        shell.AppActivate(firefox_id)
+        shell.SendKeys('^{F4}') # CTRL + F4
+        print 'Close Firefox tab ID: %s' % process.ProcessId
+        
+if not firefox_id:
+    print 'No Firefox open'    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
