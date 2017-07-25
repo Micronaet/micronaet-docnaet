@@ -22,6 +22,8 @@
 import wmi
 import win32com.client    
 
+from win32gui import GetWindowText, GetForegroundWindow
+
 shell = win32com.client.Dispatch('WScript.Shell')
 #shell.Run('firefox')
 #shell.AppActivate('firefox')
@@ -43,4 +45,6 @@ if firefox_id:
     print 'Close Firefox tab ID: %s' % firefox_id
 else:
     print 'No Firefox open'    
+
+print 'Windows active ID: %s' % GetWindowText(GetForegroundWindow())
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
