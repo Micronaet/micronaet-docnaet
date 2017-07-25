@@ -17,13 +17,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-import pdb; pdb.set_trace()
-import os
-import sys
+#import os
+#import sys
 import wmi
+import win32com.client    
 
 c = wmi.WMI()
+firefox_id = False
 for process in c.Win32_Process():
     print process.ProcessId, process.Name
-    
+    if process.Name.lower() == 'firefox.exe':
+        firefox_id = process.ProcessId
+
+if firefox_id:
+    shell = win32com.client.Dispatch('WScript.Shell')
+    #shell.Run('firefox')
+    shell.AppActivate('firefox')
+    shell.AppActivate(firefox_id)
+    shell.SendKeys('^{F4}') # CTRL + F4
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
