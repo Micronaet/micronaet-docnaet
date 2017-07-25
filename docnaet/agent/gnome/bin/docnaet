@@ -83,7 +83,7 @@ if operation == 'document':
     cmd = openfile_command % filename
     proc = subprocess.Popen(cmd.split(), shell=True) # XXX no extra space!!
     document_pid = proc.pid
-    print 'Current Document PID: %s' % document_pid
+    #print 'Current Document PID: %s' % document_pid
     #os.system(cmd)
 
 # ---------------
@@ -121,7 +121,7 @@ try:
     if pid_ids:
         pid = pid_ids[-1] # last
         shell.AppActivate(pid)
-        print 'Kill Firefox PID: %s' % pid
+        #print 'Kill Firefox PID: %s' % pid
         shell.SendKeys('^{F4}') # CTRL + F4
        
 except:
