@@ -38,7 +38,7 @@ for process in c.Win32_Process():
         caption = GetWindowText(GetForegroundWindow())
         
         print 'Firefox process ID: %s [%s]' % (pid, caption)
-        if 'Nuova scheda' in caption:
+        if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
            new_form.append(process.ProcessId)
 
 if new_form:
