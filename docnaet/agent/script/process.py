@@ -40,7 +40,7 @@ for process in c.Win32_Process():
 if firefox_id:
     shell.AppActivate(firefox_id)
     shell.SendKeys('^{F4}') # CTRL + F4
-    print 'Close Firefox tab ID: %s' % process.ProcessId
+    print 'Close Firefox tab ID: %s' % firefox_id
 else:
     print 'No Firefox open'    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
