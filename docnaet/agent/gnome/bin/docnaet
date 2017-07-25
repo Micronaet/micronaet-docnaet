@@ -76,6 +76,7 @@ operation, argument = command
 # -------------
 # 1. Open file:
 # -------------
+document_pid = False
 if operation == 'document':
     filename = os.path.join(store_path, argument)
     log_f.write('Open doc: %s\n' % filename)
