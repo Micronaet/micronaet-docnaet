@@ -35,23 +35,30 @@ else:
     mode = 'delete'
     print 'Delete mode'
         
-c = wmi.WMI()
-new_form = []
+#c = wmi.WMI()
 current_pid = GetForegroundWindow()
-for process in c.Win32_Process():
-    if process.Name.lower() == 'firefox.exe':
-        # Read parameters:
-        pid = process.ProcessId        
-        shell.AppActivate(pid)
-        caption = GetWindowText(GetForegroundWindow())
-        
-        #print 'Firefox process ID: %s [%s]' % (pid, caption)
-        if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
-            shell.SendKeys('^{F4}') # CTRL + F4
-            print 'Close Firefox tab ID: %s' % pid
-            break
-        #new_form.append(pid)
-        #print 'Firefox PID: %s [%s]' % (pid, caption)
+for p in psutil.process_iter():
+    if 'firefox' not in p.name():
+        continue
+    caption = GetWindowText(p.id)    
+    if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
+         shell.SendKeys('^{F4}') # CTRL + F4
+         print 'Close Firefox tab ID: %s' % pid
+
+#for process in c.Win32_Process():
+#    if process.Name.lower() == 'firefox.exe':
+#        # Read parameters:
+#        pid = process.ProcessId        
+#        shell.AppActivate(pid)
+#        caption = GetWindowText(GetForegroundWindow())
+#        
+#        #print 'Firefox process ID: %s [%s]' % (pid, caption)
+#        if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
+#            shell.SendKeys('^{F4}') # CTRL + F4
+#            print 'Close Firefox tab ID: %s' % pid
+#            break
+#        #new_form.append(pid)
+#        #print 'Firefox PID: %s [%s]' % (pid, caption)
 
 #if mode == 'delete' and new_form:
 #    print 'Firefox total ID: %s' % (new_form, )
