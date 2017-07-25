@@ -48,7 +48,7 @@ for process in c.Win32_Process():
         #print 'Firefox process ID: %s [%s]' % (pid, caption)
         if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
             shell.SendKeys('^{F4}') # CTRL + F4
-            print 'Close Firefox tab ID: %s' % firefox_id
+            print 'Close Firefox tab ID: %s' % pid
             break
         #new_form.append(pid)
         #print 'Firefox PID: %s [%s]' % (pid, caption)
