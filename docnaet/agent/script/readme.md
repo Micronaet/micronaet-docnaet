@@ -9,4 +9,5 @@ Install depenency:
 sudo pip install wmi
 #sudo pip install pythoncom
 sudo pip install pypiwin32 # pywin32
+sudo pip install psutil
 
