@@ -30,13 +30,17 @@ c = wmi.WMI()
 firefox_id = False
 for process in c.Win32_Process():
     if process.Name.lower() == 'firefox.exe':
-        firefox_id = process.ProcessId        
-        shell.AppActivate(firefox_id)
-        shell.SendKeys('^{F4}') # CTRL + F4
-        print 'Close Firefox tab ID: %s' % process.ProcessId
+        # Update if not present or > 
+        print 'Firefox process ID: %s' % process.ProcessId
+        if not firefox_id or process.ProcessId > firefox_id:
+            firefox_id = process.ProcessId        
     #else:        
     #    print 'Process open ID: %s Name: %s' % (
     #        process.ProcessId, process.Name)
-if not firefox_id:
+if firefox_id:
+    shell.AppActivate(firefox_id)
+    shell.SendKeys('^{F4}') # CTRL + F4
+    print 'Close Firefox tab ID: %s' % process.ProcessId
+else:
     print 'No Firefox open'    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
