@@ -25,9 +25,9 @@ import win32com.client
 c = wmi.WMI()
 firefox_id = False
 for process in c.Win32_Process():
-    print process.ProcessId, process.Name
     if process.Name.lower() == 'firefox.exe':
         firefox_id = process.ProcessId
+        print process.ProcessId, process.Name
 
 if firefox_id:
     shell = win32com.client.Dispatch('WScript.Shell')
