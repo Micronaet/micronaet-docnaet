@@ -25,31 +25,30 @@ import win32com.client
 from win32gui import GetWindowText, GetForegroundWindow
 
 shell = win32com.client.Dispatch('WScript.Shell')
+
+        
+current_pid = GetForegroundWindow()
+pid_ids = [p.id for p in psutil.process_iter() if 'firefox' in p.name()][-1]
+if pid_ids:
+   pid = pid_ids[-1] # last
+   shell.AppActivate(pid)
+   shell.SendKeys('^{F4}') # CTRL + F4
+   print 'Close Firefox tab ID: %s' % pid
+else:
+   print 'No Firefox'
+    
+shell.AppActivate(current_pid)
+
 #shell.Run('firefox')
 #shell.AppActivate('firefox')
-
-argv = sys.argv
-if len(argv) == 2:
-    mode = 'print'
-    print 'Print mode'
-else:
-    mode = 'delete'
-    print 'Delete mode'
-        
+#argv = sys.argv
+#if len(argv) == 2:
+#    mode = 'print'
+#    print 'Print mode'
+#else:
+#    mode = 'delete'
+#    print 'Delete mode'
 #c = wmi.WMI()
-current_pid = GetForegroundWindow()
-for p in psutil.process_iter():
-    if 'firefox' not in p.name():
-        continue
-    pid = p.pid
-    shell.AppActivate(pid)
-    caption = GetWindowText(GetForegroundWindow())
-    print 'Firefox ID: %s Caption: %s' % (pid, caption)
-    if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
-         shell.SendKeys('^{F4}') # CTRL + F4
-         print 'Close Firefox tab ID: %s' % pid
-         break
-
 #for process in c.Win32_Process():
 #    if process.Name.lower() == 'firefox.exe':
 #        # Read parameters:
@@ -75,7 +74,7 @@ for p in psutil.process_iter():
 #    print 'No Firefox open'    
     
 # Activate before window:
-shell.AppActivate(current_pid)
+#shell.AppActivate(current_pid)
 
 #print 'Windows active ID: %s' % GetWindowText(GetForegroundWindow())
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
