@@ -102,6 +102,9 @@ else:
         operation, 'remote' if remote else 'LAN'))
     log_f.close()
 
+# -----------------------------
+# T: Try closing TAB in Firefox
+# -----------------------------
 try:
     import psutil
     import win32com.client    
@@ -116,8 +119,7 @@ try:
        pid = pid_ids[-1] # last
        shell.AppActivate(pid)
        shell.SendKeys('^{F4}') # CTRL + F4
-       shell.AppActivate(current_pid)
-       
+       shell.AppActivate(current_pid)       
 except:
     log_f.write('No Win 32 com library (so no close TAB)')
     
