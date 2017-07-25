@@ -29,22 +29,23 @@ shell = win32com.client.Dispatch('WScript.Shell')
 #shell.AppActivate('firefox')
 
 c = wmi.WMI()
-firefox_id = False
+new_form = []
 for process in c.Win32_Process():
     if process.Name.lower() == 'firefox.exe':
-        # Update if not present or > 
         print 'Firefox process ID: %s' % process.ProcessId
-        if not firefox_id or process.ProcessId > firefox_id:
-            firefox_id = process.ProcessId        
+        if 'Nuova scheda' in GetWindowText(process.ProcessId):
+           new_form.append(process.ProcessId)
+           
     #else:        
     #    print 'Process open ID: %s Name: %s' % (
     #        process.ProcessId, process.Name)
-if firefox_id:
-    shell.AppActivate(firefox_id)
-    shell.SendKeys('^{F4}') # CTRL + F4
-    print 'Close Firefox tab ID: %s' % firefox_id
+if new_form:
+    for firefox_id in new_form:
+        shell.AppActivate(firefox_id)
+        shell.SendKeys('^{F4}') # CTRL + F4
+        print 'Close Firefox tab ID: %s' % firefox_id
 else:
     print 'No Firefox open'    
 
-print 'Windows active ID: %s' % GetWindowText(GetForegroundWindow())
+#print 'Windows active ID: %s' % GetWindowText(GetForegroundWindow())
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
