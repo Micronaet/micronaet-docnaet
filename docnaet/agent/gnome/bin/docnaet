@@ -2,8 +2,14 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+import subprocess
 import ConfigParser
     
+try:
+    from win32gui import GetWindowText, GetForegroundWindow
+    current_pid = GetForegroundWindow() # Firefox
+except: 
+    current_pid = False    
 
 # -----------------------------------------------------------------------------
 # Test remote or LAN mode (for choose config file):
@@ -46,7 +52,7 @@ if remote:
     config_remote.read([cfg_remote_file])
     store_path = config.get('folder', 'store_path')
 else:
-    store_path = config_remote.get('folder', 'store_path')
+    store_path = config.get('folder', 'store_path')
 
 private_path = config.get('folder', 'private_path') # not used in remote mode
 
@@ -77,11 +83,16 @@ operation, argument = command
 # -------------
 # 1. Open file:
 # -------------
+#proc = subprocess.Popen(['python', 'bar.py', argument], shell=True)
+#pid = proc.pid # <--- access `pid` attribute to get the pid of the child process.
 if operation == 'document':
     filename = os.path.join(store_path, argument)
     log_f.write('Open doc: %s\n' % filename)
     log_f.close()
-    os.system(openfile_command % filename)
+    cmd = openfile_command % filename
+    proc = subprocess.Popen(cmd.split(), shell=False)
+    document_pid = prod.pid
+    #os.system(cmd)
 
 # ---------------
 # 2. Open folder:
@@ -92,7 +103,7 @@ elif not remote and operation == 'folder':
         folder = folder[:-1]
     log_f.write('Open user folder: %s\n' % folder)
     log_f.close()
-    os.system('%s %s' % (folder_command, folder))
+    os.system('%s %s' % (folder_command, folder))    
 
 # -----------------------------
 # E: Error no correct operation
@@ -108,18 +119,19 @@ else:
 try:
     import psutil
     import win32com.client    
+    from win32gui import GetWindowText, GetForegroundWindow
     #import wmi
-    #from win32gui import GetWindowText, GetForegroundWindow
     
     # Create scripting shell:
     shell = win32com.client.Dispatch('WScript.Shell')            
-    current_pid = GetForegroundWindow()
     pid_ids = [p.pid for p in psutil.process_iter() if 'firefox' in p.name()]
     if pid_ids:
        pid = pid_ids[-1] # last
        shell.AppActivate(pid)
        shell.SendKeys('^{F4}') # CTRL + F4
-       shell.AppActivate(current_pid)       
+       
 except:
     log_f.write('No Win 32 com library (so no close TAB)')
     
+if document_pid:
+    shell.AppActivate(document_pid)
