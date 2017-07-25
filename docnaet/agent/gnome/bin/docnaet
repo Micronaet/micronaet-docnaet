@@ -84,6 +84,7 @@ if operation == 'document':
     cmd = openfile_command % filename
     proc = subprocess.Popen(cmd.split(), shell=True)
     document_pid = proc.pid
+    print 'Current Document PID: %s' % document_pid
     #os.system(cmd)
 
 # ---------------
@@ -124,6 +125,6 @@ try:
        
 except:
     log_f.write('No Win 32 com library (so no close TAB)')
-    
+import pdb; pdb.set_trace()    
 if document_pid:
     shell.AppActivate(document_pid)
