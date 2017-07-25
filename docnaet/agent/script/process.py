@@ -41,7 +41,8 @@ current_pid = GetForegroundWindow()
 for p in psutil.process_iter():
     if 'firefox' not in p.name():
         continue
-    caption = GetWindowText(p.id)    
+    pid = p.pid
+    caption = GetWindowText(pid)
     if 'Nuova scheda' in caption or 'Mozilla Firefox' in caption:
          shell.SendKeys('^{F4}') # CTRL + F4
          print 'Close Firefox tab ID: %s' % pid
