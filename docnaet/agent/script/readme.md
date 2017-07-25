@@ -12,7 +12,9 @@ sudo pip install pypiwin32 # pywin32
 sudo pip install psutil
 
 Send keys command:
-KeyArgument
+============================================
+Key             Argument
+============================================
 BACKSPACE       {BACKSPACE}, {BS}, or {BKSP}
 BREAK           {BREAK}
 CAPS LOCK       {CAPSLOCK}
@@ -50,11 +52,12 @@ F14             {F14}
 F15             {F15}
 F16             {F16}
 
+============================================
 Key             Special Character
+============================================
 SHIFT           +
 CTRL            ^
 ALT             %
 ENTER           ~
 
 The documentation of Sendkeys you can find at Microsoft.
-
