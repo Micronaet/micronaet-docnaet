@@ -29,6 +29,7 @@ shell = win32com.client.Dispatch('WScript.Shell')
 
 c = wmi.WMI()
 new_form = []
+current_pid = GetForegroundWindow()
 for process in c.Win32_Process():
     if process.Name.lower() == 'firefox.exe':
         # Read parameters:
@@ -39,11 +40,9 @@ for process in c.Win32_Process():
         print 'Firefox process ID: %s [%s]' % (pid, caption)
         if 'Nuova scheda' in caption:
            new_form.append(process.ProcessId)
-           
-    #else:        
-    #    print 'Process open ID: %s Name: %s' % (
-    #        process.ProcessId, process.Name)
+
 if new_form:
+    print 'Firefox total ID: %s' % (new_form, ) 
     for firefox_id in new_form:
         shell.AppActivate(firefox_id)
         shell.SendKeys('^{F4}') # CTRL + F4
