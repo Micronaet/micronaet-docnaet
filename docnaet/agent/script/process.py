@@ -21,7 +21,6 @@
 #import sys
 import wmi
 import win32com.client    
-
 from win32gui import GetWindowText, GetForegroundWindow
 
 shell = win32com.client.Dispatch('WScript.Shell')
@@ -32,11 +31,12 @@ c = wmi.WMI()
 new_form = []
 for process in c.Win32_Process():
     if process.Name.lower() == 'firefox.exe':
-        caption = GetWindowText(process.ProcessId)
-        print 'Firefox process ID: %s [%s]' % (
-            process.ProcessId,
-            caption,
-            )
+        # Read parameters:
+        pid = process.ProcessId        
+        shell.AppActivate(pid)
+        caption = GetWindowText(GetForegroundWindow())
+        
+        print 'Firefox process ID: %s [%s]' % (pid, caption)
         if 'Nuova scheda' in caption:
            new_form.append(process.ProcessId)
            
