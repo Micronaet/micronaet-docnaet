@@ -121,6 +121,7 @@ try:
     if pid_ids:
         pid = pid_ids[-1] # last
         shell.AppActivate(pid)
+        print 'Kill Firefox PID: %s' % pid
         shell.SendKeys('^{F4}') # CTRL + F4
        
 except:
