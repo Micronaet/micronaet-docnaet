@@ -126,6 +126,5 @@ try:
        
 except:
     log_f.write('No Win 32 com library (so no close TAB)')
-import pdb; pdb.set_trace()    
 if document_pid:
     shell.AppActivate(document_pid)
