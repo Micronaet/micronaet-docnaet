@@ -1,0 +1,175 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* docnaet_upload
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-22 15:31+0000\n"
+"PO-Revision-Date: 2017-08-22 15:31+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: docnaet_upload
+#: code:addons/docnaet_upload/wizard/upload_document.py:81
+#, python-format
+msgid "Select document to reassign"
+msgstr "Select document to reassign"
+
+#. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
+msgid "Home folder"
+msgstr "Home folder"
+
+#. module: docnaet_upload
+#: help:docnaet.document.upload.wizard,reassign_confirm:0
+msgid "After reassign feature confirm all draft elements"
+msgstr "After reassign feature confirm all draft elements"
+
+#. module: docnaet_upload
+#: code:addons/docnaet_upload/wizard/upload_document.py:148
+#, python-format
+msgid "Extension check"
+msgstr "Extension check"
+
+#. module: docnaet_upload
+#: model:ir.ui.menu,name:docnaet_upload.docnaet_document_upload_menu
+msgid "Upload document"
+msgstr "Upload document"
+
+#. module: docnaet_upload
+#: selection:docnaet.document.upload.wizard,mode:0
+msgid "Upload mode"
+msgstr "Upload mode"
+
+#. module: docnaet_upload
+#: field:docnaet.document,uploaded:0
+msgid "Uploaded"
+msgstr "Uploaded"
+
+#. module: docnaet_upload
+#: field:docnaet.document.upload.wizard,default_protocol_id:0
+msgid "Default protocol"
+msgstr "Default protocol"
+
+#. module: docnaet_upload
+#: field:docnaet.document.upload.wizard,assign_protocol:0
+msgid "Assign protocol"
+msgstr "Assign protocol"
+
+#. module: docnaet_upload
+#: field:docnaet.document.upload.wizard,default_partner_id:0
+msgid "Default partner"
+msgstr "Default partner"
+
+#. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
+msgid "Riassegna"
+msgstr "Riassegna"
+
+#. module: docnaet_upload
+#: field:docnaet.document.upload.wizard,default_language_id:0
+msgid "Default language"
+msgstr "Default language"
+
+#. module: docnaet_upload
+#: model:ir.actions.act_window,name:docnaet_upload.action_docnaet_my_document_to protocol_tree
+#: model:ir.ui.menu,name:docnaet_upload.menu_docnaet_my_document_to protocol
+msgid "Uploaded to confirm"
+msgstr "Uploaded to confirm"
+
+#. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
+#: model:ir.model,name:docnaet_upload.model_docnaet_document_upload_wizard
+msgid "Document upload"
+msgstr "Document upload"
+
+#. module: docnaet_upload
+#: field:docnaet.document.upload.wizard,reassign_confirm:0
+msgid "Confirm after reassign"
+msgstr "Confirm after reassign"
+
+#. module: docnaet_upload
+#: field:docnaet.document.upload.wizard,default_type_id:0
+msgid "Default type"
+msgstr "Default type"
+
+#. module: docnaet_upload
+#: model:ir.actions.act_window,name:docnaet_upload.action_docnaet_document_upload
+msgid "Docnaet document upload"
+msgstr "Docnaet document upload"
+
+#. module: docnaet_upload
+#: field:docnaet.document.upload.wizard,default_user_id:0
+msgid "Default user"
+msgstr "Default user"
+
+#. module: docnaet_upload
+#: code:addons/docnaet_upload/wizard/upload_document.py:80
+#, python-format
+msgid "No selection"
+msgstr "No selection"
+
+#. module: docnaet_upload
+#: selection:docnaet.document.upload.wizard,mode:0
+msgid "Reassign mode"
+msgstr "Reassign mode"
+
+#. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
+msgid "Upload"
+msgstr "Upload"
+
+#. module: docnaet_upload
+#: code:addons/docnaet_upload/wizard/upload_document.py:149
+#, python-format
+msgid "Extension of file must be <= 4 char!"
+msgstr "Extension of file must be <= 4 char!"
+
+#. module: docnaet_upload
+#: field:docnaet.document.upload.wizard,mode:0
+msgid "Mode"
+msgstr "Mode"
+
+#. module: docnaet_upload
+#: help:docnaet.document.upload.wizard,assign_protocol:0
+msgid "In upload mode assign protocol and next number"
+msgstr "In upload mode assign protocol and next number"
+
+#. module: docnaet_upload
+#: field:docnaet.document,import_date:0
+msgid "Import date"
+msgstr "Import date"
+
+#. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
+#: field:docnaet.document.upload.wizard,folder_status:0
+msgid "Folder status"
+msgstr "Folder status"
+
+#. module: docnaet_upload
+#: model:ir.model,name:docnaet_upload.model_docnaet_document
+msgid "Docnaet document"
+msgstr "Docnaet document"
+
+#. module: docnaet_upload
+#: code:addons/docnaet_upload/wizard/upload_document.py:110
+#, python-format
+msgid "Reassign characteristics"
+msgstr "Reassign characteristics"
+
+#. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
+msgid "Cancel"
+msgstr "Cancel"
+
+#. module: docnaet_upload
+#: model:ir.actions.act_window,name:docnaet_upload.act_docnaet_document_reassign_wizard
+msgid "Riassegna caratteristiche"
+msgstr "Riassegna caratteristiche"
+

@@ -1,0 +1,103 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* docnaet_crm
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-22 15:27+0000\n"
+"PO-Revision-Date: 2017-08-22 15:27+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: docnaet_crm
+#: help:crm.meeting,docnaet_document_id:0
+msgid "Document linked to calendar, for deadline events"
+msgstr "Document linked to calendar, for deadline events"
+
+#. module: docnaet_crm
+#: code:addons/docnaet_crm/crm.py:211
+#, python-format
+msgid "Error updating Docnaet document deadline!\n"
+"Query: %s"
+msgstr "Error updating Docnaet document deadline!\n"
+"Query: %s"
+
+#. module: docnaet_crm
+#: view:crm.meeting:0
+msgid "Stop Docnaet alert"
+msgstr "Stop Docnaet alert"
+
+#. module: docnaet_crm
+#: model:ir.model,name:docnaet_crm.model_crm_meeting
+msgid "Meeting"
+msgstr "Reunión"
+
+#. module: docnaet_crm
+#: field:crm.meeting,docnaet_alert:0
+msgid "Docnaet alert"
+msgstr "Docnaet alert"
+
+#. module: docnaet_crm
+#: model:email.template,body_html:docnaet_crm.email_alert_template_user_crm_meeting
+msgid "\n"
+"    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); \">\n"
+"        <p>Spett.le ${object.name},</p>\n"
+"        <p>Segnaliamo un'attivita' da portare avanti</p>\n"
+"        <!-- Insert Area: for list of link to crm.meeting-->\n"
+"            <!--micronaet-->\n"
+"        <!-- End Insert Area: for list of link to crm.meeting-->\n"
+"        <br/>\n"
+"        <p>Messaggio inviato automaticamente dal sistema</p>\n"
+"    </div>\n"
+"            "
+msgstr "\n"
+"    <div style=\"font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); \">\n"
+"        <p>Spett.le ${object.name},</p>\n"
+"        <p>Segnaliamo un'attivita' da portare avanti</p>\n"
+"        <!-- Insert Area: for list of link to crm.meeting-->\n"
+"            <!--micronaet-->\n"
+"        <!-- End Insert Area: for list of link to crm.meeting-->\n"
+"        <br/>\n"
+"        <p>Messaggio inviato automaticamente dal sistema</p>\n"
+"    </div>\n"
+"            "
+
+#. module: docnaet_crm
+#: view:crm.meeting:0
+#: field:crm.meeting,docnaet_document_id:0
+#: model:ir.model,name:docnaet_crm.model_docnaet_document
+msgid "Docnaet document"
+msgstr "Docnaet document"
+
+#. module: docnaet_crm
+#: help:crm.meeting,docnaet_alert:0
+msgid "This meeting is geneated from Docnaet and require an alert"
+msgstr "This meeting is geneated from Docnaet and require an alert"
+
+#. module: docnaet_crm
+#: view:crm.meeting:0
+msgid "Docnaet"
+msgstr "Docnaet"
+
+#. module: docnaet_crm
+#: code:addons/docnaet_crm/crm.py:210
+#, python-format
+msgid "Warning!"
+msgstr "Warning!"
+
+#. module: docnaet_crm
+#: model:email.template,subject:docnaet_crm.email_alert_template_user_crm_meeting
+msgid "Alert: ${object.name}"
+msgstr "Alert: ${object.name}"
+
+#. module: docnaet_crm
+#: view:crm.meeting:0
+msgid "Docnaet form"
+msgstr "Docnaet form"
+

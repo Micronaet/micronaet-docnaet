@@ -1,0 +1,179 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* docnaet_upload_mail
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-08-22 16:22+0000\n"
+"PO-Revision-Date: 2017-08-22 16:22+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: docnaet_upload_mail
+#: model:ir.model,name:docnaet_upload_mail.model_docnaet_protocol_email
+msgid "Protocol email"
+msgstr "Protocol email"
+
+#. module: docnaet_upload_mail
+#: model:ir.model,name:docnaet_upload_mail.model_docnaet_protocol
+msgid "Docnaet protocol"
+msgstr "Docnaet protocol"
+
+#. module: docnaet_upload_mail
+#: help:docnaet.protocol.email,auto_partner:0
+msgid "Try to assign partner from email address"
+msgstr "Try to assign partner from email address"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,is_active:0
+msgid "Is active"
+msgstr "Is active"
+
+#. module: docnaet_upload_mail
+#: help:docnaet.protocol.email,type_id:0
+msgid "Assign auto type of docnaet document"
+msgstr "Assign auto type of docnaet document"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,folder:0
+msgid "Folder"
+msgstr "Folder"
+
+#. module: docnaet_upload_mail
+#: help:docnaet.protocol.email,host:0
+msgid "Email IMAP server"
+msgstr "Email IMAP server"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,type_id:0
+msgid "Type"
+msgstr "Type"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,name:0
+msgid "Email"
+msgstr "Email"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,user:0
+msgid "Username"
+msgstr "Username"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,remove:0
+msgid "Remove after import"
+msgstr "Remove after import"
+
+#. module: docnaet_upload_mail
+#: model:ir.actions.act_window,name:docnaet_upload_mail.action_protocol_email_form
+#: model:ir.ui.menu,name:docnaet_upload_mail.menu_protocol_email_form
+msgid "Email account"
+msgstr "Email account"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,password:0
+msgid "Password"
+msgstr "Password"
+
+#. module: docnaet_upload_mail
+#: view:docnaet.protocol:0
+#: field:docnaet.protocol,account_ids:0
+#: view:docnaet.protocol.email:0
+msgid "Account"
+msgstr "Account"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol,auto_email:0
+msgid "Auto email"
+msgstr "Auto email"
+
+#. module: docnaet_upload_mail
+#: code:addons/docnaet_upload_mail/upload_mail.py:85
+#, python-format
+msgid "Error find imap server: %s"
+msgstr "Error find imap server: %s"
+
+#. module: docnaet_upload_mail
+#: help:docnaet.protocol.email,folder:0
+msgid "Email IMAP folder"
+msgstr "Email IMAP folder"
+
+#. module: docnaet_upload_mail
+#: view:docnaet.protocol:0
+msgid "Upload mail"
+msgstr "Upload mail"
+
+#. module: docnaet_upload_mail
+#: code:addons/docnaet_upload_mail/upload_mail.py:91
+#, python-format
+msgid "Error login access user: %s"
+msgstr "Error login access user: %s"
+
+#. module: docnaet_upload_mail
+#: view:docnaet.protocol.email:0
+msgid "Force import"
+msgstr "Force import"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,auto_partner:0
+msgid "Auto partner"
+msgstr "Auto partner"
+
+#. module: docnaet_upload_mail
+#: help:docnaet.protocol.email,auto_number:0
+msgid "Assign next number of protocol after import"
+msgstr "Assign next number of protocol after import"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,protocol_id:0
+msgid "Protocol"
+msgstr "Protocol"
+
+#. module: docnaet_upload_mail
+#: help:docnaet.protocol.email,password:0
+msgid "Email password"
+msgstr "Email password"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,auto_number:0
+msgid "Auto protocol number"
+msgstr "Auto protocol number"
+
+#. module: docnaet_upload_mail
+#: code:addons/docnaet_upload_mail/upload_mail.py:94
+#, python-format
+msgid "Error access start folder: %s"
+msgstr "Error access start folder: %s"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,SSL:0
+msgid "SSL"
+msgstr "SSL"
+
+#. module: docnaet_upload_mail
+#: help:docnaet.protocol.email,user:0
+msgid "Email user"
+msgstr "Email user"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,host:0
+msgid "IMAP server"
+msgstr "IMAP server"
+
+#. module: docnaet_upload_mail
+#: code:addons/docnaet_upload_mail/upload_mail.py:98
+#, python-format
+msgid "IMAP server error:"
+msgstr "IMAP server error:"
+
+#. module: docnaet_upload_mail
+#: field:docnaet.protocol.email,port:0
+msgid "Port"
+msgstr "Port"
+
