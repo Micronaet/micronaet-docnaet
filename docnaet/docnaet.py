@@ -96,7 +96,8 @@ class DocnaetLanguage(orm.Model):
     _order = 'name'
                     
     _columns = {        
-        'name': fields.char('Language', size=64, required=True),
+        'name': fields.char('Language', size=64, required=True,
+            translate=True),
         'code': fields.char('Code', size=16),
         'iso_code': fields.char('ISO Code', size=16),
         'note': fields.text('Note'),
@@ -109,7 +110,8 @@ class ResPartnerDocnaet(orm.Model):
     _description = 'Partner category'
                     
     _columns = {        
-        'name': fields.char('Docnaet type', size=64, required=True),
+        'name': fields.char('Docnaet type', size=64, required=True,
+            translate=True),
         'note': fields.text('Note'),
         }
 
@@ -163,7 +165,7 @@ class DocnaetType(orm.Model):
             }, context=context)
 
     _columns = {        
-        'name': fields.char('Type', size=64, required=True),
+        'name': fields.char('Type', size=64, required=True, translate=True),
         'invisible': fields.boolean('Not used'),
         'note': fields.text('Note'),
         }
@@ -204,9 +206,10 @@ class DocnaetProtocol(orm.Model):
         return number
         
     _columns = {        
-        'name': fields.char('Protocol', size=64, required=True),
+        'name': fields.char('Protocol', size=64, required=True
+            translate=True),
         'next': fields.integer('Next protocol', required=True), 
-        'note': fields.text('Note'),
+        'note': fields.text('Note', translate=True),
         # TODO default_application_id
         'invisible': fields.boolean('Not used'),
         }
@@ -236,9 +239,9 @@ class DocnaetProtocolTemplateProgram(orm.Model):
             return False
             
     _columns = {        
-        'name': fields.char('Program', size=64, required=True),
+        'name': fields.char('Program', size=64, required=True, translate=True),
         'extension': fields.char('Extension', size=5),
-        'note': fields.text('Note'),
+        'note': fields.text('Note', translate=True),
         }
 
 class DocnaetProtocolTemplate(orm.Model):
