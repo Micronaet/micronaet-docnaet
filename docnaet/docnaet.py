@@ -206,7 +206,7 @@ class DocnaetProtocol(orm.Model):
         return number
         
     _columns = {        
-        'name': fields.char('Protocol', size=64, required=True
+        'name': fields.char('Protocol', size=64, required=True,
             translate=True),
         'next': fields.integer('Next protocol', required=True), 
         'note': fields.text('Note', translate=True),
