@@ -60,7 +60,7 @@ password = config.get('openerp', 'password')
 
 URL = 'http://%s:%s' % (hostname, port) 
 
-
+import pdb; pdb.set_trace()
 # Access MS SQL Database customer table:
 connection = pyodbc.connect('DSN=%s;UID=%s;PWD=%s' % (dsn, uid, pwd))
 cr = connection.cursor()
