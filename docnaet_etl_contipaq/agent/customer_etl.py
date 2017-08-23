@@ -72,8 +72,8 @@ query = '''
         CTIPOENTRE
     FROM dbo.admClientes
     WHERE 
-        CCODIGOCLIENTE ilike 'PR%' AND CIDCLIENTEPROVEEDOR > 0;
-    '''
+        CIDCLIENTEPROVEEDOR > 0;
+    ''' #CCODIGOCLIENTE ilike 'PR%' AND 
 try:
     cr.execute(query)
 except:
