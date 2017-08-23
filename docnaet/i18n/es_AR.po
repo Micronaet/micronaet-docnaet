@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 14:20+0000\n"
-"PO-Revision-Date: 2017-08-22 14:20+0000\n"
+"POT-Creation-Date: 2017-08-23 14:36+0000\n"
+"PO-Revision-Date: 2017-08-23 14:36+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: docnaet
-#: code:addons/docnaet/docnaet.py:440
+#: code:addons/docnaet/docnaet.py:443
 #, python-format
 msgid "ID: %s\n"
 "Origin ID: %s\n"
@@ -108,6 +108,11 @@ msgid "Documenti remoti"
 msgstr "Documenti remoti"
 
 #. module: docnaet
+#: view:docnaet.document:0
+msgid "Date to"
+msgstr "Date to"
+
+#. module: docnaet
 #: selection:docnaet.document,priority:0
 msgid "Highest"
 msgstr "Highest"
@@ -123,7 +128,7 @@ msgid "File name"
 msgstr "File name"
 
 #. module: docnaet
-#: code:addons/docnaet/docnaet.py:368
+#: code:addons/docnaet/docnaet.py:371
 #, python-format
 msgid "Timed document"
 msgstr "Timed document"
@@ -134,7 +139,7 @@ msgid "Link OpenERP document"
 msgstr "Link OpenERP document"
 
 #. module: docnaet
-#: code:addons/docnaet/docnaet.py:341
+#: code:addons/docnaet/docnaet.py:344
 #: view:docnaet.document:0
 #: field:docnaet.document,protocol_id:0
 #: field:docnaet.document.duplication.wizard,protocol_id:0
@@ -146,7 +151,7 @@ msgid "Protocol"
 msgstr "Protocol"
 
 #. module: docnaet
-#: code:addons/docnaet/docnaet.py:347
+#: code:addons/docnaet/docnaet.py:350
 #, python-format
 msgid "No partner assigned, choose one before and confirm!"
 msgstr "No partner assigned, choose one before and confirm!"
@@ -170,13 +175,18 @@ msgid "Deadline"
 msgstr "Deadline"
 
 #. module: docnaet
+#: field:docnaet.document.advanced.search.wizard,from_date:0
+msgid "From date"
+msgstr "From date"
+
+#. module: docnaet
 #: code:addons/docnaet/wizard/document_duplication.py:50
 #, python-format
 msgid "Cannot found original document"
 msgstr "Cannot found original document"
 
 #. module: docnaet
-#: code:addons/docnaet/docnaet.py:346
+#: code:addons/docnaet/docnaet.py:349
 #: view:docnaet.document:0
 #: field:docnaet.document,partner_id:0
 #: field:docnaet.document.advanced.search.wizard,partner_id:0
@@ -198,7 +208,7 @@ msgid "Low"
 msgstr "Low"
 
 #. module: docnaet
-#: code:addons/docnaet/docnaet.py:342
+#: code:addons/docnaet/docnaet.py:345
 #, python-format
 msgid "No protocol assigned, choose one before and confirm!"
 msgstr "No protocol assigned, choose one before and confirm!"
@@ -246,7 +256,7 @@ msgid "Company docnaet"
 msgstr "Company docnaet"
 
 #. module: docnaet
-#: code:addons/docnaet/docnaet.py:451
+#: code:addons/docnaet/docnaet.py:454
 #, python-format
 msgid "Document info"
 msgstr "Document info"
@@ -306,6 +316,11 @@ msgid "Group By"
 msgstr "Group By"
 
 #. module: docnaet
+#: field:docnaet.document.advanced.search.wizard,from_deadline:0
+msgid "From deadline"
+msgstr "From deadline"
+
+#. module: docnaet
 #: view:docnaet.document:0
 #: field:docnaet.document,docnaet_category_id:0
 #: model:ir.model,name:docnaet.model_res_partner_docnaet
@@ -321,6 +336,11 @@ msgstr "Docnaet root path in file system for store docs"
 #: view:res.partner:0
 msgid "Set Docnaet OFF"
 msgstr "Set Docnaet OFF"
+
+#. module: docnaet
+#: view:docnaet.document:0
+msgid "Date from"
+msgstr "Date from"
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -351,10 +371,9 @@ msgid "Language"
 msgstr "Language"
 
 #. module: docnaet
-#: view:docnaet.document:0
-#: selection:docnaet.document,state:0
-msgid "Timed"
-msgstr "Timed"
+#: view:docnaet.document.advanced.search.wizard:0
+msgid "Date filter:"
+msgstr "Date filter:"
 
 #. module: docnaet
 #: view:res.users:0
@@ -382,7 +401,7 @@ msgid "Subject"
 msgstr "Subject"
 
 #. module: docnaet
-#: code:addons/docnaet/docnaet.py:369
+#: code:addons/docnaet/docnaet.py:372
 #, python-format
 msgid "For timed document need a deadline!"
 msgstr "For timed document need a deadline!"
@@ -391,6 +410,11 @@ msgstr "For timed document need a deadline!"
 #: field:res.company,docnaet_path:0
 msgid "Docnaet path"
 msgstr "Docnaet path"
+
+#. module: docnaet
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_remote_document_tree
+msgid "Remote documents"
+msgstr "Remote documents"
 
 #. module: docnaet
 #: field:res.partner,docnaet_category_id:0
@@ -403,9 +427,9 @@ msgid "Document linked!"
 msgstr "Document linked!"
 
 #. module: docnaet
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_remote_document_tree
-msgid "Remote documents"
-msgstr "Remote documents"
+#: view:docnaet.document:0
+msgid "Deadline to"
+msgstr "Deadline to"
 
 #. module: docnaet
 #: view:docnaet.protocol:0
@@ -444,6 +468,12 @@ msgstr "Note"
 
 #. module: docnaet
 #: view:docnaet.document:0
+#: selection:docnaet.document,state:0
+msgid "Timed"
+msgstr "Timed"
+
+#. module: docnaet
+#: view:docnaet.document:0
 msgid "Duplicate"
 msgstr "Duplicate"
 
@@ -476,7 +506,7 @@ msgid "Status"
 msgstr "Status"
 
 #. module: docnaet
-#: code:addons/docnaet/docnaet.py:461
+#: code:addons/docnaet/docnaet.py:464
 #, python-format
 msgid "Fax yet present!"
 msgstr "Fax yet present!"
@@ -485,6 +515,11 @@ msgstr "Fax yet present!"
 #: selection:docnaet.document,priority:0
 msgid "Normal"
 msgstr "Normal"
+
+#. module: docnaet
+#: view:docnaet.document:0
+msgid "Deadline from"
+msgstr "Deadline from"
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -504,6 +539,11 @@ msgstr "Date"
 #: view:res.partner:0
 msgid "Set Docnaet ON"
 msgstr "Set Docnaet ON"
+
+#. module: docnaet
+#: field:docnaet.document.advanced.search.wizard,to_deadline:0
+msgid "To deadline"
+msgstr "To deadline"
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -649,6 +689,11 @@ msgid "Agent group for docnaet managerment"
 msgstr "Agent group for docnaet managerment"
 
 #. module: docnaet
+#: field:docnaet.document.advanced.search.wizard,to_date:0
+msgid "To date"
+msgstr "To date"
+
+#. module: docnaet
 #: model:res.groups,comment:docnaet.group_docnaet_admin
 msgid "User that can see the configuration forms"
 msgstr "User that can see the configuration forms"
@@ -705,7 +750,7 @@ msgid "Tipology"
 msgstr "Tipology"
 
 #. module: docnaet
-#: code:addons/docnaet/docnaet.py:460
+#: code:addons/docnaet/docnaet.py:463
 #, python-format
 msgid "Fax error"
 msgstr "Fax error"
