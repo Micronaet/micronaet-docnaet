@@ -18,6 +18,7 @@
 #
 ###############################################################################
 import os
+import sys
 import pyodbc
 import erppeek
 import ConfigParser
@@ -73,7 +74,10 @@ query = '''
     WHERE 
         CCODIGOCLIENTE ilike 'PR%' AND CIDCLIENTEPROVEEDOR > 0;
     '''
-cr.execute(query)
+try:
+    cr.execute(query)
+except:
+    print 'Error: %s' % (sys.exc_info(), )
 
 # OpenERP Partner object:    
 partner_pool = get_res_partner(URL, database, user, password)
