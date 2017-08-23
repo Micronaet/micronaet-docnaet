@@ -54,6 +54,10 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         partner_name = current_proxy.partner_name or False
         partner_id = current_proxy.partner_id.id or False
         country_id = current_proxy.country_id.id or False
+        from_date = current_proxy.from_date
+        to_date = current_proxy.to_date
+        from_deadline = current_proxy.from_deadline
+        to_deadline = current_proxy.to_deadline
         
         if keywords:
             for key in keywords.split(): 
@@ -64,6 +68,14 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
             domain.append(('country_id', '=', country_id))
         if partner_id:
             domain.append(('partner_id', '=', partner_id))            
+        if from_date:
+            domain.append(('date', '>=', from_date))            
+        if to_date:
+            domain.append(('date', '<=', from_date))            
+        if from_deadline:
+            domain.append(('deadline', '>=', from_deadline))            
+        if to_deadline:
+            domain.append(('deadline', '<=', to_deadline))            
 
         return {
             'view_type': 'form',
@@ -79,6 +91,10 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         'partner_name': fields.char('Partner name', size=80),
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'country_id': fields.many2one('res.country', 'Country'),
+        'from_date': fields.date('From date'),
+        'to_date': fields.date('To date'),
+        'from_deadline': fields.date('From deadline'),
+        'from_deadline': fields.date('To deadline'),
         }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

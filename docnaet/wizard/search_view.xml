@@ -19,6 +19,12 @@
                                                 
                         <field name="country_id" />
                         <field name="partner_id" domain="[('country_id','=',country_id),('docnaet_enable','=',True)]"/>
+                        
+                        <separator string="Date filter:" colspan="4"/>
+                        <field name="from_date" />
+                        <field name="to_date" />
+                        <field name="from_deadline" />
+                        <field name="to_deadline" />
                     </group>
                 </sheet>
             </form>
