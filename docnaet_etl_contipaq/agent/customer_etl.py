@@ -75,7 +75,7 @@ query = '''
     '''
 
 # OpenERP Partner object:    
-partner_pool = get_res_partner(URL, database, username, password)
+partner_pool = get_res_partner(URL, database, user, password)
 
 for row in cr.fetchall():
     item_id = row[0]
