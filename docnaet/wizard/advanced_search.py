@@ -94,7 +94,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         'from_date': fields.date('From date'),
         'to_date': fields.date('To date'),
         'from_deadline': fields.date('From deadline'),
-        'from_deadline': fields.date('To deadline'),
+        'to_deadline': fields.date('To deadline'),
         }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
