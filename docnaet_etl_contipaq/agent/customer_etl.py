@@ -73,6 +73,7 @@ query = '''
     WHERE 
         CCODIGOCLIENTE ilike 'PR%' AND CIDCLIENTEPROVEEDOR > 0;
     '''
+cr.execute(query)
 
 # OpenERP Partner object:    
 partner_pool = get_res_partner(URL, database, user, password)
