@@ -60,14 +60,14 @@ password = config.get('openerp', 'password')
 
 URL = 'http://%s:%s' % (hostname, port) 
 
-import pdb; pdb.set_trace()
 # Access MS SQL Database customer table:
 connection = pyodbc.connect('DSN=%s;UID=%s;PWD=%s' % (dsn, uid, pwd))
 cr = connection.cursor()
+import pdb; pdb.set_trace()
 query = '''
     SELECT 
         CIDCLIENTEPROVEEDOR, CCODIGOCLIENTE, CRAZONSOCIAL, CFECHAALTA, 
-        CRCF, CDENCOMERCIAL, CTIMESTAMP, CEMAIL1, CEMAIL2, CEMAIL3, 
+        CRFC, CDENCOMERCIAL, CTIMESTAMP, CEMAIL1, CEMAIL2, CEMAIL3, 
         CTIPOENTRE
     FROM dbo.admClientes
     WHERE 
