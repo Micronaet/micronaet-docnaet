@@ -52,7 +52,7 @@ uid = config.get('dsn', 'uid')
 pwd = config.get('dsn', 'pwd') 
 
 # OpenERP block:
-server = config.get('openerp', 'server')
+hostname = config.get('openerp', 'server')
 port = config.get('openerp', 'port')
 database = config.get('openerp', 'database')
 user = config.get('openerp', 'user')
