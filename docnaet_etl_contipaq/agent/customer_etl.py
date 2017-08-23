@@ -25,7 +25,7 @@ import ConfigParser
 # -----------------------------------------------------------------------------
 #                                UTILITY
 # -----------------------------------------------------------------------------
-def get_erp_pool(URL, database, user, password):
+def get_res_partner(URL, database, user, password):
     ''' Connect to log table in ODOO
     '''
     erp = erppeek.Client(
