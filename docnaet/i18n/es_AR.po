@@ -6,16 +6,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-11 06:20+0000\n"
-"PO-Revision-Date: 2017-08-24 18:13-0600\n"
+"POT-Creation-Date: 2017-08-24 23:24+0000\n"
+"PO-Revision-Date: 2017-08-24 18:46-0600\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: it\n"
+"Language: es_AR\n"
 "X-Generator: Poedit 1.6.10\n"
+
+#. module: docnaet
+#: code:addons/docnaet/docnaet.py:443
+#, python-format
+msgid ""
+"ID: %s\n"
+"Origin ID: %s\n"
+"Extension: %s\n"
+"Old filename: %s\n"
+"Document: %s"
+msgstr ""
+"ID: %s\n"
+"Origin ID: %s\n"
+"Extension: %s\n"
+"Old filename: %s\n"
+"Document: %s"
 
 #. module: docnaet
 #: field:docnaet.document,imported:0
@@ -23,14 +39,15 @@ msgid "Imported"
 msgstr "Importado"
 
 #. module: docnaet
+#: code:addons/docnaet/wizard/document_duplication.py:49
+#, python-format
+msgid "ID error"
+msgstr "ID error"
+
+#. module: docnaet
 #: view:docnaet.document:0
 msgid "Open document"
 msgstr "Abrir el papel"
-
-#. module: docnaet
-#: model:ir.model,name:docnaet.model_docnaet_document_import_wizard
-msgid "Document import"
-msgstr "Importar papele"
 
 #. module: docnaet
 #: model:ir.module.category,name:docnaet.module_docnaet
@@ -56,7 +73,7 @@ msgstr "Papel"
 #. module: docnaet
 #: model:res.groups,name:docnaet.group_docnaet_agent
 msgid "Docnaet agent"
-msgstr "Agente docnaet"
+msgstr "Búsqueda Avanzada"
 
 #. module: docnaet
 #: view:docnaet.document.advanced.search.wizard:0
@@ -64,7 +81,7 @@ msgstr "Agente docnaet"
 #: model:ir.model,name:docnaet.model_docnaet_document_advanced_search_wizard
 #: model:ir.ui.menu,name:docnaet.docnaet_document_advanced_search
 msgid "Advanced search"
-msgstr "Búsqueda Avanzada"
+msgstr "Advanced search"
 
 #. module: docnaet
 #: field:docnaet.document,duplicated_ids:0
@@ -94,9 +111,14 @@ msgid "Documenti remoti"
 msgstr "Papeles remotes"
 
 #. module: docnaet
+#: view:docnaet.document:0
+msgid "Date to"
+msgstr "En la fecha"
+
+#. module: docnaet
 #: selection:docnaet.document,priority:0
 msgid "Highest"
-msgstr "Muy alto"
+msgstr "Alto"
 
 #. module: docnaet
 #: field:docnaet.language,iso_code:0
@@ -109,16 +131,31 @@ msgid "File name"
 msgstr "Nombre de archivo"
 
 #. module: docnaet
+#: code:addons/docnaet/docnaet.py:371
+#, python-format
+msgid "Timed document"
+msgstr "Documento a tiempo"
+
+#. module: docnaet
 #: view:docnaet.document:0
 msgid "Link OpenERP document"
 msgstr "Conectar papele OpenERP"
 
 #. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,protocol_id:0
+#: code:addons/docnaet/docnaet.py:344 view:docnaet.document:0
+#: field:docnaet.document,protocol_id:0
+#: field:docnaet.document.duplication.wizard,protocol_id:0
 #: field:docnaet.protocol,name:0 field:docnaet.protocol.template,protocol_id:0
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_protocol
+#, python-format
 msgid "Protocol"
 msgstr "Protocolo"
+
+#. module: docnaet
+#: code:addons/docnaet/docnaet.py:350
+#, python-format
+msgid "No partner assigned, choose one before and confirm!"
+msgstr "No partner assigned, choose one before and confirm!"
 
 #. module: docnaet
 #: view:docnaet.document.duplication.wizard:0
@@ -138,13 +175,26 @@ msgid "Deadline"
 msgstr "Fecha tope"
 
 #. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,partner_id:0
+#: field:docnaet.document.advanced.search.wizard,from_date:0
+msgid "From date"
+msgstr "En la fecha"
+
+#. module: docnaet
+#: code:addons/docnaet/wizard/document_duplication.py:50
+#, python-format
+msgid "Cannot found original document"
+msgstr "No se puede encontrar el documento original"
+
+#. module: docnaet
+#: code:addons/docnaet/docnaet.py:349 view:docnaet.document:0
+#: field:docnaet.document,partner_id:0
 #: field:docnaet.document.advanced.search.wizard,partner_id:0
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_partner_form
 #: model:ir.model,name:docnaet.model_res_partner
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_partner
+#, python-format
 msgid "Partner"
-msgstr "Socio"
+msgstr "Empresa"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_my_document_tree
@@ -155,6 +205,12 @@ msgstr "Mis documentos"
 #: selection:docnaet.document,priority:0
 msgid "Low"
 msgstr "Bajo"
+
+#. module: docnaet
+#: code:addons/docnaet/docnaet.py:345
+#, python-format
+msgid "No protocol assigned, choose one before and confirm!"
+msgstr "No hay protocolo asignado, elija uno antes de confirmar!"
 
 #. module: docnaet
 #: view:docnaet.document:0 selection:docnaet.document,state:0
@@ -197,6 +253,12 @@ msgid "Company docnaet"
 msgstr "Empresa docnaet"
 
 #. module: docnaet
+#: code:addons/docnaet/docnaet.py:454
+#, python-format
+msgid "Document info"
+msgstr "Información del documento"
+
+#. module: docnaet
 #: field:docnaet.document,docnaet_extension:0
 msgid "Ext."
 msgstr "Ext."
@@ -205,7 +267,7 @@ msgstr "Ext."
 #: view:docnaet.document:0 field:docnaet.document,type_id:0
 #: field:docnaet.type,name:0
 msgid "Type"
-msgstr "Especie"
+msgstr "Información de vencimiento"
 
 #. module: docnaet
 #: field:docnaet.document,deadline_info:0
@@ -250,10 +312,15 @@ msgid "Group By"
 msgstr "Grupo para"
 
 #. module: docnaet
+#: field:docnaet.document.advanced.search.wizard,from_deadline:0
+msgid "From deadline"
+msgstr "Desde la expiración"
+
+#. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,docnaet_category_id:0
 #: model:ir.model,name:docnaet.model_res_partner_docnaet
 msgid "Partner category"
-msgstr "Categoría partner"
+msgstr "Categoría de socio"
 
 #. module: docnaet
 #: help:res.company,docnaet_path:0
@@ -264,98 +331,114 @@ msgstr ""
 #. module: docnaet
 #: view:res.partner:0
 msgid "Set Docnaet OFF"
-msgstr "Set Docnaet OFF"
+msgstr "impuesta Docnaet OFF"
+
+#. module: docnaet
+#: view:docnaet.document:0
+msgid "Date from"
+msgstr "Fecha de"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.protocol.template.program,extension:0
 msgid "Extension"
-msgstr "Estensione"
+msgstr "Extension"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Scad."
-msgstr "Scad."
+msgstr "Fecha tope"
 
 #. module: docnaet
 #: view:docnaet.document:0 selection:docnaet.document,state:0
 #: view:docnaet.document.advanced.search.wizard:0
 #: view:docnaet.document.duplication.wizard:0
 msgid "Cancel"
-msgstr "Annulla"
+msgstr "Cancelado"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,language_id:0
 #: field:docnaet.language,name:0 field:docnaet.protocol.template,lang_id:0
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_language
 msgid "Language"
-msgstr "Lingua"
+msgstr "Idioma"
 
 #. module: docnaet
-#: view:docnaet.document:0 selection:docnaet.document,state:0
-msgid "Timed"
-msgstr "A tempo"
+#: view:docnaet.document.advanced.search.wizard:0
+msgid "Date filter:"
+msgstr "Filtros de fecha:"
 
 #. module: docnaet
 #: view:res.users:0
 msgid "User docnaet"
-msgstr "Utente docnaet"
+msgstr "Usuario de Docnaet"
 
 #. module: docnaet
 #: view:docnaet.document.advanced.search.wizard:0
 msgid "Search"
-msgstr "Search"
+msgstr "Búsqueda"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Linked document"
-msgstr "Documento collegato"
+msgstr "Documento enlazado"
 
 #. module: docnaet
 #: field:docnaet.protocol,next:0
 msgid "Next protocol"
-msgstr "Prossimo protocollo"
+msgstr "Siguiente protocolo"
 
 #. module: docnaet
 #: field:docnaet.document,name:0
 msgid "Subject"
-msgstr "Oggetto"
+msgstr "Tema"
+
+#. module: docnaet
+#: code:addons/docnaet/docnaet.py:372
+#, python-format
+msgid "For timed document need a deadline!"
+msgstr "Para el documento cronometrado necesita un plazo!"
 
 #. module: docnaet
 #: field:res.company,docnaet_path:0
 msgid "Docnaet path"
-msgstr "Percorso docnaet"
-
-#. module: docnaet
-#: field:res.partner,docnaet_category_id:0
-msgid "Docnaet category"
-msgstr "Categoria docnaet"
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Document linked!"
-msgstr "Documento collegato!"
+msgstr "Ruta del documento"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_remote_document_tree
 msgid "Remote documents"
-msgstr "Documenti remoti"
+msgstr "Documentos remotos"
+
+#. module: docnaet
+#: field:res.partner,docnaet_category_id:0
+msgid "Docnaet category"
+msgstr "Docnaet categoría"
+
+#. module: docnaet
+#: view:docnaet.document:0
+msgid "Document linked!"
+msgstr "Documento enlazado!"
+
+#. module: docnaet
+#: view:docnaet.document:0
+msgid "Deadline to"
+msgstr "Fecha límite para"
 
 #. module: docnaet
 #: view:docnaet.protocol:0
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_protocol
 #: model:ir.model,name:docnaet.model_docnaet_protocol
 msgid "Docnaet protocol"
-msgstr "Protocollo docnaet"
+msgstr "Protocolo Docnaet"
 
 #. module: docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_administration
 msgid "Administration"
-msgstr "Amministrazione"
+msgstr "Administración"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Doc info"
-msgstr "Doc info"
+msgstr "Información del documento"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,note:0
@@ -367,56 +450,72 @@ msgstr "Doc info"
 #: field:docnaet.type,note:0 view:res.partner.docnaet:0
 #: field:res.partner.docnaet,note:0
 msgid "Note"
-msgstr "Note"
+msgstr "Nota"
+
+#. module: docnaet
+#: view:docnaet.document:0 selection:docnaet.document,state:0
+msgid "Timed"
+msgstr "Temporizado"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Duplicate"
-msgstr "Duplica"
+msgstr "Duplicar"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.protocol.template,program_id:0
 #: field:docnaet.protocol.template.program,name:0
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_program
 msgid "Program"
-msgstr "Programma"
+msgstr "Programa"
 
 #. module: docnaet
 #: selection:docnaet.document,state:0
 msgid "Draft"
-msgstr "Bozza"
+msgstr "Borrador"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Draft state"
-msgstr "Stato bozza"
+msgstr "Estado de borrador"
 
 #. module: docnaet
 #: model:ir.module.category,description:docnaet.module_docnaet
 msgid "Documaet document management group."
-msgstr "Gruppo gestore documenti"
+msgstr "Docnaet grupo de gestión de documentos."
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Status"
-msgstr "Stato"
+msgstr "Estado"
+
+#. module: docnaet
+#: code:addons/docnaet/docnaet.py:464
+#, python-format
+msgid "Fax yet present!"
+msgstr "Fax yet present!"
 
 #. module: docnaet
 #: selection:docnaet.document,priority:0
 msgid "Normal"
-msgstr "Normale"
+msgstr "Normal"
+
+#. module: docnaet
+#: view:docnaet.document:0
+msgid "Deadline from"
+msgstr "Deadline from"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,user_id:0
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_users_form
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_user
 msgid "User"
-msgstr "Utente"
+msgstr "User"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,date:0
 msgid "Date"
-msgstr "Data"
+msgstr "Date"
 
 #. module: docnaet
 #: view:res.partner:0
@@ -424,9 +523,14 @@ msgid "Set Docnaet ON"
 msgstr "Set Docnaet ON"
 
 #. module: docnaet
+#: field:docnaet.document.advanced.search.wizard,to_deadline:0
+msgid "To deadline"
+msgstr "To deadline"
+
+#. module: docnaet
 #: view:docnaet.document:0
 msgid "Open document [R]"
-msgstr "Apri documento [R]"
+msgstr "Open document [R]"
 
 #. module: docnaet
 #: field:docnaet.document,number:0
@@ -436,59 +540,59 @@ msgstr "N."
 #. module: docnaet
 #: model:ir.model,name:docnaet.model_res_company
 msgid "Companies"
-msgstr "Aziende"
+msgstr "Compañías"
 
 #. module: docnaet
 #: view:docnaet.protocol.template:0
 #: model:ir.model,name:docnaet.model_docnaet_protocol_template
 msgid "Docnaet protocol template"
-msgstr "Modello protocollo"
+msgstr "Docnaet protocol template"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_protocol_template_program
 msgid "Programs type"
-msgstr "Tipi di programma"
+msgstr "Programs type"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Timed state"
-msgstr "Stato a tempo"
+msgstr "Timed state"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_res_partner_docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_partner_docnaet
 msgid "Partner docnaet category"
-msgstr "Categoria partner docnaet"
+msgstr "Partner docnaet category"
 
 #. module: docnaet
 #: model:res.groups,name:docnaet.group_docnaet_user
 msgid "Docnaet user"
-msgstr "Utente docnaet"
+msgstr "Docnaet user"
 
 #. module: docnaet
 #: view:docnaet.protocol:0 view:docnaet.type:0
 msgid "Set invisible"
-msgstr "Imposta visibile"
+msgstr "Set invisible"
 
 #. module: docnaet
 #: field:docnaet.document,original_id:0
 msgid "Original"
-msgstr "Originale"
+msgstr "Original"
 
 #. module: docnaet
 #: view:docnaet.document.duplication.wizard:0
 msgid "Duplicate document"
-msgstr "Documento duplicato"
+msgstr "Duplicate document"
 
 #. module: docnaet
 #: view:docnaet.protocol:0 view:docnaet.type:0
 msgid "Set visible"
-msgstr "Imposta visibile"
+msgstr "Set visible"
 
 #. module: docnaet
 #: field:docnaet.language,code:0
 msgid "Code"
-msgstr "Codice"
+msgstr "Code"
 
 #. module: docnaet
 #: field:docnaet.document.advanced.search.wizard,keywords:0
@@ -498,7 +602,7 @@ msgstr "Keywords"
 #. module: docnaet
 #: field:res.company,next_fax:0
 msgid "Next fax number"
-msgstr "Prossimo numero fax"
+msgstr "Next fax number"
 
 #. module: docnaet
 #: view:docnaet.type:0
@@ -506,22 +610,22 @@ msgstr "Prossimo numero fax"
 #: model:ir.model,name:docnaet.model_docnaet_type
 #: field:res.partner.docnaet,name:0
 msgid "Docnaet type"
-msgstr "Tipo docnaet"
+msgstr "Docnaet type"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_document_duplication
 msgid "Docnaet document duplication"
-msgstr "Docnaet duplicazione documenti"
+msgstr "Docnaet document duplication"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Reactivate"
-msgstr "Riattiva"
+msgstr "Reactivate"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Cancel state"
-msgstr "Stato annullato"
+msgstr "Cancel state"
 
 #. module: docnaet
 #: field:res.partner,docnaet_enable:0
@@ -531,12 +635,12 @@ msgstr "Docnaet partner"
 #. module: docnaet
 #: selection:docnaet.document,priority:0
 msgid "high"
-msgstr "alta"
+msgstr "high"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Original document"
-msgstr "Documento originale"
+msgstr "Original document"
 
 #. module: docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_document_document
@@ -551,32 +655,37 @@ msgstr "Partner name"
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,description:0
 msgid "Description"
-msgstr "Descrizione"
+msgstr "Description"
 
 #. module: docnaet
 #: model:res.groups,name:docnaet.group_docnaet_remote_user
 msgid "Docnaet remote user"
-msgstr "Utente remoto docnaet"
+msgstr "Docnaet remote user"
 
 #. module: docnaet
 #: model:res.groups,comment:docnaet.group_docnaet_agent
 msgid "Agent group for docnaet managerment"
-msgstr "Gruppo agenti amministrazione docnaet"
+msgstr "Agent group for docnaet managerment"
+
+#. module: docnaet
+#: field:docnaet.document.advanced.search.wizard,to_date:0
+msgid "To date"
+msgstr "To date"
 
 #. module: docnaet
 #: model:res.groups,comment:docnaet.group_docnaet_admin
 msgid "User that can see the configuration forms"
-msgstr "Utente che può utilizzare la parte di configurazione"
+msgstr "User that can see the configuration forms"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_deadline_document_tree
 msgid "My documents deadline"
-msgstr "Scadenze miei documenti"
+msgstr "My documents deadline"
 
 #. module: docnaet
 #: field:docnaet.protocol,invisible:0 field:docnaet.type,invisible:0
 msgid "Not used"
-msgstr "Non usato"
+msgstr "Not used"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,country_id:0
@@ -584,57 +693,61 @@ msgstr "Non usato"
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_country_form
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_country
 msgid "Country"
-msgstr "Nazione"
+msgstr "Country"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Document linked [R]!"
-msgstr "Documento collegato [R]!"
+msgstr "Document linked [R]!"
 
 #. module: docnaet
 #: view:res.partner.docnaet:0
 msgid "Docnaet partner category"
-msgstr "Categorie partner docnaet"
+msgstr "Docnaet partner category"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Reassign"
-msgstr "Riassegna"
+msgstr "Reassign"
 
 #. module: docnaet
 #: view:docnaet.protocol.template.program:0
 #: model:ir.model,name:docnaet.model_docnaet_protocol_template_program
 msgid "Docnaet program"
-msgstr "Programma docnaet"
+msgstr "Docnaet program"
 
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Duplicated in"
-msgstr "Duplicato in"
+msgstr "Duplicated in"
 
 #. module: docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_type
 msgid "Tipology"
-msgstr "Tipologia"
+msgstr "Tipology"
+
+#. module: docnaet
+#: code:addons/docnaet/docnaet.py:463
+#, python-format
+msgid "Fax error"
+msgstr "Fax error"
 
 #. module: docnaet
 #: view:docnaet.document:0 model:ir.model,name:docnaet.model_docnaet_document
 msgid "Docnaet document"
-msgstr "Documento docnaet"
+msgstr "Docnaet document"
 
 #. module: docnaet
 #: field:docnaet.document,program_id:0
 msgid "Type of document"
-msgstr "Tipo di documento"
+msgstr "Type of document"
 
 #. module: docnaet
 #: field:docnaet.document,private:0
 msgid "Private"
-msgstr "Privato"
+msgstr "Private"
 
 #. module: docnaet
 #: model:res.groups,comment:docnaet.group_docnaet_remote_user
 msgid "User that access to documents remotely (with local database readonly)."
-msgstr ""
-"Utente che accede ai documenti da remoto (con database locale in sola "
-"lettura)."
+msgstr "User that access to documents remotely (with local database readonly)."
