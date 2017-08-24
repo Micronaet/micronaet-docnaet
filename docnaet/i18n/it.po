@@ -637,3 +637,4 @@ msgid "User that access to documents remotely (with local database readonly)."
 msgstr ""
 "Utente che accede ai documenti da remoto (con database locale in sola "
 "lettura)."
+
