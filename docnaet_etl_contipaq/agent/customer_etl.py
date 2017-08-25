@@ -26,7 +26,7 @@ import ConfigParser
 # -----------------------------------------------------------------------------
 #                                UTILITY
 # -----------------------------------------------------------------------------
-def get_res_partner(URL, database, user, password):
+def get_erp(URL, database, user, password):
     ''' Connect to log table in ODOO
     '''
     erp = erppeek.Client(
@@ -35,7 +35,6 @@ def get_res_partner(URL, database, user, password):
         user=user,
         password=password,
         )   
-    return erp.ResPartner
 
 # -----------------------------------------------------------------------------
 #                                Parameters
@@ -79,9 +78,19 @@ try:
 except:
     print 'Error: %s' % (sys.exc_info(), )
 
-# OpenERP Partner object:    
-partner_pool = get_res_partner(URL, database, user, password)
+# OPENERP Obj: 
+erp = get_erp(URL, database, user, password)
 
+# Read category:
+category_pool = erp.ResPartnerDocnaet
+category_ids = category_pool.search([('account_start_code', '!=', False)])
+category_db = {}
+for category in erp.browse(category_ids):
+    category_db[category.account_start_code] = (
+        category.id, category.customer, category.supplier)
+
+# Read partner:
+partner_pool = erp.ResPartner
 for row in cr.fetchall():
     item_id = row[0]
     ref = row[1]
@@ -90,21 +99,28 @@ for row in cr.fetchall():
     email = row[7]
     email1 = row[8]
     email2 = row[9]
-    
+
     data = {
         'ref': ref,
         'name': name,
         #'vat': vat,
         'email': email,
-        'customer': True,
         #email1
-        #email2        
+        #email2
         }
-    partner_ids = partner_pool.search([
-        ('ref', '=', ref)])
+    
+    for start, record in category_db.iteritems():
+        (category_id, customer, supplier) = record
+        if ref.startswith(start):
+            data['docnaet_category_id'] = category_id
+            if customer:
+                data['customer'] = True                
+            if supplier:
+                data['supplier'] = True
+
+    partner_ids = partner_pool.search([('ref', '=', ref)])
     if partner_ids:
         partner_pool.write(partner_ids, data)
     else:
         partner_pool.create(data)
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
