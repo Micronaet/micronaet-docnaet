@@ -85,7 +85,7 @@ erp = get_erp(URL, database, user, password)
 category_pool = erp.ResPartnerDocnaet
 category_ids = category_pool.search([('account_start_code', '!=', False)])
 category_db = {}
-for category in erp.browse(category_ids):
+for category in category_pool.browse(category_ids):
     category_db[category.account_start_code] = (
         category.id, category.customer, category.supplier)
 
