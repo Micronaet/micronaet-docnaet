@@ -63,7 +63,7 @@ URL = 'http://%s:%s' % (hostname, port)
 # Access MS SQL Database customer table:
 connection = pyodbc.connect('DSN=%s;UID=%s;PWD=%s' % (dsn, uid, pwd))
 cr = connection.cursor()
-import pdb; pdb.set_trace()
+
 query = '''
     SELECT 
         CIDCLIENTEPROVEEDOR, CCODIGOCLIENTE, CRAZONSOCIAL, CFECHAALTA, 
@@ -101,6 +101,8 @@ for row in cr.fetchall():
     email2 = row[9]
 
     data = {
+        'is_company': True,
+        'docnaet_enable': True, # default
         'ref': ref,
         'name': name,
         #'vat': vat,
