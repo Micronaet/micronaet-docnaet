@@ -29,7 +29,7 @@ import ConfigParser
 def get_erp(URL, database, user, password):
     ''' Connect to log table in ODOO
     '''
-    erp = erppeek.Client(
+    return erppeek.Client(
         URL,
         db=database,
         user=user,
