@@ -114,10 +114,9 @@ for row in cr.fetchall():
         if ref.startswith(start):
             data['docnaet_category_id'] = category_id
             if customer:
-                data['customer'] = True                
+                data['customer'] = True
             if supplier:
                 data['supplier'] = True
-
     partner_ids = partner_pool.search([('ref', '=', ref)])
     if partner_ids:
         partner_pool.write(partner_ids, data)
