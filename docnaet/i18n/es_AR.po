@@ -98,7 +98,7 @@ msgstr "Objetos relacionados"
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_company_form
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_company
 msgid "Company"
-msgstr "Empresa"
+msgstr "Empresa docnaet"
 
 #. module: docnaet
 #: model:res.groups,name:docnaet.group_docnaet_admin
