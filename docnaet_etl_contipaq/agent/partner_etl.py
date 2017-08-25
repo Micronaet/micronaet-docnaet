@@ -122,6 +122,8 @@ for row in cr.fetchall():
     partner_ids = partner_pool.search([('ref', '=', ref)])
     if partner_ids:
         partner_pool.write(partner_ids, data)
+        print 'Update: %s' % name
     else:
         partner_pool.create(data)
+        print 'Insert: %s' % name
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
