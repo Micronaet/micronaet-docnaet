@@ -69,7 +69,7 @@ msgstr "Asignar protocolo"
 #. module: docnaet_upload
 #: field:docnaet.document.upload.wizard,default_partner_id:0
 msgid "Default partner"
-msgstr "Emppresa predeterminada"
+msgstr "Empresa predeterminada"
 
 #. module: docnaet_upload
 #: view:docnaet.document.upload.wizard:0
