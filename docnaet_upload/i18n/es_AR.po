@@ -86,7 +86,7 @@ msgstr "Idioma predeterminado"
 #: protocol_tree
 #: model:ir.ui.menu,name:docnaet_upload.menu_docnaet_my_document_to protocol
 msgid "Uploaded to confirm"
-msgstr "Subido para confirmar"
+msgstr "Pendiente por confirmar"
 
 #. module: docnaet_upload
 #: view:docnaet.document.upload.wizard:0

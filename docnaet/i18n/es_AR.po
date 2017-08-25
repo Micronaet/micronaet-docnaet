@@ -47,7 +47,7 @@ msgstr "ID error"
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Open document"
-msgstr "Abrir el papel"
+msgstr "Abrir el documento"
 
 #. module: docnaet
 #: model:ir.module.category,name:docnaet.module_docnaet
@@ -68,7 +68,7 @@ msgstr "Modelo"
 #. module: docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_document
 msgid "Document"
-msgstr "Papel"
+msgstr "Documento"
 
 #. module: docnaet
 #: model:res.groups,name:docnaet.group_docnaet_agent
@@ -139,7 +139,7 @@ msgstr "Documento a tiempo"
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Link OpenERP document"
-msgstr "Conectar papele OpenERP"
+msgstr "Conectar documento OpenERP"
 
 #. module: docnaet
 #: code:addons/docnaet/docnaet.py:344 view:docnaet.document:0
@@ -161,7 +161,7 @@ msgstr "Ningún socio asignado, elija uno antes y confirme!"
 #: view:docnaet.document.duplication.wizard:0
 #: model:ir.model,name:docnaet.model_docnaet_document_duplication_wizard
 msgid "Document duplication"
-msgstr "Papele duplicado"
+msgstr "Documento duplicado"
 
 #. module: docnaet
 #: help:docnaet.document,original_id:0
@@ -172,7 +172,7 @@ msgstr "Documento padre original después de esta duplicación"
 #: view:docnaet.document:0 field:docnaet.document,deadline:0
 #: model:ir.ui.menu,name:docnaet.docnaet_document_deadline
 msgid "Deadline"
-msgstr "Fecha tope"
+msgstr "Fecha límite"
 
 #. module: docnaet
 #: field:docnaet.document.advanced.search.wizard,from_date:0
@@ -220,12 +220,12 @@ msgstr "Confirmado"
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_document_tree
 msgid "Documents"
-msgstr "Papeles"
+msgstr "Documentos"
 
 #. module: docnaet
 #: help:docnaet.document,duplicated_ids:0
 msgid "Child document duplicated from this"
-msgstr "Papeles secundarios duplicatod de este"
+msgstr "Documentos secundarios duplicatod de este"
 
 #. module: docnaet
 #: field:docnaet.document,priority:0
@@ -346,7 +346,7 @@ msgstr "Extension"
 #. module: docnaet
 #: view:docnaet.document:0
 msgid "Scad."
-msgstr "Fecha tope"
+msgstr "Fecha límite"
 
 #. module: docnaet
 #: view:docnaet.document:0 selection:docnaet.document,state:0
