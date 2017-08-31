@@ -44,6 +44,7 @@ class ResPartnerDocnaet(orm.Model):
     _inherit = 'res.partner.docnaet'
     
     _columns = {
+        'contipaq_id': fields.integer('Contipaq ID'),
         'account_start_code': fields.char(
             'Account start code', size=10, 
             help='Start code in accounting program for auto assign', 

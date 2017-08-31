@@ -64,6 +64,22 @@ URL = 'http://%s:%s' % (hostname, port)
 connection = pyodbc.connect('DSN=%s;UID=%s;PWD=%s' % (dsn, uid, pwd))
 cr = connection.cursor()
 
+# OPENERP Obj: 
+erp = get_erp(URL, database, user, password)
+
+# -----------------------------------------------------------------------------
+# Read category:
+# -----------------------------------------------------------------------------
+category_pool = erp.ResPartnerDocnaet
+category_ids = category_pool.search([('account_start_code', '!=', False)])
+category_db = {}
+for category in category_pool.browse(category_ids):
+    category_db[category.account_start_code] = (
+        category.id, category.customer, category.supplier)
+
+# -----------------------------------------------------------------------------
+# Read partner:
+# -----------------------------------------------------------------------------
 query = '''
     SELECT 
         CIDCLIENTEPROVEEDOR, CCODIGOCLIENTE, CRAZONSOCIAL, CFECHAALTA, 
@@ -78,19 +94,63 @@ try:
 except:
     print 'Error: %s' % (sys.exc_info(), )
 
-# OPENERP Obj: 
-erp = get_erp(URL, database, user, password)
-
-# Read category:
-category_pool = erp.ResPartnerDocnaet
-category_ids = category_pool.search([('account_start_code', '!=', False)])
-category_db = {}
-for category in category_pool.browse(category_ids):
-    category_db[category.account_start_code] = (
-        category.id, category.customer, category.supplier)
-
-# Read partner:
 partner_pool = erp.ResPartner
+for row in cr.fetchall():
+    item_id = row[0]
+    ref = row[1]
+    name = row[2]
+    vat = row[4]
+    email = row[7]
+    email1 = row[8]
+    email2 = row[9]
+
+    data = {
+        'contipaq_id': item_id,
+        'is_company': True,
+        'docnaet_enable': True, # default
+        'ref': ref,
+        'name': name,
+        #'vat': vat,
+        'email': email,
+        #email1
+        #email2
+        }
+    
+    for start, record in category_db.iteritems():
+        (category_id, customer, supplier) = record
+        if ref.startswith(start):
+            data['docnaet_category_id'] = category_id
+            if customer:
+                data['customer'] = True
+            if supplier:
+                data['supplier'] = True
+    partner_ids = partner_pool.search([('ref', '=', ref)])
+    if partner_ids:
+        partner_pool.write(partner_ids, data)
+        print 'Update: %s' % name
+    else:
+        partner_pool.create(data)
+        print 'Insert: %s' % name
+
+# -----------------------------------------------------------------------------
+# Read address:
+# -----------------------------------------------------------------------------
+# TODO HERE!!!!!
+query = '''
+    SELECT 
+        CIDCLIENTEPROVEEDOR, CCODIGOCLIENTE, CRAZONSOCIAL, CFECHAALTA, 
+        CRFC, CDENCOMERCIAL, CTIMESTAMP, CEMAIL1, CEMAIL2, CEMAIL3, 
+        CTIPOENTRE
+    FROM dbo.admClientes
+    WHERE 
+        CIDCLIENTEPROVEEDOR > 0;
+    ''' #CCODIGOCLIENTE ilike 'PR%' AND 
+try:
+    cr.execute(query)
+except:
+    print 'Error: %s' % (sys.exc_info(), )
+
+#partner_pool = erp.ResPartner
 for row in cr.fetchall():
     item_id = row[0]
     ref = row[1]
@@ -126,4 +186,6 @@ for row in cr.fetchall():
     else:
         partner_pool.create(data)
         print 'Insert: %s' % name
+        
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

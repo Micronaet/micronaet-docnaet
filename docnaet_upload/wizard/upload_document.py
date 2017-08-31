@@ -57,7 +57,13 @@ class UlploadDocumentWizard(orm.TransientModel):
             cr, uid, subfolder='user', context=context)
         
         for f in os.listdir(private_folder):
-            fullpath = os.path.join(private_folder, f)
+            try:
+                fullpath = os.path.join(private_folder, f)
+            except:
+                raise osv.except_osv(
+                    _('File upload'), 
+                    _('Change file name, character not permit: %s' % f),
+                    )    
             if not os.path.isfile(fullpath):
                 continue
             res.append((fullpath, f))          
