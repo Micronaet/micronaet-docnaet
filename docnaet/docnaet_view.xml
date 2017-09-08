@@ -671,7 +671,16 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="context">{}</field>
-        <field name="domain">[]</field>
+        <field name="domain">[('state','!=','draft')]</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_docnaet_document_draft_tree">
+        <field name="name">Draft documents</field>
+        <field name="res_model">docnaet.document</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="context">{}</field>
+        <field name="domain">[('state','=','draft')]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_remote_document_tree">
         <field name="name">Remote documents</field>
@@ -687,6 +696,8 @@
 
         <menuitem parent="docnaet_root" id="docnaet_document" name="Document" sequence="20" />
             <menuitem parent="docnaet_document" id="docnaet_document_document" name="Documenti" sequence="10" action="action_docnaet_document_tree" />            
+                <menuitem parent="docnaet_document_document" id="docnaet_document_document_draft" name="Documenti bozza" sequence="10" action="action_docnaet_document_draft_tree" />
+            
             <menuitem parent="docnaet_document" id="docnaet_document_remote_ocument" name="Documenti remoti" sequence="10" action="action_docnaet_remote_document_tree" groups="group_docnaet_remote_user"/>            
             <menuitem parent="docnaet_document" id="docnaet_document_my_document" name="My document" sequence="20" action="action_docnaet_my_document_tree"/>
                 <menuitem parent="docnaet_document_my_document" id="docnaet_document_deadline" name="Deadline" sequence="30" action="action_docnaet_deadline_document_tree" />            
