@@ -122,6 +122,13 @@ class document_duplication(orm.TransientModel):
             'view_mode': 'form,tree,calendar',
             'res_model': 'docnaet.document',
             #'domain': [('id', '=', destination_id)],
+            'domain': [
+                '|',
+                ('state','!=','draft'),
+                '&',
+                ('user_id','=',uid),
+                ('state','=','draft'),
+                ],
             'type': 'ir.actions.act_window',
             'res_id': destination_id,  # IDs selected
             }
