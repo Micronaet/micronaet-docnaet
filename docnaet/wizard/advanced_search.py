@@ -71,6 +71,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         domain = []
         keywords = current_proxy.keywords or False
         partner_name = current_proxy.partner_name or False
+        protocol_id = current_proxy.protocol_id.id or False
         partner_id = current_proxy.partner_id.id or False
         country_id = current_proxy.country_id.id or False
         from_date = current_proxy.from_date
@@ -83,6 +84,8 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
                 domain.append(('name', 'ilike', key))      
         if partner_name:
             domain.append(('partner_id.name', 'ilike', partner_name))
+        if protocol_id:
+            domain.append(('protocol_id', '=', country_id))
         if country_id:
             domain.append(('country_id', '=', country_id))
         if partner_id:
@@ -108,6 +111,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
     _columns = {
         'keywords': fields.char('Keywords', size=80),
         'partner_name': fields.char('Partner name', size=80),
+        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'country_id': fields.many2one('res.country', 'Country'),
         'from_date': fields.date('From date'),
