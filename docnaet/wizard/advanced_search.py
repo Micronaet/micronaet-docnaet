@@ -40,6 +40,25 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
     _name = 'docnaet.document.advanced.search.wizard'
     _description = 'Advanced search'
 
+    def onchange_country_partner_domain(self, cr, uid, ids, partner_name,
+            country_id, context=None):
+        ''' On change for domain purpose
+        '''    
+        res = {}
+        res['domain'] = {'partner_id': [
+            ('docnaet_enable','=',True),
+            ]}        
+        
+        if country_id:
+            res['domain']['partner_id'].append(
+                ('country_id','=',country_id),
+                )
+        if partner_name:
+            res['domain']['partner_id'].append(
+                ('name','ilike',partner_name),
+                )                    
+        return res
+    
     def advanced_search(self, cr, uid, ids, context=None):
         ''' Advanced search
         '''
