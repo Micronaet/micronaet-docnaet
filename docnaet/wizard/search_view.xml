@@ -16,7 +16,7 @@
                     <group colspan="4" col="4">
                         <field name="keywords" />
                         <field name="protocol_id" />
-                        
+
                         <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id)" />
                         <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id)" />
                         <field name="partner_id" domain="[('docnaet_enable','=',True)]"/>
