@@ -84,6 +84,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         to_deadline = current_proxy.to_deadline
         
         name = current_proxy.name
+        number = current_proxy.number
         user_id = current_proxy.user_id.id or False
         description = current_proxy.description
         note = current_proxy.note
@@ -115,6 +116,8 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
 
         if name:
             domain.append(('name', 'ilike', name))    
+        if number:
+            domain.append(('number', 'ilike', number))    
         if user_id:
             domain.append(('user_id', '=', user_id))    
         if description:
