@@ -41,7 +41,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
     _description = 'Advanced search'
 
     def onchange_country_partner_domain(self, cr, uid, ids, partner_name,
-            country_id, context=None):
+            country_id, category_id, context=None):
         ''' On change for domain purpose
         '''    
         res = {}
@@ -56,7 +56,11 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         if partner_name:
             res['domain']['partner_id'].append(
                 ('name','ilike',partner_name),
-                )                    
+                )
+        if category_id:
+            res['domain']['partner_id'].append(
+                ('docnaet_category_id','=', category_id),
+                )
         return res
     
     def advanced_search(self, cr, uid, ids, context=None):
@@ -89,11 +93,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         docnaet_extension = current_proxy.docnaet_extension
         priority = current_proxy.priority
         docnaet_category_id = current_proxy.docnaet_category_id.id or False
-        # company_id
-
-        if keywords:
-            for key in keywords.split(): 
-                domain.append(('name', 'ilike', key))      
+        
         if partner_name:
             domain.append(('partner_id.name', 'ilike', partner_name))
         if protocol_id:
@@ -133,6 +133,14 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
             domain.append(('priority', '=', priority))    
         if docnaet_category_id:
             domain.append(('docnaet_category_id', '=', docnaet_category_id))    
+
+        if keywords:
+            # TODO manage multi fields
+            #if not domain:
+            #    domain.append('&')
+                
+            for key in keywords.split(): 
+                domain.append(('name', 'ilike', key))      
                 
         return {
             'view_type': 'form',
@@ -146,13 +154,35 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
     _columns = {
         'keywords': fields.char('Keywords', size=80),
         'partner_name': fields.char('Partner name', size=80),
-        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
+        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol',
+            domain=[('invisible', '=', False)]),
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'country_id': fields.many2one('res.country', 'Country'),
         'from_date': fields.date('From date'),
         'to_date': fields.date('To date'),
         'from_deadline': fields.date('From deadline'),
         'to_deadline': fields.date('To deadline'),
+        'name': fields.char('Subject', size=180),
+        'user_id': fields.many2one('res.users', 'User'),
+        'description': fields.char('Description', size=180,),
+        'note': fields.char('Note', size=180,),
+        'type_id': fields.many2one('docnaet.type', 'Type', 
+            domain=[('invisible', '=', False)]),
+        'number': fields.char('N.', size=10),
+        'language_id': fields.many2one('docnaet.language', 'Language'),
+        'program_id': fields.many2one(
+            'docnaet.protocol.template.program', 'Type of document'),
+        'docnaet_extension': fields.char('Ext.', size=10),
+        'docnaet_category_id': fields.many2one(
+            'res.partner.docnaet', 'Partner category',
+            ),
+        'priority': fields.selection([
+            ('lowest', 'Lowest'),
+            ('low', 'Low'),
+            ('normal', 'Normal'),
+            ('high', 'high'),
+            ('highest', 'Highest'), 
+            ], 'Priority'),
         }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
