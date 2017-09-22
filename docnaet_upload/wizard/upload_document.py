@@ -47,6 +47,31 @@ class UlploadDocumentWizard(orm.TransientModel):
     _name = 'docnaet.document.upload.wizard'
     _description = 'Document upload'
 
+    def onchange_country_partner_domain(self, cr, uid, ids, partner_name,
+            country_id, 
+            #category_id, 
+            context=None):
+        ''' On change for domain purpose
+        '''    
+        res = {}
+        res['domain'] = {'partner_id': [
+            ('docnaet_enable','=',True),
+            ]}        
+        
+        if country_id:
+            res['domain']['default_partner_id'].append(
+                ('country_id','=',country_id),
+                )
+        if partner_name:
+            res['domain']['default_partner_id'].append(
+                ('name','ilike',partner_name),
+                )
+        #if category_id:
+        #    res['domain']['partner_id'].append(
+        #        ('docnaet_category_id','=', category_id),
+        #        )
+        return res
+
     def private_listdir(self, cr, uid, ids, context=None):
         ''' Return private listdir list
         '''
@@ -257,6 +282,11 @@ class UlploadDocumentWizard(orm.TransientModel):
             ('upload', 'Upload mode'),
             ('reassign', 'Reassign mode'),
             ], 'Mode'),            
+
+        # Filter for partner:
+        'partner_name': fields.char('Partner name', size=80),
+        'country_id': fields.many2one('res.country', 'Country'),
+            
         'default_partner_id': fields.many2one(
             'res.partner', 'Default partner'),
         'assign_protocol': fields.boolean('Assign protocol', 

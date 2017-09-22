@@ -16,7 +16,12 @@
                     </header>
                     <sheet>
                         <group colspan="4" col='2'>
+                            <separator string="Partner:" colspan="4"/>
+                            <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id)" />
+                            <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id)" />
                             <field name="default_partner_id" domain="[('docnaet_enable', '=', True)]" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                            
+                            <separator string="Extra:" colspan="4"/>
                             <field name="default_user_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
                             <field name="default_protocol_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>                            
                             <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}" /> <!--,('is_address','=',False)-->
