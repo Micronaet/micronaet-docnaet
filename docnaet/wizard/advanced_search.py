@@ -79,26 +79,61 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         from_deadline = current_proxy.from_deadline
         to_deadline = current_proxy.to_deadline
         
+        name = current_proxy.name
+        user_id = current_proxy.user_id.id or False
+        description = current_proxy.description
+        note = current_proxy.note
+        type_id = current_proxy.type_id.id or False
+        language_id = current_proxy.language_id.id or False
+        program_id = current_proxy.program_id.id or False
+        docnaet_extension = current_proxy.docnaet_extension
+        priority = current_proxy.priority
+        docnaet_category_id = current_proxy.docnaet_category_id.id or False
+        # company_id
+
         if keywords:
             for key in keywords.split(): 
                 domain.append(('name', 'ilike', key))      
         if partner_name:
             domain.append(('partner_id.name', 'ilike', partner_name))
         if protocol_id:
-            domain.append(('protocol_id', '=', country_id))
+            domain.append(('protocol_id', '=', protocol_id))
         if country_id:
             domain.append(('country_id', '=', country_id))
         if partner_id:
             domain.append(('partner_id', '=', partner_id))            
+
         if from_date:
             domain.append(('date', '>=', from_date))            
         if to_date:
             domain.append(('date', '<=', from_date))            
+
         if from_deadline:
             domain.append(('deadline', '>=', from_deadline))            
         if to_deadline:
-            domain.append(('deadline', '<=', to_deadline))            
+            domain.append(('deadline', '<=', to_deadline))
 
+        if name:
+            domain.append(('name', 'ilike', name))    
+        if user_id:
+            domain.append(('user_id', '=', user_id))    
+        if description:
+            domain.append(('description', 'ilike', description))    
+        if note:
+            domain.append(('note', 'ilike', note))
+        if type_id:
+            domain.append(('type_id', '=', type_id))    
+        if language_id:
+            domain.append(('language_id', '=', language_id))    
+        if program_id:
+            domain.append(('program_id', '=', program_id))    
+        if docnaet_extension:
+            domain.append(('docnaet_extension', 'ilike', docnaet_extension))    
+        if priority:
+            domain.append(('priority', '=', priority))    
+        if docnaet_category_id:
+            domain.append(('docnaet_category_id', '=', docnaet_category_id))    
+                
         return {
             'view_type': 'form',
             'view_mode': 'tree,form,calendar',
