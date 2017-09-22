@@ -52,9 +52,9 @@ class UlploadDocumentWizard(orm.TransientModel):
             #category_id, 
             context=None):
         ''' On change for domain purpose
-        '''    
+        '''
         res = {}
-        res['domain'] = {'partner_id': [
+        res['domain'] = {'default_partner_id': [
             ('docnaet_enable','=',True),
             ]}        
         
@@ -288,7 +288,7 @@ class UlploadDocumentWizard(orm.TransientModel):
         'country_id': fields.many2one('res.country', 'Country'),
             
         'default_partner_id': fields.many2one(
-            'res.partner', 'Default partner'),
+            'res.partner', '>> Default partner'),
         'assign_protocol': fields.boolean('Assign protocol', 
             help='In upload mode assign protocol and next number'),    
         'default_user_id': fields.many2one('res.users', 

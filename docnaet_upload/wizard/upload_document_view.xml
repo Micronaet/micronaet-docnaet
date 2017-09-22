@@ -15,19 +15,22 @@
                         <button string='Riassegna' name='button_reassign' type='object' icon='STOCK_APPLY' attrs="{'invisible': [('mode','!=','reassign')]}"/>
                     </header>
                     <sheet>
-                        <group colspan="4" col='2'>
+                        <group colspan="4" col='4'>
                             <separator string="Partner:" colspan="4"/>
                             <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id)" />
                             <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id)" />
-                            <field name="default_partner_id" domain="[('docnaet_enable', '=', True)]" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                            <field name="default_partner_id" domain="[('docnaet_enable', '=', True)]" options="{'limit': 10, 'create': false, 'create_edit': false}" colspan="4"/>
                             
                             <separator string="Extra:" colspan="4"/>
                             <field name="default_user_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
-                            <field name="default_protocol_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>                            
-                            <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}" /> <!--,('is_address','=',False)-->
-                            
                             <field name="default_type_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+
+                            <field name="default_protocol_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>                                                        
+                            <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}" /> <!--,('is_address','=',False)-->                            
+                            
                             <field name="default_language_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                            <newline/>
+                            
                             <!--<field name="reassign_confirm" attrs="{'invisible': [('mode','!=','reassign')]}" />-->
                             <separator string="Folder status" colspan="4" attrs="{'invisible': [('mode','!=','upload')]}"/>
                             <field name="folder_status" widget="html" nolabel="1" readonly="1" colspan="4" attrs="{'invisible': [('mode','!=','upload')]}"/>
