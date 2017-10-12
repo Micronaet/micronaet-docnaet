@@ -461,7 +461,7 @@
                 <!--<field name="docnaet_category_id" /> Cassandra want to remove-->
                 <!--<field name="user_id" filter_domain="[('user_id','=',self)]"/>-->
                 <field name="protocol_id" filter_domain="[('protocol_id','=',self)]" required="1"/>
-                <!--<field name="type_id" filter_domain="[('type_id','=',self)]"/>-->
+                <field name="type_id" filter_domain="[('type_id','=',self)]"/>
                 <field name="language_id" filter_domain="[('language_id','=',self)]"/>
                 
                 <filter name="state_draft" string="Draft state" domain="[('state','=','draft')]"/>
