@@ -338,7 +338,7 @@ class UploadDocumentWizard(orm.TransientModel):
         'mode': lambda *x: 'upload',
         'default_user_id': lambda s, cr, uid, ctx: uid,
         'folder_status': default_read_upload_folder, 
-        'file_mode': lambda *x: 'partial', # TODO 'all'
+        'file_mode': lambda *x: 'all',
         }
 
 class UploadDocumentFile(orm.TransientModel):
