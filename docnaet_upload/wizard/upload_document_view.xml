@@ -17,7 +17,7 @@
                     <sheet>
                         <group colspan="4" col="2">
                             <separator string="Partner Filter:" colspan="2"/>
-                            <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id)" />
+                            <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id)" />new
                             <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id)" />
                             
                             <separator string="Default setup:" colspan="2"/>
@@ -29,11 +29,26 @@
                             <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}" /> <!--,('is_address','=',False)-->                            
                             
                             <field name="default_language_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
-                            <newline/>
+                            <field name="file_mode" attrs="{'invisible': [('mode','!=','upload')]}"/>
                             
-                            <!--<field name="reassign_confirm" attrs="{'invisible': [('mode','!=','reassign')]}" />-->
-                            <separator string="Folder status" colspan="4" attrs="{'invisible': [('mode','!=','upload')]}"/>
-                            <field name="folder_status" widget="html" nolabel="1" readonly="1" colspan="4" attrs="{'invisible': [('mode','!=','upload')]}"/>
+                            <!--Visible in UPLOAD mode:-->
+                            <group colspan="4" attrs="{'invisible': [('mode','!=','upload')]}">
+                                <group colspan="4" attrs="{'invisible': [('file_mode','!=','all')]}">
+                                    <separator string="Folder status:" colspan="4" />
+                                    <field name="folder_status" widget="html" nolabel="1" readonly="1" colspan="4"/>
+                                </group>    
+                                <group colspan="4" attrs="{'invisible': [('file_mode','!=','partial')]}">
+                                    <separator string="Select file:" colspan="4"/>
+                                    <field name="document_ids" nolabel="1">
+                                        <tree string="Files:" editable="bottom" colors="red:to_import==False">
+                                            <field name="to_import" />
+                                            <field name="name" readonly="True"/>
+                                            <field name="date" readonly="True"/>
+                                            <field name="fullname" invisible="True"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </group>    
                         </group>
                     </sheet>
                 </form>

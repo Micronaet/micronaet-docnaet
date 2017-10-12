@@ -41,7 +41,7 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 _logger = logging.getLogger(__name__)
 
 
-class UlploadDocumentWizard(orm.TransientModel):
+class UploadDocumentWizard(orm.TransientModel):
     ''' Wizard to upload document
     '''
     _name = 'docnaet.document.upload.wizard'
@@ -156,6 +156,15 @@ class UlploadDocumentWizard(orm.TransientModel):
         '''
         # TODO complete the load from folder:
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
+        file_mode = wiz_proxy.file_mode 
+
+        # Partial mode
+        file_selected = []
+
+        if file_mode == 'partial':
+            file_selected = [
+                item.name for item in wiz_proxy.document_ids if item.to_import]
+        
         company_pool = self.pool.get('res.company')
         document_pool = self.pool.get('docnaet.document')
         protocol_pool = self.pool.get('docnaet.protocol')
@@ -169,7 +178,9 @@ class UlploadDocumentWizard(orm.TransientModel):
         private_folder = self.private_listdir(cr, uid, ids, context=context)
 
         for fullpath, f in private_folder:
-        
+            if file_mode == 'partial' and f not in file_selected:
+                continue # jumped
+            
             # -----------------------------------------------------------------
             # Create record for document:
             # -----------------------------------------------------------------  
@@ -229,52 +240,67 @@ class UlploadDocumentWizard(orm.TransientModel):
             }
 
     def default_read_upload_folder(
-            self, cr, uid, ids, context=None):
+            self, cr, uid, ids, mode='html', context=None):
         ''' Read folder and return html text
         '''
-        res = ''
-        private_folder = self.private_listdir(cr, uid, ids, context=context)
+        if mode == 'html':
+            res = ''
+        else:
+            res = []
 
+        # Get private folder:        
+        private_folder = self.private_listdir(cr, uid, ids, context=context)
         for fullpath, f in private_folder:
-            res += '<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % (
-                f,
-                datetime.fromtimestamp(
-                    os.path.getmtime(fullpath)).strftime('%Y/%m/%d'),
-                f.split('.')[-1],
-                )
-                
-        return '''
-                <style>
-                    .table_bf {
-                         border:1px 
-                         padding: 3px;
-                         solid black;
-                     }
-                    .table_bf td {
-                         border:1px 
-                         solid black;
-                         padding: 3px;
-                         text-align: center;
-                     }
-                    .table_bf th {
-                         border:1px 
-                         solid black;
-                         padding: 3px;
-                         text-align: center;
-                         background-color: grey;
-                         color: white;
-                     }
-                </style>
-            <p> 
-                <table class="table_bf">
-                    <tr>
-                        <td>&nbsp;Date&nbsp;</td>
-                        <td>&nbsp;File name&nbsp;</td>
-                        <td>&nbsp;Ext.&nbsp;</td>
-                    </tr>
-                    %s
-                </table>
-            </p>''' % res
+            ts = datetime.fromtimestamp(
+                os.path.getmtime(fullpath)).strftime('%Y/%m/%d')
+            ts = ts.replace('/', '-')
+            if mode == 'html':
+                res += '<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % (
+                    f, ts, f.split('.')[-1])
+
+            else: # mode default one2many
+                res.append((0, 0, {
+                    'to_import': False,
+                    'name': f,
+                    'date': ts,
+                    'fullname': fullpath,
+                    }))  
+                              
+        if mode == 'html':        
+            return '''
+                    <style>
+                        .table_bf {
+                             border:1px 
+                             padding: 3px;
+                             solid black;
+                         }
+                        .table_bf td {
+                             border:1px 
+                             solid black;
+                             padding: 3px;
+                             text-align: center;
+                         }
+                        .table_bf th {
+                             border:1px 
+                             solid black;
+                             padding: 3px;
+                             text-align: center;
+                             background-color: grey;
+                             color: white;
+                         }
+                    </style>
+                <p> 
+                    <table class="table_bf">
+                        <tr>
+                            <td>&nbsp;Date&nbsp;</td>
+                            <td>&nbsp;File name&nbsp;</td>
+                            <td>&nbsp;Ext.&nbsp;</td>
+                        </tr>
+                        %s
+                    </table>
+                </p>''' % res
+        else:
+            return res    
         
     
     _columns = {
@@ -302,12 +328,57 @@ class UlploadDocumentWizard(orm.TransientModel):
         'folder_status': fields.text('Folder status'),
         'reassign_confirm': fields.boolean('Confirm after reassign',
             help='After reassign feature confirm all draft elements'),
+        'file_mode': fields.selection([
+            ('all', 'All'),
+            ('partial', 'Partial'),
+            ], 'File mode'),
         }
 
     _defaults = {
         'mode': lambda *x: 'upload',
         'default_user_id': lambda s, cr, uid, ctx: uid,
-        # TODO: default function
         'folder_status': default_read_upload_folder, 
+        'file_mode': lambda *x: 'partial', # TODO 'all'
         }
+
+class UploadDocumentFile(orm.TransientModel):
+    ''' Wizard to upload document
+    '''
+    _name = 'docnaet.document.upload.file'
+    _description = 'Document upload file'
+
+    _columns = {
+        'to_import': fields.boolean('Import'),
+        'name': fields.char('File name', size=100, required=True, 
+            readonly=True),
+        'fullname': fields.char('Full name', size=400),
+        'date': fields.date('Time stamp'),
+        'wizard_id': fields.many2one(
+            'docnaet.document.upload.wizard', 'Wizard'),
+        }
+        
+class UploadDocumentWizard(orm.TransientModel):
+    ''' Wizard to upload document
+    '''
+    _inherit = 'docnaet.document.upload.wizard'
+    
+    def get_default_file_ids(self, cr, uid, context=None):
+        ''' Load user files directly
+        '''        
+        if context is None:
+            context = {}
+            
+        res = self.default_read_upload_folder(
+            cr, uid, False, mode='o2m', context=context)
+        return res
+
+    _columns = {
+        'document_ids': fields.one2many(
+            'docnaet.document.upload.file', 'wizard_id', 'Files'),
+        }
+    
+    _defaults = {
+        'document_ids': lambda s, cr, uid, ctx: s.get_default_file_ids(
+            cr, uid, context=ctx),
+        }    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
