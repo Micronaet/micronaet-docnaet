@@ -234,7 +234,7 @@ convert_db = {
             's(record.name)', 's(record.description)', 's(record.note)',
             'record.number', 'record.fax_number', 
             's(record.docnaet_extension)', 's(record.date)', 
-            's(real_file)', 'mo(record.type_id)',
+            's(record.real_file)', 'mo(record.type_id)',
             #'priority_db.get(record.priority, 3)'
             ),
         (
