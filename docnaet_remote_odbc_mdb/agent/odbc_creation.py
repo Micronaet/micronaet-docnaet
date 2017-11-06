@@ -286,7 +286,6 @@ for table in import_table:
     
     # Delete previous documents if update period
     if mode == 'update' and table == 'Documenti':
-        import pdb; pdb.set_trace()
         print '[INFO] Delete document of update period: [record: %s]' % (
             len(erp_ids), 
             )
