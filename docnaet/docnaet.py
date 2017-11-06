@@ -533,9 +533,20 @@ class DocnaetDocument(orm.Model):
         '''        
         return ids
 
+    def _get_real_filename(self, cr, uid, ids, fields, args, context=None):
+        ''' Fields function for calculate 
+        '''
+        res = {}
+        for item in self.browse(cr, uid, ids, context=context):
+            res[item.id] = item.filename or original_id.id or ''
+        return res
+
     _columns = {        
         'name': fields.char('Subject', size=180, required=True),
         'filename': fields.char('File name', size=200),
+        'real_file': fields.function(
+            _get_real_filename, method=True, size=20,
+            type='char', string='Real filename', store=False), 
         'description': fields.text('Description'),
         'note': fields.text('Note'),
         
