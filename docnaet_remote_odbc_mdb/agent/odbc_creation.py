@@ -76,7 +76,7 @@ def s(value):
     '''    
     if not value:
         return ''
-
+    value = '%s' % value
     res = ''
     for c in value:
         if ord(c) <= 127:
