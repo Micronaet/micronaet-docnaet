@@ -538,7 +538,7 @@ class DocnaetDocument(orm.Model):
         '''
         res = {}
         for item in self.browse(cr, uid, ids, context=context):
-            res[item.id] = item.filename or original_id.id or ''
+            res[item.id] = item.filename or item.original_id.id or ''
         return res
 
     _columns = {        
