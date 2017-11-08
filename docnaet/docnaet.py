@@ -541,6 +541,20 @@ class DocnaetDocument(orm.Model):
             res[item.id] = item.filename or item.original_id.id or ''
         return res
 
+    def _get_date_month_4_group(self, cr, uid, ids, fields, args, context=None):
+        ''' Fields function for calculate 
+        '''
+        res = {}
+        for doc in self.browse(cr, uid, ids, context=context):
+            res[doc.id] = ('%s' % doc.date)[:7] 
+        return res
+        
+    def _store_data_month(self, cr, uid, ids, context=None):
+        ''' if change date reload data
+        '''
+        return ids
+    
+        
     _columns = {        
         'name': fields.char('Subject', size=180, required=True),
         'filename': fields.char('File name', size=200),
@@ -554,6 +568,14 @@ class DocnaetDocument(orm.Model):
         'fax_number': fields.char('Fax n.', size=10),
 
         'date': fields.date('Date', required=True),
+        'date_month': fields.function(
+            _get_date_month_4_group, method=True, 
+            type='char', string='Mese inser.', size=7, 
+            store={
+                'docnaet.document': (
+                    _store_data_month, ['date'], 10),
+                }), 
+                        
         'deadline': fields.date('Deadline'),
         'deadline_info': fields.char('Deadline info', size=64),
 

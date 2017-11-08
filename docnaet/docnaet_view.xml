@@ -473,7 +473,8 @@
                 <filter name="original_document" string="Original document" domain="[('original_id','=',False)]"/>
                 
                 <group expand="0" string="Group By">
-                    <filter name="group_date" string="Date" context="{'group_by': 'date'}"/>
+                    <!--<filter name="group_date" string="Date" context="{'group_by': 'date'}"/>-->
+                    <filter name="group_date_month" string="Mese ins." context="{'group_by': 'date_month'}"/>
                     <filter name="group_deadline" string="Deadline" context="{'group_by': 'deadline'}"/>
                     <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
                     <filter name="group_partner_category" string="Partner category" context="{'group_by': 'docnaet_category_id'}"/>
@@ -501,6 +502,7 @@
                <field name="protocol_id" required="1" />
                <field name="number" />
                <field name="date" />
+               <field name="date_month" invisible="1"/>
                <field name="name" />
                <field name="description" />
                <field name="partner_id" />
