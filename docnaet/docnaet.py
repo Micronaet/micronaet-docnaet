@@ -546,12 +546,27 @@ class DocnaetDocument(orm.Model):
         '''
         res = {}
         for doc in self.browse(cr, uid, ids, context=context):
-            res[doc.id] = ('%s' % doc.date)[:7] 
+            if doc.date:
+                res[doc.id] = ('%s' % doc.date)[:7]
+            else:
+                res[doc.id] = _('Non presente')
+        return res
+
+    def _get_deadline_month_4_group(self, cr, uid, ids, fields, args, context=None):
+        ''' Fields function for calculate 
+        '''
+        res = {}
+        for doc in self.browse(cr, uid, ids, context=context):
+            if doc.deadline:
+                res[doc.id] = ('%s' % doc.deadline)[:7]
+            else:
+                res[doc.id] = _('Non presente')
         return res
         
-    def _store_data_month(self, cr, uid, ids, context=None):
+    def _store_data_deadline_month(self, cr, uid, ids, context=None):
         ''' if change date reload data
         '''
+        _logger.warning('Change date_mont depend on date and deadline')
         return ids
     
         
@@ -573,11 +588,18 @@ class DocnaetDocument(orm.Model):
             type='char', string='Mese inser.', size=7, 
             store={
                 'docnaet.document': (
-                    _store_data_month, ['date'], 10),
+                    _store_data_deadline_month, ['date'], 10),
                 }), 
                         
-        'deadline': fields.date('Deadline'),
         'deadline_info': fields.char('Deadline info', size=64),
+        'deadline': fields.date('Deadline'),
+        'deadline_month': fields.function(
+            _get_deadline_month_4_group, method=True, 
+            type='char', string='Scadenza', size=7, 
+            store={
+                'docnaet.document': (
+                    _store_data_deadline_month, ['deadline'], 10),
+                }), 
 
         # OpenERP many2one 
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol', 

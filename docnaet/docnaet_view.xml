@@ -475,7 +475,8 @@
                 <group expand="0" string="Group By">
                     <!--<filter name="group_date" string="Date" context="{'group_by': 'date'}"/>-->
                     <filter name="group_date_month" string="Mese ins." context="{'group_by': 'date_month'}"/>
-                    <filter name="group_deadline" string="Deadline" context="{'group_by': 'deadline'}"/>
+                    <!--<filter name="group_deadline" string="Deadline" context="{'group_by': 'deadline'}"/>-->
+                    <filter name="group_deadline_month" string="Scadenza" context="{'group_by': 'deadline_month'}"/>
                     <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
                     <filter name="group_partner_category" string="Partner category" context="{'group_by': 'docnaet_category_id'}"/>
                     <filter name="group_country" string="Country" context="{'group_by': 'country_id'}"/>
@@ -512,6 +513,7 @@
                <field name="language_id" readonly="context.get('embedded',False)"/>
                <field name="priority" invisible="1"/>
                <field name="deadline" string="Scad." invisible="1" />
+               <field name="deadline_month" invisible="1"/>
                <field name="deadline_info" invisible="1"/>
                <field name="program_id" invisible="1"/>
                <field name="original_id" invisible="1"/>
