@@ -584,7 +584,7 @@ class DocnaetDocument(orm.Model):
         'date': fields.date('Date', required=True),
         'date_month': fields.function(
             _get_date_month_4_group, method=True, 
-            type='char', string='Mese inser.', size=7, 
+            type='char', string='Mese inser.', size=15,
             store={
                 'docnaet.document': (
                     _store_data_deadline_month, ['date'], 10),
@@ -594,7 +594,7 @@ class DocnaetDocument(orm.Model):
         'deadline': fields.date('Deadline'),
         'deadline_month': fields.function(
             _get_deadline_month_4_group, method=True, 
-            type='char', string='Scadenza', size=7, 
+            type='char', string='Scadenza', size=15, 
             store={
                 'docnaet.document': (
                     _store_data_deadline_month, ['deadline'], 10),
