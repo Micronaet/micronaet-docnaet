@@ -562,7 +562,31 @@ class DocnaetDocument(orm.Model):
             else:
                 res[doc.id] = _('Non presente')
         return res
+    
+    def force_update_all_date(self, cr, uid, ids, context=None):
+        ''' Button to force update
+        ''' 
+        # Search all documents:
+        doc_ids = self.search(cr, uid, [], context=context)        
         
+        # date:
+        date_month_db = self._get_date_month_4_group(
+            cr, uid, doc_ids, context=context)
+        for item_id, date_month in date_month_db.iteritems():
+            self.write(cr, uid, item_id, {
+                'date_month': date_month,
+                }, context=context)
+        
+        # deadline:        
+        deadline_month_db = self._get_deadline_month_4_group(
+            cr, uid, doc_ids, context=context)
+        for item_id, deadline_month in date_month_db.iteritems():
+            self.write(cr, uid, item_id, {
+                'deadline_month': deadline_month,
+                }, context=context)
+        
+        return True
+            
     def _store_data_deadline_month(self, cr, uid, ids, context=None):
         ''' if change date reload data
         '''
