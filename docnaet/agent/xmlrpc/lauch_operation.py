@@ -52,23 +52,16 @@ doc_pool = odoo.model('docnaet.document')
 # Read partic for partner selected
 # -----------------------------------------------------------------------------
 doc_ids = doc_pool.search([])
-
+import pdb; pdb.set_trace()
 i = 0
 for doc in doc_pool.browse(doc_ids):
     i += 1
     if i % 100 == 0:
         print 'Record: %s' % i
         
-    data = {}
-    if doc.date:
-        data['date_month'] = ('%s' % doc.date)[:7]
-    else:
-        data['date_month'] = 'Non presente'
-    
-    if doc.deadline:
-        data['deadline_month'] = ('%s' % doc.deadline)[:7]
-    else:
-        data['deadline_month'] = 'Non presente'
-    
+    data = {
+        'date': doc.date,
+        'deadline': doc.deadline,
+        }
     doc_pool.write(doc.id, data)
 
