@@ -314,13 +314,17 @@ class UploadDocumentWizard(orm.TransientModel):
         'country_id': fields.many2one('res.country', 'Country'),
             
         'default_partner_id': fields.many2one(
-            'res.partner', '>> Default partner'),
+            'res.partner', '>> Default partner',
+            domain=[('docnaet_enable', '=', True)],
+            ),
         'assign_protocol': fields.boolean('Assign protocol', 
             help='In upload mode assign protocol and next number'),    
         'default_user_id': fields.many2one('res.users', 
             'User'),
-        'default_protocol_id': fields.many2one('docnaet.protocol', 
-            'Protocol'),
+        'default_protocol_id': fields.many2one(
+            'docnaet.protocol', 'Protocol', 
+            domain=[('invisible', '=', False)],
+            ),
         'default_type_id': fields.many2one('docnaet.type', 
             'Type'),            
         'default_language_id': fields.many2one('docnaet.language', 
