@@ -568,11 +568,11 @@ class DocnaetDocument(orm.Model):
         ''' 
         _logger.info('Update all date:')
         # Search all documents:
-        doc_ids = self.search(cr, uid, [], context=context)        
+        doc_ids = self.search(cr, uid, [], context=context)      
         
         # date:
         date_month_db = self._get_date_month_4_group(
-            cr, uid, doc_ids, context=context)
+            cr, uid, doc_ids, '', '', context=context)
         _logger.info('Update date: %s' % len(date_month_db))
         for item_id, date_month in date_month_db.iteritems():
             self.write(cr, uid, item_id, {
@@ -581,7 +581,7 @@ class DocnaetDocument(orm.Model):
         
         # deadline:        
         deadline_month_db = self._get_deadline_month_4_group(
-            cr, uid, doc_ids, context=context)
+            cr, uid, doc_ids, '', '', context=context)
         _logger.info('Update deadline: %s' % len(deadline_month_db))
         for item_id, deadline_month in date_month_db.iteritems():
             self.write(cr, uid, item_id, {
