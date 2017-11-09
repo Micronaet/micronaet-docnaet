@@ -568,8 +568,7 @@ class DocnaetDocument(orm.Model):
         '''
         _logger.warning('Change date_mont depend on date and deadline')
         return ids
-    
-        
+            
     _columns = {        
         'name': fields.char('Subject', size=180, required=True),
         'filename': fields.char('File name', size=200),
