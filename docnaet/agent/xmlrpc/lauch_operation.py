@@ -51,7 +51,8 @@ doc_pool = odoo.model('docnaet.document')
 # -----------------------------------------------------------------------------
 # Read partic for partner selected
 # -----------------------------------------------------------------------------
-doc_ids = doc_pool.search([])
+doc_ids = doc_pool.search([
+    ('date_month', '=', False)])
 import pdb; pdb.set_trace()
 i = 0
 for doc in doc_pool.browse(doc_ids):
