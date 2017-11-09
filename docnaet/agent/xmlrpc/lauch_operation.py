@@ -63,12 +63,12 @@ for doc in doc_pool.browse(doc_ids):
     if doc.date:
         data['date_month'] = ('%s' % doc.date)[:7]
     else:
-        data['date_month'] = _('Non presente')
+        data['date_month'] = 'Non presente'
     
     if doc.deadline:
         data['deadline_month'] = ('%s' % doc.deadline)[:7]
     else:
-        data['deadline_month'] = _('Non presente')
+        data['deadline_month'] = 'Non presente'
     
     doc_pool.write(doc.id, data)
 
