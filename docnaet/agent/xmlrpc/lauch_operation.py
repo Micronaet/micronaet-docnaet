@@ -53,7 +53,12 @@ doc_pool = odoo.model('docnaet.document')
 # -----------------------------------------------------------------------------
 doc_ids = doc_pool.search([])
 import pdb; pdb.set_trace()
+i = 0
 for doc in doc_pool.browse(doc_ids):
+    i += 1
+    if i % 100 == 0:
+        print 'Record: %s' % i
+        
     data = {}
     if doc.date:
         data['date_month'] = ('%s' % doc.date)[:7]
