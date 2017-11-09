@@ -566,12 +566,14 @@ class DocnaetDocument(orm.Model):
     def force_update_all_date(self, cr, uid, ids, context=None):
         ''' Button to force update
         ''' 
+        _logger.info('Update all date:')
         # Search all documents:
         doc_ids = self.search(cr, uid, [], context=context)        
         
         # date:
         date_month_db = self._get_date_month_4_group(
             cr, uid, doc_ids, context=context)
+        _logger.info('Update date: %s' % len(date_month_db))
         for item_id, date_month in date_month_db.iteritems():
             self.write(cr, uid, item_id, {
                 'date_month': date_month,
@@ -580,6 +582,7 @@ class DocnaetDocument(orm.Model):
         # deadline:        
         deadline_month_db = self._get_deadline_month_4_group(
             cr, uid, doc_ids, context=context)
+        _logger.info('Update deadline: %s' % len(deadline_month_db))
         for item_id, deadline_month in date_month_db.iteritems():
             self.write(cr, uid, item_id, {
                 'deadline_month': deadline_month,
