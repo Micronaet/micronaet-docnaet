@@ -574,7 +574,11 @@ class DocnaetDocument(orm.Model):
         date_month_db = self._get_date_month_4_group(
             cr, uid, doc_ids, '', '', context=context)
         _logger.info('Update date: %s' % len(date_month_db))
+        i = 0
         for item_id, date_month in date_month_db.iteritems():
+            i += 1
+            if i % 100 == 0:
+                _logger.warning('Record %s' % i)
             self.write(cr, uid, item_id, {
                 'date_month': date_month,
                 }, context=context)
@@ -583,7 +587,11 @@ class DocnaetDocument(orm.Model):
         deadline_month_db = self._get_deadline_month_4_group(
             cr, uid, doc_ids, '', '', context=context)
         _logger.info('Update deadline: %s' % len(deadline_month_db))
+        i = 0
         for item_id, deadline_month in date_month_db.iteritems():
+            i += 1
+            if i % 100 == 0:
+                _logger.warning('Record %s' % i)
             self.write(cr, uid, item_id, {
                 'deadline_month': deadline_month,
                 }, context=context)
