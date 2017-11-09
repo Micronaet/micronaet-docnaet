@@ -549,7 +549,7 @@ class DocnaetDocument(orm.Model):
             if doc.date:
                 res[doc.id] = ('%s' % doc.date)[:7]
             else:
-                res[doc.id] = _('Non presente')
+                res[doc.id] = _('Nessuna')
         return res
 
     def _get_deadline_month_4_group(self, cr, uid, ids, fields, args, context=None):
@@ -560,7 +560,7 @@ class DocnaetDocument(orm.Model):
             if doc.deadline:
                 res[doc.id] = ('%s' % doc.deadline)[:7]
             else:
-                res[doc.id] = _('Non presente')
+                res[doc.id] = _('Nessuna')
         return res
     
     def _store_data_deadline_month(self, cr, uid, ids, context=None):
