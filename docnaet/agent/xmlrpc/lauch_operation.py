@@ -46,9 +46,24 @@ odoo = erppeek.Client(
     user=user,
     password=pwd,
     )
-doc = odoo.model('docnaet.document')
+doc_pool = odoo.model('docnaet.document')
 
 # -----------------------------------------------------------------------------
 # Read partic for partner selected
 # -----------------------------------------------------------------------------
-doc.force_update_all_date([])
+doc_ids = doc_pool.search([])
+import pdb; pdb.set_trace()
+for doc in doc_pool.browse(doc_ids):
+    data = {}
+    if doc.date:
+        data['date_month'] = ('%s' % doc.date)[:7]
+    else:
+        data['date_month'] = _('Non presente')
+    
+    if doc.deadline:
+        data['deadline_month'] = ('%s' % doc.deadline)[:7]
+    else:
+        data['deadline_month'] = _('Non presente')
+    
+    doc_pool.write(doc.id, data)
+
