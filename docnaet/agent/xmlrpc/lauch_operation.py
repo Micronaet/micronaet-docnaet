@@ -53,7 +53,7 @@ doc_pool = odoo.model('docnaet.document')
 # -----------------------------------------------------------------------------
 doc_ids = doc_pool.search([
     ('date_month', '=', False)])
-import pdb; pdb.set_trace()
+
 i = 0
 for doc in doc_pool.browse(doc_ids):
     i += 1

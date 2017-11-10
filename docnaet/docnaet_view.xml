@@ -442,6 +442,8 @@
         <field name="arch" type="xml">
             <search string="Docnaet document" version="7.0">
                 <field name="number" />
+                <field name="date_month" string="Data AAAA-MM"/>
+                <field name="deadline_month" string="Scadenza AAAA-MM"/>
                 <!--<field name="date" />
                 <field name="date" string="Date from" filter_domain="[('date','&gt;=',self)]"/>
                 <field name="date" string="Date to" filter_domain="[('date','&lt;=',self)]"/>
