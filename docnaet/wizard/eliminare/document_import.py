@@ -89,8 +89,7 @@ class document_import(orm.TransientModel):
         
         # ---------------------------------------------------------------------
         # Read file in user folder
-        # ---------------------------------------------------------------------
-        
+        # ---------------------------------------------------------------------        
         filelist = [f for f in listdir(private_folder) if isfile(join(
             private_folder, f))]
 
@@ -125,9 +124,4 @@ class document_import(orm.TransientModel):
             #'res_id': document_id,  # IDs selected
             }
 
-    _columns = {
-        }
-
-    _defaults = {
-        }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
