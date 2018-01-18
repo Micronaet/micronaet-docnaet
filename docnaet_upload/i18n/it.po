@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-12 14:05+0000\n"
-"PO-Revision-Date: 2017-10-12 16:10+0100\n"
+"POT-Creation-Date: 2018-01-18 10:38+0000\n"
+"PO-Revision-Date: 2018-01-18 11:39+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,13 +56,18 @@ msgstr "Upload file documenti"
 
 #. module: docnaet_upload
 #: view:docnaet.document.upload.wizard:0
+msgid "Filter partner country..."
+msgstr "Filtro nazione cliente..."
+
+#. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
 msgid "Files:"
 msgstr "Documenti:"
 
 #. module: docnaet_upload
 #: field:docnaet.document.upload.wizard,default_partner_id:0
 msgid ">> Default partner"
-msgstr ">> Default partner"
+msgstr ">> Partner predefinito"
 
 #. module: docnaet_upload
 #: field:docnaet.document.upload.file,to_import:0
@@ -99,7 +104,7 @@ msgstr "Riassegna"
 #: protocol_tree
 #: model:ir.ui.menu,name:docnaet_upload.menu_docnaet_my_document_to protocol
 msgid "Uploaded to confirm"
-msgstr "Upload da confermare"
+msgstr "Uploaded to confirm"
 
 #. module: docnaet_upload
 #: view:docnaet.document.upload.wizard:0
@@ -111,11 +116,6 @@ msgstr "Upload documenti"
 #: field:docnaet.document.upload.wizard,reassign_confirm:0
 msgid "Confirm after reassign"
 msgstr "Conferma dopo il riassegnamento"
-
-#. module: docnaet_upload
-#: view:docnaet.document.upload.wizard:0
-msgid "new"
-msgstr "nuovo"
 
 #. module: docnaet_upload
 #: field:docnaet.document.upload.file,fullname:0
@@ -136,6 +136,11 @@ msgstr "Caricato"
 #: view:docnaet.document.upload.wizard:0
 msgid "Folder status:"
 msgstr "Stato cartella:"
+
+#. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
+msgid "Filter partner name..."
+msgstr "Filtro nome client..."
 
 #. module: docnaet_upload
 #: field:docnaet.document.upload.wizard,default_language_id:0
