@@ -63,13 +63,20 @@ class UploadDocumentWizard(orm.TransientModel):
                 ('country_id', '=', country_id),
                 )
         if partner_name:
-            res['domain']['default_partner_id'].append(
-                ('name', 'ilike', partner_name),
-                )
+            if '+' in partner_name:
+                partner_part = partner_name.split('+')
+                res['domain']['default_partner_id'].extend([
+                    ('name', 'ilike', p) for p in partner_part])
+            else:   
+                res['domain']['default_partner_id'].append(
+                    ('name', 'ilike', partner_name),
+                    )
+                
         #if category_id:
         #    res['domain']['partner_id'].append(
         #        ('docnaet_category_id','=', category_id),
         #        )
+        _logger.warning('Filter: %s' % res)
         return res
 
     def private_listdir(self, cr, uid, ids, context=None):
