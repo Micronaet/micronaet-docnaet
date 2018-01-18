@@ -297,13 +297,23 @@ class DocnaetDocument(orm.Model):
                 ('country_id', '=', search_country_id),
                 )
         if search_partner_name:
-            res['domain']['partner_id'].append(
-                ('name', 'ilike', search_partner_name),
-                )
+            if '+' in search_partner_name:
+                partner_part = search_partner_name.split('+')
+                # Add or:
+                #res['domain']['partner_id'].extend([
+                #    '|' for item in range(1, len(partner_part))])
+                # Add partner list of ilike search:    
+                res['domain']['partner_id'].extend([
+                    ('name', 'ilike', p) for p in partner_part])
+            else:   
+                res['domain']['partner_id'].append(
+                    ('name', 'ilike', search_partner_name),
+                    )
         #if category_id:
         #    res['domain']['partner_id'].append(
         #        ('docnaet_category_id','=', category_id),
         #        )
+        _logger.warning('Filter: %s' % res)
         return res
 
     # -------------------------------------------------------------------------        
