@@ -580,6 +580,9 @@
                        <field name="number" />
                        <button name="assign_protocol_number" string="Reassign" type="object" attrs="{'invisible': ['|',('protocol_id','=',False),('number','=',False)]}" colspan="1" icon="gtk-refresh"/>
 
+                       <field name="search_partner_name" on_change="onchange_country_partner_domain(search_partner_name,search_country_id)" />
+                       <field name="search_country_id" on_change="onchange_country_partner_domain(search_partner_name,search_country_id)" />
+                       <newline/>
 
                        <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'default_docnaet_enable': True}" options="{'limit': 10, 'create': false, 'create_edit': false}" />
                        <field name="user_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>

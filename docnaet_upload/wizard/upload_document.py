@@ -55,16 +55,16 @@ class UploadDocumentWizard(orm.TransientModel):
         '''
         res = {}
         res['domain'] = {'default_partner_id': [
-            ('docnaet_enable','=',True),
+            ('docnaet_enable', '=', True),
             ]}        
         
         if country_id:
             res['domain']['default_partner_id'].append(
-                ('country_id','=',country_id),
+                ('country_id', '=', country_id),
                 )
         if partner_name:
             res['domain']['default_partner_id'].append(
-                ('name','ilike',partner_name),
+                ('name', 'ilike', partner_name),
                 )
         #if category_id:
         #    res['domain']['partner_id'].append(

@@ -280,6 +280,33 @@ class DocnaetDocument(orm.Model):
     _order = 'date desc,number desc'
 
     # -------------------------------------------------------------------------        
+    # Onchange event:
+    # -------------------------------------------------------------------------
+    def onchange_country_partner_domain(self, cr, uid, ids, 
+            search_partner_name, search_country_id, #category_id, 
+            context=None):
+        ''' On change for domain purpose
+        '''
+        res = {}
+        res['domain'] = {'partner_id': [
+            ('docnaet_enable', '=', True),
+            ]}        
+        
+        if search_country_id:
+            res['domain']['partner_id'].append(
+                ('country_id', '=', search_country_id),
+                )
+        if search_partner_name:
+            res['domain']['partner_id'].append(
+                ('name', 'ilike', search_partner_name),
+                )
+        #if category_id:
+        #    res['domain']['partner_id'].append(
+        #        ('docnaet_category_id','=', category_id),
+        #        )
+        return res
+
+    # -------------------------------------------------------------------------        
     # Override ORM
     # -------------------------------------------------------------------------
     '''def search(self, cr, user, args, offset=0, limit=None, order=None, 
@@ -628,6 +655,12 @@ class DocnaetDocument(orm.Model):
                 'docnaet.document': (
                     _refresh_category_auto_change, ['partner_id'], 10),
                 }),
+        # Search partner extra fields:
+        'search_partner_name': fields.char(
+            'Search per Partner name', size=80),
+        'search_country_id': fields.many2one(
+            'res.country', 'Search per Country'),
+                
         'docnaet_extension': fields.char('Ext.', size=10),
         'program_id': fields.many2one(
             'docnaet.protocol.template.program', 'Type of document'),

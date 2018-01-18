@@ -17,8 +17,8 @@
                     <sheet>
                         <group colspan="4" col="2">
                             <separator string="Partner Filter:" colspan="2"/>
-                            <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id)" />
-                            <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id)" />
+                            <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id)" placeholder="Filter partner name..."/>
+                            <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id)"  placeholder="Filter partner country..."/>
                             
                             <separator string="Default setup:" colspan="2"/>
                             <field name="default_partner_id" options="{'limit': 10, 'create': false, 'create_edit': false}" />
