@@ -34,6 +34,7 @@
     'init_xml': [],
     'demo': [],
     'data': [
+        'security/downlad_group.xml',
         'download_view.xml',
         ],
     'active': False,

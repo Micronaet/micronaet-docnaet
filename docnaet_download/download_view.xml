@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="docnaet.docnaet_document_tree_view"/>
             <field name="arch" type="xml">
                 <button name="button_call_url_docnaet" position="before">
-                    <button name="button_file_download" string="Download document" type="object" icon="STOCK_SAVE" />
+                    <button name="button_file_download" string="Download document" type="object" icon="STOCK_SAVE" groups="group_docnaet_download_users"/>
                 </button>
             </field>
         </record>

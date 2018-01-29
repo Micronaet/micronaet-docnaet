@@ -39,7 +39,9 @@
         ],
     'init_xml': [],
     'demo': [],
-    'data': [],
+    'data': [
+        'data/config_data.xml',
+        ],
     'active': False,
     'installable': True,
     'auto_install': False,

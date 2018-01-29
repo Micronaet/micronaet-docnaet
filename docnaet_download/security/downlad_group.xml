@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+   <data>
+        <record id="group_docnaet_download_users" model="res.groups">
+            <field name="name">Docnaet download users</field>
+        </record>
+   </data>
+</openerp>
