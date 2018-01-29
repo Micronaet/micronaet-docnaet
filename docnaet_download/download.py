@@ -53,7 +53,9 @@ class DocnaetDocument(orm.Model):
         document = self.browse(cr, uid, ids, context=context)[0]        
         filename = self.get_document_filename(
             cr, uid, document, mode='fullname', context=context)
+
+        name = 'docnaet_download_%s' % os.path.basename(filename)    
         return attachment_pool.return_file_apache_php(
-            cr, uid, filename, name=False, context=context)
+            cr, uid, filename, name=name, context=context)
             
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
