@@ -38,6 +38,8 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
     float_compare)
 
 
+_logger = logging.getLogger(__name__)
+
 class IrAttachment(orm.Model):
     """ Model name: IrAttachment
     """    
@@ -49,9 +51,6 @@ class IrAttachment(orm.Model):
     def _get_php_return_page(self, cr, uid, fullname, name, context=None):
         ''' Generate return object for pased files
         '''
-    def get_config_parameter_list(self, cr, uid, context=None):
-        ''' Read parameter: 
-        '''        
         config_pool = self.pool.get('ir.config_parameter')
         key = 'web.base.url.docnaet'
         config_ids = config_pool.search(cr, uid, [
@@ -64,7 +63,8 @@ class IrAttachment(orm.Model):
         config_proxy = config_pool.browse(
             cr, uid, config_ids, context=context)[0]
         base_address = config_proxy.value
-        
+        _logger.info('URL parameter: %s' % base_address)
+
         return {
             'type': 'ir.actions.act_url',
             'url': '%s/save_as.php?filename=%s&name=%s' % (
