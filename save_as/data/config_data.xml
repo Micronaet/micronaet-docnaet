@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<openerp>
+    <data> 
+        <record model="ir.config_parameter" id="parameter_default_download_link">
+            <field name="key">web.base.url.docnaet</field>
+            <field name="value">http://www.example.it:80</field>
+        </record>
+    </data>
+</openerp>
+
