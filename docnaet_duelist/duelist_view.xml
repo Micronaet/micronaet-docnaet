@@ -6,19 +6,26 @@
             <field name="model">docnaet.document</field>
             <field name="inherit_id" ref="docnaet.docnaet_document_form_view"/>
             <field name="arch" type="xml">
-                <field name="docnaet_category_id" position="after">
-                    <field name="deadline_present" /><!--invisible="1"-->
+                <field name="state" position="after">
+                <!--<button name="button_call_url_document" position="before"></button>-->
+                    <div style="background-color: red;text-align: center;font-weight:bold;color:white;">
+                         <field name="deadline_present" invisible="1" />
+                         <field name="deadline_comment" readonly="1" nolabel="1" attrs="{'invisible': [('deadline_present','=',False)]}" />
+                    </div>
                 </field>
+                <!--<field name="docnaet_category_id" position="after">
+                    <field name="deadline_present" />
+                </field>-->
                 <xpath expr="//notebook/page[1]" position="after">
-                   <page string="Duelist" groups="sql_due_list_mailing.group_manager_duelist">
+                   <page string="Duelist" groups="sql_due_list_mailing.group_manager_duelist" attrs="{'invisible': [('duelist_ids','=',[])]}">
                        <field name="duelist_ids" readonly="1">
-                            <tree string="Payment duelist (red=deadlined)" colors="red:deadline&lt;=current_date">
+                            <tree string="Payment duelist (red=deadlined)" colors="red:deadline&lt;=current_date" editable="bottom">
                                 <field name="name" />
                                 <field name="date" />
                                 <field name="deadline" />
-                                <field name="total" sum="total" />
-                                <field name="currency_id" />
                                 <field name="payment_type" />
+                                <field name="currency_id" />
+                                <field name="total" sum="total" />
                                 <field name="state" invisible="1"/>
                             </tree>                           
                        </field>

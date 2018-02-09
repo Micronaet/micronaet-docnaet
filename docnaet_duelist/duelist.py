@@ -53,10 +53,14 @@ class ResPartner(orm.Model):
         
         for partner in self.browse(
                 cr, uid, ids, context=context):                
-            res[partner.id] = False
+            res[partner.id] = {}
+            res[partner.id]['deadline_present'] = False
+            res[partner.id]['deadline_comment'] = False
             for payment in partner.duelist_ids:               
                 if payment.deadline < now:
-                    res[partner.id] = True
+                    res[partner.id]['deadline_present'] = True
+                    res[partner.id]['deadline_comment'] = _(
+                        'PAGAMENTI SCADUTI!')
                     break
         return res
 
@@ -64,7 +68,11 @@ class ResPartner(orm.Model):
         'deadline_present': fields.function(
             _get_partner_duelist_check, method=True, 
             type='boolean', string='Deadline present', 
-            store=False),                         
+            store=False, multi=True),
+        'deadline_comment': fields.function(
+            _get_partner_duelist_check, method=True, 
+            type='char', size=80, string='Deadline comment', 
+            store=False, multi=True),
         }
 
         
@@ -77,6 +85,10 @@ class DocnaetDocument(orm.Model):
         'deadline_present': fields.related(
             'partner_id', 'deadline_present', 
             type='boolean', string='Deadline present', 
+            store=False),
+        'deadline_comment': fields.related(
+            'partner_id', 'deadline_comment', 
+            type='char', string='Deadline comment', 
             store=False),
         'duelist_ids': fields.related(
             'partner_id', 'duelist_ids', 
