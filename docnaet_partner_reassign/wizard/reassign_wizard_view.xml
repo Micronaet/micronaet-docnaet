@@ -16,8 +16,8 @@
                         <newline/>
                         <field name="from_partner_id" domain="[('docnaet_enable', '=', True)]" on_change="onchange_partner_element(from_partner_id, to_customer_id, mode)"/>
                         <field name="to_customer_id" domain="[('sql_customer_code', '!=', False)]" on_change="onchange_partner_element(from_partner_id, to_customer_id, mode)"/>
-                        <separator string="Status" colspan="6"/>
-                        <field name="status" nolabel="1" colspan="6"/>
+                        <separator string="Status" colspan="4"/>
+                        <field name="status" nolabel="1" colspan="4" widget="html"/>
                    </group>
                 </form>
             </field>
