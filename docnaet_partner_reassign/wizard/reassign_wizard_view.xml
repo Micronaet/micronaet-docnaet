@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+       <!-- docnaet.partner.reassign.wizard -->
+       <record id="docnaet_partner_reassign_wizard_view" model="ir.ui.view">
+            <field name="name">Reassign docnaet partner</field>
+            <field name="model">docnaet.partner.reassign.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Wizard reassign docnaet partner" version="7.0">
+                   <header>
+                       <button string="Cancel" special="cancel" />
+                       <button name="action_done" string="Reassign" type="object" icon="gtk-jump-to" class="oe_highlight" />
+                   </header>                   
+                   <group colspan="4" col="6">
+                        <field name="from_partner_id" domain="[('docnaet_enable', '=', True)]"/>
+                        <field name="to_customer_id" domain="[('sql_customer_code', '!=', False)]" attrs="{'invisible': [('to_supplier_id','=',False)]}"/>
+                        <field name="to_supplier_id" domain="[('sql_supplier_code', '!=', False)]" attrs="{'invisible': [('to_customer_id','=',False)]}"/>
+                        <separator string="Status" colspan="6"/>
+                        <field name="status" nolabel="1" colspan="6"/>
+                   </group>
+                </form>
+            </field>
+      </record>
+      <record model="ir.actions.act_window" id="action_docnaet_partner_reassign_wizard">
+          <field name="name">Reassigne docnaet partner</field>
+          <field name="res_model">docnaet.partner.reassign.wizard</field>
+          <field name="view_type">form</field>
+          <field name="view_mode">form</field>
+          <field name="target">new</field>
+          <field name="view_id" ref="docnaet_partner_reassign_wizard_view"/>
+      </record>
+      <menuitem parent="docnaet.docnaet_administration_partner" 
+          id="docnaet_administration_partner_docnaet_reassign" 
+          string="Reassign partner" 
+          sequence="40" 
+          action="action_docnaet_partner_reassign_wizard" 
+          groups="docnaet_partner_reassign.group_docnaet_reassign_manager"/>
+      
+    </data>
+</openerp>
