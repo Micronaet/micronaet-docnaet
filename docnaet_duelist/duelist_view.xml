@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_docnaet_document_deadline_form">
+            <field name="name">docnaet.document.form</field>
+            <field name="model">docnaet.document</field>
+            <field name="inherit_id" ref="docnaet.docnaet_document_form_view"/>
+            <field name="arch" type="xml">
+                <field name="docnaet_category_id" position="after">
+                    <field name="deadline_present" /><!--invisible="1"-->
+                </field>
+                <xpath expr="//notebook/page[1]" position="after">
+                   <page string="Duelist" groups="sql_due_list_mailing.group_manager_duelist">
+                       <field name="duelist_ids" readonly="1">
+                            <tree string="Payment duelist (red=deadlined)" colors="red:deadline&lt;=current_date">
+                                <field name="name" />
+                                <field name="date" />
+                                <field name="deadline" />
+                                <field name="total" sum="total" />
+                                <field name="currency_id" />
+                                <field name="payment_type" />
+                                <field name="state" invisible="1"/>
+                            </tree>                           
+                       </field>
+                   </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+
