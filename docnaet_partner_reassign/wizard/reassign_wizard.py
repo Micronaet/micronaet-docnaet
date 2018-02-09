@@ -44,9 +44,19 @@ class DocnaetPartnerReassignWizard(orm.TransientModel):
     '''
     _name = 'docnaet.partner.reassign.wizard'
 
-    # --------------------
+    # -------------------------------------------------------------------------
+    # On change:
+    # -------------------------------------------------------------------------
+    def onchange_partner_element(self, cr, uid, from_id, customer_id, 
+            supplier_id, context=None):
+        ''' Update a status field for get informations
+        '''
+        res = {}
+        return res    
+        
+    # -------------------------------------------------------------------------
     # Wizard button event:
-    # --------------------
+    # -------------------------------------------------------------------------
     def action_done(self, cr, uid, ids, context=None):
         ''' Event for button done
         '''
@@ -59,22 +69,22 @@ class DocnaetPartnerReassignWizard(orm.TransientModel):
             'type': 'ir.actions.act_window_close'
             }
 
-    _columns = {    
+    _columns = {
+        'mode': fields.selection([
+            ('customer', 'Account customer'),
+            ('supplier', 'Account supplier'),            
+            ], 'Mode', required=True),                
         'from_partner_id': fields.many2one(
             'res.partner', 'From docnaet partner', 
             help='Move all document from this partner to another'),
         'to_customer_id': fields.many2one(
             'res.partner', 'To docnaet partner', 
             help='Destination partner for all document'),
-        'to_supplier_id': fields.many2one(
-            'res.partner', 'To docnaet partner', 
-            help='Destination partner for all document'),
         'status': fields.text('Status'),    
         }
         
     _defaults = {
+        'mode': lambda *x: 'customer',
         }    
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
-
