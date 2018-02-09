@@ -73,12 +73,12 @@ class DocnaetPartnerReassignWizard(orm.TransientModel):
         'mode': fields.selection([
             ('customer', 'Account customer'),
             ('supplier', 'Account supplier'),            
-            ], 'Mode', required=True),                
+            ], 'Mode', required=True),
         'from_partner_id': fields.many2one(
-            'res.partner', 'From docnaet partner', 
+            'res.partner', 'From docnaet partner', required=True,
             help='Move all document from this partner to another'),
         'to_customer_id': fields.many2one(
-            'res.partner', 'To docnaet partner', 
+            'res.partner', 'To docnaet partner', required=True,
             help='Destination partner for all document'),
         'status': fields.text('Status'),    
         }
