@@ -13,9 +13,11 @@
                    </header>                   
                    <group colspan="4" col="4">
                         <field name="mode" />
-                        <newline/>
+                        <field name="force_category" />
+                        
                         <field name="from_partner_id" domain="[('docnaet_enable', '=', True)]" on_change="onchange_partner_element(from_partner_id, to_partner_id, mode)"/>
                         <field name="to_partner_id" domain="[('sql_customer_code', '!=', False)]" on_change="onchange_partner_element(from_partner_id, to_partner_id, mode)"/>
+                        
                         <separator string="Status" colspan="4"/>
                         <field name="status" nolabel="1" colspan="4" widget="html" readonly="1"/>
                    </group>

@@ -161,6 +161,7 @@ class DocnaetPartnerReassignWizard(orm.TransientModel):
         wiz_browse = self.browse(cr, uid, ids, context=context)[0]
         from_partner = wiz_browse.from_partner_id
         to_partner = wiz_browse.to_partner_id
+        force_category = wiz_browse.force_category
         
         # ---------------------------------------------------------------------
         # Update documents:
@@ -183,14 +184,18 @@ class DocnaetPartnerReassignWizard(orm.TransientModel):
         # Manage partner:
         # ---------------------------------------------------------------------
         partner_pool = self.pool.get('res.partner')
-        data = {
-            'docnaet_enable': False,
-            }
 
         # To (only docnaet enable operation):
-        partner_pool.write(cr, uid, to_partner.id, {
-            'docnaet_enable': True,
-            }, context=context)
+        if force_category:
+            data = {
+                'docnaet_enable': True,
+                'docnaet_category_id': from_partner.docnaet_category_id.id,
+                }
+        else:        
+            data = {
+                'docnaet_enable': True,
+                }        
+        partner_pool.write(cr, uid, to_partner.id, data, context=context)
 
         # From (mark as invisible if necessary):
         if not(from_partner.sql_customer_code or \
@@ -228,6 +233,7 @@ class DocnaetPartnerReassignWizard(orm.TransientModel):
             ('customer', 'Account customer'),
             ('supplier', 'Account supplier'),            
             ], 'Mode', required=True),
+        'force_category':fields.boolean('Force category'),
         'from_partner_id': fields.many2one(
             'res.partner', 'From docnaet partner', required=True,
             help='Move all document from this partner to another'),
@@ -239,6 +245,7 @@ class DocnaetPartnerReassignWizard(orm.TransientModel):
         
     _defaults = {
         'mode': lambda *x: 'customer',
+        'force_category': lambda *x: True,
         }    
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
