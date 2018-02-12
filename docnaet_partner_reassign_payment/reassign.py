@@ -47,12 +47,11 @@ class DocnaetPartnerReassignEventWizard(orm.TransientModel):
         ''' Return partner with no docnaet document but payment
         '''
         query = '''
-            SELECT id from res_partner 
+            SELECT distinct(partner_id) 
+            FROM sql_payment_duelist) 
             WHERE 
-                id IN (
-                    SELECT partner_id FROM sql_payment_duelist) AND
-                id NOT IN (
-                    SELECT partner_id FROM docnaet_document);            
+                partner_id NOT IN (
+                    SELECT partner_id FROM docnaet_document);
             '''            
         cr.execute(query)
         partner_ids = [item.id for item in cr.fetchall()]    
