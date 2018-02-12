@@ -48,10 +48,9 @@ class DocnaetPartnerReassignEventWizard(orm.TransientModel):
         '''
         query = '''
             SELECT distinct(partner_id) 
-            FROM sql_payment_duelist) 
-            WHERE 
-                partner_id NOT IN (
-                    SELECT partner_id FROM docnaet_document);
+            FROM sql_payment_duelist 
+            WHERE partner_id NOT IN (
+                SELECT partner_id FROM docnaet_document);
             '''            
         cr.execute(query)
         partner_ids = [item.id for item in cr.fetchall()]    
