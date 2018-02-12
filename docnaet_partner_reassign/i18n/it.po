@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-02-12 10:57+0000\n"
-"PO-Revision-Date: 2018-02-12 12:00+0100\n"
+"POT-Creation-Date: 2018-02-12 11:36+0000\n"
+"PO-Revision-Date: 2018-02-12 12:37+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,6 +22,11 @@ msgstr ""
 #: field:docnaet.partner.reassign.wizard,status:0
 msgid "Status"
 msgstr "Stato"
+
+#. module: docnaet_partner_reassign
+#: view:docnaet.partner.reassign.wizard:0
+msgid "Wizard reassign docnaet partner"
+msgstr "Riassegna partner docnaet"
 
 #. module: docnaet_partner_reassign
 #: model:res.groups,name:docnaet_partner_reassign.group_docnaet_reassign_manager
@@ -64,9 +69,9 @@ msgid "Cancel"
 msgstr "Annulla"
 
 #. module: docnaet_partner_reassign
-#: view:docnaet.partner.reassign.wizard:0
-msgid "Wizard reassign docnaet partner"
-msgstr "Riassegna partner docnaet"
+#: field:docnaet.partner.reassign.wizard,force_category:0
+msgid "Force category"
+msgstr "Forza categoria"
 
 #. module: docnaet_partner_reassign
 #: selection:docnaet.partner.reassign.wizard,mode:0
