@@ -38,6 +38,45 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class DocnaetPartnerReassignEventWizard(orm.TransientModel):
+    ''' Wizard for reassign partner
+    '''
+    _inherit = 'docnaet.partner.reassign.wizard'
+
+    def get_no_docnaet_partner_with_payment(self, cr, uid, ids, context=None):
+        ''' Return partner with no docnaet document but payment
+        '''
+        query = '''
+            SELECT id from res_partner 
+            WHERE 
+                id IN (
+                    SELECT partner_id FROM sql_payment_duelist) AND
+                id NOT IN (
+                    SELECT partner_id FROM docnaet_document);            
+            '''            
+        cr.execute(query)
+        partner_ids = [item.id for item in cr.fetchall()]    
+        
+        model_pool = self.pool.get('ir.model.data')
+        view_id = model_pool.get_object_reference(
+            cr, uid, 
+            'docnaet_partner_reassign', 
+            'view_res_partner_no_docnaet_tree')[1]
+        
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Partner with duelist but not docnaet document'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'res.partner',
+            'view_id': view_id, # False
+            'views': [(view_id, 'tree'), (False, 'form')],
+            'domain': [('id', 'in', partner_ids)],
+            'context': context,
+            'target': 'current', # 'new'
+            'nodestroy': False,
+            }
+        
 class SqlPaymentSuelist(orm.Model):
     """ Model name: SqlPaymentSuelist
     """
