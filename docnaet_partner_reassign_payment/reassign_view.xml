@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+      <!--Inherit-->
+      <record model="ir.ui.view" id="view_reassign_docnaet_partner_payment_tree">
+          <field name="name">sql.payment.duelist.tree</field>
+          <field name="model">sql.payment.duelist</field>
+          <field name="inherit_id" ref="sql_due_list_mailing.view_sql_payment_duelist_colors_tree"/>
+          <field name="arch" type="xml">
+               <field name="name" position="before">
+                   <!--<button name="%(docnaet_partner_reassign.action_docnaet_partner_reassign_wizard)d" string="Reassign docnaet partner" type="action" icon="terp-personal" context="{'default_to_partner_id': active_id}" groups="docnaet_partner_reassign.group_docnaet_reassign_manager" />-->
+                   <button name="docnaet_partner_reassign_this" string="Reassign docnaet partner" type="object" icon="terp-personal" groups="docnaet_partner_reassign.group_docnaet_reassign_manager" />
+               </field>
+          </field>
+      </record>
+    </data>
+</openerp>
+

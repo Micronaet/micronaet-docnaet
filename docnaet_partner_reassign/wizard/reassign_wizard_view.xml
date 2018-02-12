@@ -14,10 +14,10 @@
                    <group colspan="4" col="4">
                         <field name="mode" />
                         <newline/>
-                        <field name="from_partner_id" domain="[('docnaet_enable', '=', True)]" on_change="onchange_partner_element(from_partner_id, to_customer_id, mode)"/>
-                        <field name="to_customer_id" domain="[('sql_customer_code', '!=', False)]" on_change="onchange_partner_element(from_partner_id, to_customer_id, mode)"/>
+                        <field name="from_partner_id" domain="[('docnaet_enable', '=', True)]" on_change="onchange_partner_element(from_partner_id, to_partner_id, mode)"/>
+                        <field name="to_partner_id" domain="[('sql_customer_code', '!=', False)]" on_change="onchange_partner_element(from_partner_id, to_partner_id, mode)"/>
                         <separator string="Status" colspan="4"/>
-                        <field name="status" nolabel="1" colspan="4" widget="html"/>
+                        <field name="status" nolabel="1" colspan="4" widget="html" readonly="1"/>
                    </group>
                 </form>
             </field>
@@ -36,7 +36,6 @@
           sequence="40" 
           action="action_docnaet_partner_reassign_wizard" 
           groups="docnaet_partner_reassign.group_docnaet_reassign_manager"
-          />
-      
+          />      
     </data>
 </openerp>

@@ -18,12 +18,11 @@
 ###############################################################################
 
 {
-    'name': 'Reassign partner in docnaet',
+    'name': 'Reassign partner in docnaet payment',
     'version': '0.1',
     'category': 'Docnaet',
     'description': '''  
-        Docnaet reassign partner for change old docnaet name in account 
-        partner name      
+        Launch wizard from payment
         ''',
     'author': 'Micronaet S.r.l. - Nicola Riolini',
     'website': 'http://www.micronaet.it',
@@ -32,14 +31,14 @@
         'base',
         'docnaet',
         'sql_partner', # Account import procedure
-        #'sql_due_list_mailing',
+        'docnaet_partner_reassign',
+        'sql_due_list_mailing',
+        'partner_addresses', # XXX not necessary
         ],
     'init_xml': [],
     'demo': [],
     'data': [
-        'security/group_reassign.xml',
-        #'security/ir.model.access.csv',    
-        'wizard/reassign_wizard_view.xml',
+        'reassign_view.xml',
         ],
     'active': False,
     'installable': True,

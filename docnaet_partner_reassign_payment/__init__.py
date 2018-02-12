@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ###############################################################################
 #
 #    Copyright (C) 2001-2014 Micronaet SRL (<http://www.micronaet.it>).
@@ -16,32 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
+from . import reassign
 
-{
-    'name': 'Reassign partner in docnaet',
-    'version': '0.1',
-    'category': 'Docnaet',
-    'description': '''  
-        Docnaet reassign partner for change old docnaet name in account 
-        partner name      
-        ''',
-    'author': 'Micronaet S.r.l. - Nicola Riolini',
-    'website': 'http://www.micronaet.it',
-    'license': 'AGPL-3',
-    'depends': [
-        'base',
-        'docnaet',
-        'sql_partner', # Account import procedure
-        #'sql_due_list_mailing',
-        ],
-    'init_xml': [],
-    'demo': [],
-    'data': [
-        'security/group_reassign.xml',
-        #'security/ir.model.access.csv',    
-        'wizard/reassign_wizard_view.xml',
-        ],
-    'active': False,
-    'installable': True,
-    'auto_install': False,
-    }
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

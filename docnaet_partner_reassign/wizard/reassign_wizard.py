@@ -47,12 +47,107 @@ class DocnaetPartnerReassignWizard(orm.TransientModel):
     # -------------------------------------------------------------------------
     # On change:
     # -------------------------------------------------------------------------
-    def onchange_partner_element(self, cr, uid, from_id, customer_id, 
-            supplier_id, context=None):
+    def onchange_partner_element(self, cr, uid, ids, from_id, to_id, 
+            mode, context=None):
         ''' Update a status field for get informations
         '''
-        res = {}
-        return res    
+        # Pool used:
+        partner_pool = self.pool.get('res.partner')
+        document_pool = self.pool.get('docnaet.document')
+        
+        res = {
+            'domain': {
+                'to_partner_id': [('sql_customer_code', '!=', False)],
+                },
+            'value': {
+                'status': '',
+                },
+            }
+        
+        if mode == 'supplier':
+            res['domain']['to_partner_id'] = [
+                ('sql_supplier_code', '!=', False)]
+                
+        if not from_id or not to_id:
+            return res
+
+        from_proxy = partner_pool.browse(cr, uid, from_id, context=context)
+        to_proxy = partner_pool.browse(cr, uid, to_id, context=context)
+        doc_ids = document_pool.search(cr, uid, [
+            ('partner_id', '=', from_id),
+            ], context=context)
+
+        if not doc_ids:            
+            operation = 'Nessuna (no documenti)'
+        else:
+            operation = 'Migrazione dei documenti al nuovo partner\n'    
+            if from_proxy.sql_customer_code or from_proxy.sql_supplier_code or\
+                    from_proxy.sql_destination_code: 
+                operation += '- Cliente origine disattivato (da gest.)\n'
+            else:    
+                operation += '- Cliente origine cancellato (da docnaet)\n'
+                
+            
+        res['value']['status'] = u'''
+            <table width='100%%'>
+                <tr>
+                    <th>Campo</th><th>Da</th><th>A</th>
+                </tr>
+                <tr>
+                    <th>Nome</th><td>%s</td><td>%s</td>
+                </tr>
+                <tr>
+                    <th>Docnaet</th><td>%s</td><td>%s</td>
+                </tr>
+                <tr>
+                    <th>Nazione</th><td>%s</td><td>%s</td>
+                </tr>
+                <tr>
+                    <th>Categoria</th><td>%s</td><td>%s</td>
+                </tr>                
+                <tr>
+                    <th>Cod. Cliente</th><td>%s</td><td>%s</td>
+                </tr>                
+                <tr>
+                    <th>Cod. Fornitore</th><td>%s</td><td>%s</td>
+                </tr>                
+                <tr>
+                    <th>Cod. Destinazione</th><td>%s</td><td>%s</td>
+                </tr>                
+                <tr>
+                    <th># Documenti</th><td>%s</td><td>&nbsp;</td>
+                </tr>                
+                <tr>
+                    <th>Operazione</th><td colspan="2">%s</td>
+                </tr>                
+            </table>
+            ''' % (
+                from_proxy.name, 
+                to_proxy.name,
+                
+                'SI' if from_proxy.docnaet_enable else 'NO', 
+                'SI' if to_proxy.docnaet_enable else 'NO',
+                                
+                from_proxy.country_id.name or '/', 
+                to_proxy.country_id.name or '/',
+                
+                from_proxy.docnaet_category_id.name or '/',
+                to_proxy.docnaet_category_id.name or '/',
+                
+                from_proxy.sql_customer_code or '/',  
+                to_proxy.sql_customer_code or '/',
+
+                from_proxy.sql_supplier_code or '/',  
+                to_proxy.sql_supplier_code or '/',
+
+                from_proxy.sql_destination_code or '/',  
+                to_proxy.sql_destination_code or '/',
+                
+                len(doc_ids),
+                
+                operation,
+                )
+        return res 
         
     # -------------------------------------------------------------------------
     # Wizard button event:
@@ -63,12 +158,71 @@ class DocnaetPartnerReassignWizard(orm.TransientModel):
         if context is None: 
             context = {}        
         
-        wizard_browse = self.browse(cr, uid, ids, context=context)[0]
+        wiz_browse = self.browse(cr, uid, ids, context=context)[0]
+        from_partner = wiz_browse.from_partner_id
+        to_partner = wiz_browse.to_partner_id
         
-        return {
-            'type': 'ir.actions.act_window_close'
+        # ---------------------------------------------------------------------
+        # Update documents:
+        # ---------------------------------------------------------------------
+        document_pool = self.pool.get('docnaet.document')        
+        doc_ids = document_pool.search(cr, uid, [
+            ('partner_id', '=', from_partner.id),
+            ], context=context)
+            
+        if not doc_ids:
+            raise osv.except_osv(
+                _('Error'), 
+                _('No document to reassign!'),
+                )   
+        document_pool.write(cr, uid, doc_ids, {
+            'partner_id': to_partner.id,
+            }, context=context)         
+            
+        # ---------------------------------------------------------------------
+        # Manage partner:
+        # ---------------------------------------------------------------------
+        partner_pool = self.pool.get('res.partner')
+        data = {
+            'docnaet_enable': False,
             }
 
+        # To (only docnaet enable operation):
+        partner_pool.write(cr, uid, to_partner.id, {
+            'docnaet_enable': True,
+            }, context=context)
+
+        # From (mark as invisible if necessary):
+        if not(from_partner.sql_customer_code or \
+                from_partner.sql_supplier_code or \
+                from_partner.sql_destination_code): 
+            data = {
+                'docnaet_enable': False,
+                'active': False,
+                }
+            _logger.warning(
+                'Partner marked as not active: %s' % from_partner.id)    
+        else:
+            data = {
+                'docnaet_enable': False,
+                }
+            _logger.warning(
+                'Partner marked no docnaet: %s' % from_partner.id)        
+        partner_pool.write(cr, uid, from_partner.id, data, context=context)
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Modified document'),
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'docnaet.document',
+            'views': [(False, 'tree'), (False, 'form')],
+            'domain': [('id', 'in', doc_ids)],
+            'context': context,
+            'target': 'current', # 'new'
+            'nodestroy': False,
+            }
+            
     _columns = {
         'mode': fields.selection([
             ('customer', 'Account customer'),
@@ -77,7 +231,7 @@ class DocnaetPartnerReassignWizard(orm.TransientModel):
         'from_partner_id': fields.many2one(
             'res.partner', 'From docnaet partner', required=True,
             help='Move all document from this partner to another'),
-        'to_customer_id': fields.many2one(
+        'to_partner_id': fields.many2one(
             'res.partner', 'To docnaet partner', required=True,
             help='Destination partner for all document'),
         'status': fields.text('Status'),    
