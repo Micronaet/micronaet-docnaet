@@ -56,12 +56,18 @@ class DocnaetPartnerReassignEventWizard(orm.TransientModel):
             '''            
         cr.execute(query)
         partner_ids = [item.id for item in cr.fetchall()]    
-        
+        if not partner_ids:
+            raise osv.except_osv(
+                _('Error'), 
+                _('No partner present in payment and not in Docnaet'),
+                )
+                
         model_pool = self.pool.get('ir.model.data')
         view_id = model_pool.get_object_reference(
             cr, uid, 
             'docnaet_partner_reassign', 
-            'view_res_partner_no_docnaet_tree')[1]
+            'view_res_partner_no_docnaet_tree',
+            )[1]
         
         return {
             'type': 'ir.actions.act_window',
