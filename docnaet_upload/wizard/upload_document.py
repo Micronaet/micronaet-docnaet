@@ -193,11 +193,10 @@ class UploadDocumentWizard(orm.TransientModel):
             # -----------------------------------------------------------------  
             extension = f.split('.')[-1].lower()
             if len(extension) > 4:
-                raise osv.except_osv(
-                    _('Extension check'), 
-                    _('Extension of file must be <= 4 char!'),
-                    )
-
+                _logger.warning(
+                    _('Extension must be <= 4 char (jump file %s!') % f)
+                continue
+                
             data = {
                 'name': 'Document %s' % f,
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
