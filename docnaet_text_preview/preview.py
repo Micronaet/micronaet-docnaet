@@ -49,7 +49,7 @@ from cStringIO import StringIO
 try:
     from docx import opendocx, getdocumenttext
 except:
-    _logger('DocX converter not found!')
+    _logger.eerror('DocX converter not found!')
 
 # PDF:
 #http://stackoverflow.com/questions/5725278/\
