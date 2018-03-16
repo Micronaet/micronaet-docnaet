@@ -137,13 +137,19 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         if docnaet_category_id:
             domain.append(('docnaet_category_id', '=', docnaet_category_id))    
 
+        # Multi search management of splitted keywords:
         if keywords:
-            # TODO manage multi fields
-            #if not domain:
-            #    domain.append('&')
-                
-            for key in keywords.split(): 
-                domain.append(('name', 'ilike', key))      
+            set_ids = {}
+            for field in ('name', 'note', 'description'):
+                kw_domain = []
+                for key in keywords.split(): 
+                    kw_domain.append((field, 'ilike', key))
+                set_ids[field] = set(document_pool.search(
+                    cr, uid, kw_domain, context=context))
+            keyword_ids = list(
+                set_ids['name'] + set_ids['note'] + set_ids['description'])
+                )
+            domain.append(('id', 'in', keyword_ids))        
                 
         return {
             'view_type': 'form',
