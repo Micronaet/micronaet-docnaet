@@ -147,7 +147,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
                 set_ids[field] = set(document_pool.search(
                     cr, uid, kw_domain, context=context))
             keyword_ids = list(
-                set_ids['name'] + set_ids['note'] + set_ids['description'])
+                set_ids['name'] | set_ids['note'] | set_ids['description'])
             domain.append(('id', 'in', keyword_ids))        
                 
         return {
