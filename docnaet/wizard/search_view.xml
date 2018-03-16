@@ -14,8 +14,8 @@
                 </header>
                 <sheet>
                     <group colspan="4" col="6">
-                        <field name="keywords" />
-                        <field name="protocol_id" />
+                        <field name="keywords" colspan="6"/>
+                        <field name="protocol_id" colspan="4"/>
                         <field name="number" />
 
                         <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id)" />
