@@ -316,44 +316,6 @@ class DocnaetDocument(orm.Model):
         _logger.warning('Filter: %s' % res)
         return res
 
-    # -------------------------------------------------------------------------        
-    # Override ORM
-    # -------------------------------------------------------------------------
-    '''def search(self, cr, user, args, offset=0, limit=None, order=None, 
-            context=None, count=False):
-        """
-        Override search ORM method splitting name if there's * char in it, es.:
-        searching: "name1*name2" = search name ilike name1 and name ilike name2 
-    
-        @param cr: cursor to database
-        @param user: id of current user
-        @param args: list of conditions to be applied in search opertion
-        @param offset: default from first record, you can start from n records
-        @param limit: # of records to be comes in answer from search opertion
-        @param order: ordering on any field(s)
-        @param context: context arguments, like lang, time zone
-        @param count: 
-        @return: a list of integers based on search domain
-        """
-        split_element = "*" # TODO parametrize for set up in a view!
-        
-        new_args = []
-        for search_item in args:
-            if len(search_item) == 3 and search_item[0] == 'name':
-                multi_search = search_item[2].split(split_element)
-                if multi_search > 1:
-                    total_split = len(multi_search)
-                    for i in range(0, total_split):
-                        if i != total_split - 1:
-                            new_args.append("&")
-                        new_args.append(('name', 'ilike', multi_search[i]))                    
-                else:
-                    new_args.append(search_item)
-            else:
-                new_args.append(search_item)
-        return super(product_product_override_search, self).search(
-            cr, user, new_args, offset, limit, order, context, count)'''
-    
     # -------------------------------------------------------------------------
     # Workflow state event: 
     # -------------------------------------------------------------------------
