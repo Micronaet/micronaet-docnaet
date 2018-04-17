@@ -42,18 +42,23 @@ class ResCompany(orm.Model):
     ''' Docnaet company extra fields
     '''
     _inherit = 'res.company'
-    
+        
     def get_docnaet_folder_path(self, cr, uid, subfolder='root', context=None):
         ''' Function for get (or create) root docnaet folder 
             (also create extra subfolder)
             subfolder: string value for sub root folder, valid value:
                 > 'store'
                 > 'private'
+            context: used field_path for read correct path name in company    
         '''
+        if context is None:
+            context = {}
+        field_path = context.get('field_path', 'docnaet_path')
+        
         # Get docnaet path from company element
         company_ids = self.search(cr, uid, [], context=context)
         company_proxy = self.browse(cr, uid, company_ids, context=context)[0]
-        docnaet_path = company_proxy.docnaet_path
+        docnaet_path = company_proxy.__getattr__(field_path)# XXX variable
         
         # Folder structure:
         path = {}
@@ -73,7 +78,6 @@ class ResCompany(orm.Model):
         '''
         company_id = self.search(cr, uid, [], context=context)[0] # TODO
         
-        
         company_proxy = self.browse(cr, uid, company_id, context=context)
         number = company_proxy.next_fax
         self.write(cr, uid, company_id, {
@@ -85,9 +89,12 @@ class ResCompany(orm.Model):
         'docnaet_path': fields.char(
             'Docnaet path', size=64, required=True,
             help='Docnaet root path in file system for store docs'), 
+        'labnaet_path': fields.char(
+            'Labnaet path', size=64, required=True,
+            help='Labnaet root path in file system for store docs'), 
         'next_fax': fields.integer('Next fax number'),
         }
-
+        
 class DocnaetLanguage(orm.Model):
     ''' Object docnaet.language
     '''    
@@ -101,6 +108,16 @@ class DocnaetLanguage(orm.Model):
         'code': fields.char('Code', size=16),
         'iso_code': fields.char('ISO Code', size=16),
         'note': fields.text('Note'),
+        'docnaet_mode': fields.selection([
+            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('labnaet', 'Labnaet'),
+            ], 'Docnaet mode', required=True,
+            help='Usually document management, but for future improvement also'
+                ' for manage other docs'),
+        }
+
+    _defaults = {
+        'docnaet_mode': lambda *x: 'docnaet',
         }
 
 class ResPartnerDocnaet(orm.Model):
@@ -113,6 +130,16 @@ class ResPartnerDocnaet(orm.Model):
         'name': fields.char('Docnaet type', size=64, required=True,
             translate=True),
         'note': fields.text('Note'),
+        'docnaet_mode': fields.selection([
+            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('labnaet', 'Labnaet'),
+            ], 'Docnaet mode', required=True,
+            help='Usually document management, but for future improvement also'
+                ' for manage other docs'),
+        }
+        
+    _defaults = {
+        'docnaet_mode': lambda *x: 'docnaet',
         }
 
 class ResPartner(orm.Model):
@@ -168,6 +195,16 @@ class DocnaetType(orm.Model):
         'name': fields.char('Type', size=64, required=True, translate=True),
         'invisible': fields.boolean('Not used'),
         'note': fields.text('Note'),
+        'docnaet_mode': fields.selection([
+            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('labnaet', 'Labnaet'),
+            ], 'Docnaet mode', required=True,
+            help='Usually document management, but for future improvement also'
+                ' for manage other docs'),
+        }
+        
+    _defaults = {
+        'docnaet_mode': lambda *x: 'docnaet',
         }
 
 class DocnaetProtocol(orm.Model):
@@ -212,9 +249,16 @@ class DocnaetProtocol(orm.Model):
         'note': fields.text('Note', translate=True),
         # TODO default_application_id
         'invisible': fields.boolean('Not used'),
+        'docnaet_mode': fields.selection([
+            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('labnaet', 'Labnaet'),
+            ], 'Docnaet mode', required=True,
+            help='Usually document management, but for future improvement also'
+                ' for manage other docs'),
         }
-
+        
     _defaults = {
+        'docnaet_mode': lambda *x: 'docnaet',
         'next': lambda *x: 1,
         }    
 
@@ -645,6 +689,12 @@ class DocnaetDocument(orm.Model):
         #'date_confirmed': fields.text('Confirmed event', required=True),
         #'date_suspended': fields.date('Suspended event', required=True),
         #'date_deadline': fields.date('Deadline event', required=True),
+        'docnaet_mode': fields.selection([
+            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('labnaet', 'Labnaet'),
+            ], 'Docnaet mode', required=True,
+            help='Usually document management, but for future improvement also'
+                ' for manage other docs'),
 
         'priority': fields.selection([
             ('lowest', 'Lowest'),
@@ -662,6 +712,7 @@ class DocnaetDocument(orm.Model):
         }
         
     _defaults = {
+        'docnaet_mode': lambda *x: 'docnaet',
         'date': lambda *x: datetime.now().strftime(
             DEFAULT_SERVER_DATE_FORMAT),
         'priority': lambda *x: 'normal',
@@ -669,7 +720,7 @@ class DocnaetDocument(orm.Model):
         }    
 
 class DocnaetDocument(orm.Model):
-    ''' Add extra relation fileds
+    ''' Add extra relation fields
     '''          
     _inherit = 'docnaet.document'
 
