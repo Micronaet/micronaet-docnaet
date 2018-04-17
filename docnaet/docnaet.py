@@ -614,6 +614,8 @@ class DocnaetDocument(orm.Model):
             
     _columns = {        
         'name': fields.char('Subject', size=180, required=True),
+        'labnaet_id': fields.integer('Labnaet ID', 
+            help='Secondary ID for document, keep data in different folder.'),
         'filename': fields.char('File name', size=200),
         'real_file': fields.function(
             _get_real_filename, method=True, size=20,
