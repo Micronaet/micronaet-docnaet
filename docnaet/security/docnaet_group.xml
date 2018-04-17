@@ -24,6 +24,11 @@
         <field name="category_id" ref="module_docnaet" />
         <field name="comment">Agent group for docnaet managerment</field>
     </record>
+    <record id="group_docnaet_mode" model="res.groups">
+        <field name="name">Docnaet mode management</field>
+        <field name="category_id" ref="module_docnaet" />
+        <field name="comment">Manage docnaet mode for Docnaet and Labnaet</field>
+    </record>
 
     <record id="group_docnaet_remote_user" model="res.groups">
         <field name="name">Docnaet remote user</field>
