@@ -58,7 +58,17 @@
         </field>
     </record>
 
-    <record id="action_document_advanced_search" model="ir.actions.act_window">
+    <!--DOCNAET-->
+    <record id="action_document_advanced_search_docnaet" model="ir.actions.act_window">
+            <field name="name">Advanced search</field>
+            <field name="res_model">docnaet.document.advanced.search.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="document_advanced_search_form"/>
+            <field name="target">new</field>
+    </record>
+    <!--LABNAET-->
+    <record id="action_document_advanced_search_labnaet" model="ir.actions.act_window">
             <field name="name">Advanced search</field>
             <field name="res_model">docnaet.document.advanced.search.wizard</field>
             <field name="view_type">form</field>
@@ -67,7 +77,9 @@
             <field name="target">new</field>
     </record>
 
-   <menuitem parent="docnaet_document" id="docnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search" />            
+   <menuitem parent="docnaet_document" id="docnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search_docnaet" />            
+
+   <menuitem parent="docnaet_document" id="labnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search_labnaet" />            
     
     </data>
 </openerp>
