@@ -717,12 +717,49 @@
         <field name="context">{'remote_document':True}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet'))]</field>
     </record>
+    
     <!--TODO Labnaet actions:-->
+    <record model="ir.actions.act_window" id="action_labnaet_deadline_document_tree">
+        <field name="name">My documents deadline</field>
+        <field name="res_model">docnaet.document</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="docnaet_document_calendar_view"/>
+        <field name="context">{'search_default_state_timed': True,'default_docnaet_mode': 'labnaet'}</field>
+        <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('user_id','=',uid)]</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_labnaet_my_document_tree">
+        <field name="name">My Documents</field>
+        <field name="res_model">docnaet.document</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
+        <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('user_id','=',uid)]</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_labnaet_document_tree">
+        <field name="name">Documents</field>
+        <field name="res_model">docnaet.document</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
+        <field name="domain">['&amp;',('docnaet_mode','in',('all', 'labnaet')),'|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_labnaet_document_draft_tree">
+        <field name="name">Draft documents</field>
+        <field name="res_model">docnaet.document</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
+        <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('state','=','draft')]</field>
+    </record>
     
     
     <menuitem id="docnaet_root" name="Docnaet" sequence="20" groups="group_docnaet_user,group_docnaet_admin,group_docnaet_agent"/>
-
-        <menuitem parent="docnaet_root" id="docnaet_document" name="Document" sequence="20" />
+        <!--DOCNAET: -->
+        <menuitem parent="docnaet_root" id="docnaet_document" name="Docnaet" sequence="20" />
             <menuitem parent="docnaet_document" id="docnaet_document_document" name="Documenti" sequence="10" action="action_docnaet_document_tree" />
                 <!--<menuitem parent="docnaet_document_document" id="docnaet_document_document_draft" name="Documenti bozza" sequence="10" action="action_docnaet_document_draft_tree" />-->
             
@@ -730,7 +767,15 @@
             <menuitem parent="docnaet_document" id="docnaet_document_my_document" name="My document" sequence="20" action="action_docnaet_my_document_tree"/>
                 <menuitem parent="docnaet_document_my_document" id="docnaet_document_deadline" name="Deadline" sequence="30" action="action_docnaet_deadline_document_tree" />            
 
-        <menuitem parent="docnaet_root" id="docnaet_administration" name="Administration" sequence="90" groups="group_docnaet_admin"/>
+        <!--LABNAET: -->
+        <menuitem parent="docnaet_root" id="labnaet_document" name="Labnaet" sequence="30" groups="group_labnaet_user,group_labnaet_admin"/>
+            <menuitem parent="labnaet_document" id="labnaet_document_document" name="Documenti" sequence="10" action="action_labnaet_document_tree" />
+            
+            <menuitem parent="labnaet_document" id="labnaet_document_my_document" name="My document" sequence="20" action="action_labnaet_my_document_tree"/>
+                <menuitem parent="labnaet_document_my_document" id="labnaet_document_deadline" name="Deadline" sequence="30" action="action_labnaet_deadline_document_tree" />            
+
+        <!--CONFIGURATION: -->
+        <menuitem parent="docnaet_root" id="docnaet_administration" name="Administration" sequence="90" groups="group_docnaet_admin,group_labnaet_admin"/>
             <menuitem parent="docnaet_administration" id="docnaet_administration_company" string="Company" sequence="1" action="action_docnaet_company_form" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_user" string="User" sequence="5" action="action_docnaet_users_form" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_partner" string="Partner" sequence="1" action="action_docnaet_partner_form" />

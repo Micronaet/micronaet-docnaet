@@ -534,7 +534,6 @@ class DocnaetDocument(orm.Model):
             document: browse obj
             mode: fullname or filename only
         '''
-        import pdb; pdb.set_trace()
         if context is None:
             context = {}
         context['field_path'] = '%s_path' % document.docnaet_mode
