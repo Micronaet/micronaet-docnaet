@@ -534,9 +534,15 @@ class DocnaetDocument(orm.Model):
             document: browse obj
             mode: fullname or filename only
         '''
+        import pdb; pdb.set_trace()
         if context is None:
             context = {}
         context['field_path'] = '%s_path' % document.docnaet_mode
+        if document.docnaet_mode == 'labnaet':
+            document_id = document.labnaet_id
+        else:#elif document.docnaet_mode == 'labnaet': # XXX labnaet mode
+            document_id = document.id
+            
         
         company_pool = self.pool.get('res.company')
         if document.filename:
@@ -556,7 +562,7 @@ class DocnaetDocument(orm.Model):
         else: # Duplicate also file:
             store_folder = company_pool.get_docnaet_folder_path(
                 cr, uid, subfolder='store', context=context)
-            filename = '%s.%s' % (document.id, document.docnaet_extension)
+            filename = '%s.%s' % (document_id, document.docnaet_extension)
             if mode == 'filename':
                 return filename
             else:# fullname mode:
