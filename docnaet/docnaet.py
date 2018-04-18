@@ -534,6 +534,10 @@ class DocnaetDocument(orm.Model):
             document: browse obj
             mode: fullname or filename only
         '''
+        if context is None:
+            context = {}
+        context['field_path'] = '%s_path' % document.docnaet_mode
+        
         company_pool = self.pool.get('res.company')
         if document.filename:
             store_folder = company_pool.get_docnaet_folder_path(
@@ -588,7 +592,8 @@ class DocnaetDocument(orm.Model):
             res[item.id] = item.filename or item.original_id.id or ''
         return res
 
-    def _get_date_month_4_group(self, cr, uid, ids, fields, args, context=None):
+    def _get_date_month_4_group(self, cr, uid, ids, fields, args, 
+            context=None):
         ''' Fields function for calculate 
         '''
         res = {}
@@ -599,7 +604,8 @@ class DocnaetDocument(orm.Model):
                 res[doc.id] = _('Nessuna')
         return res
 
-    def _get_deadline_month_4_group(self, cr, uid, ids, fields, args, context=None):
+    def _get_deadline_month_4_group(self, cr, uid, ids, fields, args, 
+            context=None):
         ''' Fields function for calculate 
         '''
         res = {}
@@ -673,7 +679,8 @@ class DocnaetDocument(orm.Model):
             relation='res.partner.docnaet', string='Partner category',
             store={
                 'res.partner': (
-                    _refresh_partner_category_change, ['docnaet_category_id'], 10),
+                    _refresh_partner_category_change, [
+                        'docnaet_category_id'], 10),
                 'docnaet.document': (
                     _refresh_category_auto_change, ['partner_id'], 10),
                 }),
