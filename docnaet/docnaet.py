@@ -111,6 +111,7 @@ class DocnaetLanguage(orm.Model):
         'docnaet_mode': fields.selection([
             ('docnaet', 'Docnaet'), # Only for docnaet
             ('labnaet', 'Labnaet'),
+            ('all', 'All'),
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'
                 ' for manage other docs'),
@@ -133,6 +134,7 @@ class ResPartnerDocnaet(orm.Model):
         'docnaet_mode': fields.selection([
             ('docnaet', 'Docnaet'), # Only for docnaet
             ('labnaet', 'Labnaet'),
+            ('all', 'All'),
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'
                 ' for manage other docs'),
@@ -198,6 +200,7 @@ class DocnaetType(orm.Model):
         'docnaet_mode': fields.selection([
             ('docnaet', 'Docnaet'), # Only for docnaet
             ('labnaet', 'Labnaet'),
+            ('all', 'All'),
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'
                 ' for manage other docs'),
@@ -252,6 +255,7 @@ class DocnaetProtocol(orm.Model):
         'docnaet_mode': fields.selection([
             ('docnaet', 'Docnaet'), # Only for docnaet
             ('labnaet', 'Labnaet'),
+            ('all', 'All'), # TODO remove?!?
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'
                 ' for manage other docs'),
@@ -694,6 +698,7 @@ class DocnaetDocument(orm.Model):
         'docnaet_mode': fields.selection([
             ('docnaet', 'Docnaet'), # Only for docnaet
             ('labnaet', 'Labnaet'),
+            #('all', 'All'),
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'
                 ' for manage other docs'),

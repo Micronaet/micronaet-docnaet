@@ -447,7 +447,7 @@
     </record>
     
     <!--docnaet.document--> 
-    <record model="ir.ui.view" id="view_docnaet_document_search">
+    <record model="ir.ui.view" id="view_docnaet_document_docnaet_search">
         <field name="name">docnaet.document.search</field>
         <field name="model">docnaet.document</field>
         <field name="arch" type="xml">
@@ -473,9 +473,9 @@
                 <field name="country_id" />
                 <!--<field name="docnaet_category_id" /> Cassandra want to remove-->
                 <!--<field name="user_id" filter_domain="[('user_id','=',self)]"/>-->
-                <field name="protocol_id" filter_domain="[('protocol_id','=',self)]" required="1"/>
-                <field name="type_id" filter_domain="[('type_id','=',self)]"/>
-                <field name="language_id" filter_domain="[('language_id','=',self)]"/>
+                <field name="protocol_id" filter_domain="[('protocol_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
+                <field name="type_id" filter_domain="[('type_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
+                <field name="language_id" filter_domain="[('language_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
                 
                 <filter name="state_draft" string="Draft state" domain="[('state','=','draft')]"/>
                 <filter name="state_confirmed" string="Confirmed state" domain="[('state','=','confirmed')]"/>
@@ -517,6 +517,7 @@
                <field name="number" />
                <field name="date" />
                <field name="date_month" invisible="1"/>
+               <field name="docnaet_mode" invisible="1" />
                <field name="name" />
                <field name="description" />
                <field name="partner_id" />
@@ -587,7 +588,7 @@
                        
                        <field name="name" colspan="5"/>
 
-                       <field name="protocol_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                       <field name="protocol_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
                        <field name="number" />
                        <button name="assign_protocol_number" string="Reassign" type="object" attrs="{'invisible': ['|',('protocol_id','=',False),('number','=',False)]}" colspan="1" icon="gtk-refresh"/>
 
@@ -605,8 +606,8 @@
                        <!--<field name="fax_number" />-->
                        <newline/>
 
-                       <field name="type_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
-                       <field name="language_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                       <field name="type_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
+                       <field name="language_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
                        <newline/>
 
                        <field name="program_id" readonly="1" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
@@ -665,9 +666,12 @@
                 <field name="name"/>
                 <field name="partner_id" /><!--domain="[('is_address','=',False)]"-->
                 <field name="priority"/>
+                <field name="docnaet_mode" invisible="1"/>
             </calendar>
         </field>
     </record>
+    
+    <!--Docnaet Actions:-->
     <record model="ir.actions.act_window" id="action_docnaet_deadline_document_tree">
         <field name="name">My documents deadline</field>
         <field name="res_model">docnaet.document</field>
@@ -675,7 +679,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_calendar_view"/>
         <field name="context">{'search_default_state_timed': True}</field>
-        <field name="domain">[('user_id','=',uid)]</field>
+        <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid)]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_my_document_tree">
         <field name="name">My Documents</field>
@@ -684,7 +688,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="context">{}</field>
-        <field name="domain">[('user_id','=',uid)]</field>
+        <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid)]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_document_tree">
         <field name="name">Documents</field>
@@ -693,7 +697,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="context">{}</field>
-        <field name="domain">['|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
+        <field name="domain">['&amp;',('docnaet_mode','in',('all', 'docnaet')), '|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_document_draft_tree">
         <field name="name">Draft documents</field>
@@ -702,7 +706,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="context">{}</field>
-        <field name="domain">[('state','=','draft')]</field>
+        <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('state','=','draft')]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_remote_document_tree">
         <field name="name">Remote documents</field>
@@ -711,8 +715,10 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="context">{'remote_document':True}</field>
-        <field name="domain">[]</field>
+        <field name="domain">[('docnaet_mode','in',('all', 'docnaet'))]</field>
     </record>
+    <!--TODO Labnaet actions:-->
+    
     
     <menuitem id="docnaet_root" name="Docnaet" sequence="20" groups="group_docnaet_user,group_docnaet_admin,group_docnaet_agent"/>
 
