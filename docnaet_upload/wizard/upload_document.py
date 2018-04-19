@@ -79,7 +79,7 @@ class UploadDocumentWizard(orm.TransientModel):
         _logger.warning('Filter: %s' % res)
         return res
 
-    def private_listdir(self, cr, uid, ids, context=None):
+    def private_listdir(self, cr, uid, context=None):
         ''' Return private listdir list
         '''
         res = []
@@ -161,6 +161,9 @@ class UploadDocumentWizard(orm.TransientModel):
     def button_upload(self, cr, uid, ids, context=None):
         ''' Button event for upload
         '''
+        if context is None:
+            context = {}
+
         # TODO complete the load from folder:
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
         file_mode = wiz_proxy.file_mode 
@@ -178,11 +181,25 @@ class UploadDocumentWizard(orm.TransientModel):
         program_pool = self.pool.get('docnaet.protocol.template.program')
 
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
+        
+        # Difference between Docnaet and Labnaet:
+        docnaet_mode = doc_proxy.docnaet_mode
+        if not docnaet_mode:
+            raise osv.except_osv(
+                _('Docnaet mode:'), 
+                _('Cannot find document mode (labnaet or docnaet'),
+                )
+        context['docnaet_mode'] = docnaet_mode
+
+        # ---------------------------------------------------------------------        
+        # Folder depend on doc/lab mode
+        # ---------------------------------------------------------------------        
+        # Store (output):
         store_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='store', context=context)
         
-        # Read document folder and create docnaet.document:
-        private_folder = self.private_listdir(cr, uid, ids, context=context)
+        # Private (input):
+        private_folder = self.private_listdir(cr, uid, context=context)
 
         for fullpath, f in private_folder:
             if file_mode == 'partial' and f not in file_selected:
@@ -198,6 +215,7 @@ class UploadDocumentWizard(orm.TransientModel):
                 continue
                 
             data = {
+                'docnaet_mode': docnaet_mode,
                 'name': 'Document %s' % f,
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
                 'user_id': wiz_proxy.default_user_id.id or uid, 
@@ -233,29 +251,36 @@ class UploadDocumentWizard(orm.TransientModel):
             except:
                 _logger.error('Cannot set property of file')
 
+        context['default_docnaet_mode'] = docnaet_mode
         return {
             'view_type': 'form',
             'view_mode': 'tree,form,calendar',
             'res_model': 'docnaet.document',
             'domain': [
+                ('docnaet_mode', '=', docnaet_mode),
                 ('user_id', '=', uid), 
                 ('uploaded', '=', True), 
                 ('state', '=', 'draft'),
                 ],
             'type': 'ir.actions.act_window',
+            'context': context,
             }
 
     def default_read_upload_folder(
-            self, cr, uid, ids, mode='html', context=None):
+            self, cr, uid, mode='html', context=None):
         ''' Read folder and return html text
         '''
+        if context is None:
+            context = {}
+        docnaet_mode = context.get('docnaet_mode', 'docnaet')    
+        
         if mode == 'html':
             res = ''
         else:
             res = []
 
         # Get private folder:        
-        private_folder = self.private_listdir(cr, uid, ids, context=context)
+        private_folder = self.private_listdir(cr, uid, context=context)
         for fullpath, f in private_folder:
             ts = datetime.fromtimestamp(
                 os.path.getmtime(fullpath)).strftime('%Y/%m/%d')
@@ -355,7 +380,8 @@ class UploadDocumentWizard(orm.TransientModel):
         'docnaet_mode': lambda *x: 'docnaet',
         'mode': lambda *x: 'upload',
         'default_user_id': lambda s, cr, uid, ctx: uid,
-        'folder_status': default_read_upload_folder, 
+        'folder_status': lambda s, cr, uid, ctx: s.default_read_upload_folder(
+            cr, uid, context=ctx), 
         'file_mode': lambda *x: 'all',
         }
 
@@ -387,7 +413,7 @@ class UploadDocumentWizard(orm.TransientModel):
             context = {}
             
         res = self.default_read_upload_folder(
-            cr, uid, False, mode='o2m', context=context)
+            cr, uid, mode='o2m', context=context)
         return res
 
     _columns = {

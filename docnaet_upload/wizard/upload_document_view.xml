@@ -16,7 +16,7 @@
                     </header>
                     <sheet>
                         <group colspan="4" col="2">
-                            <field name="docnaet_mode" groups="docnaet.group_docnaet_mode" />
+                            <field name="docnaet_mode" invisible="1"/> <!--groups="docnaet.group_docnaet_mode"-->
                             <newline/>
                             
                             <separator string="Partner Filter:" colspan="2"/>
@@ -66,7 +66,7 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_upload_form"/>
             <field name="target">new</field>
-            <field name="context">{'default_docnaet_mode': 'docnaet'}</field>
+            <field name="context">{'default_docnaet_mode': 'docnaet', 'docnaet_mode': 'docnaet'}</field>
         </record>
         <record id="action_labnaet_document_upload" model="ir.actions.act_window">
             <field name="name">Labnaet document upload</field>
@@ -75,7 +75,7 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_upload_form"/>
             <field name="target">new</field>
-            <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
+            <field name="context">{'default_docnaet_mode': 'labnaet', 'docnaet_mode': 'labnaet'}</field>
         </record>
         <menuitem parent="docnaet.docnaet_document" id="docnaet_document_upload_menu" name="Upload document" sequence="40" action="action_docnaet_document_upload" />            
         <menuitem parent="docnaet.labnaet_document" id="labnaet_document_upload_menu" name="Upload document" sequence="40" action="action_labnaet_document_upload" />            

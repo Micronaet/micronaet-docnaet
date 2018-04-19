@@ -53,7 +53,7 @@ class ResCompany(orm.Model):
         '''
         if context is None:
             context = {}
-        field_path = context.get('field_path', 'docnaet_path')
+        field_path = '%s_path' % context.get('docnaet_mode', 'docnaet')
         
         # Get docnaet path from company element
         company_ids = self.search(cr, uid, [], context=context)
@@ -525,7 +525,7 @@ class DocnaetDocument(orm.Model):
         '''
         if context is None:
             context = {}
-        context['field_path'] = '%s_path' % document.docnaet_mode
+        context['docnaet_mode'] = document.docnaet_mode
         if document.docnaet_mode == 'labnaet':
             document_id = document.labnaet_id
         else:#elif document.docnaet_mode == 'labnaet': # XXX labnaet mode
