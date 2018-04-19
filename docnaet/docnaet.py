@@ -720,14 +720,16 @@ class DocnaetDocument(orm.Model):
             ('low', 'Low'),
             ('normal', 'Normal'),
             ('high', 'high'),
-            ('highest', 'Highest'), ], 'Priority'),
+            ('highest', 'Highest'), 
+            ], 'Priority'),
         
         'state': fields.selection([
             ('draft', 'Draft'),
             ('confirmed', 'Confirmed'),
             #('suspended', 'Suspended'),
             ('timed', 'Timed'),
-            ('cancel', 'Cancel'), ], 'State', readonly=True),
+            ('cancel', 'Cancel'), 
+            ], 'State', readonly=True),
         }
         
     _defaults = {

@@ -14,6 +14,8 @@
                 </header>
                 <sheet>
                     <group colspan="4" col="6">
+                        <field name="docnaet_mode" groups="docnaet.group_docnaet_mode" />
+                        <newline/>
                         <field name="keywords" colspan="6"/>
                         <field name="protocol_id" colspan="4"/>
                         <field name="number" />
@@ -40,8 +42,8 @@
                                        <field name="description" />
                                        <field name="note" />                               
 
-                                       <field name="type_id" options="{'limit': 10, 'create': false, 'create_edit': false}" />
-                                       <field name="language_id" options="{'limit': 10, 'create': false, 'create_edit': false}" />
+                                       <field name="type_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
+                                       <field name="language_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]" />
 
                                        <field name="program_id" options="{'limit': 10, 'create': false, 'create_edit': false}" />
                                        <field name="docnaet_extension" />
@@ -65,6 +67,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_advanced_search_form"/>
+            <field name="context">{'default_docnaet_mode': 'docnaet'}</field>
             <field name="target">new</field>
     </record>
     <!--LABNAET-->
@@ -74,12 +77,12 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_advanced_search_form"/>
+            <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
             <field name="target">new</field>
     </record>
 
-   <menuitem parent="docnaet_document" id="docnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search_docnaet" />            
-
-   <menuitem parent="docnaet_document" id="labnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search_labnaet" />            
+   <menuitem parent="docnaet_document" id="docnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search_docnaet" /> 
+   <menuitem parent="labnaet_document" id="labnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search_labnaet" />            
     
     </data>
 </openerp>

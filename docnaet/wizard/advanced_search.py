@@ -191,6 +191,16 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
             ('high', 'high'),
             ('highest', 'Highest'), 
             ], 'Priority'),
+        'docnaet_mode': fields.selection([
+            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('labnaet', 'Labnaet'),
+            #('all', 'All'),
+            ], 'Docnaet mode', required=True,
+            help='Usually document management, but for future improvement also'
+                ' for manage other docs'),
         }
-    
+
+    _defaults = {
+        'docnaet_mode': lambda *x: 'docnaet',
+        }        
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
