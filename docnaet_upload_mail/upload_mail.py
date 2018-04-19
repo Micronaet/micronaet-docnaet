@@ -56,6 +56,9 @@ class DocnaetProtocolEmail(orm.Model):
         '''
         ''' Read all mail activated
         '''        
+        if context is None:
+            context = {}
+            
         # Pool used:
         doc_pool = self.pool.get('docnaet.document')
         protocol_pool = self.pool.get('docnaet.protocol')
@@ -64,10 +67,18 @@ class DocnaetProtocolEmail(orm.Model):
         user_pool = self.pool.get('res.users')
         partner_pool = self.pool.get('res.partner')
 
+        protocol_proxy = protocol_pool.browse(cr, uid, ids, context=context)[0]
+        
+        # Keep docnaet mode as in protocol setup:
+        docnaet_mode = protocol_proxy.docnaet_mode
+        context['docnaet_mode'] = docnaet_mode                
+        
+        # Get store folder depend on docnaet mode:
         store_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='store', context=context)
-        _logger.info('Start read # %s IMAP server [stored in: %s]' % (
+        _logger.info('Start read # %s IMAP server [stored in %s: %s]' % (
             len(ids), 
+            docnaet_mode,
             store_folder,
             ))
         
@@ -164,7 +175,18 @@ class DocnaetProtocolEmail(orm.Model):
                                             email_address,
                                             ))
 
+                # -------------------------------------------------------------
+                # Labnaet setup:
+                # -------------------------------------------------------------
+                if docnaet_mode == 'labnaet':
+                    labnaet_id = document_pool.get_counter_labnaet_id(
+                        cr, uid, context=context)
+                else:
+                    labnaet_id = False
+                    
                 data = {
+                    'docnaet_mode': docnaet_mode,
+                    'labnaet_id': labnaet_id,
                     'protocol_id': protocol_id,
                     'user_id': user_id,
                     'name': record['Subject'] or '...',
@@ -181,7 +203,13 @@ class DocnaetProtocolEmail(orm.Model):
                     data['number'] = protocol_pool.assign_protocol_number(
                         cr, uid, data['protocol_id'], context=context)                
                     
+                # -------------------------------------------------------------
+                # Create ID for Docnaet / Labnaet:
+                # -------------------------------------------------------------
                 doc_id = doc_pool.create(cr, uid, data, context=context)
+                if docnaet_mode == 'labnaet':
+                    doc_id = labnaet_id
+
                 _logger.info('Read mail: To: %s - From: %s - Subject: %s' % (
                     record['To'],
                     record['From'],
