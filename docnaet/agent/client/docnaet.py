@@ -42,7 +42,7 @@ else: # ends with [D] or nothing >> Docnaet
     #config_file = 'docnaet.cfg'
     pass # XXX Nothing for now
 
-# Read config file:    
+# Read config file:
 cfg_file = os.path.join(current_path, config_file)
 config = ConfigParser()
 config.read([cfg_file])
