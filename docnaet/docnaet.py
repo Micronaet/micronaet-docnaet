@@ -131,20 +131,8 @@ class ResPartnerDocnaet(orm.Model):
         'name': fields.char('Docnaet type', size=64, required=True,
             translate=True),
         'note': fields.text('Note'),
-        # Not necessary
-        #'docnaet_mode': fields.selection([
-        #    ('docnaet', 'Docnaet'), # Only for docnaet
-        #    ('labnaet', 'Labnaet'),
-        #    ('all', 'All'),
-        #    ], 'Docnaet mode', required=True,
-        #    help='Usually document management, but for future improvement also'
-        #        ' for manage other docs'),
         }
         
-    _defaults = {
-        #'docnaet_mode': lambda *x: 'docnaet',
-        }
-
 class ResPartner(orm.Model):
     """ Model name: ResPartner
     """    
