@@ -342,9 +342,17 @@ class UploadDocumentWizard(orm.TransientModel):
             ('all', 'All'),
             ('partial', 'Partial'),
             ], 'File mode'),
+        'docnaet_mode': fields.selection([
+            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('labnaet', 'Labnaet'),
+            #('all', 'All'),
+            ], 'Docnaet mode', required=True,
+            help='Usually document management, but for future improvement also'
+                ' for manage other docs'),
         }
 
     _defaults = {
+        'docnaet_mode': lambda *x: 'docnaet',
         'mode': lambda *x: 'upload',
         'default_user_id': lambda s, cr, uid, ctx: uid,
         'folder_status': default_read_upload_folder, 

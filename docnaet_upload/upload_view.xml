@@ -1,19 +1,32 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        <record model="ir.actions.act_window" id="action_docnaet_my_document_to protocol_tree">
+        <record model="ir.actions.act_window" id="action_docnaet_my_document_to protocol_docnaet_tree">
             <field name="name">Uploaded to confirm</field>
             <field name="res_model">docnaet.document</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar</field>
             <field name="view_id" ref="docnaet.docnaet_document_tree_view"/>
-            <field name="context">{}</field>
-            <field name="domain">[('user_id','=',uid),('state', '=', 'draft'),('uploaded','=',True)]</field>
+            <field name="context">{'default_docnaet_mode': 'docnaet'}</field>
+            <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid),('state', '=', 'draft'),('uploaded','=',True)]</field>
+        </record>        
+        <record model="ir.actions.act_window" id="action_docnaet_my_document_to protocol_labnaet_tree">
+            <field name="name">Uploaded to confirm</field>
+            <field name="res_model">docnaet.document</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_id" ref="docnaet.docnaet_document_tree_view"/>
+            <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
+            <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('user_id','=',uid),('state', '=', 'draft'),('uploaded','=',True)]</field>
         </record>        
         <menuitem 
             parent="docnaet.docnaet_document_my_document" 
-            id="menu_docnaet_my_document_to protocol" 
-            action="action_docnaet_my_document_to protocol_tree"/>   
+            id="menu_docnaet_my_document_to_protocol" 
+            action="action_docnaet_my_document_to protocol_docnaet_tree"/>   
+        <menuitem 
+            parent="docnaet.labnaet_document_my_document" 
+            id="menu_labnaet_my_document_to_protocol" 
+            action="action_docnaet_my_document_to protocol_labnaet_tree"/>   
     </data>
 </openerp>    
     
