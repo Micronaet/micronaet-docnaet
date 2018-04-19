@@ -213,9 +213,16 @@ class UploadDocumentWizard(orm.TransientModel):
                 _logger.warning(
                     _('Extension must be <= 4 char (jump file %s!') % f)
                 continue
-                
+
+            if docnaet_mode == 'labnaet':
+                labnaet_id = document_pool.get_counter_labnaet_id(
+                    cr, uid, context=context)
+            else:
+                labnaet_id = False
+        
             data = {
                 'docnaet_mode': docnaet_mode,
+                'labnaet_id': labnaet_id,
                 'name': 'Document %s' % f,
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
                 'user_id': wiz_proxy.default_user_id.id or uid, 
@@ -234,6 +241,13 @@ class UploadDocumentWizard(orm.TransientModel):
                 data['number'] = protocol_pool.assign_protocol_number(
                     cr, uid, data['protocol_id'], context=context)                
             item_id = document_pool.create(cr, uid, data, context=context)
+
+            # -----------------------------------------------------------------
+            # Labnaet alternative:
+            # -----------------------------------------------------------------
+            # ID mode labnaet / docnaet (force labnaet_id):
+            if docnaet_mode == 'labnaet':
+                item_id = labnaet_id
 
             # -----------------------------------------------------------------
             # Import file in store:

@@ -108,18 +108,7 @@ class DocnaetLanguage(orm.Model):
         'code': fields.char('Code', size=16),
         'iso_code': fields.char('ISO Code', size=16),
         'note': fields.text('Note'),
-        #'docnaet_mode': fields.selection([
-        #    ('docnaet', 'Docnaet'), # Only for docnaet
-        #    ('labnaet', 'Labnaet'),
-        #    ('all', 'All'),
-        #    ], 'Docnaet mode', required=True,
-        #    help='Usually document management, but for future improvement also'
-        #        ' for manage other docs'),
         }
-
-    #_defaults = {
-    #    'docnaet_mode': lambda *x: 'docnaet',
-    #    }
 
 class ResPartnerDocnaet(orm.Model):
     ''' Object res.partner.docnaet
@@ -244,7 +233,7 @@ class DocnaetProtocol(orm.Model):
         'docnaet_mode': fields.selection([
             ('docnaet', 'Docnaet'), # Only for docnaet
             ('labnaet', 'Labnaet'),
-            ('all', 'All'), # TODO remove?!?
+            #('all', 'All'), # TODO remove?!?
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'
                 ' for manage other docs'),
@@ -526,11 +515,12 @@ class DocnaetDocument(orm.Model):
         if context is None:
             context = {}
         context['docnaet_mode'] = document.docnaet_mode
+        
+        # 2 different ID:
         if document.docnaet_mode == 'labnaet':
             document_id = document.labnaet_id
-        else:#elif document.docnaet_mode == 'labnaet': # XXX labnaet mode
+        else: #'docnaet':
             document_id = document.id
-            
         
         company_pool = self.pool.get('res.company')
         if document.filename:
@@ -615,7 +605,13 @@ class DocnaetDocument(orm.Model):
         '''
         _logger.warning('Change date_mont depend on date and deadline')
         return ids
-            
+    
+    def get_counter_labnaet_id(self, cr, uid, context=None):
+        ''' Return ID for labnaet_id
+        '''
+        return int(self.pool.get('ir.sequence').get(
+            cr, uid, 'docnaet.document.labnaet'))
+
     _columns = {        
         'name': fields.char('Subject', size=180, required=True),
         'labnaet_id': fields.integer('Labnaet ID', 

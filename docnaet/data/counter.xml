@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="seq_type_docnaet_document_labnaet" model="ir.sequence.type">
+            <field name="name">Labnaet type</field>
+            <field name="code">docnaet.document.labnaet</field>
+        </record>
+        <record id="seq_docnaet_document_labnaet" model="ir.sequence">
+            <field name="name">Labnaet ID file</field>
+            <field name="code">docnaet.document.labnaet</field>
+            <field name="prefix"></field>
+            <field name="padding">0</field>
+        </record>
+    </data>
+</openerp>

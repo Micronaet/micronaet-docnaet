@@ -39,6 +39,7 @@
         'security/ir.model.access.csv',
 
         'data/config.xml',
+        'data/counter.xml',
 
         'wizard/document_duplication_view.xml',
         'docnaet_view.xml',
