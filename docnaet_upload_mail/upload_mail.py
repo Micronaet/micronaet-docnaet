@@ -277,6 +277,11 @@ class DocnaetProtocolEmail(orm.Model):
         'type_id': fields.many2one(
             'docnaet.type', 'Type', 
             help='Assign auto type of docnaet document'),    
+        'docnaet_mode': fields.related(
+            'protocol_id', 'docnaet_mode', 
+            type='selection', string='Docnaet mode', 
+            selection=[('docnaet', 'Docnaet'),('labnaet', 'Labnaet'),],
+            )            
         }
     
     _defaults = {

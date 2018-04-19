@@ -15,7 +15,44 @@
                     <page string="Upload mail" attrs="{'invisible': [('auto_email','=',False)]}">
                         <group colspan="4" col="4">
                             <separator string="Account" colspan="4"/>
-                            <field name="account_ids" colspan="4" nolabel="1" context="{'embedded': True,'default_protocol_id': active_id}"/>
+                            <field name="account_ids" colspan="4" nolabel="1" context="{'embedded': True,'default_docnaet_mode':docnaet_mode,'default_protocol_id':active_id}">
+                                <tree string="Account" colors="red:is_active==False">
+                                    <field name="is_active" />
+                                    <field name="protocol_id" invisible="1"/>
+                                    <field name="type_id" />
+                                    <field name="name" />
+                                    <field name="host" />
+                                    <field name="SSL" />
+                                    <field name="port" />
+                                    <field name="user" />
+                                    <field name="folder" />                    
+                                    <button name="force_import_email_document" string="Force import" type="object" icon="terp-mail-message-new"/>
+                                </tree>
+                                <form string="Account" version="7.0">
+                                    <header>
+                                        <button name="force_import_email_document" string="Force import" type="object" icon="terp-mail-message-new"/>
+                                    </header>
+                                    <sheet>
+                                        <group colspan="4" col="4">
+                                            <field name="is_active" />
+                                            <field name="docnaet_mode" invisible="1" />
+                                            <newline/>
+                                            <field name="name" colspan="4"/>
+                                            <field name="protocol_id" invisible="1"/>
+                                            <field name="type_id" domain="[('docnaet_mode', 'in', (docnaet_mode, 'all'))]"/>
+                                            <field name="host" />
+                                            <field name="port" />
+                                            <field name="user" />
+                                            <field name="password" />
+                                            <field name="SSL" />
+                                            <field name="folder" />
+                                            <field name="auto_number" />
+                                            <field name="auto_partner" />
+                                            <field name="remove" />
+                                        </group>                                
+                                    </sheet>
+                                </form>
+                            </field>
                         </group>                                
                     </page>
                 </xpath>
@@ -29,7 +66,7 @@
             <field name="arch" type="xml">
                 <tree string="Account" colors="red:is_active==False">        
                     <field name="is_active" />
-                    <field name="protocol_id" invisible="context.get('embedded', False)"/>
+                    <field name="protocol_id"/>
                     <field name="type_id" />
                     <field name="name" />
                     <field name="host" />
@@ -52,10 +89,11 @@
                     <sheet>
                         <group colspan="4" col="4">
                             <field name="is_active" />
+                            <field name="docnaet_mode" invisible="1" />
                             <newline/>
                             <field name="name" colspan="4"/>
-                            <field name="protocol_id" invisible="context.get('embedded', False)"/>
-                            <field name="type_id" />
+                            <field name="protocol_id" readonly="1" help="Cannot change protocol because depend on docnaet or labnaet mode!"/>
+                            <field name="type_id" domain="[('docnaet_mode', 'in', (docnaet_mode, 'all'))]"/>
                             <field name="host" />
                             <field name="port" />
                             <field name="user" />

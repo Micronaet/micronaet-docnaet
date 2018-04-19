@@ -221,9 +221,11 @@ class UploadDocumentWizard(orm.TransientModel):
                 labnaet_id = False
         
             data = {
+                # Labnaet management:
                 'docnaet_mode': docnaet_mode,
                 'labnaet_id': labnaet_id,
-                'name': 'Document %s' % f,
+                
+                'name': _('Document %s') % f,
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
                 'user_id': wiz_proxy.default_user_id.id or uid, 
                 'partner_id': wiz_proxy.default_partner_id.id or False, 
