@@ -72,7 +72,9 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         document_pool = self.pool.get('docnaet.document')
         
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
-        domain = []
+        
+        docnaet_mode = current_proxy.docnaet_mode or 'docnaet'
+        
         keywords = current_proxy.keywords or False
         partner_name = current_proxy.partner_name or False
         protocol_id = current_proxy.protocol_id.id or False
@@ -94,6 +96,8 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         docnaet_extension = current_proxy.docnaet_extension
         priority = current_proxy.priority
         docnaet_category_id = current_proxy.docnaet_category_id.id or False
+
+        domain = [('docnaet_mode', '=', docnaet_mode)]
         
         if partner_name:
             domain.append(('partner_id.name', 'ilike', partner_name))

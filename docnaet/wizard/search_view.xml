@@ -17,7 +17,7 @@
                         <field name="docnaet_mode" groups="docnaet.group_docnaet_mode" />
                         <newline/>
                         <field name="keywords" colspan="6"/>
-                        <field name="protocol_id" colspan="4"/>
+                        <field name="protocol_id" colspan="4" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
                         <field name="number" />
 
                         <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id)" />
@@ -49,7 +49,7 @@
                                        <field name="docnaet_extension" />
 
                                        <field name="priority" options="{'limit': 10, 'create': false, 'create_edit': false}" />
-                                       <field name="docnaet_category_id" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id)"  />                                       
+                                       <field name="docnaet_category_id" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id)" />                                       
                                  </group>
                             </page>
                         </notebook>
