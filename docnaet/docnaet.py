@@ -421,23 +421,40 @@ class DocnaetDocument(orm.Model):
             
             NOTE: maybe expand the services
         '''        
-        #handle = 'docnaet' # put in company
-        handle = 'openerp' # put in company
+        handle = 'openerp' # TODO put in company as parameter
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
-        if mode == 'open':  # TODO rimettere id e togliere docnaet_id
+        # ---------------------------------------------------------------------
+        # Labnaet mode:
+        # ---------------------------------------------------------------------
+        if doc_proxy.docnaet_mode == 'labnaet':
+            app = '[L]'
+            docnaet_mode = 'labnaet'
+        else:    
+            app = '' # TODO '[D]'
+            docnaet_mode = 'docnaet'
+            
+        # ---------------------------------------------------------------------
+        #                           Operations
+        # ---------------------------------------------------------------------
+        # A. Open document:
+        if mode == 'open':
             filename = self.get_document_filename(
                 cr, uid, doc_proxy, mode='filename', context=context)
-            final_url = r'%s://document|%s' % (
-                handle, filename)
+            final_url = r'%s://document|%s%s' % (
+                handle, filename, app)
+        
+        # B. Open private folder:        
         elif mode == 'home':
-            final_url = r'%s://folder|%s' % (
-                handle, uid)
-        if remote:
-            final_url = '%s[R]' % final_url
+            final_url = r'%s://folder|%s%s' % (
+                handle, uid, app)
+        
+        # C. Open remote document:
+        #if remote:
+        #    final_url = '%s[R]' % final_url
 
         return {
-            'name': 'Docnaet document',
+            'name': 'Open %s document' % docnaet_mode,
             #res_model': 'ir.actions.act_url',
             'type': 'ir.actions.act_url', 
             'url': final_url, 
