@@ -39,7 +39,7 @@
                                             <newline/>
                                             <field name="name" colspan="4"/>
                                             <field name="protocol_id" invisible="1"/>
-                                            <field name="type_id" domain="[('docnaet_mode', 'in', (docnaet_mode, 'all'))]"/>
+                                            <field name="type_id" domain="[('is_active', '=', True),('docnaet_mode', 'in', (docnaet_mode, 'all'))]"/>
                                             <field name="host" />
                                             <field name="port" />
                                             <field name="user" />
@@ -93,7 +93,7 @@
                             <newline/>
                             <field name="name" colspan="4"/>
                             <field name="protocol_id" readonly="1" help="Cannot change protocol because depend on docnaet or labnaet mode!"/>
-                            <field name="type_id" domain="[('docnaet_mode', 'in', (docnaet_mode, 'all'))]"/>
+                            <field name="type_id" domain="[('is_active', '=', True),('docnaet_mode', 'in', (docnaet_mode, 'all'))]"/>
                             <field name="host" />
                             <field name="port" />
                             <field name="user" />
