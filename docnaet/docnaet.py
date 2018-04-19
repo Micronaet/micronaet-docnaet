@@ -53,6 +53,8 @@ class ResCompany(orm.Model):
         '''
         if context is None:
             context = {}
+        if 'docnaet_mode' not in context:
+            _logger.error('No docnaet mode parameter in context!')
         field_path = '%s_path' % context.get('docnaet_mode', 'docnaet')
         
         # Get docnaet path from company element
