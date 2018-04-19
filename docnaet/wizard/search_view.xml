@@ -14,7 +14,7 @@
                 </header>
                 <sheet>
                     <group colspan="4" col="6">
-                        <field name="docnaet_mode" groups="docnaet.group_docnaet_mode" />
+                        <field name="docnaet_mode" invisible="1"/><!--groups="docnaet.group_docnaet_mode"-->
                         <newline/>
                         <field name="keywords" colspan="6"/>
                         <field name="protocol_id" colspan="4" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>

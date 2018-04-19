@@ -191,7 +191,7 @@
                         <field name="name" colspan="4"/>
                         <field name="code" />
                         <field name="iso_code" />
-                        <field name="docnaet_mode" groups="docnaet.group_docnaet_mode" />
+                        <!--<field name="docnaet_mode" groups="docnaet.group_docnaet_mode" />-->
                         <separator string="Note" colspan="4"/>
                         <field name="note" colspan="4" nolabel="1"/>
                     </group>
@@ -208,7 +208,7 @@
                 <field name="name" />
                 <field name="code" />
                 <field name="iso_code" />
-                <field name="docnaet_mode" groups="docnaet.group_docnaet_mode" />
+                <!--<field name="docnaet_mode" groups="docnaet.group_docnaet_mode" />-->
                 <field name="note" />
             </tree>
         </field>
@@ -475,7 +475,7 @@
                 <!--<field name="user_id" filter_domain="[('user_id','=',self)]"/>-->
                 <field name="protocol_id" filter_domain="[('protocol_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
                 <field name="type_id" filter_domain="[('type_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
-                <field name="language_id" filter_domain="[('language_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
+                <field name="language_id" filter_domain="[('language_id','=',self)]" /><!--domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>-->
                 
                 <filter name="state_draft" string="Draft state" domain="[('state','=','draft')]"/>
                 <filter name="state_confirmed" string="Confirmed state" domain="[('state','=','confirmed')]"/>
@@ -607,7 +607,7 @@
                        <newline/>
 
                        <field name="type_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
-                       <field name="language_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
+                       <field name="language_id" options="{'limit': 10, 'create': false, 'create_edit': false}" /><!--domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>-->
                        <newline/>
 
                        <field name="program_id" readonly="1" options="{'limit': 10, 'create': false, 'create_edit': false}"/>

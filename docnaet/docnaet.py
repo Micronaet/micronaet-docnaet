@@ -108,18 +108,18 @@ class DocnaetLanguage(orm.Model):
         'code': fields.char('Code', size=16),
         'iso_code': fields.char('ISO Code', size=16),
         'note': fields.text('Note'),
-        'docnaet_mode': fields.selection([
-            ('docnaet', 'Docnaet'), # Only for docnaet
-            ('labnaet', 'Labnaet'),
-            ('all', 'All'),
-            ], 'Docnaet mode', required=True,
-            help='Usually document management, but for future improvement also'
-                ' for manage other docs'),
+        #'docnaet_mode': fields.selection([
+        #    ('docnaet', 'Docnaet'), # Only for docnaet
+        #    ('labnaet', 'Labnaet'),
+        #    ('all', 'All'),
+        #    ], 'Docnaet mode', required=True,
+        #    help='Usually document management, but for future improvement also'
+        #        ' for manage other docs'),
         }
 
-    _defaults = {
-        'docnaet_mode': lambda *x: 'docnaet',
-        }
+    #_defaults = {
+    #    'docnaet_mode': lambda *x: 'docnaet',
+    #    }
 
 class ResPartnerDocnaet(orm.Model):
     ''' Object res.partner.docnaet
