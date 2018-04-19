@@ -11,11 +11,13 @@
                 <header>
                     <button string="Cancel" special="cancel" icon='STOCK_CANCEL'/>
                     <button string="Search" name="advanced_search" type="object" icon="gtk-find" />
+                    <field name="docnaet_mode" invisible="1"/><!--groups="docnaet.group_docnaet_mode"-->
                 </header>
                 <sheet>
                     <group colspan="4" col="6">
-                        <field name="docnaet_mode" invisible="1"/><!--groups="docnaet.group_docnaet_mode"-->
-                        <newline/>
+                        <separator string="Docnaet advanced search:" colspan="6" attrs="{'invisible': [('docnaet_mode','=','labnaet')]}"/>
+                        <separator string="Labnaet advanced search:" colspan="6" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
+                        
                         <field name="keywords" colspan="6"/>
                         <field name="protocol_id" colspan="4" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
                         <field name="number" />
