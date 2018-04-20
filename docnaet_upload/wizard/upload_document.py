@@ -229,6 +229,7 @@ class UploadDocumentWizard(orm.TransientModel):
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
                 'user_id': wiz_proxy.default_user_id.id or uid, 
                 'partner_id': wiz_proxy.default_partner_id.id or False, 
+                'product_id': wiz_proxy.default_product_id.id or False,                 
                 'language_id': wiz_proxy.default_language_id.id or False, 
                 'type_id': wiz_proxy.default_type_id.id or False,
                 'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),
@@ -364,6 +365,11 @@ class UploadDocumentWizard(orm.TransientModel):
             'res.partner', '>> Default partner',
             domain=[('docnaet_enable', '=', True)],
             ),
+            
+        # Labnaet:
+        'default_product_id': fields.many2one('docnaet.product', 
+            'Product'),
+
         'assign_protocol': fields.boolean('Assign protocol', 
             help='In upload mode assign protocol and next number'),    
         'default_user_id': fields.many2one('res.users', 
