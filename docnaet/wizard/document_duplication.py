@@ -63,12 +63,13 @@ class document_duplication(orm.TransientModel):
         original_id = context.get('active_id')
         original_proxy = document_pool.browse(    
             cr, uid, original_id, context=context)
+        context['docnaet_mode'] = original_proxy.docnaet_mode    
         reassign_protocol = True if wiz_proxy.protocol_id else False
         protocol_id = \
             wiz_proxy.protocol_id.id or original_proxy.protocol_id.id or False
             
         data = {
-            
+            'docnaet_mode': original_proxy.docnaet_mode,
             'name': original_proxy.name,             
             'description': original_proxy.description,
             'note': original_proxy.note,            
@@ -90,7 +91,10 @@ class document_duplication(orm.TransientModel):
             # XXX remember when add new fields to update this record!
             'original_id': original_id if mode == 'link' else False,
             }
+
+        # ---------------------------------------------------------------------
         # Manage protocol number (3 cases):
+        # ---------------------------------------------------------------------
         if reassign_protocol or not linked_document: # always if reassigned 
             data['number'] = protocol_pool.assign_protocol_number(
                 cr, uid, protocol_id, context=context)
@@ -103,7 +107,9 @@ class document_duplication(orm.TransientModel):
         destination_proxy = document_pool.browse(    
             cr, uid, destination_id, context=context)
         
+        # ---------------------------------------------------------------------
         # File management:
+        # ---------------------------------------------------------------------
         if mode != 'link': 
             # duplicate also file:
             original_file = document_pool.get_document_filename(
