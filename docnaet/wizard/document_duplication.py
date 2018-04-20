@@ -69,8 +69,17 @@ class document_duplication(orm.TransientModel):
         protocol_id = \
             wiz_proxy.protocol_id.id or original_proxy.protocol_id.id or False
         
+        if docnaet_mode == 'labnaet' and mode != 'link':
+            labnaet_id = document_pool.get_counter_labnaet_id(
+                cr, uid, context=context)
+        else:
+            labnaet_id = False
+    
         data = {
+            # Labnaet management:
             'docnaet_mode': docnaet_mode,
+            'labnaet_id': labnaet_id,
+
             'name': original_proxy.name,             
             'description': original_proxy.description,
             'note': original_proxy.note,            
