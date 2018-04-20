@@ -1,0 +1,12 @@
+[OpenERP]
+dbname: Docnaet7
+user: admin
+pwd: admin
+server: localhost
+port: 8069
+
+[csv]
+path: ~/etl/Docnaet/import
+header: 0
+separator: ,
+

@@ -123,7 +123,7 @@ class ResPartnerDocnaet(orm.Model):
             translate=True),
         'note': fields.text('Note'),
         }
-        
+
 class ResPartner(orm.Model):
     """ Model name: ResPartner
     """    
@@ -149,6 +149,28 @@ class ResPartner(orm.Model):
             'res.partner.docnaet', 'Docnaet category'),
         }
 
+class ProductProductDocnaet(orm.Model):
+    ''' Object product.product.docnaet
+    '''    
+    _name = 'product.product.docnaet'
+    _description = 'Product category'
+                    
+    _columns = {        
+        'name': fields.char('Docnaet category', size=64, required=True,
+            translate=True),
+        'note': fields.text('Note'),
+        }
+
+class ProductProduct(orm.Model):
+    """ Model name: Product product
+    """    
+    _inherit = 'product.product'
+
+    _columns = {        
+        'docnaet_category_id': fields.many2one(
+            'product.product.docnaet', 'Docnaet category'),
+        }
+        
 class DocnaetType(orm.Model):
     ''' Object docnaet.type
     '''    
@@ -577,8 +599,15 @@ class DocnaetDocument(orm.Model):
         return self.pool.get('docnaet.document').search(cr, uid, [
             ('partner_id', 'in', ids)], context=context)
 
+    def _refresh_product_category_change(self, cr, uid, ids, context=None):
+        ''' When change product category update docnaet document
+        '''        
+        return self.pool.get('docnaet.document').search(cr, uid, [
+            ('product_id', 'in', ids)], context=context)
+
     def _refresh_category_auto_change(self, cr, uid, ids, context=None):
         ''' When change partner in category change in document
+            Used also for change product_id for update category
         '''        
         return ids
 
@@ -673,6 +702,8 @@ class DocnaetDocument(orm.Model):
             domain=[('invisible', '=', False)]),
         'company_id': fields.many2one('res.company', 'Company'),
         'user_id': fields.many2one('res.users', 'User', required=True),
+        
+        # Partner:
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'country_id': fields.related(
             'partner_id', 'country_id', type='many2one', 
@@ -693,6 +724,20 @@ class DocnaetDocument(orm.Model):
                 'docnaet.document': (
                     _refresh_category_auto_change, ['partner_id'], 10),
                 }),
+
+        # Product:
+        'product_id': fields.many2one('product.product', 'Product'),
+        'docnaet_product_category_id': fields.related(
+            'product_id', 'docnaet_category_id', type='many2one',
+            relation='product.product.docnaet', string='Product category',
+            store={
+                'product.product': (
+                    _refresh_product_category_change, [
+                        'docnaet_category_id'], 10),
+                'docnaet.document': (
+                    _refresh_category_auto_change, ['product_id'], 10),
+                }),
+
         # Search partner extra fields:
         'search_partner_name': fields.char(
             'Search per Partner name', size=80),
@@ -746,7 +791,7 @@ class DocnaetDocument(orm.Model):
 
 class DocnaetDocument(orm.Model):
     ''' Add extra relation fields
-    '''          
+    '''
     _inherit = 'docnaet.document'
 
     _columns = {
