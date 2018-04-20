@@ -85,6 +85,11 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         from_deadline = current_proxy.from_deadline
         to_deadline = current_proxy.to_deadline
         
+        # Labnaet:
+        product_id = current_proxy.product_id.id or False
+        docnaet_product_category_id = \
+            current_proxy.docnaet_product_category_id.id or False
+
         name = current_proxy.name
         number = current_proxy.number
         user_id = current_proxy.user_id.id or False
@@ -107,6 +112,14 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
             domain.append(('country_id', '=', country_id))
         if partner_id:
             domain.append(('partner_id', '=', partner_id))            
+        
+        # Labnaet:    
+        if product_id:
+            domain.append(('product_id', '=', product_id))            
+        if docnaet_product_category_id:
+            domain.append(
+                ('docnaet_product_category_id', '=', 
+                    docnaet_product_category_id))            
 
         if from_date:
             domain.append(('date', '>=', from_date))            
@@ -188,6 +201,13 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         'docnaet_category_id': fields.many2one(
             'res.partner.docnaet', 'Partner category',
             ),
+        # Labnaet:    
+        'product_id': fields.many2one(
+            'docnaet.product', 'Product'),
+        'docnaet_product_category_id': fields.many2one(
+            'product.product.docnaet', 'Product category',
+            ),
+
         'priority': fields.selection([
             ('lowest', 'Lowest'),
             ('low', 'Low'),

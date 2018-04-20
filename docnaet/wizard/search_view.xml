@@ -26,6 +26,11 @@
                         <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id)" />
                         <field name="partner_id" domain="[('docnaet_enable','=',True)]"/>
                         
+                        <!--LABNAET Mode:-->
+                        <field name="product_id" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
+                        <field name="docnaet_product_category_id" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
+                        <newline/>
+                        
                         <notebook colspan="6">
                             <page string="Simple">
                                  <group colspan="4" col="4">

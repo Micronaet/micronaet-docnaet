@@ -68,6 +68,7 @@ class document_duplication(orm.TransientModel):
             wiz_proxy.protocol_id.id or original_proxy.protocol_id.id or False
             
         data = {
+            
             'name': original_proxy.name,             
             'description': original_proxy.description,
             'note': original_proxy.note,            
