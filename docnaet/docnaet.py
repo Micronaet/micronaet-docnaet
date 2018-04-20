@@ -123,7 +123,7 @@ class ResPartnerDocnaet(orm.Model):
             translate=True),
         'note': fields.text('Note'),
         }
-
+        
 class ResPartner(orm.Model):
     """ Model name: ResPartner
     """    
@@ -161,16 +161,22 @@ class ProductProductDocnaet(orm.Model):
         'note': fields.text('Note'),
         }
 
-class ProductProduct(orm.Model):
-    """ Model name: Product product
+class DocnaetProduct(orm.Model):
+    """ Model name: Docnaet product
     """    
-    _inherit = 'product.product'
+    _name = 'docnaet.product'
+    _description = 'Docnaet Product'
 
     _columns = {        
+        'name': fields.char('Name', size=64, required=True,
+            translate=True),
+        'default_code': fields.char('Default code', size=64),            
+        'note': fields.text('Note'),
+     
         'docnaet_category_id': fields.many2one(
             'product.product.docnaet', 'Docnaet category'),
         }
-        
+
 class DocnaetType(orm.Model):
     ''' Object docnaet.type
     '''    
@@ -702,7 +708,7 @@ class DocnaetDocument(orm.Model):
             domain=[('invisible', '=', False)]),
         'company_id': fields.many2one('res.company', 'Company'),
         'user_id': fields.many2one('res.users', 'User', required=True),
-        
+
         # Partner:
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'country_id': fields.related(
@@ -726,12 +732,12 @@ class DocnaetDocument(orm.Model):
                 }),
 
         # Product:
-        'product_id': fields.many2one('product.product', 'Product'),
+        'product_id': fields.many2one('docnaet.product', 'Product'),
         'docnaet_product_category_id': fields.related(
             'product_id', 'docnaet_category_id', type='many2one',
             relation='product.product.docnaet', string='Product category',
             store={
-                'product.product': (
+                'docnaet.product': (
                     _refresh_product_category_change, [
                         'docnaet_category_id'], 10),
                 'docnaet.document': (
@@ -791,7 +797,7 @@ class DocnaetDocument(orm.Model):
 
 class DocnaetDocument(orm.Model):
     ''' Add extra relation fields
-    '''
+    '''          
     _inherit = 'docnaet.document'
 
     _columns = {

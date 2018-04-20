@@ -29,7 +29,7 @@
     'license': 'AGPL-3',
     'depends': [
         'base',
-        #'docnaet',
+        'docnaet',
         ],
     'init_xml': [],
     'demo': [],

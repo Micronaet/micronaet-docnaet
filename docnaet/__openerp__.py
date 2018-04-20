@@ -30,8 +30,8 @@
     'author': 'Micronaet s.r.l.',
     'website': 'http://www.micronaet.it',
     'depends': [
-        'base',
-        'product',        
+        'base',   
+        #'product',
         #'web_m2o_enhanced', # XXX not work if enabled!
         ],
     'init_xml': [], 
