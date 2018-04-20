@@ -171,10 +171,9 @@ class DocnaetProduct(orm.Model):
         'name': fields.char('Name', size=64, required=True,
             translate=True),
         'default_code': fields.char('Default code', size=64),            
-        'note': fields.text('Note'),
-     
         'docnaet_category_id': fields.many2one(
             'product.product.docnaet', 'Docnaet category'),
+        'note': fields.text('Note'),
         }
 
 class DocnaetType(orm.Model):

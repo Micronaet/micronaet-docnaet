@@ -1,6 +1,80 @@
 <?xml version="1.0"?>
 <openerp>
     <data>   
+    <!--docnaet.product--> 
+    <record model="ir.ui.view" id="view_docnaet_product_form">
+        <field name="name">Docnaet product</field>
+        <field name="model">docnaet.product</field>
+        <field name="arch" type="xml">
+            <form string="Docnaet program" version="7.0">
+                <sheet>
+                    <group colspan="4" col="4">
+                        <field name="name" colspan="4"/>
+                        <field name="default_code" />
+                        <field name="docnaet_category_id" />
+                        <separator string="Note" colspan="4"/>
+                        <field name="note" colspan="4" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>    
+    <record model="ir.ui.view" id="view_docnaet_product_tree">
+        <field name="name">Docnaet product</field>
+        <field name="model">docnaet.product</field>
+        <field name="arch" type="xml">
+            <tree string="Docnaet program" version="7.0">
+                <field name="name" />
+                <field name="default_code" />
+                <field name="docnaet_category_id" />
+            </tree>
+        </field>
+    </record>    
+    <record model="ir.actions.act_window" id="action_docnaet_product">
+        <field name="name">Docnaet product</field>
+        <field name="res_model">docnaet.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_docnaet_product_tree"/>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+    </record>
+    
+    <!--product.product.docnaet--> 
+    <record model="ir.ui.view" id="view_product_product_docnaet_form">
+        <field name="name">Docnaet product category</field>
+        <field name="model">product.product.docnaet</field>
+        <field name="arch" type="xml">
+            <form string="Docnaet product category" version="7.0">
+                <sheet>
+                    <group colspan="4" col="4">
+                        <field name="name" colspan="4"/>
+                        <separator string="Note" colspan="4"/>
+                        <field name="note" colspan="4" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>    
+    <record model="ir.ui.view" id="view_product_product_docnaet_tree">
+        <field name="name">Docnaet product category</field>
+        <field name="model">product.product.docnaet</field>
+        <field name="arch" type="xml">
+            <tree string="Docnaet product category" version="7.0">
+                <field name="name" />
+                <field name="note" />
+            </tree>
+        </field>
+    </record>    
+    <record model="ir.actions.act_window" id="action_product_product_docnaet">
+        <field name="name">Docnaet product category</field>
+        <field name="res_model">product.product.docnaet</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_product_product_docnaet_tree"/>
+        <field name="context">{}</field>
+        <field name="domain">[]</field>
+    </record>
 
     <!--docnaet.protocol.template.language--> 
     <record model="ir.ui.view" id="view_docnaet_protocol_template_program_form">
@@ -295,7 +369,7 @@
     </record>
     
     <!--res.partner--> 
-    <!--TODO needet a form custom-<record model="ir.ui.view" id="res_partner_form_docnaet_view">
+    <!--TODO needed a form custom-<record model="ir.ui.view" id="res_partner_form_docnaet_view">
         <field name="name">Partner Docnaet</field>
         <field name="model">res.partner</field>
         <field name="priority" eval="20"/>
@@ -471,6 +545,11 @@
                 <field name="program_id" />-->
                 <field name="partner_id" filter_domain="[('partner_id','=',self)]" domain="[('docnaet_enable','=',True)]"/>
                 <field name="country_id" />
+                
+                <!--LABNAET EXTRA FILTER:-->
+                <field name="product_id" filter_domain="[('product_id','=',self)]" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
+                <field name="docnaet_product_category_id" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
+                
                 <!--<field name="docnaet_category_id" /> Cassandra want to remove-->
                 <!--<field name="user_id" filter_domain="[('user_id','=',self)]"/>-->
                 <field name="protocol_id" filter_domain="[('protocol_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
@@ -492,6 +571,11 @@
                     <filter name="group_deadline_month" string="Scadenza" context="{'group_by': 'deadline_month'}"/>
                     <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
                     <filter name="group_partner_category" string="Partner category" context="{'group_by': 'docnaet_category_id'}"/>
+
+                    <!--Labnaet Extra filter:-->
+                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
+                    <filter name="group_product_category" string="Product category" context="{'group_by': 'docnaet_product_category_id'}" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
+
                     <filter name="group_country" string="Country" context="{'group_by': 'country_id'}"/>
                     <filter name="group_user" string="User" context="{'group_by': 'user_id'}"/>
                     <filter name="group_protocol" string="Protocol" context="{'group_by': 'protocol_id'}"/>
@@ -522,9 +606,10 @@
                <field name="description" />
                <field name="partner_id" />
                <field name="country_id" />
-               <field name="user_id" readonly="context.get('embedded',False)" invisible="1"/>
+               <field name="product_id" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
+               <field name="user_id" invisible="1"/>
                <field name="type_id" />
-               <field name="language_id" readonly="context.get('embedded',False)"/>
+               <field name="language_id" />
                <field name="priority" invisible="1"/>
                <field name="deadline" string="Scad." invisible="1" />
                <field name="deadline_month" invisible="1"/>
@@ -533,7 +618,7 @@
                <field name="original_id" invisible="1"/>
                <field name="country_id" invisible="1"/>
                <field name="docnaet_category_id" invisible="1"/>
-               <field name="docnaet_extension" readonly="context.get('embedded',False)"/>
+               <field name="docnaet_extension" />
 
                <!--WORKFLOW BUTTON-->
                <!--draft-->
@@ -598,6 +683,10 @@
 
                        <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'default_docnaet_enable': True}" options="{'limit': 10, 'create': false, 'create_edit': false}" />
                        <field name="user_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                       <newline/>
+                       
+                       <field name="product_id"  groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin" options="{'limit': 10, 'create': false, 'create_edit': false}" attrs="{'invisible':[('docnaet_mode','!=','labnaet')]}"/>
+                       <field name="docnaet_product_category_id" readonly="1" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin" attrs="{'invisible':[('docnaet_mode','!=','labnaet')]}"/>
                        <newline/>
 
                        <field name="date" />
@@ -755,8 +844,7 @@
         <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('state','=','draft')]</field>
     </record>
-    
-    
+        
     <menuitem id="docnaet_root" name="Docnaet" sequence="20" groups="group_docnaet_user,group_docnaet_admin,group_docnaet_agent"/>
         <!--DOCNAET: -->
         <menuitem parent="docnaet_root" id="docnaet_document" name="Docnaet" sequence="20" />
@@ -768,24 +856,26 @@
                 <menuitem parent="docnaet_document_my_document" id="docnaet_document_deadline" name="Deadline" sequence="30" action="action_docnaet_deadline_document_tree" />            
 
         <!--LABNAET: -->
-        <menuitem parent="docnaet_root" id="labnaet_document" name="Labnaet" sequence="30" groups="group_labnaet_user,group_labnaet_admin"/>
+        <menuitem parent="docnaet_root" id="labnaet_document" name="Labnaet" sequence="30" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
             <menuitem parent="labnaet_document" id="labnaet_document_document" name="Documenti" sequence="10" action="action_labnaet_document_tree" />
             
             <menuitem parent="labnaet_document" id="labnaet_document_my_document" name="My document" sequence="20" action="action_labnaet_my_document_tree"/>
                 <menuitem parent="labnaet_document_my_document" id="labnaet_document_deadline" name="Deadline" sequence="30" action="action_labnaet_deadline_document_tree" />            
 
         <!--CONFIGURATION: -->
-        <menuitem parent="docnaet_root" id="docnaet_administration" name="Administration" sequence="90" groups="group_docnaet_admin,group_labnaet_admin"/>
-            <menuitem parent="docnaet_administration" id="docnaet_administration_company" string="Company" sequence="1" action="action_docnaet_company_form" />
-            <menuitem parent="docnaet_administration" id="docnaet_administration_user" string="User" sequence="5" action="action_docnaet_users_form" />
-            <menuitem parent="docnaet_administration" id="docnaet_administration_partner" string="Partner" sequence="1" action="action_docnaet_partner_form" />
+        <menuitem parent="docnaet_root" id="docnaet_administration" name="Administration" sequence="90" groups="group_docnaet_admin,docnaet.group_labnaet_admin"/>
+            <menuitem parent="docnaet_administration" id="docnaet_administration_company" string="Company" sequence="10" action="action_docnaet_company_form" />
+            <menuitem parent="docnaet_administration" id="docnaet_administration_user" string="User" sequence="20" action="action_docnaet_users_form" />
+            <menuitem parent="docnaet_administration" id="docnaet_administration_partner" string="Partner" sequence="30" action="action_docnaet_partner_form" />
                 <menuitem parent="docnaet_administration_partner" id="docnaet_administration_country" string="Country" sequence="10" action="action_docnaet_country_form" />
                 <menuitem parent="docnaet_administration_partner" id="docnaet_administration_partner_docnaet" string="Category" sequence="20" action="action_res_partner_docnaet" />
+            <menuitem parent="docnaet_administration" id="menu_docnaet_product" name="Product" sequence="40" action="action_docnaet_product" groups="docnaet.group_labnaet_admin"/>
+                <menuitem parent="menu_docnaet_product" id="menu_product_product_docnaet" name="Product category" sequence="10" action="action_product_product_docnaet" />
             
-            <menuitem parent="docnaet_administration" id="docnaet_administration_protocol" name="Protocol" sequence="10" action="action_docnaet_protocol"/>
-            <menuitem parent="docnaet_administration" id="docnaet_administration_program" name="Program" sequence="15" action="action_docnaet_protocol_template_program"/>            
-            <menuitem parent="docnaet_administration" id="docnaet_administration_type" name="Tipology" sequence="20" action="action_docnaet_type" />
-            <menuitem parent="docnaet_administration" id="docnaet_administration_language" name="Language" sequence="30" action="action_docnaet_language" />
+            <menuitem parent="docnaet_administration" id="docnaet_administration_protocol" name="Protocol" sequence="50" action="action_docnaet_protocol"/>
+            <menuitem parent="docnaet_administration" id="docnaet_administration_program" name="Program" sequence="60" action="action_docnaet_protocol_template_program"/>            
+            <menuitem parent="docnaet_administration" id="docnaet_administration_type" name="Tipology" sequence="70" action="action_docnaet_type" />
+            <menuitem parent="docnaet_administration" id="docnaet_administration_language" name="Language" sequence="80" action="action_docnaet_language" />            
     </data>    
 </openerp>    
     
