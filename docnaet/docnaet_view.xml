@@ -635,7 +635,7 @@
                <button name="document_cancel_draft" string="Reactivate" type="workflow" states="cancel" icon="gtk-redo"/>
                <field name="state" invisible="1"/>
                
-               <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" />
+               <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" context="{'default_docnaet_mode': docnaet_mode}"/>
             </tree>
         </field>
     </record>    
@@ -667,7 +667,7 @@
                        <button type="object" name="button_call_url_docnaet" string="Open document" class="oe_highlight" colspan="1" invisible="context.get('remote_document', False)"/>
                        <button type="object" name="button_call_url_remote_docnaet" string="Open document [R]" class="oe_highlight" colspan="1" invisible="not context.get('remote_document', False)"/>
                        <!--<button type="object" name="button_assign_fax_number" string="Assign fax" attrs="{'invisible':[('fax_number','=',True)]}"/>-->
-                       <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" colspan="1" invisible="context.get('remote_document', False)" />
+                       <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" colspan="1" invisible="context.get('remote_document', False)" context="{'default_docnaet_mode': docnaet_mode}"/>
                        <button type="object" name="button_doc_info_docnaet" string="Doc info" colspan="1" invisible="context.get('remote_document', False)" />
                        <newline />
                        

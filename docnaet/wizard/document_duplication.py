@@ -63,13 +63,14 @@ class document_duplication(orm.TransientModel):
         original_id = context.get('active_id')
         original_proxy = document_pool.browse(    
             cr, uid, original_id, context=context)
-        context['docnaet_mode'] = original_proxy.docnaet_mode    
+        docnaet_mode = original_proxy.docnaet_mode    
+        context['docnaet_mode'] = docnaet_mode    
         reassign_protocol = True if wiz_proxy.protocol_id else False
         protocol_id = \
             wiz_proxy.protocol_id.id or original_proxy.protocol_id.id or False
-            
+        
         data = {
-            'docnaet_mode': original_proxy.docnaet_mode,
+            'docnaet_mode': docnaet_mode,
             'name': original_proxy.name,             
             'description': original_proxy.description,
             'note': original_proxy.note,            
@@ -135,6 +136,7 @@ class document_duplication(orm.TransientModel):
                 '&',
                 ('user_id','=',uid),
                 ('state','=','draft'),
+                ('docnaet_mode', '=', docnaet_mode),
                 ],
             'type': 'ir.actions.act_window',
             'res_id': destination_id,  # IDs selected
@@ -165,6 +167,13 @@ class document_duplication(orm.TransientModel):
         # To remove
         #'with_number': fields.boolean('With number'),
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
+        'docnaet_mode': fields.selection([
+            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('labnaet', 'Labnaet'),
+            ], 'Docnaet mode', required=True,
+            help='Usually document management, but for future improvement also'
+                ' for manage other docs'),
+        
         }
     
     _defaults = {

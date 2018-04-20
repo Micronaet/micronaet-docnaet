@@ -15,7 +15,8 @@
                     <button string='Duplicate document' name='duplication_document' type='object' icon='gtk-justify-fill' />
                     <button string='Link document' name='linked_document' type='object' icon='gtk-revert-to-saved' />
                     <group>
-                        <field name="protocol_id" />
+                        <field name="protocol_id" domain="[('docnaet_mode', '=', docnaet_mode)]"/>
+                        <field name="docnaet_mode" invisible="1"/>
                     </group>
                 </sheet>
             </form>
