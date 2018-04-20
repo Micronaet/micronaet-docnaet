@@ -23,9 +23,9 @@ import csv
 import erppeek
 import ConfigParser
 
-# ----------------
+# -----------------------------------------------------------------------------
 # Read parameters:
-# ----------------
+# -----------------------------------------------------------------------------
 config = ConfigParser.ConfigParser()
 config.read(['config.cfg'])
 
@@ -39,9 +39,11 @@ path = config.get('csv', 'path')
 header = eval(config.get('csv', 'header'))
 delimiter = config.get('csv', 'delimiter')
 
-# --------------
-# Client erpeek:
-# --------------
+docnaet_mode = 'labnaet'
+
+# -----------------------------------------------------------------------------
+# Client ODOO:
+# -----------------------------------------------------------------------------
 erp = erppeek.Client(
     'http://%s:%s' % (server, port),
     db=dbname,
@@ -97,32 +99,47 @@ def prepare_date(value):
     return res        
 
 # -----------------------------------------------------------------------------
-#                             Manual importations:
+#                             Mapping importations
 # -----------------------------------------------------------------------------
 # Priority (not used in real docnaet)
-priority = {
-    # Direct:
-    #1: 'highest',
-    #2: 'high',
-    #3: 'normal',
-    #4: 'low',
-    #5: 'lowest',
+# TODO verificare che non sia presente
+priority = 'normal'
+
+partner_type = {}
+# TODO sarà vuota (non era usata per i clienti ma per prodotto)
+
+language = {
+    # TODO
+    11: 1, #'Italiano'
+    12: 2, #'Francese'
+    13: 1, #'Tedesco'
+    17: 1, #'Inglese'
+    18: 1, #'Spagnolo'
     }
 
-partner_type = {
-    # direct:
-    #1. client
-    #2. fornitori
-    #3. interna
-    #4. agenti
-    #5. contatti vari
-    #6. concorrenti    
+users = {
+    # TODO mapping manuale
+    # TODO settare poi utente labnaet e gruppo labnaet 
+    1: 1,#"Administrator" ADM
+    2: 17,#"Nicola" ADM
+    3: 22,#"Valeria" ADM
+    4: 4,#"Vago" ADM 
+    6: 1,#"Alessandro"
+    7: 9,#"Simona" ADM
+    9: 6,#"Mauro" 
+    11: 5,#"Marcello" ADM 
+    12: 16,#"Giuseppe"
+    13: 13,#"Patrizia"
+    14: 24,#"Elisabetta"
+    15: 25,#"Laboratorio"
+    16: 26,#"Amministrazione"
+    17: 1,#"Wilma" x
+    18: 29,#"Veronica"
+    19: 11,#"Cassandra" ADM
+    20: 32,#"Claudio"
     }
-    
+
 # Ditte 
-#company = {
-#    6: 1, # docnaet, openerp        
-#    }    
 company_id = 1
 
 # Spedito << TODO import current
@@ -130,104 +147,11 @@ company_id = 1
 # -----------------------------------------------------------------------------
 #                             Automatic migration
 # -----------------------------------------------------------------------------
-# ------
-# Utenti
-# ------
-filename = 'Utenti.txt'
-print 'Import %s' % filename
-user = {}
-erp_pool = erp.ResUsers
-csv_file = os.path.expanduser(
-    os.path.join(path, filename))
-
-lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
-i = - header   
-tot_cols = False
-for line in lines:
-    i += 1
-    if i <= 0:
-        continue # jump intestation
-    if not tot_cols: # save for test 
-        tot_cols = len(line)
-    
-    if tot_cols != len(line):
-        print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
-        continue
-    
-    # read fields:    
-    docnaet_id = int(line[0])
-    name = line[1].strip().lower()
-    password = line[2].strip()
-    
-    if name == 'administrator':
-        name = 'admin'
-
-    if name == 'edgadro':
-        name = 'edgardo'
-
-    item_ids = erp_pool.search([('login', '=', name)])
-    data = {
-        'login': name,
-        'name': name,
-        'password': password,
-        'docnaet_id': docnaet_id,  
-        }
-    if item_ids:
-        openerp_id = item_ids[0]
-        #erp_pool.write(openerp_id, data) # No update
-    else:        
-        openerp_id = erp_pool.create(data).id
-        print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
-    user[docnaet_id] = openerp_id
-
 # ------------
 # Applicazioni 
 # ------------
-application = {}    
-# TODO create from extension in OpenERP
-
-# ------
-# Lingue 
-# ------
-filename = 'Lingue.txt'
-print 'Import %s' % filename
-language = {}
-erp_pool = erp.DocnaetLanguage
-csv_file = os.path.expanduser(
-    os.path.join(path, filename))
-
-lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
-i = - header   
-tot_cols = False
-for line in lines:
-    i += 1
-    if i <= 0:
-        continue # jump intestation
-    if not tot_cols: # save for test 
-        tot_cols = len(line)
-    
-    if tot_cols != len(line):
-        print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
-        continue
-    
-    # read fields:    
-    docnaet_id = int(line[0])
-    name = line[1].strip()
-    note = line[2].strip()
-    
-    item_ids = erp_pool.search([('name', '=', name)])
-    data = {
-        'name': name,
-        'note': note,
-        'docnaet_id': docnaet_id,
-        }
-    if item_ids:
-        openerp_id = item_ids[0]
-        #erp_pool.write(openerp_id, data) # No update
-    else:
-        openerp_id = erp_pool.create(data).id      
-        print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
-    language[docnaet_id] = openerp_id
+# TODO vedere se farlo calcolare in automatico (in base a estensione)
+application = {}
 
 # ----------
 # Protocolli 
@@ -259,26 +183,32 @@ for line in lines:
         name = line[1].strip()
         next = eval(line[2].strip())
         note = line[3].strip()
-        #company_id = eval(line[4].strip())
         #application_id = eval(line[5].strip())
         
-        item_ids = erp_pool.search([('name', '=', name)])
         data = {
+            'docnaet_mode': docnaet_mode,
             'name': name,
             'note': note,
-            'docnaet_id': docnaet_id,
+            'docnaet_id': docnaet_id, # XXX ???
             'company_id': company_id,
             'next': next,
             }
+
+        item_ids = erp_pool.search([
+            ('name', '=', name),
+            ('docnaet_mode', '=', docnaet_mode),
+            ])
         if item_ids:
             openerp_id = item_ids[0]
             erp_pool.write(openerp_id, data) # TODO No update
         else:        
             openerp_id = erp_pool.create(data).id          
             print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
-        protocol[docnaet_id] = openerp_id
+        protocol[docnaet_id] = openerp_id # Mapping
     except:
         print "%s. Error %s: %s" % (i, csv_file.split('.')[0], name)    
+
+sys.exit() # XXX End of procedure
 
 # ---------
 # Tipologie
@@ -309,12 +239,16 @@ for line in lines:
     name = line[1].strip()
     note = line[2].strip()
     
-    item_ids = erp_pool.search([('name', '=', name)])
     data = {
+        'docnaet_mode': docnaet_mode,
         'name': name,
         'note': note,
         'docnaet_id': docnaet_id,
         }
+    item_ids = erp_pool.search([
+        ('name', '=', name),
+        ('docnaet_mode', '=', docnaet_mode),
+        ])
     if item_ids:
         openerp_id = item_ids[0]
         #erp_pool.write(openerp_id, data) # No update
@@ -323,16 +257,15 @@ for line in lines:
         print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
     tipology[docnaet_id] = openerp_id
 
-
 # -------
-# Nazioni
+# Nazioni > Partner
 # -------
 # TODO create a dict for name converter (IT > EN)
 filename = 'Nazioni.txt'
 print 'Import %s' % filename
 jump = False
-country = {}
-erp_pool = erp.ResCountry
+partner = {} # TODO partner
+erp_pool = erp.ResPartner
 csv_file = os.path.expanduser(
     os.path.join(path, filename))
 
@@ -358,82 +291,88 @@ for line in lines:
     # read fields:    
     docnaet_id = int(line[0])
     name = line[1].strip()
-    code =  hex(code_temp)[2:]
+    #code =  hex(code_temp)[2:]
     
-    item_ids = erp_pool.search([('name', '=', name)])
+    item_ids = erp_pool.search([
+        ('name', '=', name),
+        ])
     data = {
         'name': name,
-        'code': code,
+        #'code': code,
         'docnaet_id': docnaet_id,
+        
+        #'country_id': country.get(id_nazione, False),
+        #'docnaet_category_id': id_tipo, # direct
+        #'company_id': company_id,
+        # TODO docnaet_enable
         }
     if item_ids:
         openerp_id = item_ids[0]
         erp_pool.write(openerp_id, data) # No update
     else:        
-        try:
-            openerp_id = erp_pool.create(data).id # No creation only update: IT vs EN
-        except:
-            _logger.error('Error creating: %s' % code)
-            #continue
-        print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
+        # TODO riassociazione manuale:
+        #try:
+        #    openerp_id = erp_pool.create(data).id # No creation only update: IT vs EN
+        #except:
+        #    _logger.error('Error creating: %s' % code)
+        #    #continue
+        openerp_id = 1
+        print "%s. Not created %s: %s" % (i, csv_file.split('.')[0], name)    
         
-    country[docnaet_id] = openerp_id
+    partner[docnaet_id] = openerp_id
 sys.exit()
 
 # -------
-# Clienti
+# XXX NON CI SONO Clienti
 # -------
-filename = 'Clienti.txt'
-print 'Import %s' % filename
-jump = False
-partner = {}
-erp_pool = erp.ResPartner
-csv_file = os.path.expanduser(
-    os.path.join(path, filename))
+#filename = 'Clienti.txt'
+#print 'Import %s' % filename
+#jump = False
+#partner = {}
+#erp_pool = erp.ResPartner
+#csv_file = os.path.expanduser(
+#    os.path.join(path, filename))
 
-lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
-i = -header   
-tot_cols = False
-for line in lines:
-    if jump:
-        break
-
-    i += 1
-    if i <= 0:
-        continue # jump intestation
-    if not tot_cols: # save for test 
-        tot_cols = len(line)
-    if i % 100 == 0:
-        print 'Import %s #%s' % (filename, i)
-    
-    if tot_cols != len(line):
-        print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
-        continue
-    
-    # read fields:    
-    docnaet_id = int(line[0])
-    name = line[1].strip()
-    id_nazione = int(line[9].strip() or '0')
-    id_tipo = int(line[10].strip() or '0')
-    
-    item_ids = erp_pool.search([('name', '=', name)])
-    data = {
-        'name': name,
-        'docnaet_id': docnaet_id,
-        'country_id': country.get(id_nazione, False),
-        'docnaet_category_id': id_tipo, # direct
-        'company_id': company_id,
-        }
-    if item_ids:
-        openerp_id = item_ids[0]
-        erp_pool.write(openerp_id, data)
-    else:        
-        opener_id = False # TODO
-        data['from_docnaet'] = True # for mark customer
-        openerp_id = erp_pool.create(data).id # No creation only update: IT vs EN
-        print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
-        
-    partner[docnaet_id] = openerp_id
+#lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
+#i = -header   
+#tot_cols = False
+#for line in lines:
+#    if jump:
+#        break
+#    i += 1
+#    if i <= 0:
+#        continue # jump intestation
+#    if not tot_cols: # save for test 
+#        tot_cols = len(line)
+#    if i % 100 == 0:
+#        print 'Import %s #%s' % (filename, i)
+#    
+#    if tot_cols != len(line):
+#        print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
+#        continue
+#    # read fields:    
+#    docnaet_id = int(line[0])
+#    name = line[1].strip()
+#    id_nazione = int(line[9].strip() or '0')
+#    id_tipo = int(line[10].strip() or '0')
+#    item_ids = erp_pool.search([('name', '=', name)])
+#    data = {
+#        'name': name,
+#        'docnaet_id': docnaet_id,
+#        'country_id': country.get(id_nazione, False),
+#        'docnaet_category_id': id_tipo, # direct
+#        'company_id': company_id,
+#        }
+#    if item_ids:
+#        openerp_id = item_ids[0]
+#        erp_pool.write(openerp_id, data)
+#    else:        
+#        opener_id = False # TODO
+#        data['from_docnaet'] = True # for mark customer
+#        openerp_id = erp_pool.create(data).id # No creation only update: IT vs EN
+#        print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
+#        
+#    partner[docnaet_id] = openerp_id
 
 # ---------
 # Documenti 
@@ -498,7 +437,6 @@ for line in lines:
         type_id = tipology.get(type_code, False) # no warn if error
         user_id = user.get(user_code, 1) # No warning or error (set admin)
         partner_id = partner.get(partner_code, 1)
-        #company_id = company.get(company_code, 1)    
         
         # Create / Update operations:
         data = {        
@@ -519,10 +457,11 @@ for line in lines:
             'filename': file_name,
             'docnaet_id': docnaet_id,           
             'partner_id': partner_id,
+            'priority': priority,
             
             # TODO linked document!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             }
-        item_ids = erp_pool.search([('docnaet_id', '=', docnaet_id)])
+        item_ids = erp_pool.search([('docnaet_id', '=', docnaet_id)]) # labnaet
         if item_ids:
             openerp_id = item_ids[0]
             erp_pool.write(openerp_id, data) # No update
@@ -531,7 +470,6 @@ for line in lines:
             #data['id'] = openerp_id # preserve ID
             openerp_id = erp_pool.create(data).id           
             # Force same ID:
-            erp_pool.force_id_from_docnaet(openerp_id, docnaet_id)
             #erp_pool.write(openerp_id, {
             #    'id': docnaet_id,
             #    })    
@@ -541,13 +479,13 @@ for line in lines:
         print "%s. Error document import: %s" % (i, data)
         print sys.exc_info()
 
-print "Remember to change labnaet_id sequence after!!!"
+print 'Remember to change labnaet_id sequence after!!!'
+print 'Remember to force workflow when migrate'
 
 # -----------------------------------------------------------------------------
 #                                Not migration
 # -----------------------------------------------------------------------------
 # NOTE: 
 # not imported (see res.partner category)
-# Supporti 
 # Prodotti
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

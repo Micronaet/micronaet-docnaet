@@ -1,6 +1,6 @@
 #!/bin/bash
-for table in $(mdb-tables docnaet.mdb)
+for table in $(mdb-tables labnaet.mdb)
    do 
-      mdb-export docnaet.mdb ${table} > ./import/${table}.txt
+      mdb-export labnaet.mdb ${table} > ./import/${table}.txt
    done   
    
