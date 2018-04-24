@@ -327,7 +327,6 @@ for line in lines:
 # --------------------------------------
 # Categorie Clienti > Categorie Prodotti
 # --------------------------------------
-import pdb; pdb.set_trace()
 filename = 'Tipi.txt'
 print 'Import %s' % filename
 product_type = {}
@@ -408,7 +407,7 @@ for line in lines:
     type_code = int(line[10].strip() or '0') # wrong: type of partner
     
     # Get om relation: 
-    partner_id = partner.get(partner_code, 1) # Pan Chemicals if not present
+    partner_id = partner.get(partner_code, False)
     type_id = product_type.get(type_code, False)
     
     item_ids = erp_pool.search([('name', '=', name)])
@@ -456,13 +455,15 @@ for line in lines:
             print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
             continue
         
+        # ---------------------------------------------------------------------
         # read fields:    
+        # ---------------------------------------------------------------------
         docnaet_id = prepare_int(line[0])     
         protocol_code = prepare_int(line[1])
         language_code = prepare_int(line[2])
         type_code = prepare_int(line[3])
         support_code = prepare_int(line[4])
-        partner_code = prepare_int(line[5])
+        partner_code = prepare_int(line[5]) # product
         name = prepare_string(line[6]) or '...'
         description = prepare_string(line[7])
         note = line[8].strip() #prepare_string(line[8])
@@ -480,9 +481,12 @@ for line in lines:
         date_create = prepare_date(line[20])
         #control = line[21].strip()
         extension = prepare_string(line[22]).lower()
-        product_code = prepare_int(line[23])
+        product_code = prepare_int(line[23]) # empty
         ## NO old_id = line[24].strip()
         
+        # ---------------------------------------------------------------------
+        # Relations:
+        # ---------------------------------------------------------------------
         # Convert code in ID:
         protocol_id = protocol.get(protocol_code, False)
         if not protocol_id:
@@ -492,13 +496,16 @@ for line in lines:
         language_id = language.get(language_code, False) # no warn if error
         type_id = tipology.get(type_code, False) # no warn if error
         user_id = 1 # TODO USE: users.get(user_code, 1) # No warning or error (set admin)
-        partner_id = partner.get(partner_code, 1)
+        #partner_id = partner.get(partner_code, 1)
+        partner_id = False
+        product_id = product.get(partner_code, False)
         
         # Create / Update operations:
         data = {        
             'docnaet_mode': docnaet_mode,
             'company_id': company_id,
             'partner_id': partner_id,
+            'product_id': product_id,
             'user_id': user_id,
             'protocol_id': protocol_id,
             'language_id': language_id,
@@ -534,7 +541,7 @@ for line in lines:
             #    'id': docnaet_id,
             #    })    
             print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)            
-        document[docnaet_id] = openerp_id # XXX change if works!!!!!!!!!!!!!!!!
+        #document[docnaet_id] = openerp_id # XXX change if works!!!!!!!!!!!!!!!!
     except:
         print "%s. Error document import: %s" % (i, data)
         #print sys.exc_info()
