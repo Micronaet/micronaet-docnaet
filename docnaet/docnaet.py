@@ -174,6 +174,8 @@ class DocnaetProduct(orm.Model):
         'docnaet_category_id': fields.many2one(
             'product.product.docnaet', 'Docnaet category'),
         'partner_id': fields.many2one('res.partner', 'Partner'),
+        #'product_id': fields.many2one('product.product', 'Product', 
+        #    help='Link to original product data'),
         'note': fields.text('Note'),
         }
 
