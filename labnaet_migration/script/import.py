@@ -261,7 +261,7 @@ for line in lines:
 # -----------------
 # Nazioni > Partner
 # -----------------
-filename = 'Nazioni.txt'
+filename = 'Nazioni.txt' # Partner
 print 'Import %s' % filename
 jump = False
 partner = {} # TODO partner
@@ -327,15 +327,16 @@ for line in lines:
 # --------------------------------------
 # Categorie Clienti > Categorie Prodotti
 # --------------------------------------
+import pdb; pdb.set_trace()
 filename = 'Tipi.txt'
 print 'Import %s' % filename
 product_type = {}
-erp_pool = erp.DocnaetType
+erp_pool = erp.ProductProductDocnaet
 csv_file = os.path.expanduser(
     os.path.join(path, filename))
 
 lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
-i = - header   
+i = - header
 tot_cols = False
 for line in lines:
     i += 1
@@ -354,33 +355,31 @@ for line in lines:
     note = line[2].strip()
     
     data = {
-        'docnaet_mode': docnaet_mode,
         'name': name,
         'note': note,
         'docnaet_id': docnaet_id,
         }
     item_ids = erp_pool.search([
         ('name', '=', name),
-        ('docnaet_mode', '=', docnaet_mode),
         ])
     if item_ids:
         openerp_id = item_ids[0]
-        #erp_pool.write(openerp_id, data) # No update
-        print "%s. Yet present not updated %s: %s" % (
+        erp_pool.write(openerp_id, data) # No update
+        print "%s. Yet present updated %s: %s" % (
             i, csv_file.split('.')[0], name)    
     else:        
         openerp_id = erp_pool.create(data).id      
         print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)    
-    tipology[docnaet_id] = openerp_id
+    product_type[docnaet_id] = openerp_id
 
 # ------------------
 # Clienti > Prodotti
 # ------------------
-filename = 'Clienti.txt'
+filename = 'Clienti.txt' # Real: prodotti
 print 'Import %s' % filename
 jump = False
-partner = {}
-erp_pool = erp.ResPartner
+product = {}
+erp_pool = erp.DocnaetProduct
 csv_file = os.path.expanduser(
     os.path.join(path, filename))
 
@@ -401,29 +400,33 @@ for line in lines:
     if tot_cols != len(line):
         print "%s. Jump line: different cols %s > %s" % (tot_cols, len(line))
         continue
-    # read fields:    
+        
+    # Read fields:
     docnaet_id = int(line[0])
     name = line[1].strip()
-    id_nazione = int(line[9].strip() or '0')
-    id_tipo = int(line[10].strip() or '0')
+    partner_code = int(line[9].strip() or '0') # wrong: nation
+    type_code = int(line[10].strip() or '0') # wrong: type of partner
+    
+    # Get om relation: 
+    partner_id = partner.get(partner_code, 1) # Pan Chemicals if not present
+    type_id = product_type.get(type_code, False)
+    
     item_ids = erp_pool.search([('name', '=', name)])
     data = {
         'name': name,
         'docnaet_id': docnaet_id,
-        'country_id': country.get(id_nazione, False),
-        'docnaet_category_id': id_tipo, # direct
-        'company_id': company_id,
+        'docnaet_category_id': type_id,
+        'partner_id': partner_id,
+        #'company_id': company_id,
         }
     if item_ids:
         openerp_id = item_ids[0]
         erp_pool.write(openerp_id, data)
+        print "%s. Update product %s: %s" % (i, csv_file.split('.')[0], name)    
     else:        
-        opener_id = False # TODO
-        data['from_docnaet'] = True # for mark customer
-        openerp_id = erp_pool.create(data).id # No creation only update: IT vs EN
-        print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)    
-        
-    partner[docnaet_id] = openerp_id
+        openerp_id = erp_pool.create(data).id
+        print "%s. To create %s: %s" % (i, csv_file.split('.')[0], name)        
+    product[docnaet_id] = openerp_id
 
 # ---------
 # Documenti 

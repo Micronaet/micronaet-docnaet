@@ -173,6 +173,7 @@ class DocnaetProduct(orm.Model):
         'default_code': fields.char('Default code', size=64),            
         'docnaet_category_id': fields.many2one(
             'product.product.docnaet', 'Docnaet category'),
+        'partner_id': fields.many2one('res.partner', 'Partner'),
         'note': fields.text('Note'),
         }
 
