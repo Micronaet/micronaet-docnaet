@@ -111,17 +111,9 @@ partner_type = {}
 language = {
     11: 1, # 'Italiano'
     12: 3, # 'Francese'
-    13: 1, # 'Tedesco' > Italiano
-    17: 1, # 'Inglese' > Italiano
-    18: 1, # 'Spagnolo' > Italiano
-    
-    Francese 			
-	Inglese 			
-	Italiano 			
-	Polacco 			
-	Portoghese 			
-	Spagnolo 			
-	Tedesco
+    13: 4, # 'Tedesco'
+    17: 2, # 'Inglese'
+    18: 5, # 'Spagnolo'
     }
 
 users = {

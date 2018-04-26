@@ -42,6 +42,7 @@ port = config.get('openerp', 'port')
 database = config.get('openerp', 'database')
 username = config.get('openerp', 'username')
 password = config.get('openerp', 'password')
+docnaet_mode = 'docnaet' # TODO parametrize in config file
 
 # Access:
 path_database = config.get('mdb', 'path')
@@ -227,7 +228,7 @@ convert_db = {
         
     'Documenti': [
         'DocnaetDocument',
-        [],
+        [('docnaet_mode', '=', docnaet_mode)], # Docnaet / Labnaet mode
         (
             'record.id', 'mo(record.protocol_id)', 'mo(record.partner_id)', 
             'mo(record.language_id)', 'mo(record.user_id)', 
@@ -248,6 +249,7 @@ convert_db = {
             ),
         ],
     }
+
 if mode == 'update':
     last_update = datetime.now() - timedelta(days=update_period)
     
