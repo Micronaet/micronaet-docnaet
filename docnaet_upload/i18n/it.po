@@ -6,15 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-18 10:38+0000\n"
-"PO-Revision-Date: 2018-01-18 11:39+0100\n"
+"POT-Creation-Date: 2018-06-29 14:11+0000\n"
+"PO-Revision-Date: 2018-06-29 16:18+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: it\n"
 "X-Generator: Poedit 1.6.10\n"
 
 #. module: docnaet_upload
@@ -41,6 +40,7 @@ msgstr "Impostazioni di default:"
 
 #. module: docnaet_upload
 #: model:ir.ui.menu,name:docnaet_upload.docnaet_document_upload_menu
+#: model:ir.ui.menu,name:docnaet_upload.labnaet_document_upload_menu
 msgid "Upload document"
 msgstr "Upload documenti"
 
@@ -55,19 +55,19 @@ msgid "Document upload file"
 msgstr "Upload file documenti"
 
 #. module: docnaet_upload
-#: view:docnaet.document.upload.wizard:0
-msgid "Filter partner country..."
-msgstr "Filtro nazione cliente..."
+#: selection:docnaet.document.upload.wizard,docnaet_mode:0
+msgid "Docnaet"
+msgstr "Docnaet"
 
 #. module: docnaet_upload
 #: view:docnaet.document.upload.wizard:0
-msgid "Files:"
-msgstr "Documenti:"
+msgid "Filter partner name..."
+msgstr "Filtro nome cliente..."
 
 #. module: docnaet_upload
 #: field:docnaet.document.upload.wizard,default_partner_id:0
 msgid ">> Default partner"
-msgstr ">> Partner predefinito"
+msgstr ">> Default partner"
 
 #. module: docnaet_upload
 #: field:docnaet.document.upload.file,to_import:0
@@ -80,9 +80,9 @@ msgid "Type"
 msgstr "Tipo"
 
 #. module: docnaet_upload
-#: field:docnaet.document.upload.wizard,document_ids:0
-msgid "Files"
-msgstr "Files"
+#: view:docnaet.document.upload.wizard:0
+msgid "Docnaet folder status:"
+msgstr "Stato cartella docnaet:"
 
 #. module: docnaet_upload
 #: field:docnaet.document.upload.wizard,assign_protocol:0
@@ -95,22 +95,28 @@ msgid "Partner name"
 msgstr "Nome partner"
 
 #. module: docnaet_upload
+#: selection:docnaet.document.upload.wizard,docnaet_mode:0
+msgid "Labnaet"
+msgstr "Labnaet"
+
+#. module: docnaet_upload
 #: view:docnaet.document.upload.wizard:0
 msgid "Riassegna"
 msgstr "Riassegna"
 
 #. module: docnaet_upload
 #: model:ir.actions.act_window,name:docnaet_upload.action_docnaet_my_document_to
-#: protocol_tree
-#: model:ir.ui.menu,name:docnaet_upload.menu_docnaet_my_document_to protocol
+#: protocol_docnaet_tree protocol_labnaet_tree
+#: model:ir.ui.menu,name:docnaet_upload.menu_docnaet_my_document_to_protocol
+#: model:ir.ui.menu,name:docnaet_upload.menu_labnaet_my_document_to_protocol
 msgid "Uploaded to confirm"
-msgstr "Uploaded to confirm"
+msgstr "Caricamenti da confermare"
 
 #. module: docnaet_upload
 #: view:docnaet.document.upload.wizard:0
 #: model:ir.model,name:docnaet_upload.model_docnaet_document_upload_wizard
 msgid "Document upload"
-msgstr "Upload documenti"
+msgstr "Caricamento documenti"
 
 #. module: docnaet_upload
 #: field:docnaet.document.upload.wizard,reassign_confirm:0
@@ -118,29 +124,34 @@ msgid "Confirm after reassign"
 msgstr "Conferma dopo il riassegnamento"
 
 #. module: docnaet_upload
-#: field:docnaet.document.upload.file,fullname:0
-msgid "Full name"
-msgstr "Nome completo"
-
-#. module: docnaet_upload
-#: model:ir.actions.act_window,name:docnaet_upload.action_docnaet_document_upload
-msgid "Docnaet document upload"
-msgstr "Upload documenti"
-
-#. module: docnaet_upload
 #: field:docnaet.document,uploaded:0
 msgid "Uploaded"
 msgstr "Caricato"
 
 #. module: docnaet_upload
-#: view:docnaet.document.upload.wizard:0
-msgid "Folder status:"
-msgstr "Stato cartella:"
+#: field:docnaet.document.upload.wizard,file_mode:0
+msgid "File mode"
+msgstr "Modalità file"
+
+#. module: docnaet_upload
+#: model:ir.actions.act_window,name:docnaet_upload.action_docnaet_document_upload
+msgid "Docnaet document upload"
+msgstr "Caricamento documenti"
+
+#. module: docnaet_upload
+#: field:docnaet.document.upload.wizard,document_ids:0
+msgid "Files"
+msgstr "Files"
+
+#. module: docnaet_upload
+#: field:docnaet.document.upload.wizard,docnaet_mode:0
+msgid "Docnaet mode"
+msgstr "Modalità Docnaet"
 
 #. module: docnaet_upload
 #: view:docnaet.document.upload.wizard:0
-msgid "Filter partner name..."
-msgstr "Filtro nome client..."
+msgid "Labnaet folder status:"
+msgstr "Stato cartella Labnaet"
 
 #. module: docnaet_upload
 #: field:docnaet.document.upload.wizard,default_language_id:0
@@ -163,14 +174,19 @@ msgid "Reassign mode"
 msgstr "Modalità riassegnamento"
 
 #. module: docnaet_upload
-#: view:docnaet.document.upload.wizard:0
-msgid "Upload"
-msgstr "Upload"
+#: field:docnaet.document.upload.wizard,default_product_id:0
+msgid "Product"
+msgstr "Prodotto"
 
 #. module: docnaet_upload
 #: view:docnaet.document.upload.wizard:0
-msgid "Select file:"
-msgstr "Seleziona file:"
+msgid "Upload"
+msgstr "Caricamento"
+
+#. module: docnaet_upload
+#: model:ir.actions.act_window,name:docnaet_upload.action_labnaet_document_upload
+msgid "Labnaet document upload"
+msgstr "Caricamento documenti Labnaet"
 
 #. module: docnaet_upload
 #: field:docnaet.document.upload.wizard,mode:0
@@ -208,6 +224,20 @@ msgid "Partial"
 msgstr "Parziale"
 
 #. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
+msgid "Filter partner country..."
+msgstr "Filtro nazione cliente..."
+
+#. module: docnaet_upload
+#: help:docnaet.document.upload.wizard,docnaet_mode:0
+msgid ""
+"Usually document management, but for future improvement also for manage "
+"other docs"
+msgstr ""
+"Normalmente gestiona documentale, in un futuro verrà integrata con la "
+"gestione di altri documenti"
+
+#. module: docnaet_upload
 #: model:ir.model,name:docnaet_upload.model_docnaet_document
 msgid "Docnaet document"
 msgstr "Documento docnaet"
@@ -223,14 +253,24 @@ msgid "Partner Filter:"
 msgstr "Filtro partner:"
 
 #. module: docnaet_upload
+#: field:docnaet.document.upload.file,fullname:0
+msgid "Full name"
+msgstr "Nome completo"
+
+#. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
+msgid "Docnaet select file:"
+msgstr "Docnaet selezione file:"
+
+#. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
+msgid "Files:"
+msgstr "Documenti:"
+
+#. module: docnaet_upload
 #: field:docnaet.document.upload.wizard,default_user_id:0
 msgid "User"
 msgstr "Utente"
-
-#. module: docnaet_upload
-#: field:docnaet.document.upload.wizard,file_mode:0
-msgid "File mode"
-msgstr "Modalità file"
 
 #. module: docnaet_upload
 #: view:docnaet.document.upload.wizard:0
@@ -241,3 +281,8 @@ msgstr "Annulla"
 #: model:ir.actions.act_window,name:docnaet_upload.act_docnaet_document_reassign_wizard
 msgid "Riassegna caratteristiche"
 msgstr "Riassegna caratteristiche"
+
+#. module: docnaet_upload
+#: view:docnaet.document.upload.wizard:0
+msgid "Labnaet select file:"
+msgstr "Labnaet selezione file:"
