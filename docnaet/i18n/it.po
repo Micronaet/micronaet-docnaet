@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-18 10:24+0000\n"
-"PO-Revision-Date: 2018-01-18 11:26+0100\n"
+"POT-Creation-Date: 2018-06-29 13:55+0000\n"
+"PO-Revision-Date: 2018-06-29 16:03+0100\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,15 +28,40 @@ msgid "Open document"
 msgstr "Apri documento"
 
 #. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Evemelt"
+msgstr "Evemelt"
+
+#. module: docnaet
 #: model:ir.model,name:docnaet.model_docnaet_document_import_wizard
 msgid "Document import"
 msgstr "Importa documento"
 
 #. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Borace Raffinato Gran. Deca"
+msgstr "Borace Raffinato Gran. Deca"
+
+#. module: docnaet
+#: selection:docnaet.document,docnaet_mode:0
+#: selection:docnaet.document.advanced.search.wizard,docnaet_mode:0
+#: selection:docnaet.document.duplication.wizard,docnaet_mode:0
+#: selection:docnaet.protocol,docnaet_mode:0
+#: selection:docnaet.type,docnaet_mode:0
 #: model:ir.module.category,name:docnaet.module_docnaet
+#: model:ir.ui.menu,name:docnaet.docnaet_document
 #: model:ir.ui.menu,name:docnaet.docnaet_root view:res.company:0
 msgid "Docnaet"
 msgstr "Docnaet"
+
+#. module: docnaet
+#: view:docnaet.document:0
+#: field:docnaet.document,docnaet_product_category_id:0
+#: field:docnaet.document.advanced.search.wizard,docnaet_product_category_id:0
+#: model:ir.model,name:docnaet.model_product_product_docnaet
+#: model:ir.ui.menu,name:docnaet.menu_product_product_docnaet
+msgid "Product category"
+msgstr "Categoria prodotto"
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -49,9 +74,19 @@ msgid "Template"
 msgstr "Modello"
 
 #. module: docnaet
-#: model:ir.ui.menu,name:docnaet.docnaet_document
-msgid "Document"
-msgstr "Documento"
+#: model:docnaet.product,name:0
+msgid "Tetraborato di potassio"
+msgstr "Tetraborato di potassio"
+
+#. module: docnaet
+#: view:docnaet.document:0 selection:docnaet.document,state:0
+msgid "Timed"
+msgstr "A tempo"
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Rame solfato zoo"
+msgstr "Rame solfato zoo"
 
 #. module: docnaet
 #: model:res.groups,name:docnaet.group_docnaet_agent
@@ -60,9 +95,11 @@ msgstr "Agente docnaet"
 
 #. module: docnaet
 #: view:docnaet.document.advanced.search.wizard:0
-#: model:ir.actions.act_window,name:docnaet.action_document_advanced_search
+#: model:ir.actions.act_window,name:docnaet.action_document_advanced_search_docnaet
+#: model:ir.actions.act_window,name:docnaet.action_document_advanced_search_labnaet
 #: model:ir.model,name:docnaet.model_docnaet_document_advanced_search_wizard
 #: model:ir.ui.menu,name:docnaet.docnaet_document_advanced_search
+#: model:ir.ui.menu,name:docnaet.labnaet_document_advanced_search
 msgid "Advanced search"
 msgstr "Ricerca avanzata"
 
@@ -72,9 +109,19 @@ msgid "duplicated"
 msgstr "duplicato"
 
 #. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Rame solfato cristalli medi"
+msgstr "Rame solfato cristalli medi"
+
+#. module: docnaet
 #: view:docnaet.document:0
 msgid "Linked objects"
 msgstr "Oggetti collegati"
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Soda caustica microperle"
+msgstr "Soda caustica microperle"
 
 #. module: docnaet
 #: field:docnaet.document,company_id:0
@@ -85,6 +132,7 @@ msgstr "Azienda"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_document_draft_tree
+#: model:ir.actions.act_window,name:docnaet.action_labnaet_document_draft_tree
 msgid "Draft documents"
 msgstr "Documento bozza"
 
@@ -94,9 +142,24 @@ msgid "Documenti remoti"
 msgstr "Documenti remoti"
 
 #. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Pallets"
+msgstr "Bancali"
+
+#. module: docnaet
 #: view:res.partner:0
 msgid "Set Docnaet OFF"
-msgstr "Imposta Docnaet OFF"
+msgstr ">> Docnaet OFF"
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Sodio bicarbonato"
+msgstr "Sodio bicarbonato"
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Zaclon ZR Flux"
+msgstr "Zaclon ZR Flux"
 
 #. module: docnaet
 #: selection:docnaet.document,priority:0
@@ -110,9 +173,38 @@ msgid "ISO Code"
 msgstr "Codice ISO"
 
 #. module: docnaet
+#: model:res.groups,name:docnaet.group_docnaet_mode
+msgid "Docnaet mode management"
+msgstr "Gestione modalità docnaet"
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Acidi Bicarbossilici"
+msgstr "Acidi Bicarbossilici"
+
+#. module: docnaet
 #: field:docnaet.document,filename:0
 msgid "File name"
 msgstr "Nome file"
+
+#. module: docnaet
+#: view:docnaet.document:0
+msgid "Doc info"
+msgstr "Doc info"
+
+#. module: docnaet
+#: view:docnaet.document:0 field:docnaet.document,protocol_id:0
+#: field:docnaet.document.advanced.search.wizard,protocol_id:0
+#: field:docnaet.document.duplication.wizard,protocol_id:0
+#: field:docnaet.protocol,name:0 field:docnaet.protocol.template,protocol_id:0
+#: model:ir.ui.menu,name:docnaet.docnaet_administration_protocol
+msgid "Protocol"
+msgstr "Protocollo"
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Zinco/Ammonio cloruro"
+msgstr "Zinco/Ammonio cloruro"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,deadline_month:0
@@ -125,13 +217,15 @@ msgid "Link OpenERP document"
 msgstr "Collega documento OpenERP"
 
 #. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,protocol_id:0
-#: field:docnaet.document.advanced.search.wizard,protocol_id:0
-#: field:docnaet.document.duplication.wizard,protocol_id:0
-#: field:docnaet.protocol,name:0 field:docnaet.protocol.template,protocol_id:0
-#: model:ir.ui.menu,name:docnaet.docnaet_administration_protocol
-msgid "Protocol"
-msgstr "Protocollo"
+#: selection:docnaet.document,priority:0
+#: selection:docnaet.document.advanced.search.wizard,priority:0
+msgid "Low"
+msgstr "Bassa"
+
+#. module: docnaet
+#: view:docnaet.product:0
+msgid "Group By..."
+msgstr "Raggruppa per..."
 
 #. module: docnaet
 #: view:docnaet.document.advanced.search.wizard:0
@@ -152,6 +246,7 @@ msgstr "Documento padre originale dopo questa duplicazione"
 #. module: docnaet
 #: field:docnaet.document,deadline:0
 #: model:ir.ui.menu,name:docnaet.docnaet_document_deadline
+#: model:ir.ui.menu,name:docnaet.labnaet_document_deadline
 msgid "Deadline"
 msgstr "Scadenza"
 
@@ -163,6 +258,7 @@ msgstr "Dalla data"
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,partner_id:0
 #: field:docnaet.document.advanced.search.wizard,partner_id:0
+#: view:docnaet.product:0 field:docnaet.product,partner_id:0
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_partner_form
 #: model:ir.model,name:docnaet.model_res_partner
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_partner
@@ -171,14 +267,19 @@ msgstr "Partner"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_my_document_tree
+#: model:ir.actions.act_window,name:docnaet.action_labnaet_my_document_tree
 msgid "My Documents"
 msgstr "I miei documenti"
 
 #. module: docnaet
-#: selection:docnaet.document,priority:0
-#: selection:docnaet.document.advanced.search.wizard,priority:0
-msgid "Low"
-msgstr "Bassa"
+#: model:docnaet.product,name:0
+msgid "Ossido di Zinco 99.9 - Pharma"
+msgstr "Ossido di Zinco 99.9 - Pharma"
+
+#. module: docnaet
+#: view:docnaet.document:0
+msgid "Document linked!"
+msgstr "Documento collegato!"
 
 #. module: docnaet
 #: view:docnaet.document:0 selection:docnaet.document,state:0
@@ -187,6 +288,7 @@ msgstr "Confermato"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_document_tree
+#: model:ir.actions.act_window,name:docnaet.action_labnaet_document_tree
 msgid "Documents"
 msgstr "Documenti"
 
@@ -196,10 +298,9 @@ msgid "Child document duplicated from this"
 msgstr "Documenti figlio duplicati da questo"
 
 #. module: docnaet
-#: field:docnaet.document,priority:0
-#: field:docnaet.document.advanced.search.wizard,priority:0
-msgid "Priority"
-msgstr "Priorità"
+#: model:ir.model,name:docnaet.model_docnaet_product
+msgid "Docnaet Product"
+msgstr "Prodotto docnaet"
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -222,17 +323,20 @@ msgid "Company docnaet"
 msgstr "Azienda docnaet"
 
 #. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Antischiuma siliconico B10"
+msgstr "Antischiuma siliconico B10"
+
+#. module: docnaet
 #: field:docnaet.document,docnaet_extension:0
 #: field:docnaet.document.advanced.search.wizard,docnaet_extension:0
 msgid "Ext."
 msgstr "Est."
 
 #. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,type_id:0
-#: field:docnaet.document.advanced.search.wizard,type_id:0
-#: field:docnaet.type,name:0
-msgid "Type"
-msgstr "Tipo"
+#: model:docnaet.product,name:0
+msgid "Pallets 100x120"
+msgstr "Pallets 100x120"
 
 #. module: docnaet
 #: field:docnaet.document,deadline_info:0
@@ -264,6 +368,7 @@ msgstr "Lingua docnaet"
 
 #. module: docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_document_my_document
+#: model:ir.ui.menu,name:docnaet.labnaet_document_my_document
 msgid "My document"
 msgstr "Mio documento"
 
@@ -295,6 +400,12 @@ msgid "Partner category"
 msgstr "Categoria partner"
 
 #. module: docnaet
+#: field:docnaet.document,number:0
+#: field:docnaet.document.advanced.search.wizard,number:0
+msgid "N."
+msgstr "N."
+
+#. module: docnaet
 #: help:res.company,docnaet_path:0
 msgid "Docnaet root path in file system for store docs"
 msgstr "Percorso base del file system per deposito documenti"
@@ -315,24 +426,14 @@ msgid "Extension"
 msgstr "Estensione"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Scad."
-msgstr "Scad."
+#: help:res.company,labnaet_path:0
+msgid "Labnaet root path in file system for store docs"
+msgstr "Labnaet root path in file system for store docs"
 
 #. module: docnaet
-#: view:docnaet.document:0 selection:docnaet.document,state:0
-#: view:docnaet.document.advanced.search.wizard:0
-#: view:docnaet.document.duplication.wizard:0
-msgid "Cancel"
-msgstr "Annulla"
-
-#. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,language_id:0
-#: field:docnaet.document.advanced.search.wizard,language_id:0
-#: field:docnaet.language,name:0 field:docnaet.protocol.template,lang_id:0
-#: model:ir.ui.menu,name:docnaet.docnaet_administration_language
-msgid "Language"
-msgstr "Lingua"
+#: field:docnaet.document.advanced.search.wizard,keywords:0
+msgid "Keywords"
+msgstr "Parole chiave"
 
 #. module: docnaet
 #: view:docnaet.document.advanced.search.wizard:0
@@ -370,10 +471,19 @@ msgid "Next protocol"
 msgstr "Prossimo protocollo"
 
 #. module: docnaet
-#: field:docnaet.document,name:0
-#: field:docnaet.document.advanced.search.wizard,name:0
-msgid "Subject"
-msgstr "Oggetto"
+#: model:docnaet.product,name:0
+msgid "Potassio cloruro"
+msgstr "Potassio cloruro"
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Paraffina 56/58"
+msgstr "Paraffina 56/58"
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Benzotriazolo"
+msgstr "Benzotriazolo"
 
 #. module: docnaet
 #: field:res.company,docnaet_path:0
@@ -381,19 +491,32 @@ msgid "Docnaet path"
 msgstr "Percorso docnaet"
 
 #. module: docnaet
+#: field:docnaet.product,docnaet_category_id:0
+#: field:product.product.docnaet,name:0
 #: field:res.partner,docnaet_category_id:0
 msgid "Docnaet category"
 msgstr "Categoria docnaet"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Document linked!"
-msgstr "Documento collegato!"
+#: field:docnaet.document,name:0
+#: field:docnaet.document.advanced.search.wizard,name:0
+msgid "Subject"
+msgstr "Oggetto"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_remote_document_tree
 msgid "Remote documents"
 msgstr "Documenti remoti"
+
+#. module: docnaet
+#: view:docnaet.product:0
+msgid "Category"
+msgstr "Categoria"
+
+#. module: docnaet
+#: model:res.groups,name:docnaet.group_labnaet_admin
+msgid "Labnaet administrator"
+msgstr "Amministratore labnaet"
 
 #. module: docnaet
 #: model:res.groups,name:docnaet.group_docnaet_admin
@@ -413,27 +536,34 @@ msgid "Administration"
 msgstr "Amministrazione"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Doc info"
-msgstr "Doc info"
+#: model:docnaet.product,name:0
+msgid "Ammonio Cloruro"
+msgstr "Ammonio Cloruro"
+
+#. module: docnaet
+#: field:docnaet.product,default_code:0
+msgid "Default code"
+msgstr "Codice"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,note:0
 #: field:docnaet.document.advanced.search.wizard,note:0
 #: view:docnaet.language:0 field:docnaet.language,note:0
-#: view:docnaet.protocol:0 field:docnaet.protocol,note:0
-#: view:docnaet.protocol.template:0 field:docnaet.protocol.template,note:0
+#: view:docnaet.product:0 field:docnaet.product,note:0 view:docnaet.protocol:0
+#: field:docnaet.protocol,note:0 view:docnaet.protocol.template:0
+#: field:docnaet.protocol.template,note:0
 #: view:docnaet.protocol.template.program:0
 #: field:docnaet.protocol.template.program,note:0 view:docnaet.type:0
-#: field:docnaet.type,note:0 view:res.partner.docnaet:0
+#: field:docnaet.type,note:0 view:product.product.docnaet:0
+#: field:product.product.docnaet,note:0 view:res.partner.docnaet:0
 #: field:res.partner.docnaet,note:0
 msgid "Note"
 msgstr "Note"
 
 #. module: docnaet
-#: view:docnaet.document:0 selection:docnaet.document,state:0
-msgid "Timed"
-msgstr "A tempo"
+#: model:docnaet.product,name:0
+msgid "Soimul S 45/SIN"
+msgstr "Soimul S 45/SIN"
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -458,9 +588,14 @@ msgid "Draft state"
 msgstr "Stato bozza"
 
 #. module: docnaet
-#: model:ir.module.category,description:docnaet.module_docnaet
-msgid "Documaet document management group."
-msgstr "Gruppo gestore documenti"
+#: view:docnaet.document:0
+msgid "Timed state"
+msgstr "Stato a tempo"
+
+#. module: docnaet
+#: model:res.groups,comment:docnaet.group_docnaet_mode
+msgid "Manage docnaet mode for Docnaet and Labnaet"
+msgstr "Gestisce modalità docnaet per Docnaet e Labnaet"
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -472,6 +607,16 @@ msgstr "Stato"
 #: selection:docnaet.document.advanced.search.wizard,priority:0
 msgid "Normal"
 msgstr "Normale"
+
+#. module: docnaet
+#: view:docnaet.document.advanced.search.wizard:0
+msgid "Docnaet advanced search:"
+msgstr "Ricerca avanzata Docnaet:"
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Aciso Fosforico tecn. 75% 53Be"
+msgstr "Aciso Fosforico tecn. 75% 53Be"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,user_id:0
@@ -487,9 +632,14 @@ msgid "Date"
 msgstr "Data"
 
 #. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Verserve S (Idrossilamina Solfato)"
+msgstr "Verserve S (Idrossilamina Solfato)"
+
+#. module: docnaet
 #: view:res.partner:0
 msgid "Set Docnaet ON"
-msgstr "Imposta Docnaet ON"
+msgstr ">> Docnaet ON"
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -502,15 +652,36 @@ msgid "To deadline"
 msgstr "Alla scadenza"
 
 #. module: docnaet
+#: model:ir.actions.act_window,name:docnaet.action_product_product_docnaet
+#: view:product.product.docnaet:0
+msgid "Docnaet product category"
+msgstr "Categoria prodotto docnaet"
+
+#. module: docnaet
 #: view:docnaet.document:0
 msgid "Open document [R]"
 msgstr "Apri documento [R]"
 
 #. module: docnaet
-#: field:docnaet.document,number:0
-#: field:docnaet.document.advanced.search.wizard,number:0
-msgid "N."
-msgstr "N."
+#: field:docnaet.document,docnaet_mode:0
+#: field:docnaet.document.advanced.search.wizard,docnaet_mode:0
+#: field:docnaet.document.duplication.wizard,docnaet_mode:0
+#: field:docnaet.protocol,docnaet_mode:0 field:docnaet.type,docnaet_mode:0
+msgid "Docnaet mode"
+msgstr "Modalità Docnaet"
+
+#. module: docnaet
+#: view:docnaet.document:0 field:docnaet.document,language_id:0
+#: field:docnaet.document.advanced.search.wizard,language_id:0
+#: field:docnaet.language,name:0 field:docnaet.protocol.template,lang_id:0
+#: model:ir.ui.menu,name:docnaet.docnaet_administration_language
+msgid "Language"
+msgstr "Lingua"
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Pentaborato di Potassio"
+msgstr "Pentaborato di Potassio"
 
 #. module: docnaet
 #: model:ir.model,name:docnaet.model_res_company
@@ -529,9 +700,9 @@ msgid "Programs type"
 msgstr "Tipi di programma"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Timed state"
-msgstr "Stato a tempo"
+#: field:docnaet.document,labnaet_id:0
+msgid "Labnaet ID"
+msgstr "Labnaet ID"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_res_partner_docnaet
@@ -560,6 +731,12 @@ msgid "Duplicate document"
 msgstr "Documento duplicato"
 
 #. module: docnaet
+#: field:docnaet.document,priority:0
+#: field:docnaet.document.advanced.search.wizard,priority:0
+msgid "Priority"
+msgstr "Priorità"
+
+#. module: docnaet
 #: view:docnaet.protocol:0 view:docnaet.type:0
 msgid "Set visible"
 msgstr "Imposta visibile"
@@ -571,8 +748,37 @@ msgstr "Codice"
 
 #. module: docnaet
 #: model:res.groups,comment:docnaet.group_docnaet_user
+#: model:res.groups,comment:docnaet.group_labnaet_user
 msgid "User that access to documents."
 msgstr "Utente che accede ai documenti"
+
+#. module: docnaet
+#: help:docnaet.document,docnaet_mode:0
+#: help:docnaet.document.advanced.search.wizard,docnaet_mode:0
+#: help:docnaet.document.duplication.wizard,docnaet_mode:0
+#: help:docnaet.protocol,docnaet_mode:0 help:docnaet.type,docnaet_mode:0
+msgid ""
+"Usually document management, but for future improvement also for manage "
+"other docs"
+msgstr ""
+"Abitualmente gestione documenti, ma per futuri sviluppi anche utilizzato per "
+"gestire altri documenti"
+
+#. module: docnaet
+#: view:docnaet.product:0
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_product
+msgid "Docnaet product"
+msgstr "Prodotto docnaet"
+
+#. module: docnaet
+#: selection:docnaet.document,docnaet_mode:0
+#: selection:docnaet.document.advanced.search.wizard,docnaet_mode:0
+#: selection:docnaet.document.duplication.wizard,docnaet_mode:0
+#: selection:docnaet.protocol,docnaet_mode:0
+#: selection:docnaet.type,docnaet_mode:0
+#: model:ir.ui.menu,name:docnaet.labnaet_document
+msgid "Labnaet"
+msgstr "Labnaet"
 
 #. module: docnaet
 #: field:docnaet.document,search_partner_name:0
@@ -580,9 +786,16 @@ msgid "Search per Partner name"
 msgstr "Ricerca per nome partner"
 
 #. module: docnaet
-#: field:docnaet.document.advanced.search.wizard,keywords:0
-msgid "Keywords"
-msgstr "Keywords"
+#: model:ir.module.category,description:docnaet.module_docnaet
+msgid "Document document management group."
+msgstr "Gruppo gestione documenti "
+
+#. module: docnaet
+#: view:docnaet.document:0 selection:docnaet.document,state:0
+#: view:docnaet.document.advanced.search.wizard:0
+#: view:docnaet.document.duplication.wizard:0
+msgid "Cancel"
+msgstr "Annulla"
 
 #. module: docnaet
 #: field:res.company,next_fax:0
@@ -598,6 +811,11 @@ msgid "Docnaet type"
 msgstr "Tipo docnaet"
 
 #. module: docnaet
+#: help:docnaet.document,labnaet_id:0
+msgid "Secondary ID for document, keep data in different folder."
+msgstr "ID Secondario per documenti, tiene i dati in cartelle differenti"
+
+#. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_document_duplication
 msgid "Docnaet document duplication"
 msgstr "Docnaet duplicazione documenti"
@@ -606,6 +824,11 @@ msgstr "Docnaet duplicazione documenti"
 #: view:docnaet.document:0
 msgid "Reactivate"
 msgstr "Riattiva"
+
+#. module: docnaet
+#: view:docnaet.document:0
+msgid "Scadenza AAAA-MM"
+msgstr "Scadenza AAAA-MM"
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -624,19 +847,30 @@ msgid "high"
 msgstr "alta"
 
 #. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Rame Solfato neve 25% CU"
+msgstr "Rame Solfato neve 25% CU"
+
+#. module: docnaet
 #: view:docnaet.document:0
 msgid "Original document"
 msgstr "Documento originale"
 
 #. module: docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_document_document
+#: model:ir.ui.menu,name:docnaet.labnaet_document_document
 msgid "Documenti"
 msgstr "Documenti"
 
 #. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Dibutiltiourea"
+msgstr "Dibutiltiourea"
+
+#. module: docnaet
 #: field:docnaet.document.advanced.search.wizard,partner_name:0
 msgid "Partner name"
-msgstr "Partner name"
+msgstr "Nome partner"
 
 #. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,description:0
@@ -650,6 +884,18 @@ msgid "Docnaet remote user"
 msgstr "Utente remoto docnaet"
 
 #. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Soda caustica soluz. 30%"
+msgstr "Soda caustica soluz. 30%"
+
+#. module: docnaet
+#: view:docnaet.document:0 field:docnaet.document,type_id:0
+#: field:docnaet.document.advanced.search.wizard,type_id:0
+#: field:docnaet.type,name:0
+msgid "Type"
+msgstr "Tipo"
+
+#. module: docnaet
 #: model:res.groups,comment:docnaet.group_docnaet_agent
 msgid "Agent group for docnaet managerment"
 msgstr "Gruppo agenti amministrazione docnaet"
@@ -661,11 +907,13 @@ msgstr "Alla data"
 
 #. module: docnaet
 #: model:res.groups,comment:docnaet.group_docnaet_admin
+#: model:res.groups,comment:docnaet.group_labnaet_admin
 msgid "User that can see the configuration forms"
 msgstr "Utente che può utilizzare la parte di configurazione"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_deadline_document_tree
+#: model:ir.actions.act_window,name:docnaet.action_labnaet_deadline_document_tree
 msgid "My documents deadline"
 msgstr "Scadenze miei documenti"
 
@@ -675,12 +923,29 @@ msgid "Not used"
 msgstr "Non usato"
 
 #. module: docnaet
+#: field:docnaet.product,name:0
+msgid "Name"
+msgstr "Nome"
+
+#. module: docnaet
+#: view:docnaet.document.advanced.search.wizard:0
+msgid "Labnaet advanced search:"
+msgstr "Labnaet ricerca avanzata:"
+
+#. module: docnaet
 #: view:docnaet.document:0 field:docnaet.document,country_id:0
 #: field:docnaet.document.advanced.search.wizard,country_id:0
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_country_form
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_country
 msgid "Country"
 msgstr "Nazione"
+
+#. module: docnaet
+#: view:docnaet.document:0 field:docnaet.document,product_id:0
+#: field:docnaet.document.advanced.search.wizard,product_id:0
+#: model:ir.ui.menu,name:docnaet.menu_docnaet_product
+msgid "Product"
+msgstr "Prodotto"
 
 #. module: docnaet
 #: view:docnaet.document:0
@@ -693,12 +958,22 @@ msgid "Docnaet partner category"
 msgstr "Categorie partner docnaet"
 
 #. module: docnaet
+#: model:res.groups,name:docnaet.group_labnaet_user
+msgid "Labnaet user"
+msgstr "Utente Labnaet"
+
+#. module: docnaet
+#: field:res.company,labnaet_path:0
+msgid "Labnaet path"
+msgstr "Percorso labnaet"
+
+#. module: docnaet
 #: view:docnaet.document:0
 msgid "Reassign"
 msgstr "Riassegna"
 
 #. module: docnaet
-#: view:docnaet.protocol.template.program:0
+#: view:docnaet.product:0 view:docnaet.protocol.template.program:0
 #: model:ir.model,name:docnaet.model_docnaet_protocol_template_program
 msgid "Docnaet program"
 msgstr "Programma docnaet"
@@ -707,6 +982,11 @@ msgstr "Programma docnaet"
 #: view:docnaet.document:0
 msgid "Duplicated in"
 msgstr "Duplicato in"
+
+#. module: docnaet
+#: selection:docnaet.type,docnaet_mode:0
+msgid "All"
+msgstr "Tutti"
 
 #. module: docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_type
@@ -726,13 +1006,23 @@ msgstr "Tipo di documento"
 
 #. module: docnaet
 #: view:docnaet.document:0
-msgid "Scadenza AAAA-MM"
-msgstr "Scadenza AAAA-MM"
+msgid "Scad."
+msgstr "Scad."
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Ammonio cloruro"
+msgstr "Ammonio cloruro"
 
 #. module: docnaet
 #: field:docnaet.document,private:0
 msgid "Private"
 msgstr "Privato"
+
+#. module: docnaet
+#: model:docnaet.product,name:0
+msgid "Bibutiltidurea"
+msgstr "Bibutiltidurea"
 
 #. module: docnaet
 #: view:docnaet.document:0
