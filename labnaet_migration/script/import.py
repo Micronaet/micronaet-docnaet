@@ -540,7 +540,7 @@ for line in lines:
             #    'id': docnaet_id,
             #    })    
             print "%s. Create %s: %s" % (i, csv_file.split('.')[0], name)            
-        #document[docnaet_id] = openerp_id # XXX change if works!!!!!!!!!!!!!!!!
+        #document[docnaet_id] = openerp_id # XXX change if works!!!!!!!!!!!!!!!
     except:
         print "%s. Error document import: %s" % (i, data)
         #print sys.exc_info()
