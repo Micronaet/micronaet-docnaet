@@ -279,6 +279,8 @@ client_mapping = {}
 for line in open('map_client.csv', 'r'): # TODO check filename if present
     line = line.strip()
     line_ids = line.split(';')
+    if len(line_ids) != 2:
+        continue
     client_mapping[line_ids[0]] = line_ids[1]
 import pdb; pdb.set_trace()
 
