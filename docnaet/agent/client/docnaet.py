@@ -42,17 +42,17 @@ else: # ends with [D] or nothing >> Docnaet
     #config_file = 'docnaet.cfg'
     pass # XXX Nothing for now
 
-# Read config file: XXX Manage error for file
-cfg_file = os.path.join(current_path, config_file)
-config = ConfigParser()
-config.read([cfg_file])
-
 # -----------------------------------------------------------------------------
 #                                Parameters
 # -----------------------------------------------------------------------------
 # A. Static:
 close_tab = False # TODO put in config file
 current_path = os.path.expanduser(os.path.dirname(__file__))
+
+# Read config file: XXX Manage error for file
+cfg_file = os.path.join(current_path, config_file)
+config = ConfigParser()
+config.read([cfg_file])
 
 # B. File cfg selected:
 
