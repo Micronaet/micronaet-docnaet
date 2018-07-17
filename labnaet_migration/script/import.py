@@ -293,7 +293,7 @@ for line in lines:
     name = line[1].strip()
     
     item_ids = erp_pool.search([
-        ('name', '=', name),
+        ('name', '=ilike', name),
         # No mode here (use same partner)!
         ])
     data = {
