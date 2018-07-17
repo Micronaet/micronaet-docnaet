@@ -10,6 +10,7 @@ from ConfigParser import ConfigParser
 # -----------------------------------------------------------------------------
 # Read second part of command:
 command_line = sys.argv[1] # LAN/Local or Labnaet/Docnaet
+command_line = command_line.rstrip('/') # remove trail /
 
 # -----------------------------------------------------------------------------
 # Check OS:
