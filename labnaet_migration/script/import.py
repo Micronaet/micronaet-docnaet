@@ -155,6 +155,7 @@ application = {}
 # ----------
 # Protocolli 
 # ----------
+import pdb; pdb.set_trace()
 filename = 'Protocolli.txt'
 print 'Import %s' % filename
 protocol = {}
@@ -211,6 +212,7 @@ for line in lines:
 # ---------
 # Tipologie
 # ---------
+import pdb; pdb.set_trace()
 filename = 'Tipologie.txt'
 print 'Import %s' % filename
 tipology = {}
@@ -261,6 +263,7 @@ for line in lines:
 # -----------------
 # Nazioni > Partner
 # -----------------
+import pdb; pdb.set_trace()
 filename = 'Nazioni.txt' # Partner
 print 'Import %s' % filename
 jump = False
@@ -327,6 +330,7 @@ for line in lines:
 # --------------------------------------
 # Categorie Clienti > Categorie Prodotti
 # --------------------------------------
+import pdb; pdb.set_trace()
 filename = 'Tipi.txt'
 print 'Import %s' % filename
 product_type = {}
@@ -374,6 +378,7 @@ for line in lines:
 # ------------------
 # Clienti > Prodotti
 # ------------------
+import pdb; pdb.set_trace()
 filename = 'Clienti.txt' # Real: prodotti
 print 'Import %s' % filename
 jump = False
@@ -430,13 +435,13 @@ for line in lines:
 # ---------
 # Documenti 
 # ---------
-print 'IN PRODUZIONE CAMBIARE SETTAGGIO UTENTE!'
+import pdb; pdb.set_trace()
+print 'IN PRODUZIONE CAMBIARE SETTAGGIO UTENTE!' # sui files?
 filename = 'Documenti.txt'
 print 'Import %s' % filename
 document = {}
 erp_pool = erp.DocnaetDocument
-csv_file = os.path.expanduser(
-    os.path.join(path, filename))
+csv_file = os.path.expanduser(os.path.join(path, filename))
 
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
 lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
@@ -545,6 +550,7 @@ for line in lines:
         print "%s. Error document import: %s" % (i, data)
         #print sys.exc_info()
 
+import pdb; pdb.set_trace()
 print 'Remember to change labnaet_id sequence after!!!'
 print 'Remember to force workflow when migrate'
 
