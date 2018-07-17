@@ -319,7 +319,7 @@ for line in lines:
         #    #continue
         openerp_id = 1 # XXX misseg ID!!!
         print "%s. Not created %s: %s" % (i, csv_file.split('.')[0], name)    
-        f_temp.write(u'%s\n' % name)
+        f_temp.write('{}\n'.format(name))
         
     partner[labnaet_id] = openerp_id
 # TODO update with mapping manual files    
