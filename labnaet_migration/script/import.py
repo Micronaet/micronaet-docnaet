@@ -155,7 +155,6 @@ application = {}
 # ----------
 # Protocolli 
 # ----------
-import pdb; pdb.set_trace()
 filename = 'Protocolli.txt'
 print 'Import %s' % filename
 protocol = {}
@@ -212,7 +211,6 @@ for line in lines:
 # ---------
 # Tipologie
 # ---------
-import pdb; pdb.set_trace()
 filename = 'Tipologie.txt'
 print 'Import %s' % filename
 tipology = {}
@@ -269,13 +267,12 @@ print 'Import %s' % filename
 jump = False
 partner = {} # TODO partner
 erp_pool = erp.ResPartner
-csv_file = os.path.expanduser(
-    os.path.join(path, filename))
-
+csv_file = os.path.expanduser(os.path.join(path, filename))
 lines = csv.reader(open(csv_file, 'rb'), delimiter=delimiter)   
 i = - header   
 tot_cols = False
 code_temp = 0 # TODO run direct first time!!
+f_temp = open('clienti_da_associare.csv', 'w')
 for line in lines:
     if jump:
         break
@@ -322,10 +319,12 @@ for line in lines:
         #    #continue
         openerp_id = 1 # XXX misseg ID!!!
         print "%s. Not created %s: %s" % (i, csv_file.split('.')[0], name)    
+        f_temp.write(u'%s\n' % name)
         
     partner[labnaet_id] = openerp_id
-    
 # TODO update with mapping manual files    
+sys.exit() # TODO remove
+    
 
 # --------------------------------------
 # Categorie Clienti > Categorie Prodotti
