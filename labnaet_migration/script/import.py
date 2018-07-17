@@ -276,7 +276,7 @@ f_temp = open('clienti_da_associare.csv', 'w')
 # Read client mapping:
 import pdb; pdb.set_trace()
 client_mapping = {}
-for line in open('map_client.csv', 'r'): # TODO check name
+for line in open('map_client.csv', 'r'): # TODO check filename if present
     line = line.strip()
     line_ids = line.split('|')
     client_mapping[line_ids[0]] = line_ids[1]
@@ -303,7 +303,7 @@ for line in lines:
     
     if name in client_mapping: # Remapped name:
         item_ids = erp_pool.search([
-            ('name', '=ilike', client_mapping[name]),
+            ('name', 'like', client_mapping[name]),
             ])
     else:
         item_ids = erp_pool.search([
@@ -324,14 +324,8 @@ for line in lines:
         erp_pool.write(openerp_id, data) # XXX update for enabling
         print "%s. Yet present updated %s: %s" % (
             i, csv_file.split('.')[0], name)    
-    else:        
-        # TODO riassociazione manuale:
-        #try:
-        #    openerp_id = erp_pool.create(data).id # No creation only update: IT vs EN
-        #except:
-        #    _logger.error('Error creating: %s' % code)
-        #    #continue
-        openerp_id = 1 # XXX misseg ID!!!
+    else: # not updated, use company
+        openerp_id = 1 # XXX missed ID!!!
         print "%s. Not created %s: %s" % (i, csv_file.split('.')[0], name)    
         f_temp.write('{}\n'.format(name))
         
