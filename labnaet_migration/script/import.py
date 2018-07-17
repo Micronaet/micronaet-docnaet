@@ -261,7 +261,6 @@ for line in lines:
 # -----------------
 # Nazioni > Partner
 # -----------------
-import pdb; pdb.set_trace()
 filename = 'Nazioni.txt' # Partner
 print 'Import %s' % filename
 jump = False
@@ -273,6 +272,16 @@ i = - header
 tot_cols = False
 code_temp = 0 # TODO run direct first time!!
 f_temp = open('clienti_da_associare.csv', 'w')
+
+# Read client mapping:
+import pdb; pdb.set_trace()
+client_mapping = {}
+for line in open('map_client.csv', 'r'): # TODO check name
+    line = line.strip()
+    line_ids = line.split('|')
+    client_mapping[line_ids[0]] = line_ids[1]
+import pdb; pdb.set_trace()
+
 for line in lines:
     if jump:
         break
@@ -292,13 +301,18 @@ for line in lines:
     labnaet_id = int(line[0]) # XXX Partner used labnaet ID in this procedure
     name = line[1].strip()
     
-    item_ids = erp_pool.search([
-        ('name', '=ilike', name),
-        # No mode here (use same partner)!
-        ])
+    if name in client_mapping: # Remapped name:
+        item_ids = erp_pool.search([
+            ('name', '=ilike', client_mapping[name]),
+            ])
+    else:
+        item_ids = erp_pool.search([
+            ('name', '=ilike', name),
+            ])
+        
     data = {
         'docnaet_enable': True,
-        'name': name,
+        #'name': name, # XXX not write (for remapped name)
         'labnaet_id': labnaet_id, # Docnaet yet done!
 
         #'code': code,
