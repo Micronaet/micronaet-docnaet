@@ -275,7 +275,7 @@ f_temp = open('clienti_da_associare.csv', 'w')
 
 # Read client mapping:
 client_mapping = {}
-for line in open('map_client.csv', 'r'): # TODO check filename if present
+for line in open('map_client.csv', 'r'):
     line = line.strip()
     line_ids = line.split(';')
     if len(line_ids) != 2:
@@ -330,9 +330,6 @@ for line in lines:
         f_temp.write('{}\n'.format(name))
         
     partner[labnaet_id] = openerp_id
-# TODO update with mapping manual files    
-sys.exit() # TODO remove
-    
 
 # --------------------------------------
 # Categorie Clienti > Categorie Prodotti
