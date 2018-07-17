@@ -274,7 +274,6 @@ code_temp = 0 # TODO run direct first time!!
 f_temp = open('clienti_da_associare.csv', 'w')
 
 # Read client mapping:
-import pdb; pdb.set_trace()
 client_mapping = {}
 for line in open('map_client.csv', 'r'): # TODO check filename if present
     line = line.strip()
@@ -282,7 +281,6 @@ for line in open('map_client.csv', 'r'): # TODO check filename if present
     if len(line_ids) != 2:
         continue
     client_mapping[line_ids[0]] = line_ids[1]
-import pdb; pdb.set_trace()
 
 for line in lines:
     if jump:
