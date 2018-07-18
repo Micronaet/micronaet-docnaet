@@ -56,5 +56,5 @@ for item_id in document_ids:
     erp.exec_workflow(
         'docnaet.document', 
         'document_draft_confirmed', 
-        [item_id])
+        item_id)
 
