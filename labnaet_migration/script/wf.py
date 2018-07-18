@@ -48,6 +48,7 @@ erp = erppeek.Client(
 document_pool = erp.DocnaetDocument
 document_ids = document_pool.search([('state', '=', 'draft')])
 i = 0
+import pdb; pdb.set_trace()
 for item_id in document_ids: 
     i += 1
     print i 
