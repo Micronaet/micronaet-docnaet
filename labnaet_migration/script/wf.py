@@ -44,14 +44,16 @@ erp = erppeek.Client(
     user=user,
     password=password,
     )
-import pdb; pdb.set_trace()
+
 document_pool = erp.DocnaetDocument
 document_ids = document_pool.search([('state', '=', 'draft')])
 i = 0
 for item_id in document_ids: 
     i += 1
     print i 
-    erp.execute_kw(
+    #erp.execute_kw(
+    import pdb; pdb.set_trace()
+    erp.exec_workflow(
         'docnaet.document', 
         'document_draft_confirmed', 
         [item_id])
