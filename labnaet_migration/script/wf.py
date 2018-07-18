@@ -51,8 +51,7 @@ i = 0
 for item_id in document_ids: 
     i += 1
     print i 
-    #erp.execute_kw(
-    import pdb; pdb.set_trace()
+
     erp.exec_workflow(
         'docnaet.document', 
         'document_draft_confirmed', 
