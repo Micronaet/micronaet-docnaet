@@ -55,9 +55,11 @@ i = 0
 for item_id in document_ids: 
     i += 1
     print i 
-
-    erp.exec_workflow(
-        'docnaet.document', 
-        'document_draft_confirmed', 
-        item_id)
-
+    try:
+        erp.exec_workflow(
+            'docnaet.document', 
+            'document_draft_confirmed', 
+            item_id)
+    except:
+        print 'errore', sys.exc_info()
+        continue
