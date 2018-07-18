@@ -558,6 +558,7 @@ import pdb; pdb.set_trace()
 print 'Remember to change labnaet_id sequence after!!!'
 print 'Remember to force workflow when migrate'
 
+#clientOdoo.exec_workflow(po._model_name, 'purchase_confirm', po.id)
 # -----------------------------------------------------------------------------
 #                                Not migration
 # -----------------------------------------------------------------------------
