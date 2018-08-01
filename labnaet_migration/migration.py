@@ -64,5 +64,14 @@ class DocnaetProduct(orm.Model):
     _columns = {        
         'docnaet_id': fields.integer('Docnaet ID migration'),         
         }
+
+class DocnaetDocument(orm.Model):
+    """ Model name: Docnaet document
+    """    
+    _inherit = 'docnaet.document'
+
+    _columns = {        
+        'old_protocol_id': fields.integer('Old protocol ID'),         
+        }
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
