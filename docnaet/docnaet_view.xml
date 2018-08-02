@@ -570,10 +570,6 @@
                 <field name="partner_id" filter_domain="[('partner_id','=',self)]" domain="[('docnaet_enable','=',True)]"/>
                 <field name="country_id" />
                 
-                <!--LABNAET EXTRA FILTER:-->
-                <field name="product_id" filter_domain="[('product_id','=',self)]" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
-                <field name="docnaet_product_category_id" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
-                
                 <!--<field name="docnaet_category_id" /> Cassandra want to remove-->
                 <!--<field name="user_id" filter_domain="[('user_id','=',self)]"/>-->
                 <field name="protocol_id" filter_domain="[('protocol_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
@@ -596,9 +592,58 @@
                     <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
                     <filter name="group_partner_category" string="Partner category" context="{'group_by': 'docnaet_category_id'}"/>
 
+                    <filter name="group_country" string="Country" context="{'group_by': 'country_id'}"/>
+                    <filter name="group_user" string="User" context="{'group_by': 'user_id'}"/>
+                    <filter name="group_protocol" string="Protocol" context="{'group_by': 'protocol_id'}"/>
+                    <filter name="group_program" string="Program" context="{'group_by': 'program_id'}"/>
+                    <filter name="group_extension" string="Extension" context="{'group_by': 'docnaet_extension'}"/>
+                    <filter name="group_type" string="Type" context="{'group_by': 'type_id'}"/>
+                    <filter name="group_language" string="Language" context="{'group_by': 'language_id'}"/>
+                    <filter string="Status" context="{'group_by': 'state'}" icon="terp-stock_effects-object-colorize"/>
+                </group>                
+           </search>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_docnaet_document_labnaet_search">
+        <field name="name">docnaet.document.labnaet.search</field>
+        <field name="model">docnaet.document</field>
+        <field name="priority" eval="40"/>
+        <field name="arch" type="xml">
+            <search string="Labnaet document" version="7.0">
+                <field name="number" />
+                <field name="date_month" string="Data AAAA-MM"/>
+                <field name="deadline_month" string="Scadenza AAAA-MM"/>
+                <field name="name" />
+                <field name="description" />
+                <field name="note" />
+                <field name="partner_id" filter_domain="[('partner_id','=',self)]" domain="[('docnaet_enable','=',True)]"/>
+                <field name="country_id" />
+                
+                <!--LABNAET EXTRA FILTER:-->
+                <field name="product_id" filter_domain="[('product_id','=',self)]" />
+                <field name="docnaet_product_category_id" />
+                
+                <field name="protocol_id" filter_domain="[('protocol_id','=',self)]" domain="[('docnaet_mode', 'in', ('labnaet', 'all'))]"/>
+                <field name="type_id" filter_domain="[('type_id','=',self)]" domain="[('docnaet_mode', 'in', ('labnaet', 'all'))]"/>
+                <field name="language_id" filter_domain="[('language_id','=',self)]" />
+                
+                <filter name="state_draft" string="Draft state" domain="[('state','=','draft')]"/>
+                <filter name="state_confirmed" string="Confirmed state" domain="[('state','=','confirmed')]"/>
+                <filter name="state_timed" string="Timed state" domain="[('state','=','timed')]"/>
+                <filter name="state_cancel" string="Cancel state" domain="[('state','=','cancel')]"/>
+                
+                <filter name="linked_document" string="Linked document" domain="[('original_id','!=',False)]"/>
+                <filter name="original_document" string="Original document" domain="[('original_id','=',False)]"/>
+                
+                <group expand="0" string="Group By">
+                    <filter name="group_date_month" string="Data" context="{'group_by': 'date_month'}"/>
+                    <filter name="group_deadline_month" string="Scadenza" context="{'group_by': 'deadline_month'}"/>
+                    <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_partner_category" string="Partner category" context="{'group_by': 'docnaet_category_id'}"/>
+
                     <!--Labnaet Extra filter:-->
-                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
-                    <filter name="group_product_category" string="Product category" context="{'group_by': 'docnaet_product_category_id'}" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
+                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}" />
+                    <filter name="group_product_category" string="Product category" context="{'group_by': 'docnaet_product_category_id'}" />
 
                     <filter name="group_country" string="Country" context="{'group_by': 'country_id'}"/>
                     <filter name="group_user" string="User" context="{'group_by': 'user_id'}"/>
@@ -791,6 +836,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_calendar_view"/>
+        <field name="view_id" ref="view_docnaet_document_docnaet_search"/>        
         <field name="context">{'search_default_state_timed': True}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid)]</field>
     </record>
@@ -800,6 +846,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="view_id" ref="view_docnaet_document_docnaet_search"/>        
         <field name="context">{}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid)]</field>
     </record>
@@ -809,6 +856,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="view_id" ref="view_docnaet_document_docnaet_search"/>        
         <field name="context">{}</field>
         <field name="domain">['&amp;',('docnaet_mode','in',('all', 'docnaet')), '|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
     </record>
@@ -818,6 +866,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="view_id" ref="view_docnaet_document_docnaet_search"/>        
         <field name="context">{}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('state','=','draft')]</field>
     </record>
@@ -827,6 +876,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="view_id" ref="view_docnaet_document_docnaet_search"/>        
         <field name="context">{'remote_document':True}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet'))]</field>
     </record>
@@ -838,6 +888,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_calendar_view"/>
+        <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
         <field name="context">{'search_default_state_timed': True,'default_docnaet_mode': 'labnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('user_id','=',uid)]</field>
     </record>
@@ -847,6 +898,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
         <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('user_id','=',uid)]</field>
     </record>
@@ -856,6 +908,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
         <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
         <field name="domain">['&amp;',('docnaet_mode','in',('all', 'labnaet')),'|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
     </record>
@@ -865,6 +918,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
+        <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
         <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('state','=','draft')]</field>
     </record>
