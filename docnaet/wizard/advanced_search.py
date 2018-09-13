@@ -109,7 +109,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
             # Search partner name in partner but also in parent name:
             partner_ids = parent_pool.search(cr, uid, [
                 '|',
-                ('partner_id.name', 'ilike', partner_name),
+                ('name', 'ilike', partner_name),
                 ('docnaet_parent_id.name', 'ilike', partner_name),
                 ], context=context)
             domain.append(('partner_id', 'in', partner_ids))
