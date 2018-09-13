@@ -142,7 +142,7 @@ class ResPartner(orm.Model):
         return self.write(cr, uid, ids, {
             'docnaet_enable': False,
             }, context=context)
-            
+
     _columns = {
         'docnaet_parent_id': fields.many2one(
             'res.partner', 'Docnaet parent partner',
