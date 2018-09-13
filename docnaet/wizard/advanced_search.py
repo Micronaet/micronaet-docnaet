@@ -70,6 +70,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
             
         # Pool used:
         document_pool = self.pool.get('docnaet.document')
+        parent_pool = self.pool.get('res.partner')
         
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         
@@ -105,14 +106,28 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         domain = [('docnaet_mode', '=', docnaet_mode)]
         
         if partner_name:
-            domain.append(('partner_id.name', 'ilike', partner_name))
+            # Search partner name in partner but also in parent name:
+            partner_ids = parent_pool.search(cr, uid, [
+                '|',
+                ('partner_id.name', 'ilike', partner_name),
+                ('docnaet_parent_id.name', 'ilike', partner_name),
+                ], context=context)
+            domain.append(('partner_id', 'in', partner_ids))
+            #domain.append(('partner_id.name', 'ilike', partner_name))
+
+        if partner_id:
+            # Search partner name in partner but also in parent id:
+            partner_ids = parent_pool.search(cr, uid, [
+                ('docnaet_parent_id', '=', partner_id),
+                ], context=context)
+            partner_ids.append(partner_id)            
+            domain.append(('partner_id', 'in', partner_ids))        
+
         if protocol_id:
             domain.append(('protocol_id', '=', protocol_id))
         if country_id:
             domain.append(('country_id', '=', country_id))
-        if partner_id:
-            domain.append(('partner_id', '=', partner_id))            
-        
+
         # Labnaet:    
         if product_id:
             domain.append(('product_id', '=', product_id))            
@@ -182,6 +197,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol',
             domain=[('invisible', '=', False)]),
         'partner_id': fields.many2one('res.partner', 'Partner'),
+        #'docnaet_parent_id': fields.many2one('res.partner', 'Parent partner'),
         'country_id': fields.many2one('res.country', 'Country'),
         'from_date': fields.date('From date'),
         'to_date': fields.date('To date'),

@@ -144,6 +144,9 @@ class ResPartner(orm.Model):
             }, context=context)
             
     _columns = {
+        'docnaet_parent_id': fields.many2one(
+            'res.partner', 'Docnaet parent partner',
+            help='Master partner alse searchable'),
         'docnaet_enable': fields.boolean('Docnaet partner'),
         'docnaet_category_id': fields.many2one(
             'res.partner.docnaet', 'Docnaet category'),
