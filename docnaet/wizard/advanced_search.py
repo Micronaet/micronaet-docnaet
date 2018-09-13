@@ -113,7 +113,6 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
                 ('docnaet_parent_id.name', 'ilike', partner_name),
                 ], context=context)
             domain.append(('partner_id', 'in', partner_ids))
-            #domain.append(('partner_id.name', 'ilike', partner_name))
 
         if partner_id:
             # Search partner name in partner but also in parent id:
