@@ -66,7 +66,7 @@ class ResPartner(orm.Model):
                     break
                     
             # Parent partner payment deadline:
-            if parent.docnaet_parent_id:
+            if partner.docnaet_parent_id:
                 for payment in partner.docnaet_parent_id.duelist_ids:               
                     if payment.deadline < now:
                         res[partner.id]['deadline_present'] = True
