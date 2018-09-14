@@ -151,6 +151,16 @@ class ResPartner(orm.Model):
         'docnaet_category_id': fields.many2one(
             'res.partner.docnaet', 'Docnaet category'),
         }
+        
+class ResPartner(orm.Model):
+    """ Model name: ResPartner
+    """    
+    _inherit = 'res.partner'
+
+    _columns = {
+        'docnaet_child_ids': fields.one2many(
+            'res.partner', 'docnaet_parent_id', 'Docnaet Ditte Collegate'),
+        }    
 
 class ProductProductDocnaet(orm.Model):
     ''' Object product.product.docnaet

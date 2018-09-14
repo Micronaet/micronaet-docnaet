@@ -436,6 +436,11 @@
                     <field name="docnaet_enable" invisible="1"/>
                 </header>
             </xpath>
+            <xpath expr="//page[2]" position="after">
+                <page string="Docnaet partner collegati">
+                    <field name="docnaet_child_ids" readonly="1" />
+                </page>
+            </xpath>
         </field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_partner_form">
