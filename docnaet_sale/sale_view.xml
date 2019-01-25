@@ -1,21 +1,100 @@
 <?xml version="1.0"?>
 <openerp>
-    <data>
+    <data>    
         <!-- INHERITED docnaet.document -->
+    <record model="ir.ui.view" id="docnaet_document_sale_tree_view">
+        <field name="name">Docnaet sale document</field>
+        <field name="model">docnaet.document</field>        
+        <field name="priority" eval="40" />
+        <field name="arch" type="xml">
+            <tree string="Docnaet sale offer" colors="grey:sale_state=='pending';green:sale_state=='win';red:sale_state=='lost'">
+               <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}" invisible="context.get('remote_document', False)"/>
+               <button type="object" name="button_call_url_docnaet" string="Document linked!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"  invisible="context.get('remote_document', False)"/>
+               <button type="object" name="button_call_url_remote_docnaet" string="Open document [R]" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}" invisible="not context.get('remote_document', False)"/>
+               <button type="object" name="button_call_url_remote_docnaet" string="Document linked [R]!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"  invisible="not context.get('remote_document', False)"/>
+               <field name="protocol_id" required="1" />
+               <field name="number" />
+               <field name="date" />
+               <field name="date_month" invisible="1"/>
+               <field name="docnaet_mode" invisible="1" />
+               <field name="name" />
+               <field name="description" />
+               <field name="partner_id" />
+               <field name="user_id" invisible="1"/>
+               <field name="type_id" />
+               <field name="language_id" />
+               <field name="priority" invisible="1"/>
+               <field name="deadline" string="Scad." invisible="1" />
+               <field name="deadline_month" invisible="1"/>
+               <field name="deadline_info" invisible="1"/>
+               <field name="program_id" invisible="1"/>
+               <field name="original_id" invisible="1"/>
+               <field name="country_id" invisible="1"/>
+               <field name="docnaet_category_id" invisible="1"/>
+               <field name="docnaet_extension" />
+
+               <field name="sale_order_amount" widget="currency" sum="Total"/>
+               <field name="sale_currency_id" widget="select"/>
+
+               <!--WORKFLOW SALE BUTTON-->
+               <button name="sale_order_pending" string="Pending" type="object" attrs="{'invisible': [('sale_state','not in',('win', 'lost'))]}" colspan="1" icon="STOCK_UNDO"/>
+               <button name="sale_order_win" string="Win" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost'))]}" colspan="1" icon="STOCK_YES" />
+               <button name="sale_order_lost" string="Lost" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost'))]}" colspan="1" icon="STOCK_NO"/>                        
+
+               <field name="sale_state"/>
+               <field name="state" invisible="1"/>
+
+               <button type="action" name="%(docnaet.action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" context="{'default_docnaet_mode': docnaet_mode}"/>
+            </tree>
+        </field>
+    </record>    
+
+        <record model="ir.ui.view" id="view_docnaet_document_docnaet_sale_search">
+            <field name="name">docnaet.document.sale.search</field>        
+            <field name="model">docnaet.document</field>
+            <field name="inherit_id" ref="docnaet.view_docnaet_document_docnaet_search"/>
+            <field name="arch" type="xml">
+                 <filter name="state_draft" position="before">
+                     <filter name="state_sale_pending" string="Sale pending" domain="[('sale_state','=','pending'),('sale_order_amount', '>', 0)]"/>
+                     <filter name="state_sale_win" string="Sale win" domain="[('sale_state','=','win')]"/>
+                     <filter name="state_sale_lost" string="Sale lost" domain="[('sale_state','=','lost')]"/>
+                 </filter>
+                 <filter name="group_language" position="after">
+                     <filter name="group_sale_state" string="Sale State" context="{'group_by': 'sale_state'}"/>
+                     <filter name="group_currency_id" string="Sale currency" context="{'group_by': 'sale_currency_id'}"/>
+                 </filter>    
+           </field>
+        </record>    
+        
         <record model="ir.ui.view" id="docnaet_document_link_sale_form_view">
             <field name="name">Docnaet document sale linked</field>
             <field name="model">docnaet.document</field>        
             <field name="inherit_id" ref="docnaet.docnaet_document_form_view" />
             <field name="arch" type="xml">
+                <xpath expr="/form//notebook/page[@string='Linked objects']" position="after">
+                    <page string="CRM">
+                        <group colspan="4" col="5" >                       
+                            <field name="sale_order_amount" widget="currency"/>
+                            <field name="sale_currency_id" widget="select"/>
+                            <button name="sale_order_pending_offer" string="Pending offer" type="object" icon="STOCK_JUSTIFY_FILL"/>
+                            
+                            <field name="sale_state" readonly="1"/>
+                            <button name="sale_order_pending" string="Pending" type="object" attrs="{'invisible': [('sale_state','not in',('win', 'lost'))]}" colspan="1" icon="STOCK_UNDO"/>
+                            <button name="sale_order_win" string="Win" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost'))]}" colspan="1" icon="STOCK_YES" />
+                            <button name="sale_order_lost" string="Lost" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost'))]}" colspan="1" icon="STOCK_NO"/>                        
+                        </group>
+                    </page>
+                </xpath>
                 <xpath expr="/form//notebook/page[@string='Linked objects']/group[@name='master']/separator" position="after">
                     <group colspan="4" col="4">
                         <separator string="Sale" colspan="4"/>
                         <field name="link_sale" />
                         <field name="linked_sale_id" attrs="{'invisible': [('link_sale','=',False)]}" />
                     </group>
-                </xpath>
+                </xpath>                
             </field>    
         </record>        
+
 
         <!-- INHERITED sale.order-->
         <record model="ir.ui.view" id="docnaet_normal_link_sale_form_view">
@@ -45,6 +124,31 @@
                 </xpath>
             </field>    
         </record>                
+
+        <record model="ir.actions.act_window" id="action_docnaet_my_sale_order_tree">
+            <field name="name">My Offer</field>
+            <field name="res_model">docnaet.document</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_id" ref="docnaet_document_sale_tree_view"/>
+            <field name="search_view_id" ref="docnaet.view_docnaet_document_docnaet_search"/>        
+            <field name="context">{'search_default_state_sale_pending': True}</field>
+            <field name="domain">[('sale_order_amount', '>', 0),('user_id','=',uid)]</field>
+        </record>
+        <record model="ir.actions.act_window" id="action_docnaet_sale_order_tree">
+            <field name="name">Offer</field>
+            <field name="res_model">docnaet.document</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_id" ref="docnaet_document_sale_tree_view"/>
+            <field name="search_view_id" ref="docnaet.view_docnaet_document_docnaet_search"/>        
+            <field name="context">{'search_default_state_sale_pending': True}</field>
+            <field name="domain">[('sale_order_amount', '>', 0)]</field>
+        </record>
+    
+        <menuitem parent="docnaet.docnaet_document" id="menu_docnaet_document_document_offer" name="Offerte" sequence="12" action="action_docnaet_sale_order_tree" />
+        <menuitem parent="docnaet.docnaet_document_my_document" id="menu_docnaet_document_my_pending_order" name="Pending offer" sequence="40" action="action_docnaet_my_sale_order_tree" />            
+        
     </data>
 </openerp>    
     

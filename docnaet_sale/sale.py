@@ -38,20 +38,94 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class DocnaetProtocol(orm.Model):
+    ''' Add extra fields for integrare a link to docnaet document
+    '''
+    _inherit = 'docnaet.protocol'
+    
+    _columns = {
+        'sale_management': fields.boolean('CRM management'),
+        }
+
 class DocnaetDocument(orm.Model):
     ''' Add extra fields for integrare a link to docnaet document
     '''
     _inherit = 'docnaet.document'
     
+    # -------------------------------------------------------------------------
+    # Workflow sale event:
+    # -------------------------------------------------------------------------
+    def sale_order_pending(self, cr, uid, ids, context=None):
+        ''' Workflow set pending
+        '''
+        return self.write(cr, uid, ids, {
+            'sale_state': 'pending',
+            }, context=context)
+    def sale_order_win(self, cr, uid, ids, context=None):
+        ''' Workflow set win
+        '''
+        return self.write(cr, uid, ids, {
+            'sale_state': 'win',
+            }, context=context)
+    def sale_order_lost(self, cr, uid, ids, context=None):
+        ''' Workflow set lost
+        '''
+        return self.write(cr, uid, ids, {
+            'sale_state': 'lost',
+            }, context=context)
+    
+    def sale_order_pending_offer(self, cr, uid, ids, context=None):
+        ''' Return view of pending offer
+        '''
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        partner_id = current_proxy.partner_id.id
+        document_ids = self.search(cr, uid, [
+            ('id', '!=', ids[0]),
+            ('partner_id', '=', partner_id),
+            ('sale_state', '=', 'pending'),
+            ], context=context)
+        if document_ids:
+            view_id = False
+            return {
+                'type': 'ir.actions.act_window',
+                'name': _('Pending offer'),
+                'view_type': 'form',
+                'view_mode': 'tree,form',
+                #'res_id': 1,
+                'res_model': 'docnaet.document',
+                'view_id': view_id, # False
+                'views': [(False, 'tree'), (False, 'form')],
+                'domain': [('id', 'in', document_ids)],
+                'context': context,
+                'target': 'current', # 'new'
+                'nodestroy': False,
+                }
+        else:
+            raise osv.except_osv(
+                _('Info:'), 
+                _('No pending offer!'),
+                )
+
     _columns = {
         'linked_sale_id': fields.many2one(
             'sale.order', 'Linked sale'),
         'link_sale': fields.boolean('Link', 
             help='Link document in sale form'),
+
+        # CRM management:
+        'sale_order_amount': fields.float('Total sale', digits=(16, 2)),
+        'sale_currency_id': fields.many2one('res.currency', 'Currency'),
+        'sale_state': fields.selection([
+            ('pending', 'Pending'),
+            ('win', 'Win'),
+            ('lost', 'Lost'),
+            ], 'Sale state'),
         }
 
     _defaults = {
+        'sale_state': lambda *x: 'pending',
         'link_sale': lambda *x: True,
+        'sale_currency_id': lambda *x: 1, # TODO better
         }
 
 class SaleOrder(orm.Model):
