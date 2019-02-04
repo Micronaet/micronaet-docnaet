@@ -113,6 +113,8 @@ class DocnaetDocument(orm.Model):
             help='Link document in sale form'),
 
         # CRM management:
+        'sale_comment': fields.text('Sale comment', 
+            help='Why we lost or win the quotation'),
         'sale_order_amount': fields.float('Total sale', digits=(16, 2)),
         'sale_currency_id': fields.many2one('res.currency', 'Currency'),
         'sale_state': fields.selection([
