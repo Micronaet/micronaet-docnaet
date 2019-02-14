@@ -95,7 +95,13 @@ class IrAttachment(orm.Model):
         tmp.close()
         
         # Copy current file in temp destination
-        shutil.copyfile(origin, destination)
+        try:
+            shutil.copyfile(origin, destination)
+        except:
+            raise osv.except_osv(
+                _('File non trovato'), 
+                _(u'File non trovato nella cartella documentale!'),
+                )    
         
         if not name:
             name = 'file_download.%s' % extension
