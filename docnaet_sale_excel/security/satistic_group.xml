@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+   <data>
+        <record id="group_sale_statistic_mail" model="res.groups">
+            <field name="name">Excel Statistic mail</field>
+        </record>
+   </data>
+</openerp>
