@@ -351,7 +351,7 @@ class SaleOrder(orm.Model):
                 ws_name, row, [
                     total, 
                     ], 
-                    default_format=f_number, 
+                    default_format=f_number_bg_green_bold, 
                     col=start-1)
 
         # Total Row:
