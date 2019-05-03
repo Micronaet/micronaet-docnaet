@@ -366,9 +366,9 @@ class SaleOrder(orm.Model):
                 uom_code,
                 )
             text_total_row.append(res)
-        if index_today != False:
-            text_total_row[index_today] = (
-                text_total_row[index_today], f_number_bg_blue_bold)
+        #if index_today != False:
+        #    text_total_row[index_today] = (
+        #        text_total_row[index_today], f_number_bg_blue_bold)
     
         excel_pool.write_xls_line(
             ws_name, row, text_total_row, 
