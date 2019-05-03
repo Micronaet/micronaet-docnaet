@@ -346,7 +346,7 @@ class SaleOrder(orm.Model):
         for record in total_row:
             res = ''
             for uom_code in record:
-                res += '%s.00%s\n' % (
+                res += '%s.00 %s\n' % (
                 record[uom_code],
                 uom_code,
                 )
