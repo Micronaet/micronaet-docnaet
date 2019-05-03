@@ -282,7 +282,7 @@ class SaleOrder(orm.Model):
         excel_pool.create_worksheet(name=ws_name)
         width = [15, 40, 2, 10]
         cols = len(month_column)
-        width.extend([8 for item in range(0, cols)])
+        width.extend([10 for item in range(0, cols)])
         empty = ['' for item in range(0, cols)]
 
         header = ['Codice', 'Prodotto', 'UM', 'Totale']
@@ -341,13 +341,14 @@ class SaleOrder(orm.Model):
 
         # Total Row:
         row += 1
+        excel_pool.row_height(ws_name, [row, ], height=50)
         text_total_row = []
         for record in total_row:
             res = ''
             for uom_code in record:
-                res += '%s %s\n' % (
-                uom_code,
+                res += '%s.00%s\n' % (
                 record[uom_code],
+                uom_code,
                 )
             text_total_row.append(res)
         excel_pool.write_xls_line(
