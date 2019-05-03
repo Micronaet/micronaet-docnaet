@@ -60,6 +60,7 @@ class SaleOrder(orm.Model):
         partner_total = {}
         product_total = {}
         month_column = []
+        now = ('%s' % datetime.now())[:7]
 
         # ---------------------------------------------------------------------
         # Docnaet Order:
@@ -91,6 +92,8 @@ class SaleOrder(orm.Model):
         f_text_red = excel_pool.get_format('text_red')
         f_number = excel_pool.get_format('number')
         f_number_red = excel_pool.get_format('number_red')
+        f_number_bg_blue = excel_pool.get_format('bg_blue_number')
+        f_number_bg_blue_bold = excel_pool.get_format('bg_blue_number_bold')
         
         # Column:
         excel_pool.column_width(ws_name, width)
@@ -158,6 +161,10 @@ class SaleOrder(orm.Model):
                     ], default_format=f_text_current)
             row += 1
         month_column = sorted(month_column)
+        try:
+            index_today = month_column.index(now)
+        except:
+            index_today = False
         
         # ---------------------------------------------------------------------
         # Docnaet Quotation (pending and lost):
@@ -280,10 +287,13 @@ class SaleOrder(orm.Model):
         # ---------------------------------------------------------------------               
         ws_name = 'Prodotti'
         excel_pool.create_worksheet(name=ws_name)
+        
         width = [15, 40, 2, 10]
         cols = len(month_column)
         width.extend([10 for item in range(0, cols)])
         empty = ['' for item in range(0, cols)]
+        if index_today != False:
+            empty[index_today] = ('', f_number_bg_blue)
 
         header = ['Codice', 'Prodotto', 'UM', 'Totale']
         start = len(header)
@@ -302,7 +312,7 @@ class SaleOrder(orm.Model):
 
         for product in sorted(product_total, key=lambda x: x.default_code):
             uom_code = product.uom_id.account_ref or product.uom_id.name
-            row += 1   
+            row += 1
             data = [
                 product.default_code, 
                 product.name, 
@@ -316,10 +326,14 @@ class SaleOrder(orm.Model):
             total = 0.0
 
             for deadline in product_total[product]:
+                if deadline == now:
+                    f_number_color = f_number_bg_blue
+                else:
+                    f_number_color = f_number
+                        
                 subtotal = int(product_total[product][deadline])
                 total += subtotal
                 index = month_column.index(deadline)
-
                 if uom_code in total_row[index]:
                     total_row[index][uom_code] += subtotal
                 else:    
@@ -329,7 +343,7 @@ class SaleOrder(orm.Model):
                     ws_name, row, [
                         subtotal, 
                         ],
-                        default_format=f_number, 
+                        default_format=f_number_color, 
                         col=start + index)
 
             excel_pool.write_xls_line(
@@ -351,6 +365,10 @@ class SaleOrder(orm.Model):
                 uom_code,
                 )
             text_total_row.append(res)
+        if index_today != False:
+            text_total_row[index_today] = (
+                text_total_row[index_today], f_number_bg_blue_bold)
+    
         excel_pool.write_xls_line(
             ws_name, row, text_total_row, 
                 default_format=f_number, 
