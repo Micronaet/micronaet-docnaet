@@ -280,11 +280,12 @@ class SaleOrder(orm.Model):
         # ---------------------------------------------------------------------               
         ws_name = 'Prodotti'
         excel_pool.create_worksheet(name=ws_name)
-        width = [15, 40, ]
+        width = [15, 40, 2]
         width.extend([10 for item in range(0, len(month_column))])
         empty = ['' for item in range(0, len(month_column))]
 
-        header = ['Codice', 'Prodotto', ]
+        header = ['Codice', 'Prodotto', 'UM', ]
+        start = len(header)
         header.extend(month_column)        
                 
         # Column:
@@ -296,7 +297,7 @@ class SaleOrder(orm.Model):
             ws_name, row, header, default_format=f_header)        
         for product in sorted(product_total, key=lambda x: x.default_code):
             row += 1   
-            data = [product.default_code, product.name]
+            data = [product.default_code, product.name, product.uom_id.name]
             data.extend(empty)
             excel_pool.write_xls_line(
                 ws_name, row, data, 
@@ -308,7 +309,7 @@ class SaleOrder(orm.Model):
                         (product_total[product][deadline], f_number), 
                         ], 
                         default_format=f_text, 
-                        col=2 + month_column.index(deadline))
+                        col=start + month_column.index(deadline))
 
         # ---------------------------------------------------------------------
         # Send mail:
