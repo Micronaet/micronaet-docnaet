@@ -94,6 +94,7 @@ class SaleOrder(orm.Model):
         f_number_red = excel_pool.get_format('number_red')
         f_number_bg_blue = excel_pool.get_format('bg_blue_number')
         f_number_bg_blue_bold = excel_pool.get_format('bg_blue_number_bold')
+        f_number_bg_green_bold = excel_pool.get_format('bg_blue_green_bold')
         
         # Column:
         excel_pool.column_width(ws_name, width)
