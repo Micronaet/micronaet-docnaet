@@ -309,7 +309,7 @@ class SaleOrder(orm.Model):
             for deadline in product_total[product]:
                 excel_pool.write_xls_line(
                     ws_name, row, [
-                        (product_total[product][deadline], f_number), 
+                        (int(product_total[product][deadline]), f_number), 
                         ], 
                         default_format=f_text, 
                         col=start + month_column.index(deadline))
