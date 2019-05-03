@@ -94,7 +94,7 @@ class SaleOrder(orm.Model):
         f_number_red = excel_pool.get_format('number_red')
         f_number_bg_blue = excel_pool.get_format('bg_blue_number')
         f_number_bg_blue_bold = excel_pool.get_format('bg_blue_number_bold')
-        f_number_bg_green_bold = excel_pool.get_format('bg_blue_green_bold')
+        f_number_bg_green_bold = excel_pool.get_format('bg_green_number_bold')
         
         # Column:
         excel_pool.column_width(ws_name, width)
@@ -289,7 +289,7 @@ class SaleOrder(orm.Model):
         ws_name = 'Prodotti'
         excel_pool.create_worksheet(name=ws_name)
         
-        width = [15, 40, 2, 10]
+        width = [12, 30, 2, 10]
         cols = len(month_column)
         width.extend([10 for item in range(0, cols)])
         empty = ['' for item in range(0, cols)]
@@ -372,7 +372,7 @@ class SaleOrder(orm.Model):
     
         excel_pool.write_xls_line(
             ws_name, row, text_total_row, 
-                default_format=f_number, 
+                default_format=f_number_bg_green_bold, 
                 col=start)
             
         # ---------------------------------------------------------------------
