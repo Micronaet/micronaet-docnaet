@@ -281,12 +281,13 @@ class SaleOrder(orm.Model):
         ws_name = 'Prodotti'
         excel_pool.create_worksheet(name=ws_name)
         width = [15, 40, 2, 10]
-        width.extend([8 for item in range(0, len(month_column))])
-        empty = ['' for item in range(0, len(month_column))]
+        cols = len(month_column)
+        width.extend([8 for item in range(0, cols)])
+        empty = ['' for item in range(0, cols)]
 
         header = ['Codice', 'Prodotto', 'UM', 'Totale']
         start = len(header)
-        header.extend(month_column)        
+        header.extend(month_column)
                 
         # Column:
         row = 0
@@ -295,26 +296,42 @@ class SaleOrder(orm.Model):
         # Header:
         excel_pool.write_xls_line(
             ws_name, row, header, default_format=f_header)        
+        total_row = []
+        for item in range(0, cols):
+            total_row.append({})
+
         for product in sorted(product_total, key=lambda x: x.default_code):
+            uom_code = product.uom_id.account_ref or product.uom_id.name
             row += 1   
             data = [
                 product.default_code, 
                 product.name, 
-                product.uom_id.account_ref or product.uom_id.name]
+                uom_code,
+                '',
+                ]
             data.extend(empty)
             excel_pool.write_xls_line(
                 ws_name, row, data, 
                 default_format=f_text)
             total = 0.0
+
             for deadline in product_total[product]:
                 subtotal = int(product_total[product][deadline])
+                total += subtotal
+                index = month_column.index(deadline)
+
+                if uom_code in total_row[index]:
+                    total_row[index][uom_code] += subtotal
+                else:    
+                    total_row[index][uom_code] = subtotal
+                
                 excel_pool.write_xls_line(
                     ws_name, row, [
                         subtotal, 
                         ],
                         default_format=f_number, 
-                        col=start + month_column.index(deadline))
-                        
+                        col=start + index)
+
             excel_pool.write_xls_line(
                 ws_name, row, [
                     total, 
@@ -322,6 +339,22 @@ class SaleOrder(orm.Model):
                     default_format=f_number, 
                     col=start-1)
 
+        # Total Row:
+        row += 1
+        text_total_row = []
+        for record in total_row:
+            res = ''
+            for uom_code in record:
+                res += '%s %s\n' % (
+                uom_code,
+                record[uom_code],
+                )
+            text_total_row.append(res)
+        excel_pool.write_xls_line(
+            ws_name, row, text_total_row, 
+                default_format=f_number, 
+                col=start)
+            
         # ---------------------------------------------------------------------
         # Send mail:
         # ---------------------------------------------------------------------        
