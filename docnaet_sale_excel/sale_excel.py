@@ -56,6 +56,11 @@ class SaleOrder(orm.Model):
         docnaet_document = self.pool.get('docnaet.document')
         sale_pool = self.pool.get('sale.order')
         
+        # Collect data:
+        partner_total = {}
+        product_total = {}
+        month_column = []
+
         # ---------------------------------------------------------------------
         # Docnaet Order:
         # ---------------------------------------------------------------------               
@@ -102,6 +107,38 @@ class SaleOrder(orm.Model):
                 key=lambda x: x.date_order,
                 reverse=True):
             partner = order.partner_id
+
+            # -----------------------------------------------------------------            
+            # Partner total:
+            # -----------------------------------------------------------------            
+            if partner not in partner_total:
+                partner_total[partner] = [
+                    0.0, # Order
+                    0.0, # Quotation
+                    0.0, # Lost
+                    ]
+            partner_total[partner][0] += order.amount_untaxed # TODO Currency
+            
+            # -----------------------------------------------------------------            
+            # Product total:
+            # -----------------------------------------------------------------            
+            for line in order.order_line:
+                product = line.product_id
+                if not product:
+                    continue
+                deadline = (line.date_deadline or ' No')[:7]
+                if product not in product_total:
+                    product_total[product] = {}
+                if deadline in product_total[product]:
+                    product_total[product][deadline] += line.product_uom_qty
+                else:    
+                    product_total[product][deadline] = line.product_uom_qty
+                if deadline not in month_column:
+                    month_column.append(deadline)    
+
+            # -----------------------------------------------------------------            
+            # Excel write detail:
+            # -----------------------------------------------------------------            
             if partner.duelist_uncovered:
                 f_text_current = f_text_red
                 f_number_current = f_number_red
@@ -117,10 +154,11 @@ class SaleOrder(orm.Model):
                     order.name,
                     '',
                     (order.amount_untaxed, f_number_current),                    
-                    (partner.duelist_uncovered_amount, f_number_current),             
+                    (partner.duelist_uncovered_amount or '', f_number_current),             
                     ], default_format=f_text_current)
             row += 1
-
+        month_column = sorted(month_column)
+        
         # ---------------------------------------------------------------------
         # Docnaet Quotation (pending and lost):
         # ---------------------------------------------------------------------   
@@ -163,7 +201,7 @@ class SaleOrder(orm.Model):
             excel_pool.write_xls_line(
                 ws_name, row, header, default_format=f_header)
             row += 1   
-            
+
             document_proxy = docnaet_document.browse(
                 cr, uid, docnaet_ids, context=context)
             for document in sorted(
@@ -171,6 +209,17 @@ class SaleOrder(orm.Model):
                     key=lambda x: x.date,
                     reverse=True):
                 partner = document.partner_id
+                if partner not in partner_total:
+                    partner_total[partner] = [
+                        0.0, # Order
+                        0.0, # Quotation
+                        0.0, # Lost
+                        ]
+                if ws_name == 'Quotazioni':        
+                    partner_total[partner][1] += order.amount_untaxed #XXX Curre
+                else:    
+                    partner_total[partner][2] += order.amount_untaxed #XXX Curre
+
                 if partner.duelist_uncovered:
                     f_text_current = f_text_red
                     f_number_current = f_number_red
@@ -189,10 +238,78 @@ class SaleOrder(orm.Model):
                             ),
                         document.sale_currency_id.symbol,
                         (document.sale_order_amount, f_number_current),                    
-                        (partner.duelist_uncovered_amount, f_number_current),             
+                        (partner.duelist_uncovered_amount or '', 
+                            f_number_current),             
                         ], default_format=f_text_current)
                 row += 1
+
+        # ---------------------------------------------------------------------
+        # Docnaet Customer total:
+        # ---------------------------------------------------------------------               
+        ws_name = 'Clienti'
+        excel_pool.create_worksheet(name=ws_name)
+        width = [40, 20, 20, 20, 30, ]
+        header = [
+            'Partner', 'Offerte', 'Quotazioni', 'Perse', 
+            'Scoperto cliente',
+            ]
+        row = 0
+                
+        # Column:
+        excel_pool.column_width(ws_name, width)
+        
+        # Header:
+        excel_pool.write_xls_line(
+            ws_name, row, header, default_format=f_header)
+        row += 1   
+        
+        for partner in sorted(partner_total, key=lambda x: x.name):
+            order, quotation, lost = partner_total[partner]
+            excel_pool.write_xls_line(
+                ws_name, row, [
+                    partner.name,
+                    (order or '', f_number),                    
+                    (quotation or '', f_number),       
+                    (lost or '', f_number_red),                    
+                    (partner.duelist_uncovered_amount or '', f_number_red),
+                    ], default_format=f_text_current)
+            row += 1
+
+        # ---------------------------------------------------------------------
+        # Docnaet Product total:
+        # ---------------------------------------------------------------------               
+        ws_name = 'Prodotti'
+        excel_pool.create_worksheet(name=ws_name)
+        width = [15, 40, ]
+        width.extend([10 for item in range(0, len(month_column))])
+        empty = ['' for item in range(0, len(month_column))]
+
+        header = ['Codice', 'Prodotto', ]
+        header.extend(month_column)        
+                
+        # Column:
+        row = 0
+        excel_pool.column_width(ws_name, width)
+        
+        # Header:
+        excel_pool.write_xls_line(
+            ws_name, row, header, default_format=f_header)        
+        for product in sorted(product_total, key=lambda x: x.default_code):
+            row += 1   
+            data = [product.default_code, product.name]
+            data.extend(empty)
+            excel_pool.write_xls_line(
+                ws_name, row, data, 
+                default_format=f_text)
             
+            for deadline in product_total[product]:
+                excel_pool.write_xls_line(
+                    ws_name, row, [
+                        (product_total[product][deadline], f_number), 
+                        ], 
+                        default_format=f_text, 
+                        col=2 + month_column.index(deadline))
+
         # ---------------------------------------------------------------------
         # Send mail:
         # ---------------------------------------------------------------------        
