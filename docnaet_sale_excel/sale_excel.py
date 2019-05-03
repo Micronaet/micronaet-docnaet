@@ -297,7 +297,10 @@ class SaleOrder(orm.Model):
             ws_name, row, header, default_format=f_header)        
         for product in sorted(product_total, key=lambda x: x.default_code):
             row += 1   
-            data = [product.default_code, product.name, product.uom_id.name]
+            data = [
+                product.default_code, 
+                product.name, 
+                product.uom_id.account_ref or product.uom_id.name]
             data.extend(empty)
             excel_pool.write_xls_line(
                 ws_name, row, data, 
