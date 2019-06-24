@@ -577,7 +577,7 @@
                 <field name="country_id" />
                 
                 <!--<field name="docnaet_category_id" /> Cassandra want to remove-->
-                <!--<field name="user_id" filter_domain="[('user_id','=',self)]"/>-->
+                <field name="user_id" filter_domain="[('user_id','=',self)]"/>
                 <field name="protocol_id" filter_domain="[('protocol_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
                 <field name="type_id" filter_domain="[('type_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
                 <field name="language_id" filter_domain="[('language_id','=',self)]" /><!--domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>-->
@@ -623,6 +623,7 @@
                 <field name="description" />
                 <field name="note" />
                 <field name="partner_id" filter_domain="[('partner_id','=',self)]" domain="[('docnaet_enable','=',True)]"/>
+                <field name="user_id" filter_domain="[('user_id','=',self)]"/>
                 <field name="country_id" />
                 
                 <!--LABNAET EXTRA FILTER:-->
