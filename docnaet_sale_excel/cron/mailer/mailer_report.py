@@ -25,6 +25,7 @@ import ConfigParser
 import smtplib  
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
+from email.mime.text import MIMEText
 from email import Encoders
 
 # -----------------------------------------------------------------------------
@@ -96,6 +97,7 @@ msg = MIMEMultipart()
 msg['Subject'] = smtp['subject']
 msg['From'] = odoo_mailer.smtp_user
 msg['To'] = smtp['to'] #', '.join(self.EMAIL_TO)
+msg.attach(MIMEText('Messaggio di prova', 'plain')
 
 
 part = MIMEBase('application', 'octet-stream')
