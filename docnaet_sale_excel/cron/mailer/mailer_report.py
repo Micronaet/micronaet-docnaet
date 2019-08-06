@@ -98,8 +98,8 @@ msg['From'] = odoo_mailer.smtp_user
 msg['To'] = smtp['to'] #', '.join(self.EMAIL_TO)
 
 
-part = MIMEBase('application', "octet-stream")
-part.set_payload(open("text.txt", "rb").read())
+part = MIMEBase('application', 'octet-stream')
+part.set_payload(open('text.txt', 'rb').read())
 Encoders.encode_base64(part)
 part.add_header('Content-Disposition', 'attachment; filename="text.txt"')
 
