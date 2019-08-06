@@ -94,7 +94,7 @@ else:
 
 msg = MIMEMultipart()
 msg['Subject'] = smtp['subject']
-msg['From'] = smtp['from']
+msg['From'] = odoo_mailer.smtp_user
 msg['To'] = smtp['to'] #', '.join(self.EMAIL_TO)
 
 
