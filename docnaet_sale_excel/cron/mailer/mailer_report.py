@@ -97,7 +97,7 @@ msg = MIMEMultipart()
 msg['Subject'] = smtp['subject']
 msg['From'] = odoo_mailer.smtp_user
 msg['To'] = smtp['to'] #', '.join(self.EMAIL_TO)
-msg.attach(MIMEText('Messaggio di prova', 'plain')
+msg.attach(MIMEText('Messaggio di prova', 'plain'))
 
 
 part = MIMEBase('application', 'octet-stream')
