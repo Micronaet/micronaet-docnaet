@@ -23,6 +23,9 @@ import os
 import erppeek
 import ConfigParser
 import smtplib  
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEBase import MIMEBase
+from email import Encoders
 
 # -----------------------------------------------------------------------------
 # Read configuration parameter:
@@ -84,15 +87,18 @@ print '[INFO] Sending using "%s" connection [%s:%s]' % (
 if odoo_mailer.smtp_encryption in ('ssl', 'starttls'):
     smtp_server = smtplib.SMTP_SSL(
         odoo_mailer.smtp_host, odoo_mailer.smtp_port)
-    #server_smtp.starttls()  
 else:
     print '[ERR] Connect only SMTP SSL server!'
     sys.exit()
     #server_smtp.start() # TODO Check
 
+msg = MIMEMultipart()
+msg['Subject'] = smtp['subject']
+msg['From'] = smtp['from']
+msg['To'] = smtp['to'] #', '.join(self.EMAIL_TO)
+
 
 # Send mail:
 smtp_server.login(odoo_mailer.smtp_user, odoo_mailer.smtp_pass)
-import pdb; pdb.set_trace()
-smtp_server.sendmail(odoo_mailer.smtp_user, smtp['to'], smtp['subject'])
+smtp_server.sendmail(odoo_mailer.smtp_user, smtp['to'], msg.as_string())
 smtp_server.quit()
