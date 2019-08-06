@@ -80,7 +80,7 @@ print '[INFO] Sending using "%s" connection [%s:%s]' % (
     odoo_mailer.smtp_host,
     odoo_mailer.smtp_port,
     )
-import pdb; pdb.set_trace()
+
 if odoo_mailer.smtp_encryption in ('ssl', 'starttls'):
     smtp_server = smtplib.SMTP_SSL(
         odoo_mailer.smtp_host, odoo_mailer.smtp_port)
@@ -91,7 +91,8 @@ else:
     #server_smtp.start() # TODO Check
 
 
-# Send mail:    
+# Send mail:
 smtp_server.login(odoo_mailer.smtp_user, odoo_mailer.smtp_pass)
+import pdb; pdb.set_trace()
 smtp_server.sendmail(odoo_mailer.smtp_user, smtp['to'], smtp['subject'])
 smtp_server.quit()
