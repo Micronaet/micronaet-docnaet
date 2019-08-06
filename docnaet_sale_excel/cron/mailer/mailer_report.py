@@ -54,6 +54,7 @@ smtp = {
     'folder': config.get('smtp', 'folder'),
     }
 
+filename = 'prova.pdf'
 # -----------------------------------------------------------------------------
 # Connect to ODOO:
 # -----------------------------------------------------------------------------
@@ -101,9 +102,9 @@ msg.attach(MIMEText('Messaggio di prova', 'plain'))
 
 
 part = MIMEBase('application', 'octet-stream')
-part.set_payload(open('text.txt', 'rb').read())
+part.set_payload(open(filename, 'rb').read())
 Encoders.encode_base64(part)
-part.add_header('Content-Disposition', 'attachment; filename="text.txt"')
+part.add_header('Content-Disposition', 'attachment; filename="%s"' % filename)
 
 msg.attach(part)
 # Send mail:
