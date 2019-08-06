@@ -43,6 +43,7 @@ odoo = {
 
 # Mail:
 smtp = {
+    'to': config.get('smtp', 'to'),
     'subject': config.get('smtp', 'subject'),
     'text': config.get('smtp', 'text'),
     
