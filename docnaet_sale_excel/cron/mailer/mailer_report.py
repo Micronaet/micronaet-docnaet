@@ -35,7 +35,7 @@ from email import Encoders
 # -----------------------------------------------------------------------------
 #cfg_file = os.path.expanduser('../local.cfg')
 cfg_file = os.path.expanduser('../openerp.cfg')
-now = datetime.now()
+now = ('%s' %datetime.now())[:19]
 
 config = ConfigParser.ConfigParser()
 config.read([cfg_file])
@@ -141,7 +141,7 @@ msg = MIMEMultipart()
 msg['Subject'] = smtp['subject']
 msg['From'] = odoo_mailer.smtp_user
 msg['To'] = smtp['to'] #', '.join(self.EMAIL_TO)
-msg.attach(MIMEText('Messaggio di prova', 'plain'))
+msg.attach(MIMEText(smtp['text'], 'plain'))
 
 
 part = MIMEBase('application', 'octet-stream')
