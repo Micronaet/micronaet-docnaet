@@ -20,6 +20,7 @@
 #
 ###############################################################################
 import os
+import sys
 import erppeek
 import ConfigParser
 import smtplib  
@@ -31,7 +32,8 @@ from email import Encoders
 # -----------------------------------------------------------------------------
 # Read configuration parameter:
 # -----------------------------------------------------------------------------
-cfg_file = os.path.expanduser('../openerp.cfg')
+cfg_file = os.path.expanduser('../local.cfg')
+#cfg_file = os.path.expanduser('../openerp.cfg')
 
 config = ConfigParser.ConfigParser()
 config.read([cfg_file])
@@ -54,7 +56,8 @@ smtp = {
     'folder': config.get('smtp', 'folder'),
     }
 
-filename = 'prova.pdf'
+filename = os.path.expanduser(
+    os.path.join(smtp['folder'], 'stato_ordini.xlsx'))
 context = {
     'save_mode': filename,
     }
