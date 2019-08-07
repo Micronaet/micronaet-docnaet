@@ -55,8 +55,8 @@ smtp = {
     #'subject': config.get('smtp', 'subject'),
     #'text': config.get('smtp', 'text'),
     'text': '''
-        <p>Mail giornaliera <b>OpenERP</b> con stato ordini in contabilità e 
-            quotazioni aperte in <b>Docnaet</b>.
+        <p>Mail giornaliera <b>OpenERP</b> con stato ordini in 
+            contabilit&agrave;  e quotazioni aperte in <b>Docnaet</b>.
         </p>
         <p>
         Stato ordini aggiornato il <b>%s</b>: <br/>
