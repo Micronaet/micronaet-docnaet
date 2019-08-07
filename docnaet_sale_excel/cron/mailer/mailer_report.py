@@ -59,15 +59,15 @@ smtp = {
             contabilit&agrave;  e quotazioni aperte in <b>Docnaet</b>.
         </p>
         <p>
-        Stato ordini aggiornato il <b>%s</b>: <br/>
-        1. Offerte: Elenco offerte con FIDO cliente 
+        Stato ordini aggiornato il <b>%s</b>: <br/><br/>
+        1. <b>Offerte</b>: Elenco offerte con FIDO cliente 
            (ordinate per data decrescente)<br/>
-        2. Quotazioni: Documenti Docnaet valorizzati dagli agenti ancora da
-           vincere o perdere<br/>
-        3. Perse: Quotazioni marcate come perse in Docnaet<br/>
-        4. Clienti: Elenco offerte, quotazioni attive, quotazioni perse e 
-           scoperto clienti (ordinamento alfabetico)<br/>
-        5. Prodotti: Elenco ordini per prodotto suddivisi per mese di 
+        2. <b>Quotazioni</b>: Documenti Docnaet valorizzati dagli agenti ancora 
+           da vincere o perdere<br/>
+        3. <b>Perse</b>: Quotazioni marcate come perse in Docnaet<br/>
+        4. <b>Clienti</b>: Elenco offerte, quotazioni attive, quotazioni perse 
+           e scoperto clienti (ordinamento alfabetico)<br/>
+        5. <b>Prodotti</b>: Elenco ordini per prodotto suddivisi per mese di 
            scadenza / consegna (colonna No = senza scadenza). Totalizzato in 
            fondo per unità di misura<br/>
         </p>
