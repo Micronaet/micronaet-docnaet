@@ -59,7 +59,7 @@ smtp = {
             quotazioni aperte in <b>Docnaet</b>.
         </p>
         <p>
-        Stato ordini aggiornato il <b>%s</b><br/>:
+        Stato ordini aggiornato il <b>%s</b>: <br/>
         1. Offerte: Elenco offerte con FIDO cliente 
            (ordinate per data decrescente)<br/>
         2. Quotazioni: Documenti Docnaet valorizzati dagli agenti ancora da
