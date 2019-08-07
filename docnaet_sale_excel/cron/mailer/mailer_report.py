@@ -77,7 +77,7 @@ smtp = {
         </p>
 
         <p><i>
-            Nota: In rosso le righe con clienti con pendenze contabili</i></p>
+            Nota: In rosso le righe dei clienti con pendenze contabili</i></p>
         
         <b>Micronaet S.r.l.</b>
         ''' % now,
