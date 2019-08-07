@@ -152,7 +152,8 @@ msg.attach(MIMEText(smtp['text'], 'html'))
 part = MIMEBase('application', 'octet-stream')
 part.set_payload(open(filename, 'rb').read())
 Encoders.encode_base64(part)
-part.add_header('Content-Disposition', 'attachment; filename="%s"' % filename)
+part.add_header(
+    'Content-Disposition', 'attachment; filename="Stato ordini.xlsx"')
 
 msg.attach(part)
 # Send mail:
