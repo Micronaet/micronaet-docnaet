@@ -24,6 +24,7 @@ import sys
 import erppeek
 import ConfigParser
 import smtplib  
+from datetime import datetime
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEBase import MIMEBase
 from email.mime.text import MIMEText
