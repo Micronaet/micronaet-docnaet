@@ -32,8 +32,8 @@ from email import Encoders
 # -----------------------------------------------------------------------------
 # Read configuration parameter:
 # -----------------------------------------------------------------------------
-cfg_file = os.path.expanduser('../local.cfg')
-#cfg_file = os.path.expanduser('../openerp.cfg')
+#cfg_file = os.path.expanduser('../local.cfg')
+cfg_file = os.path.expanduser('../openerp.cfg')
 
 config = ConfigParser.ConfigParser()
 config.read([cfg_file])
@@ -55,7 +55,7 @@ smtp = {
     
     'folder': config.get('smtp', 'folder'),
     }
-group_name = 'docnaet_sale_excel.group_sale_statistic_mail'
+#group_name = 'docnaet_sale_excel.group_sale_statistic_mail'
 
 filename = os.path.expanduser(
     os.path.join(smtp['folder'], 'stato_ordini.xlsx'))
@@ -86,13 +86,14 @@ order.extract_sale_excel_report()
 # -----------------------------------------------------------------------------
 # Extract mail list from group:
 # -----------------------------------------------------------------------------
-group_name = group_name.split('.')
-group_id = model_pool.get_object_reference(
-    group[0], group[1])[1]    
-partner_name = []
-for user in group_pool.browse(group_id).users:
-    partner_ids.append(user.partner_id.email)
-import pdb; pdb.set_trace()
+#group_name = group_name.split('.')
+#group_id = model.get_object_reference(
+#    group_name[0], 
+#    group_name[1],
+#    )[1]
+#partner_name = []
+#for user in group_pool.browse(group_id).users:
+#    partner_ids.append(user.partner_id.email)
 
 # -----------------------------------------------------------------------------
 # SMTP Sent:
