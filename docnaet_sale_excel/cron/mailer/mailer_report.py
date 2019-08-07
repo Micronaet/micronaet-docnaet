@@ -55,17 +55,22 @@ smtp = {
     #'subject': config.get('smtp', 'subject'),
     #'text': config.get('smtp', 'text'),
     'text': '''
+        <p>Mail giornaliera stato ordini in contabilità e quotazioni
+            aperte in Docnaet.
+        </p>
+        <p>
         Stato ordini aggiornato il %s:
         1. Offerte: Elenco offerte con FIDO cliente 
-           (ordinate per data decrescente) 
+           (ordinate per data decrescente)<br/>
         2. Quotazioni: Documenti Docnaet valorizzati dagli agenti ancora da
-           vincere o perdere
-        3. Perse: Quotazioni marcate come perse in Docnaet
+           vincere o perdere<br/>
+        3. Perse: Quotazioni marcate come perse in Docnaet<br/>
         4. Clienti: Elenco offerte, quotazioni attive, quotazioni perse e 
-           scoperto clienti (ordinamento alfabetico)
+           scoperto clienti (ordinamento alfabetico)<br/>
         5. Prodotti: Elenco ordini per prodotto suddivisi per mese di 
            scadenza / consegna (colonna No = senza scadenza). Totalizzato in 
-           fondo per unità di misura
+           fondo per unità di misura<br/>
+        </p>
         ''' % now,
     'subject': 'Dettaglio ordini e quotazioni aperte: %s' % now,    
     
@@ -141,7 +146,7 @@ msg = MIMEMultipart()
 msg['Subject'] = smtp['subject']
 msg['From'] = odoo_mailer.smtp_user
 msg['To'] = smtp['to'] #', '.join(self.EMAIL_TO)
-msg.attach(MIMEText(smtp['text'], 'plain'))
+msg.attach(MIMEText(smtp['text'], 'html'))
 
 
 part = MIMEBase('application', 'octet-stream')
