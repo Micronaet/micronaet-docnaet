@@ -55,12 +55,13 @@ smtp = {
     #'subject': config.get('smtp', 'subject'),
     #'text': config.get('smtp', 'text'),
     'text': '''
-        <p>Mail automatica giornaliera inviata da <b>OpenERP</b> con lo stato 
-            ordini in contabilit&agrave; e le quotazioni aperte in 
-            <b>Docnaet</b>.
+        <p>Spett.li responsabili vendite,</p>
+        <p>Questa &egrave; una mail automatica giornaliera inviata da 
+            <b>OpenERP</b> con lo stato ordini in contabilit&agrave; e 
+            le quotazioni aperte in <b>Docnaet</b>.
         </p>
 
-        <p>Stato ordini aggiornato il <b>%s</b>:</p>
+        <p>Stato ordini aggiornato al <b>%s</b>, dettaglio fogli:</p>
 
         <p>
         1. <b>Offerte</b>: Elenco offerte con FIDO cliente 
