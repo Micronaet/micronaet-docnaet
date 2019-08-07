@@ -34,6 +34,7 @@ from email import Encoders
 # -----------------------------------------------------------------------------
 #cfg_file = os.path.expanduser('../local.cfg')
 cfg_file = os.path.expanduser('../openerp.cfg')
+now = datetime.now()
 
 config = ConfigParser.ConfigParser()
 config.read([cfg_file])
@@ -50,8 +51,22 @@ odoo = {
 # Mail:
 smtp = {
     'to': config.get('smtp', 'to'),
-    'subject': config.get('smtp', 'subject'),
-    'text': config.get('smtp', 'text'),
+    #'subject': config.get('smtp', 'subject'),
+    #'text': config.get('smtp', 'text'),
+    'text': '''
+        Stato ordini aggiornato il %s:
+        1. Offerte: Elenco offerte con FIDO cliente 
+           (ordinate per data decrescente) 
+        2. Quotazioni: Documenti Docnaet valorizzati dagli agenti ancora da
+           vincere o perdere
+        3. Perse: Quotazioni marcate come perse in Docnaet
+        4. Clienti: Elenco offerte, quotazioni attive, quotazioni perse e 
+           scoperto clienti (ordinamento alfabetico)
+        5. Prodotti: Elenco ordini per prodotto suddivisi per mese di 
+           scadenza / consegna (colonna No = senza scadenza). Totalizzato in 
+           fondo per unità di misura
+        ''' % now,
+    'subject': 'Dettaglio ordini e quotazioni aperte: %s' % now,    
     
     'folder': config.get('smtp', 'folder'),
     }
