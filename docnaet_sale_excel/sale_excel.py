@@ -51,6 +51,12 @@ class SaleOrder(orm.Model):
     def extract_sale_excel_report(self, cr, uid, context=None):
         ''' Schedule extract of sale quotation info
         '''
+        if context is None:
+            context = {}
+        
+        save_mode = context.get('save_mode')            
+        _logger.info('Start extract save mode: %s' % save_mode)
+        
         # Pool used:
         excel_pool = self.pool.get('excel.writer')
         docnaet_document = self.pool.get('docnaet.document')
@@ -372,14 +378,16 @@ class SaleOrder(orm.Model):
                 default_format=f_number_bg_green_bold, 
                 col=start)
             
-        # ---------------------------------------------------------------------
-        # Send mail:
-        # ---------------------------------------------------------------------        
-        return excel_pool.send_mail_to_group(cr, uid, 
-            'docnaet_sale_excel.group_sale_statistic_mail', 
-            'Statistiche vendite', 
-            'Statistiche giornaliere vendite', 
-            'sale_statistic.xlsx',
-            context=context)
+        if save_mode: # Save as a file:
+            _logger.info('Save mode: %s' % save_mode)
+            return excel_pool.save_file_as(save_mode)            
+        else: # Send mail:
+            _logger.info('Send mail mode!')
+            return excel_pool.send_mail_to_group(cr, uid, 
+                'docnaet_sale_excel.group_sale_statistic_mail', 
+                'Statistiche vendite', 
+                'Statistiche giornaliere vendite', 
+                'sale_statistic.xlsx',
+                context=context)
     
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

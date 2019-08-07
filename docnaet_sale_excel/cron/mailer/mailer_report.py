@@ -55,11 +55,13 @@ smtp = {
     }
 
 filename = 'prova.pdf'
+context = {
+    'save_mode': filename,
+    }
 
 # -----------------------------------------------------------------------------
 # Connect to ODOO:
 # -----------------------------------------------------------------------------
-
 odoo = erppeek.Client(
     'http://%s:%s' % (odoo['server'], odoo['port']), 
     db=odoo['database'],
@@ -67,8 +69,13 @@ odoo = erppeek.Client(
     password=odoo['password'],
     )
 mailer = odoo.model('ir.mail_server')
+
+# Setup context for order:
+import pdb; pdb.set_trace()
+odoo.context = context
 order = odoo.model('sale.order')
 
+order.extract_sale_excel_report()
 # -----------------------------------------------------------------------------
 # SMTP Sent:
 # -----------------------------------------------------------------------------
