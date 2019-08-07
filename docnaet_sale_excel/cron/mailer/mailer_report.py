@@ -55,11 +55,11 @@ smtp = {
     #'subject': config.get('smtp', 'subject'),
     #'text': config.get('smtp', 'text'),
     'text': '''
-        <p>Mail giornaliera stato ordini in contabilità e quotazioni
-            aperte in Docnaet.
+        <p>Mail giornaliera <b>OpenERP</b> con stato ordini in contabilità e 
+            quotazioni aperte in <b>Docnaet</b>.
         </p>
         <p>
-        Stato ordini aggiornato il %s:
+        Stato ordini aggiornato il <b>%s</b><br/>:
         1. Offerte: Elenco offerte con FIDO cliente 
            (ordinate per data decrescente)<br/>
         2. Quotazioni: Documenti Docnaet valorizzati dagli agenti ancora da
