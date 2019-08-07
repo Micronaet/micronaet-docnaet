@@ -55,11 +55,14 @@ smtp = {
     #'subject': config.get('smtp', 'subject'),
     #'text': config.get('smtp', 'text'),
     'text': '''
-        <p>Mail giornaliera <b>OpenERP</b> con stato ordini in 
-            contabilit&agrave;  e quotazioni aperte in <b>Docnaet</b>.
+        <p>Mail automatica giornaliera inviata da <b>OpenERP</b> con lo stato 
+            ordini in contabilit&agrave; e le quotazioni aperte in 
+            <b>Docnaet</b>.
         </p>
+
+        <p>Stato ordini aggiornato il <b>%s</b>:</p>
+
         <p>
-        Stato ordini aggiornato il <b>%s</b>: <br/><br/>
         1. <b>Offerte</b>: Elenco offerte con FIDO cliente 
            (ordinate per data decrescente)<br/>
         2. <b>Quotazioni</b>: Documenti Docnaet valorizzati dagli agenti ancora 
@@ -69,8 +72,13 @@ smtp = {
            e scoperto clienti (ordinamento alfabetico)<br/>
         5. <b>Prodotti</b>: Elenco ordini per prodotto suddivisi per mese di 
            scadenza / consegna (colonna No = senza scadenza). Totalizzato in 
-           fondo per unità di misura<br/>
+           fondo per unit&agrave di misura<br/>
         </p>
+
+        <p><i>
+            Nota: In rosso le righe con clienti con pendenze contabili</i></p>
+        
+        <b>Micronaet S.r.l.</b>
         ''' % now,
     'subject': 'Dettaglio ordini e quotazioni aperte: %s' % now,    
     
