@@ -65,19 +65,19 @@ smtp = {
 
         <p>
         1. <b>Ordini</b>: Elenco ordini (aggiunto il dettaglio FIDO cliente).
-           Ordinamento per data decrescente<br/>
+           Ordinamento per data decrescente.<br/>
         2. <b>Offerte</b>: Documenti Docnaet valorizzati dagli agenti ancora 
            da vincere o perdere<br/>
-        3. <b>Perse</b>: Offerte marcate come perse in Docnaet<br/>
+        3. <b>Perse</b>: Offerte marcate come perse in Docnaet.<br/>
         4. <b>Clienti</b>: Elenco ordini, offerte attive, offerte perse 
-           e dettaglio solvibilit&agrave; cliente. Ordinamento alfabetico<br/>
+           e dettaglio solvibilit&agrave; cliente. Ordinamento alfabetico.<br/>
         5. <b>Prodotti</b>: Elenco ordini per prodotto suddivisi per mese di 
            scadenza / consegna (colonna No = senza scadenza). Totalizzato in 
-           fondo per unit&agrave di misura (in azzurro il mese attuale)<br/>
+           fondo per unit&agrave di misura (in azzurro il mese attuale).<br/>
         </p>
 
         <p><i>
-            Nota: In rosso le righe dei clienti con pendenze contabili</i></p>
+            Nota: In rosso le righe dei clienti con pagamenti scaduti.</i></p>
         
         <b>Micronaet S.r.l.</b>
         ''' % now,
