@@ -64,16 +64,16 @@ smtp = {
         <p>Stato ordini aggiornato al <b>%s</b>, dettaglio fogli:</p>
 
         <p>
-        1. <b>Offerte</b>: Elenco offerte con FIDO cliente 
-           (ordinate per data decrescente)<br/>
-        2. <b>Quotazioni</b>: Documenti Docnaet valorizzati dagli agenti ancora 
+        1. <b>Ordini</b>: Elenco ordini (aggiunto il dettaglio FIDO cliente).
+           Ordinamento per data decrescente<br/>
+        2. <b>Offerte</b>: Documenti Docnaet valorizzati dagli agenti ancora 
            da vincere o perdere<br/>
-        3. <b>Perse</b>: Quotazioni marcate come perse in Docnaet<br/>
-        4. <b>Clienti</b>: Elenco offerte, quotazioni attive, quotazioni perse 
-           e scoperto clienti (ordinamento alfabetico)<br/>
+        3. <b>Perse</b>: Offerte marcate come perse in Docnaet<br/>
+        4. <b>Clienti</b>: Elenco ordini, offerte attive, offerte perse 
+           e dettaglio solvibilit&agrave; cliente. Ordinamento alfabetico<br/>
         5. <b>Prodotti</b>: Elenco ordini per prodotto suddivisi per mese di 
            scadenza / consegna (colonna No = senza scadenza). Totalizzato in 
-           fondo per unit&agrave di misura<br/>
+           fondo per unit&agrave di misura (in azzurro il mese attuale)<br/>
         </p>
 
         <p><i>
@@ -81,7 +81,7 @@ smtp = {
         
         <b>Micronaet S.r.l.</b>
         ''' % now,
-    'subject': 'Dettaglio ordini e quotazioni aperte: %s' % now,    
+    'subject': 'Dettaglio offerte e ordini aperti: %s' % now,    
     
     'folder': config.get('smtp', 'folder'),
     }
@@ -165,7 +165,7 @@ for to in smtp['to'].replace(' ', '').split(','):
     part.set_payload(open(filename, 'rb').read())
     Encoders.encode_base64(part)
     part.add_header(
-        'Content-Disposition', 'attachment; filename="Stato ordini.xlsx"')
+        'Content-Disposition', 'attachment; filename="Stato vendite.xlsx"')
 
     msg.attach(part)
 

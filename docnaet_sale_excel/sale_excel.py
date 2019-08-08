@@ -71,7 +71,7 @@ class SaleOrder(orm.Model):
         # ---------------------------------------------------------------------
         # Docnaet Order:
         # ---------------------------------------------------------------------               
-        ws_name = 'Offerte'
+        ws_name = 'Ordini'
         excel_pool.create_worksheet(name=ws_name)
         width = [
             40, 20, 12, 12, 45,
@@ -79,9 +79,15 @@ class SaleOrder(orm.Model):
             15,
             ]
         header = [
-            'Partner', 'Commerciale', 'Data', 'Scadenza', 'Oggetto', 
+            'Partner', 
+            'Commerciale', 
+            'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
-            'Scoperto cliente',
+            # TODO 
+            #'FIDO',
+            #'Pagamenti aperti ',
+            #'Di cui scaduti',
+            'Pagamenti scaduti',
             ]
             
         sale_ids = sale_pool.search(cr, uid, [
@@ -162,11 +168,11 @@ class SaleOrder(orm.Model):
             excel_pool.write_xls_line(
                 ws_name, row, [
                     partner.name,
-                    order.user_id.name,
+                    '', #TODO order.user_id.name,
                     order.date_order,
                     order.date_deadline,
                     order.name,
-                    '',
+                    '', # TODO
                     (order.amount_untaxed, f_number_current),                    
                     (partner.duelist_uncovered_amount or '', f_number_current),             
                     ], default_format=f_text_current)
@@ -190,7 +196,7 @@ class SaleOrder(orm.Model):
         # ---------------------------------------------------------------------   
         # Setup:
         ws_setup = [
-            ('Quotazioni', [
+            ('Offerte', [
                 ('sale_state', '=', 'pending'),
                 ('sale_order_amount', '>', 0.0),
                 ]),
