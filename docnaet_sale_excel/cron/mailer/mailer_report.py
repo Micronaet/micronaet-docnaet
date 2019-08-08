@@ -61,7 +61,7 @@ smtp = {
             le quotazioni aperte in <b>Docnaet</b>.
         </p>
 
-        <p>Stato ordini aggiornato al <b>%s</b>, dettaglio fogli:</p>
+        <p>Situazione aggiornata alla data di riferimento: <b>%s</b></p>
 
         <p>
         1. <b>Ordini</b>: Elenco ordini (aggiunto il dettaglio FIDO cliente).
