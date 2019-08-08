@@ -58,7 +58,7 @@ smtp = {
         <p>Spett.li responsabili vendite,</p>
         <p>Questa &egrave; una mail automatica giornaliera inviata da 
             <b>OpenERP</b> con lo stato ordini in contabilit&agrave; e 
-            le quotazioni aperte in <b>Docnaet</b>.
+            le offerte aperte o perse in <b>Docnaet</b>.
         </p>
 
         <p>Situazione aggiornata alla data di riferimento: <b>%s</b></p>
