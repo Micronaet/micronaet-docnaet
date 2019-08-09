@@ -430,12 +430,7 @@ class SaleOrder(orm.Model):
         excel_pool.write_xls_line(
             ws_name, row, header, default_format=f_header)        
             
-        # TODO remove:
-        #total_row = []
-        #for item in range(0, cols):
-        #    total_row.append({})
-
-        total = {}
+        uom_total = {}
         for product in sorted(product_total, key=lambda x: x.default_code):
             uom_code = product.uom_id.account_ref or product.uom_id.name
             
@@ -470,10 +465,10 @@ class SaleOrder(orm.Model):
                 #    total_row[index][uom_code] += subtotal
                 #else:    
                 #    total_row[index][uom_code] = subtotal
-                if uom_code not in total:
-                    total[uom_code] = [0.0 for item in range(0, cols)]
+                if uom_code not in uom_total:
+                    uom_total[uom_code] = [0.0 for item in range(0, cols)]
                 index = month_column.index(deadline)
-                total[uom_code][index] += subtotal
+                uom_total[uom_code][index] += subtotal
                 
                 excel_pool.write_xls_line(
                     ws_name, row, [
@@ -492,14 +487,14 @@ class SaleOrder(orm.Model):
         # Total Row:
         row += 1
         
-        for uom_code in total:
+        for uom_code in uom_total:
             excel_pool.write_xls_line(
                 ws_name, row, [uom_code, ], 
                     default_format=f_number_bg_green_bold, 
                     col=start - 1)
                                     
             excel_pool.write_xls_line(
-                ws_name, row, total[uom_code], 
+                ws_name, row, uom_total[uom_code], 
                     default_format=f_number_bg_green_bold, 
                     col=start)
             
