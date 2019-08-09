@@ -388,13 +388,13 @@ class SaleOrder(orm.Model):
         # Total page order:    
         excel_pool.write_xls_line(
             ws_name, row, [
-                'Tot.',
-                (page_total[0], f_number),    
-                (page_total[1], f_number),    
-                (page_total[2], f_number_red),
+                'Totale',
+                (total[0], f_number),    
+                (total[1], f_number),    
+                (total[2], f_number_red),
                     
-                (page_total[3], f_number),    
-                (page_total[4], f_number_red),    
+                (total[3], f_number),    
+                (total[4], f_number_red),    
                 ], default_format=f_text_current)
 
         # ---------------------------------------------------------------------
