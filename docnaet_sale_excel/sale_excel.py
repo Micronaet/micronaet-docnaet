@@ -318,7 +318,7 @@ class SaleOrder(orm.Model):
             # -----------------------------------------------------------------
             # Total page order:
             # -----------------------------------------------------------------
-            for currency in sorted(total, lambda x: x.symbol):
+            for currency in sorted(total, key=lambda x: x.symbol):
                 excel_pool.write_xls_line(
                     ws_name, row, [
                         'Totale',
