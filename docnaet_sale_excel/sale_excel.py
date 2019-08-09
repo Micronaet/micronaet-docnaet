@@ -95,7 +95,7 @@ class SaleOrder(orm.Model):
             'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
             
-            'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
+            'Val.', 'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
             ]
             
         sale_ids = sale_pool.search(cr, uid, [
@@ -134,6 +134,7 @@ class SaleOrder(orm.Model):
                 reverse=True):
             partner = order.partner_id
             currency = order.currency_id
+            currency_payment = partner.duelist_currency_id
 
             # -----------------------------------------------------------------            
             # Collect: Partner total
@@ -153,10 +154,13 @@ class SaleOrder(orm.Model):
             if currency not in total:
                 # order, exposition, deadlined
                 total[currency] = [0.0, 0.0, 0.0] 
+            if currency_payment not in total:
+                # order, exposition, deadlined
+                total[currency_payment] = [0.0, 0.0, 0.0] 
 
             total[currency][0] += order.amount_untaxed
-            total[currency][1] += partner.duelist_exposition_amount
-            total[currency][2] += partner.duelist_uncovered_amount
+            total[currency_payment][1] += partner.duelist_exposition_amount
+            total[currency_payment][2] += partner.duelist_uncovered_amount
 
             # -----------------------------------------------------------------            
             # Collect data: Product total
@@ -192,10 +196,11 @@ class SaleOrder(orm.Model):
                     order.date_order,
                     order.date_deadline,
                     order.name,
-                    order.currency_id.symbol,
+                    order.currency_id.symbol, # Order:
                     (order.amount_untaxed, f_number_current),                    
 
-                    (partner.duelist_exposition_amount or '', 
+                    currency_payment.symbol, # Payment:
+                    (partner.duelist_exposition_amount or '',
                         f_number_current),             
                     (partner.duelist_uncovered_amount or '', 
                         f_number_current),
@@ -214,8 +219,9 @@ class SaleOrder(orm.Model):
             excel_pool.write_xls_line(
                 ws_name, row, [
                     'Totale',
-                    currency.symbol,
+                    currency.symbol, # Order
                     (total[currency][0], f_number),    
+                    currency.symbol, # Payment
                     (total[currency][1], f_number),    
                     (total[currency][2], f_number_red),    
                     ], default_format=f_text_current, col=4)
