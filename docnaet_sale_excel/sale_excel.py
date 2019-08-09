@@ -127,16 +127,18 @@ class SaleOrder(orm.Model):
         sale_proxy = sale_pool.browse(
             cr, uid, sale_ids, context=context)
             
-        total = [0.0, 0.0, 0.0] # order, exposition, deadlined
+        total = {}
         for order in sorted(
                 sale_proxy, 
                 key=lambda x: x.date_order,
                 reverse=True):
             partner = order.partner_id
+            currency = order.currency_id
 
             # -----------------------------------------------------------------            
-            # Partner total:
+            # Collect: Partner total
             # -----------------------------------------------------------------            
+            # TODO upgrade:
             if partner not in partner_total:
                 partner_total[partner] = [
                     0.0, # Order
@@ -148,9 +150,13 @@ class SaleOrder(orm.Model):
             # -----------------------------------------------------------------            
             # Update total:
             # -----------------------------------------------------------------            
-            total[0] += order.amount_untaxed
-            total[1] += partner.duelist_exposition_amount
-            total[2] += partner.duelist_uncovered_amount
+            if currency not in total:
+                # order, exposition, deadlined
+                total[currency] = [0.0, 0.0, 0.0] 
+
+            total[currency][0] += order.amount_untaxed
+            total[currency][1] += partner.duelist_exposition_amount
+            total[currency][2] += partner.duelist_uncovered_amount
 
             # -----------------------------------------------------------------            
             # Collect data: Product total
@@ -203,15 +209,18 @@ class SaleOrder(orm.Model):
         except:
             index_today = False
             
-        # Total page order:    
-        excel_pool.write_xls_line(
-            ws_name, row, [
-                'Tot.',
-                (total[0], f_number),    
-                (total[1], f_number),    
-                (total[2], f_number_red),    
-                ], default_format=f_text_current, col=5)
-        
+        # Total page order: 
+        for currency in total:   
+            excel_pool.write_xls_line(
+                ws_name, row, [
+                    'Totale',
+                    currency.symbol,
+                    (total[0], f_number),    
+                    (total[1], f_number),    
+                    (total[2], f_number_red),    
+                    ], default_format=f_text_current, col=4)
+            row += 1        
+            
         # ---------------------------------------------------------------------
         # Docnaet Quotation (pending and lost):
         # ---------------------------------------------------------------------   
