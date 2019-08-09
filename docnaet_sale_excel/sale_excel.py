@@ -99,7 +99,7 @@ class SaleOrder(orm.Model):
             ]
             
         sale_ids = sale_pool.search(cr, uid, [
-            ('state', 'in', ('draft','sent','cancel')),
+            ('state', 'in', ('draft', 'sent', 'cancel')),
             ], context=context)
 
         row = 0
@@ -186,7 +186,7 @@ class SaleOrder(orm.Model):
                     order.date_order,
                     order.date_deadline,
                     order.name,
-                    '', # TODO
+                    order.currency_id.symbol,
                     (order.amount_untaxed, f_number_current),                    
 
                     (partner.duelist_exposition_amount or '', 
