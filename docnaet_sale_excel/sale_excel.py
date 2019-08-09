@@ -57,9 +57,9 @@ class SaleOrder(orm.Model):
             '''
             return '%s%s' % (
                 '[Pagamenti scaduti presenti] ' if \
-                    partner.duelist_uncovered or '',
+                    partner.duelist_uncovered else '',
                 '[Fuori FIDO] ' if \
-                    partner.duelist_over_fido or '',
+                    partner.duelist_over_fido else '',
                 )
         
         if context is None:
