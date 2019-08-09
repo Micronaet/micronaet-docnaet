@@ -154,7 +154,7 @@ class SaleOrder(orm.Model):
             if currency not in total:
                 # order, exposition, deadlined
                 total[currency] = [0.0, 0.0, 0.0] 
-            if currency_payment not in total:
+            if currency_payment and currency_payment not in total:
                 # order, exposition, deadlined
                 total[currency_payment] = [0.0, 0.0, 0.0] 
 
