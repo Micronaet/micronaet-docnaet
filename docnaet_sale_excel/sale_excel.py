@@ -95,7 +95,7 @@ class SaleOrder(orm.Model):
             'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
             
-            'Pag. aperti', 'Pag. scaduti','FIDO', 'Note',
+            'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
             ]
             
         sale_ids = sale_pool.search(cr, uid, [
@@ -235,7 +235,7 @@ class SaleOrder(orm.Model):
         header = [
             'Partner', 'Commerciale', 'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
-            'Pag. aperti', 'Pag. scaduti','FIDO', 'Note',
+            'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
             ]
             
         for ws_name, document_filter in ws_setup:
@@ -331,7 +331,7 @@ class SaleOrder(orm.Model):
             ]
         header = [
             'Partner', 'Ordini', 'Offerte', 'Off. perse', 
-            'Pag. aperti', 'Pag. scaduti','FIDO', 'Note',
+            'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
             ]
         row = 0
                 
