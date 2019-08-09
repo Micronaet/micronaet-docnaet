@@ -258,7 +258,7 @@ class SaleOrder(orm.Model):
             document_proxy = docnaet_document.browse(
                 cr, uid, docnaet_ids, context=context)
 
-            total = [0.0, 0.0, 0.0]
+            total = {}
             for document in sorted(
                     document_proxy, 
                     key=lambda x: x.date,
@@ -276,11 +276,14 @@ class SaleOrder(orm.Model):
                     partner_total[partner][2] += order.amount_untaxed #XXX Curr
                 
                 # -------------------------------------------------------------
-                # Update total:
+                # Update total in currency mode:
                 # -------------------------------------------------------------
-                total[0] += document.sale_order_amount
-                total[1] += partner.duelist_exposition_amount
-                total[2] += partner.duelist_uncovered_amount
+                currency = document.sale_currency_id
+                if currency not in total:
+                    total[currency] = [0.0, 0.0, 0.0]
+                total[currency][0] += document.sale_order_amount
+                total[currency][1] += partner.duelist_exposition_amount
+                total[currency][2] += partner.duelist_uncovered_amount
 
                 # Setup color:
                 if partner.duelist_uncovered or partner.duelist_over_fido:
@@ -300,7 +303,7 @@ class SaleOrder(orm.Model):
                             document.name or '',
                             document.description or '',
                             ),
-                        document.sale_currency_id.symbol,
+                        currency.symbol,
                         (document.sale_order_amount, f_number_current),
                         
                         (partner.duelist_exposition_amount or '', 
@@ -312,14 +315,19 @@ class SaleOrder(orm.Model):
                         ], default_format=f_text_current)
                 row += 1
 
-            # Total page order:    
-            excel_pool.write_xls_line(
-                ws_name, row, [
-                    'Tot.',
-                    (total[0], f_number),    
-                    (total[1], f_number),    
-                    (total[2], f_number_red),
-                    ], default_format=f_text_current, col=5)
+            # -----------------------------------------------------------------
+            # Total page order:
+            # -----------------------------------------------------------------
+            for currency in total:    
+                excel_pool.write_xls_line(
+                    ws_name, row, [
+                        'Totale',
+                        currency.symbol,
+                        (total[0], f_number),    
+                        (total[1], f_number),    
+                        (total[2], f_number_red),
+                        ], default_format=f_text_current, col=4)
+                row += 1        
 
         # ---------------------------------------------------------------------
         # Docnaet Customer total:
