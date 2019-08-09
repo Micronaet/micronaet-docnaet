@@ -87,7 +87,7 @@ class SaleOrder(orm.Model):
         width = [
             40, 20, 10, 10, 20,
             3, 13,
-            13, 13, 13, 40,
+            3, 13, 13, 13, 40,
             ]
         header = [
             'Partner', 
