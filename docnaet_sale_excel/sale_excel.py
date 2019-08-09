@@ -95,7 +95,7 @@ class SaleOrder(orm.Model):
             'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
             
-            'FIDO', 'Pag. aperti', 'Pag. scaduti', 'Note',
+            'Pag. aperti', 'Pag. scaduti','FIDO', 'Note',
             ]
             
         sale_ids = sale_pool.search(cr, uid, [
@@ -127,10 +127,7 @@ class SaleOrder(orm.Model):
         sale_proxy = sale_pool.browse(
             cr, uid, sale_ids, context=context)
             
-        total = []
-        # TODO remove
-        page_total = 0.0
-        page_total_pending = 0.0
+        total = [0.0, 0.0, 0.0] # order, exposition, deadlined
         for order in sorted(
                 sale_proxy, 
                 key=lambda x: x.date_order,
@@ -147,11 +144,16 @@ class SaleOrder(orm.Model):
                     0.0, # Lost
                     ]
             partner_total[partner][0] += order.amount_untaxed # TODO Currency
-            page_total += order.amount_untaxed
-            page_total_pending += partner.duelist_uncovered_amount
             
             # -----------------------------------------------------------------            
-            # Product total:
+            # Update total:
+            # -----------------------------------------------------------------            
+            total[0] += order.amount_untaxed
+            total[1] += partner.duelist_exposition_amount
+            total[2] += partner.duelist_uncovered_amount
+
+            # -----------------------------------------------------------------            
+            # Collect data: Product total
             # -----------------------------------------------------------------            
             for line in order.order_line:
                 product = line.product_id
@@ -187,11 +189,11 @@ class SaleOrder(orm.Model):
                     '', # TODO
                     (order.amount_untaxed, f_number_current),                    
 
-                    (partner.duelist_fido or '', f_number_current),             
                     (partner.duelist_exposition_amount or '', 
                         f_number_current),             
                     (partner.duelist_uncovered_amount or '', 
                         f_number_current),
+                    (partner.duelist_fido or '', f_number_current),             
                     get_partner_note(partner),
                     ], default_format=f_text_current)
             row += 1
@@ -205,8 +207,9 @@ class SaleOrder(orm.Model):
         excel_pool.write_xls_line(
             ws_name, row, [
                 'Tot.',
-                (page_total, f_number),    
-                (page_total_pending, f_number_red),    
+                (total[0], f_number),    
+                (total[1], f_number),    
+                (total[2], f_number_red),    
                 ], default_format=f_text_current, col=5)
         
         # ---------------------------------------------------------------------
@@ -232,7 +235,7 @@ class SaleOrder(orm.Model):
         header = [
             'Partner', 'Commerciale', 'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
-            'FIDO', 'Pagamenti aperti', 'Pagamenti scaduti', 'Note',
+            'Pag. aperti', 'Pag. scaduti','FIDO', 'Note',
             ]
             
         for ws_name, document_filter in ws_setup:
@@ -255,8 +258,7 @@ class SaleOrder(orm.Model):
             document_proxy = docnaet_document.browse(
                 cr, uid, docnaet_ids, context=context)
 
-            page_total = 0.0
-            page_total_pending = 0.0
+            total = [0.0, 0.0, 0.0]
             for document in sorted(
                     document_proxy, 
                     key=lambda x: x.date,
@@ -273,9 +275,12 @@ class SaleOrder(orm.Model):
                 else:    
                     partner_total[partner][2] += order.amount_untaxed #XXX Curr
                 
-                # Total page:    
-                page_total += document.sale_order_amount
-                page_total_pending += partner.duelist_uncovered_amount
+                # -------------------------------------------------------------
+                # Update total:
+                # -------------------------------------------------------------
+                total[0] += document.sale_order_amount
+                total[1] += partner.duelist_exposition_amount
+                total[2] += partner.duelist_uncovered_amount
 
                 # Setup color:
                 if partner.duelist_uncovered or partner.duelist_over_fido:
@@ -298,11 +303,11 @@ class SaleOrder(orm.Model):
                         document.sale_currency_id.symbol,
                         (document.sale_order_amount, f_number_current),
                         
-                        (partner.duelist_fido or '', f_number_current),             
                         (partner.duelist_exposition_amount or '', 
                             f_number_current),             
                         (partner.duelist_uncovered_amount or '', 
                             f_number_current),
+                        (partner.duelist_fido or '', f_number_current),             
                         get_partner_note(partner),
                         ], default_format=f_text_current)
                 row += 1
@@ -311,8 +316,9 @@ class SaleOrder(orm.Model):
             excel_pool.write_xls_line(
                 ws_name, row, [
                     'Tot.',
-                    (page_total, f_number),    
-                    (page_total_pending, f_number_red),
+                    (total[0], f_number),    
+                    (total[1], f_number),    
+                    (total[2], f_number_red),
                     ], default_format=f_text_current, col=5)
 
         # ---------------------------------------------------------------------
@@ -325,7 +331,7 @@ class SaleOrder(orm.Model):
             ]
         header = [
             'Partner', 'Ordini', 'Offerte', 'Off. perse', 
-            'FIDO', 'Pagamenti aperti', 'Pagamenti scaduti', 'Note',
+            'Pag. aperti', 'Pag. scaduti','FIDO', 'Note',
             ]
         row = 0
                 
@@ -337,7 +343,10 @@ class SaleOrder(orm.Model):
             ws_name, row, header, default_format=f_header)
         row += 1   
         
-        page_total = [0.0, 0.0, 0.0, 0.0]
+        total = [
+            0.0, 0.0, 0.0, 
+            0.0, 0.0, 0.0,
+            ]
         for partner in sorted(partner_total, key=lambda x: x.name):
             order, quotation, lost = partner_total[partner]
 
@@ -356,18 +365,24 @@ class SaleOrder(orm.Model):
                     (quotation or '', f_number),       
                     (lost or '', f_number_red),                    
 
-                    (partner.duelist_fido or '', f_number_current),             
                     (partner.duelist_exposition_amount or '', 
                         f_number_current),             
                     (partner.duelist_uncovered_amount or '', 
                         f_number_current),
+                    (partner.duelist_fido or '', f_number_current),             
                     get_partner_note(partner),
                     ], default_format=f_text_current)
 
-            page_total[0] += order
-            page_total[1] += quotation
-            page_total[2] += lost
-            page_total[3] += partner.duelist_uncovered_amount
+            # -------------------------------------------------------------
+            # Update total:
+            # -------------------------------------------------------------
+            total[0] += order
+            total[1] += quotation
+            total[2] += lost
+            
+            total[3] += partner.duelist_exposition_amount
+            total[4] += partner.duelist_uncovered_amount
+            
             row += 1
 
         # Total page order:    
@@ -376,8 +391,10 @@ class SaleOrder(orm.Model):
                 'Tot.',
                 (page_total[0], f_number),    
                 (page_total[1], f_number),    
-                (page_total[2], f_number_red),    
-                (page_total[3], f_number_red),    
+                (page_total[2], f_number_red),
+                    
+                (page_total[3], f_number),    
+                (page_total[4], f_number_red),    
                 ], default_format=f_text_current)
 
         # ---------------------------------------------------------------------
