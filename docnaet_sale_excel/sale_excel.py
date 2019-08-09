@@ -489,9 +489,9 @@ class SaleOrder(orm.Model):
         
         for uom_code in uom_total:
             excel_pool.write_xls_line(
-                ws_name, row, [uom_code, ], 
-                    default_format=f_number_bg_green_bold, 
-                    col=start - 1)
+                ws_name, row, [uom_code, 'Totale:'], 
+                    default_format=f_text, 
+                    col=start - 2)
                                     
             excel_pool.write_xls_line(
                 ws_name, row, uom_total[uom_code], 
