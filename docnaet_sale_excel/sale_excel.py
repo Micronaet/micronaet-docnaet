@@ -250,7 +250,7 @@ class SaleOrder(orm.Model):
                         0.0, # Quotation
                         0.0, # Lost
                         ]
-                if ws_name == 'Quotazioni':        
+                if ws_name == 'Offerte':        
                     partner_total[partner][1] += order.amount_untaxed #XXX Curr
                 else:    
                     partner_total[partner][2] += order.amount_untaxed #XXX Curr
@@ -297,7 +297,7 @@ class SaleOrder(orm.Model):
         excel_pool.create_worksheet(name=ws_name)
         width = [40, 20, 20, 20, 30, ]
         header = [
-            'Partner', 'Offerte', 'Quotazioni', 'Perse', 
+            'Partner', 'Ordini', 'Offerte', 'Off. perse', 
             'Scoperto cliente',
             ]
         row = 0
