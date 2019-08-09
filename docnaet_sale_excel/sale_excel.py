@@ -133,8 +133,10 @@ class SaleOrder(orm.Model):
                 key=lambda x: x.date_order,
                 reverse=True):
             partner = order.partner_id
-            currency = order.currency_id
-            currency_payment = partner.duelist_currency_id
+            
+            # Currency:
+            currency = order.currency_id            
+            currency_payment = partner.duelist_currency_id or currency
 
             # -----------------------------------------------------------------            
             # Collect: Partner total
@@ -154,7 +156,8 @@ class SaleOrder(orm.Model):
             if currency not in total:
                 # order, exposition, deadlined
                 total[currency] = [0.0, 0.0, 0.0] 
-            if currency_payment and currency_payment not in total:
+                
+            if currency_payment not in total:
                 # order, exposition, deadlined
                 total[currency_payment] = [0.0, 0.0, 0.0] 
 
