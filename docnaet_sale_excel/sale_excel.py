@@ -429,12 +429,16 @@ class SaleOrder(orm.Model):
         # Header:
         excel_pool.write_xls_line(
             ws_name, row, header, default_format=f_header)        
-        total_row = []
-        for item in range(0, cols):
-            total_row.append({})
+            
+        # TODO remove:
+        #total_row = []
+        #for item in range(0, cols):
+        #    total_row.append({})
 
+        total = {}
         for product in sorted(product_total, key=lambda x: x.default_code):
             uom_code = product.uom_id.account_ref or product.uom_id.name
+            
             row += 1
             data = [
                 product.default_code, 
@@ -456,11 +460,20 @@ class SaleOrder(orm.Model):
                         
                 subtotal = int(product_total[product][deadline])
                 total += subtotal
+
+                # -------------------------------------------------------------
+                # Total setup:
+                # -------------------------------------------------------------
+                # TODO remove:
+                #index = month_column.index(deadline)
+                #if uom_code in total_row[index]:
+                #    total_row[index][uom_code] += subtotal
+                #else:    
+                #    total_row[index][uom_code] = subtotal
+                if uom_code not in total:
+                    total[uom_code] = [0.0 for item in range(0, cols)]
                 index = month_column.index(deadline)
-                if uom_code in total_row[index]:
-                    total_row[index][uom_code] += subtotal
-                else:    
-                    total_row[index][uom_code] = subtotal
+                total[uom_code][index] += subtotal
                 
                 excel_pool.write_xls_line(
                     ws_name, row, [
@@ -478,21 +491,33 @@ class SaleOrder(orm.Model):
 
         # Total Row:
         row += 1
-        excel_pool.row_height(ws_name, [row, ], height=50)
-        text_total_row = []
-        for record in total_row:
-            res = ''
-            for uom_code in record:
-                res += '%s.00 %s\n' % (
-                record[uom_code],
-                uom_code,
-                )
-            text_total_row.append(res)
+        
+        for uom_code in total:
+            excel_pool.write_xls_line(
+                ws_name, row, [uom_code, ], 
+                    default_format=f_number_bg_green_bold, 
+                    col=start - 1)
+                                    
+            excel_pool.write_xls_line(
+                ws_name, row, total[uom_code], 
+                    default_format=f_number_bg_green_bold, 
+                    col=start)
+            
+        #excel_pool.row_height(ws_name, [row, ], height=50)
+        #text_total_row = []
+        #for record in total_row:
+        #    res = ''
+        #    for uom_code in record:
+        #        res += '%s.00 %s\n' % (
+        #        record[uom_code],
+        #        uom_code,
+        #        )
+        #    text_total_row.append(res)
     
-        excel_pool.write_xls_line(
-            ws_name, row, text_total_row, 
-                default_format=f_number_bg_green_bold, 
-                col=start)
+        #excel_pool.write_xls_line(
+        #    ws_name, row, text_total_row, 
+        #        default_format=f_number_bg_green_bold, 
+        #        col=start)
             
         if save_mode: # Save as a file:
             _logger.info('Save mode: %s' % save_mode)
