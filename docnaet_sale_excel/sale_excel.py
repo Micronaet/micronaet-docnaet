@@ -215,9 +215,9 @@ class SaleOrder(orm.Model):
                 ws_name, row, [
                     'Totale',
                     currency.symbol,
-                    (total[0], f_number),    
-                    (total[1], f_number),    
-                    (total[2], f_number_red),    
+                    (total[currency][0], f_number),    
+                    (total[currency][1], f_number),    
+                    (total[currency][2], f_number_red),    
                     ], default_format=f_text_current, col=4)
             row += 1        
             
