@@ -497,6 +497,7 @@ class SaleOrder(orm.Model):
                 ws_name, row, uom_total[uom_code], 
                     default_format=f_number_bg_green_bold, 
                     col=start)
+            row += 1
             
         #excel_pool.row_height(ws_name, [row, ], height=50)
         #text_total_row = []
