@@ -85,9 +85,9 @@ class SaleOrder(orm.Model):
         ws_name = 'Ordini'
         excel_pool.create_worksheet(name=ws_name)
         width = [
-            40, 20, 12, 12, 45,
-            3, 15,
-            15, 15, 15, 40,
+            40, 20, 10, 10, 20,
+            3, 13,
+            13, 13, 13, 40,
             ]
         header = [
             'Partner', 
@@ -228,9 +228,9 @@ class SaleOrder(orm.Model):
             ]
 
         width = [
-            40, 20, 12, 12, 45,
-            3, 15,
-            15, 15, 15, 40
+            38, 18, 10, 10, 50,
+            3, 12,
+            12, 12, 12, 40
             ]
         header = [
             'Partner', 'Commerciale', 'Data', 'Scadenza', 'Oggetto', 
@@ -334,8 +334,8 @@ class SaleOrder(orm.Model):
         # ---------------------------------------------------------------------               
         ws_name = 'Clienti'
         excel_pool.create_worksheet(name=ws_name)
-        width = [40, 20, 20, 20, 
-            15, 15, 15, 40,
+        width = [40, 12, 12, 12, 
+            12, 12, 12, 40,
             ]
         header = [
             'Partner', 'Ordini', 'Offerte', 'Off. perse', 
@@ -413,7 +413,7 @@ class SaleOrder(orm.Model):
         
         width = [12, 30, 2, 10]
         cols = len(month_column)
-        width.extend([10 for item in range(0, cols)])
+        width.extend([9 for item in range(0, cols)])
         empty = ['' for item in range(0, cols)]
         if index_today != False:
             empty[index_today] = ('', f_number_bg_blue)
