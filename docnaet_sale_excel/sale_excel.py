@@ -51,6 +51,17 @@ class SaleOrder(orm.Model):
     def extract_sale_excel_report(self, cr, uid, context=None):
         ''' Schedule extract of sale quotation info
         '''
+        # Function:
+        def get_partner_note(partner):
+            ''' Return color information
+            '''
+            return '%s%s' % (
+                '[Pagamenti scaduti presenti] ' if \
+                    partner.duelist_uncovered or '',
+                '[Fuori FIDO] ' if \
+                    partner.duelist_over_fido or '',
+                )
+        
         if context is None:
             context = {}
         
@@ -76,18 +87,15 @@ class SaleOrder(orm.Model):
         width = [
             40, 20, 12, 12, 45,
             3, 15,
-            15,
+            15, 15, 15, 40,
             ]
         header = [
             'Partner', 
             'Commerciale', 
             'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
-            # TODO 
-            #'FIDO',
-            #'Pagamenti aperti ',
-            #'Di cui scaduti',
-            'Pagamenti scaduti',
+            
+            'FIDO', 'Pag. aperti', 'Pag. scaduti', 'Note',
             ]
             
         sale_ids = sale_pool.search(cr, uid, [
@@ -118,6 +126,9 @@ class SaleOrder(orm.Model):
         
         sale_proxy = sale_pool.browse(
             cr, uid, sale_ids, context=context)
+            
+        total = []
+        # TODO remove
         page_total = 0.0
         page_total_pending = 0.0
         for order in sorted(
@@ -159,7 +170,8 @@ class SaleOrder(orm.Model):
             # -----------------------------------------------------------------            
             # Excel write detail:
             # -----------------------------------------------------------------            
-            if partner.duelist_uncovered:
+            # Setup color:
+            if partner.duelist_uncovered or partner.duelist_over_fido:
                 f_text_current = f_text_red
                 f_number_current = f_number_red
             else:
@@ -174,7 +186,13 @@ class SaleOrder(orm.Model):
                     order.name,
                     '', # TODO
                     (order.amount_untaxed, f_number_current),                    
-                    (partner.duelist_uncovered_amount or '', f_number_current),             
+
+                    (partner.duelist_fido or '', f_number_current),             
+                    (partner.duelist_exposition_amount or '', 
+                        f_number_current),             
+                    (partner.duelist_uncovered_amount or '', 
+                        f_number_current),
+                    get_partner_note(partner),
                     ], default_format=f_text_current)
             row += 1
         month_column = sorted(month_column)
@@ -209,12 +227,12 @@ class SaleOrder(orm.Model):
         width = [
             40, 20, 12, 12, 45,
             3, 15,
-            15,
+            15, 15, 15, 40
             ]
         header = [
             'Partner', 'Commerciale', 'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
-            'Scoperto cliente',
+            'FIDO', 'Pagamenti aperti', 'Pagamenti scaduti', 'Note',
             ]
             
         for ws_name, document_filter in ws_setup:
@@ -259,12 +277,14 @@ class SaleOrder(orm.Model):
                 page_total += document.sale_order_amount
                 page_total_pending += partner.duelist_uncovered_amount
 
-                if partner.duelist_uncovered:
+                # Setup color:
+                if partner.duelist_uncovered or partner.duelist_over_fido:
                     f_text_current = f_text_red
                     f_number_current = f_number_red
                 else:
                     f_text_current = f_text
                     f_number_current = f_number
+                    
                 excel_pool.write_xls_line(
                     ws_name, row, [
                         partner.name,
@@ -276,9 +296,14 @@ class SaleOrder(orm.Model):
                             document.description or '',
                             ),
                         document.sale_currency_id.symbol,
-                        (document.sale_order_amount, f_number_current),                    
-                        (partner.duelist_uncovered_amount or '', 
+                        (document.sale_order_amount, f_number_current),
+                        
+                        (partner.duelist_fido or '', f_number_current),             
+                        (partner.duelist_exposition_amount or '', 
                             f_number_current),             
+                        (partner.duelist_uncovered_amount or '', 
+                            f_number_current),
+                        get_partner_note(partner),
                         ], default_format=f_text_current)
                 row += 1
 
@@ -295,10 +320,12 @@ class SaleOrder(orm.Model):
         # ---------------------------------------------------------------------               
         ws_name = 'Clienti'
         excel_pool.create_worksheet(name=ws_name)
-        width = [40, 20, 20, 20, 30, ]
+        width = [40, 20, 20, 20, 
+            15, 15, 15, 40,
+            ]
         header = [
             'Partner', 'Ordini', 'Offerte', 'Off. perse', 
-            'Scoperto cliente',
+            'FIDO', 'Pagamenti aperti', 'Pagamenti scaduti', 'Note',
             ]
         row = 0
                 
@@ -313,13 +340,28 @@ class SaleOrder(orm.Model):
         page_total = [0.0, 0.0, 0.0, 0.0]
         for partner in sorted(partner_total, key=lambda x: x.name):
             order, quotation, lost = partner_total[partner]
+
+            # Setup color:
+            if partner.duelist_uncovered or partner.duelist_over_fido:
+                f_text_current = f_text_red
+                f_number_current = f_number_red
+            else:
+                f_text_current = f_text
+                f_number_current = f_number
+
             excel_pool.write_xls_line(
                 ws_name, row, [
                     partner.name,
                     (order or '', f_number),                    
                     (quotation or '', f_number),       
                     (lost or '', f_number_red),                    
-                    (partner.duelist_uncovered_amount or '', f_number_red),
+
+                    (partner.duelist_fido or '', f_number_current),             
+                    (partner.duelist_exposition_amount or '', 
+                        f_number_current),             
+                    (partner.duelist_uncovered_amount or '', 
+                        f_number_current),
+                    get_partner_note(partner),
                     ], default_format=f_text_current)
 
             page_total[0] += order

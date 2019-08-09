@@ -64,7 +64,8 @@ smtp = {
         <p>Situazione aggiornata alla data di riferimento: <b>%s</b></p>
 
         <p>
-        1. <b>Ordini</b>: Elenco ordini (aggiunto il dettaglio FIDO cliente).
+        1. <b>Ordini</b>: Elenco ordini da consegnare, fonte Mexal
+           (aggiunte informazioni solvibili&agrave;).
            Ordinamento per data decrescente.<br/>
         2. <b>Offerte</b>: Documenti Docnaet valorizzati dagli agenti ancora 
            da vincere o perdere<br/>
