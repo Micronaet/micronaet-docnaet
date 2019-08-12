@@ -429,10 +429,13 @@ class SaleOrder(orm.Model):
             excel_pool.write_xls_line(
                 ws_name, row, [
                     partner.name,
+                    
+                    currency.symbol,
                     (order or '', f_number),                    
                     (quotation or '', f_number),       
                     (lost or '', f_number_red),                    
 
+                    currency_payment.symbol,
                     (partner.duelist_exposition_amount or '', 
                         f_number_current),             
                     (partner.duelist_uncovered_amount or '', 
