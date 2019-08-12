@@ -218,7 +218,7 @@ class SaleOrder(orm.Model):
             index_today = False
             
         # Total page order: 
-        for currency in total:   
+        for currency in sorted(total, key=lambda x: x.symbol):
             excel_pool.write_xls_line(
                 ws_name, row, [
                     'Totale',
@@ -248,12 +248,12 @@ class SaleOrder(orm.Model):
         width = [
             38, 18, 10, 10, 50,
             3, 12,
-            12, 12, 12, 40
+            3, 12, 12, 12, 40
             ]
         header = [
             'Partner', 'Commerciale', 'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
-            'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
+            'Val.', 'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
             ]
             
         for ws_name, document_filter in ws_setup:
@@ -297,11 +297,19 @@ class SaleOrder(orm.Model):
                 # Update total in currency mode:
                 # -------------------------------------------------------------
                 currency = document.sale_currency_id
+                currency_payment = partner.duelist_currency_id or currency
+                
                 if currency not in total:
+                    # order, exposition, deadlined
                     total[currency] = [0.0, 0.0, 0.0]
+
+                if currency_payment not in total:
+                    # order, exposition, deadlined
+                    total[currency_payment] = [0.0, 0.0, 0.0]
+                    
                 total[currency][0] += document.sale_order_amount
-                total[currency][1] += partner.duelist_exposition_amount
-                total[currency][2] += partner.duelist_uncovered_amount
+                total[currency_payment][1] += partner.duelist_exposition_amount
+                total[currency_payment][2] += partner.duelist_uncovered_amount
 
                 # Setup color:
                 if partner.duelist_uncovered or partner.duelist_over_fido:
