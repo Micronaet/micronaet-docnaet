@@ -144,7 +144,7 @@ class SaleOrder(orm.Model):
             if partner not in partner_total:
                 partner_total[partner] = {}                
             if currency not in partner_total[partner]:
-                partnet_total[partner][currency] = [
+                partner_total[partner][currency] = [
                     0.0, # Order
                     0.0, # Quotation
                     0.0, # Lost
