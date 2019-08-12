@@ -364,15 +364,15 @@ class SaleOrder(orm.Model):
         excel_pool.create_worksheet(name=ws_name)
         width = [
             40, 
-            3, 12, 
+            3, 12, 12, 12, 
             3, 12, 12, 
-            12, 12, 12, 40,
+            12, 40,
             ]
         header = [
             'Partner', 
-            'Val.', 'Ordini', 
-            'Val.', 'Offerte', 'Off. perse', 
-            'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
+            'Val.', 'Ordini', 'Offerte', 'Off. perse', 
+            'Val.', 'Pag. aperti', 'Di cui scaduti', 
+            'FIDO', 'Note',
             ]
         row = 0
                 
