@@ -391,65 +391,81 @@ class SaleOrder(orm.Model):
         for partner in sorted(partner_total, key=lambda x: x.name):
             currency_payment = partner.duelist_currency_id or currency
 
-            for total_currency in partner_total[partner]:
-                order, quotation, lost = partner_total[partner][total_currency]
+            first = True
+            for currency in partner_total[partner]:
+                order, quotation, lost = partner_total[partner][currency]
+                # -------------------------------------------------------------
+                # Update total in currency mode:
+                # -------------------------------------------------------------                
+                if currency not in total:
+                    # order, exposition, deadlined
+                    total[currency] = [
+                        0.0, 0.0, 0.0, 
+                        0.0, 0.0, 0.0,
+                        ]
 
-            # -----------------------------------------------------------------
-            # Update total in currency mode:
-            # -----------------------------------------------------------------
-            currency = document.sale_currency_id
-            
-            if currency not in total:
-                # order, exposition, deadlined
-                total[currency] = [
-                    0.0, 0.0, 0.0, 
-                    0.0, 0.0, 0.0,
-                    ]
+                if currency_payment not in total:
+                    # order, exposition, deadlined
+                    total[currency_payment] = [
+                        0.0, 0.0, 0.0, 
+                        0.0, 0.0, 0.0,
+                        ]
 
-            if currency_payment not in total:
-                # order, exposition, deadlined
-                total[currency_payment] = [
-                    0.0, 0.0, 0.0, 
-                    0.0, 0.0, 0.0,
-                    ]
+                total[currency][0] += order
+                total[currency][1] += quotation # TODO problem if different currency
+                total[currency][2] += lost # TODO problem if different currency
+                
+                # Payment:
+                total[currency_payment][3] += partner.duelist_exposition_amount
+                total[currency_payment][4] += partner.duelist_uncovered_amount
 
-            total[currency][0] += order
-            total[currency][1] += quotation # TODO problem if different currency
-            total[currency][2] += lost # TODO problem if different currency
-            
-            # Payment:
-            total[currency_payment][3] += partner.duelist_exposition_amount
-            total[currency_payment][4] += partner.duelist_uncovered_amount
+                # -----------------------------------------------------------------
+                # Setup color:
+                # -----------------------------------------------------------------
+                if partner.duelist_uncovered or partner.duelist_over_fido:
+                    f_text_current = f_text_red
+                    f_number_current = f_number_red
+                else:
+                    f_text_current = f_text
+                    f_number_current = f_number
+                if first:
+                    first = False
+                    excel_pool.write_xls_line(
+                        ws_name, row, [
+                            partner.name,
+                            
+                            currency.symbol,
+                            (order or '', f_number),                    
+                            (quotation or '', f_number),       
+                            (lost or '', f_number_red),                    
 
-            # -----------------------------------------------------------------
-            # Setup color:
-            # -----------------------------------------------------------------
-            if partner.duelist_uncovered or partner.duelist_over_fido:
-                f_text_current = f_text_red
-                f_number_current = f_number_red
-            else:
-                f_text_current = f_text
-                f_number_current = f_number
+                            currency_payment.symbol,
+                            (partner.duelist_exposition_amount or '', 
+                                f_number_current),             
+                            (partner.duelist_uncovered_amount or '', 
+                                f_number_current),
+                            (partner.duelist_fido or '', f_number_current),             
+                            get_partner_note(partner),
+                            ], default_format=f_text_current)
+                else:            
+                    excel_pool.write_xls_line(
+                        ws_name, row, [
+                            #partner.name,
+                            
+                            currency.symbol,
+                            (order or '', f_number),                    
+                            (quotation or '', f_number),       
+                            (lost or '', f_number_red),                    
 
-            excel_pool.write_xls_line(
-                ws_name, row, [
-                    partner.name,
-                    
-                    currency.symbol,
-                    (order or '', f_number),                    
-                    (quotation or '', f_number),       
-                    (lost or '', f_number_red),                    
-
-                    currency_payment.symbol,
-                    (partner.duelist_exposition_amount or '', 
-                        f_number_current),             
-                    (partner.duelist_uncovered_amount or '', 
-                        f_number_current),
-                    (partner.duelist_fido or '', f_number_current),             
-                    get_partner_note(partner),
-                    ], default_format=f_text_current)
-
-            row += 1
+                            #currency_payment.symbol,
+                            #(partner.duelist_exposition_amount or '', 
+                            #    f_number_current),             
+                            #(partner.duelist_uncovered_amount or '', 
+                            #    f_number_current),
+                            #(partner.duelist_fido or '', f_number_current),             
+                            #get_partner_note(partner),
+                            ], default_format=f_text_current, col=1)
+                row += 1
 
         # ---------------------------------------------------------------------
         # Total page order:
