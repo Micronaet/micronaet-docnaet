@@ -332,6 +332,7 @@ class SaleOrder(orm.Model):
                         currency.symbol,
                         (document.sale_order_amount, f_number_current),
                         
+                        currency_payment.symbol,
                         (partner.duelist_exposition_amount or '', 
                             f_number_current),             
                         (partner.duelist_uncovered_amount or '', 
@@ -350,6 +351,7 @@ class SaleOrder(orm.Model):
                         'Totale',
                         currency.symbol,
                         (total[currency][0], f_number),    
+                        currency.symbol,
                         (total[currency][1], f_number),    
                         (total[currency][2], f_number_red),
                         ], default_format=f_text_current, col=4)
