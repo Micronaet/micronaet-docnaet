@@ -478,12 +478,12 @@ class SaleOrder(orm.Model):
                 ws_name, row, [
                     'Totale',
                     currency.symbol,
-                    (total[currency][0], f_number_bg_blue),    
-                    (total[currency][1], f_number_bg_blue),    
-                    (total[currency][2], f_number_bg_blue),    
+                    (total[currency][0], f_number_bg_blue_bold),    
+                    (total[currency][1], f_number_bg_blue_bold),    
+                    (total[currency][2], f_number_bg_blue_bold),    
                     currency.symbol,
-                    (total[currency][3], f_number_bg_blue),    
-                    (total[currency][4], f_number_bg_blue),
+                    (total[currency][3], f_number_bg_blue_bold),    
+                    (total[currency][4], f_number_bg_blue_bold),
                     ], default_format=f_text_bg_blue)
             row += 1        
 
