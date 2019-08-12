@@ -108,8 +108,11 @@ class SaleOrder(orm.Model):
         excel_pool.set_format()
         f_title = excel_pool.get_format('title')
         f_header = excel_pool.get_format('header')
+
         f_text = excel_pool.get_format('text')
         f_text_red = excel_pool.get_format('text_red')
+        f_text_bg_blue = excel_pool.get_format('bg_blue')
+        
         f_number = excel_pool.get_format('number')
         f_number_red = excel_pool.get_format('number_red')
         f_number_bg_blue = excel_pool.get_format('bg_blue_number')
@@ -475,13 +478,13 @@ class SaleOrder(orm.Model):
                 ws_name, row, [
                     'Totale',
                     currency.symbol,
-                    (total[currency][0], f_number),    
-                    (total[currency][1], f_number),    
-                    (total[currency][2], f_number),    
+                    (total[currency][0], f_number_bg_blue),    
+                    (total[currency][1], f_number_bg_blue),    
+                    (total[currency][2], f_number_bg_blue),    
                     currency.symbol,
-                    (total[currency][3], f_number),    
-                    (total[currency][4], f_number_red),
-                    ], default_format=f_text_current)
+                    (total[currency][3], f_number_bg_blue),    
+                    (total[currency][4], f_number_bg_blue),
+                    ], default_format=f_text_bg_blue)
             row += 1        
 
         # ---------------------------------------------------------------------
