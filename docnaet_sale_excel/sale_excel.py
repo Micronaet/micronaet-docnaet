@@ -227,11 +227,11 @@ class SaleOrder(orm.Model):
                 ws_name, row, [
                     'Totale',
                     currency.symbol, # Order
-                    (total[currency][0], f_number),    
+                    (total[currency][0], f_number_bg_blue_bold),    
                     currency.symbol, # Payment
-                    (total[currency][1], f_number),    
-                    (total[currency][2], f_number_red),    
-                    ], default_format=f_text_current, col=4)
+                    (total[currency][1], f_number_bg_blue_bold),    
+                    (total[currency][2], f_number_bg_blue_bold),    
+                    ], default_format=f_text_bg_blue, col=4)
             row += 1        
             
         # ---------------------------------------------------------------------
@@ -356,11 +356,11 @@ class SaleOrder(orm.Model):
                     ws_name, row, [
                         'Totale',
                         currency.symbol,
-                        (total[currency][0], f_number),    
+                        (total[currency][0], f_number_bg_blue_bold),    
                         currency.symbol,
-                        (total[currency][1], f_number),    
-                        (total[currency][2], f_number_red),
-                        ], default_format=f_text_current, col=4)
+                        (total[currency][1], f_number_bg_blue_bold),    
+                        (total[currency][2], f_number_bg_blue_bold),
+                        ], default_format=f_text_bg_blue, col=4)
                 row += 1        
 
         # ---------------------------------------------------------------------
