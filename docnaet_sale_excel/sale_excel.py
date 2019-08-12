@@ -74,8 +74,8 @@ class SaleOrder(orm.Model):
         sale_pool = self.pool.get('sale.order')
         
         # Collect data:
-        partner_total = {}
-        product_total = {}
+        partner_total = {} # Statistic for partner
+        product_total = {} # Statistic for product
         month_column = []
         now = ('%s' % datetime.now())[:7]
 
@@ -139,16 +139,17 @@ class SaleOrder(orm.Model):
             currency_payment = partner.duelist_currency_id or currency
 
             # -----------------------------------------------------------------            
-            # Collect: Partner total
+            # COLLECT: Partner total
             # -----------------------------------------------------------------            
-            # TODO upgrade:
             if partner not in partner_total:
-                partner_total[partner] = [
+                partner_total[partner] = {}                
+            if currency not in partner_total[partner]:
+                partnet_total[partner][currency] = [
                     0.0, # Order
                     0.0, # Quotation
                     0.0, # Lost
                     ]
-            partner_total[partner][0] += order.amount_untaxed # TODO Currency
+            partner_total[partner][currency][0] += order.amount_untaxed
             
             # -----------------------------------------------------------------            
             # Update total:
@@ -282,23 +283,25 @@ class SaleOrder(orm.Model):
                     key=lambda x: x.date,
                     reverse=True):
                 partner = document.partner_id
+                currency = document.sale_currency_id
+                currency_payment = partner.duelist_currency_id or currency
+
                 if partner not in partner_total:
-                    partner_total[partner] = [
+                    partner_total[partner] = {}
+                if currency not in partner_total[partner]:
+                    partner_total[partner][currency] = [
                         0.0, # Order
                         0.0, # Quotation
                         0.0, # Lost
-                        ]
+                        ]    
                 if ws_name == 'Offerte':        
-                    partner_total[partner][1] += order.amount_untaxed #XXX Curr
+                    partner_total[partner][currency][1] += order.amount_untaxed
                 else:    
-                    partner_total[partner][2] += order.amount_untaxed #XXX Curr
+                    partner_total[partner][currency][2] += order.amount_untaxed
                 
                 # -------------------------------------------------------------
                 # Update total in currency mode:
                 # -------------------------------------------------------------
-                currency = document.sale_currency_id
-                currency_payment = partner.duelist_currency_id or currency
-                
                 if currency not in total:
                     # order, exposition, deadlined
                     total[currency] = [0.0, 0.0, 0.0]
@@ -386,13 +389,15 @@ class SaleOrder(orm.Model):
         
         total = {}
         for partner in sorted(partner_total, key=lambda x: x.name):
-            order, quotation, lost = partner_total[partner]
-
-            # -------------------------------------------------------------
-            # Update total in currency mode:
-            # -------------------------------------------------------------
-            currency = document.sale_currency_id
             currency_payment = partner.duelist_currency_id or currency
+
+            for total_currency in partner_total[partner]:
+                order, quotation, lost = partner_total[partner][total_currency]
+
+            # -----------------------------------------------------------------
+            # Update total in currency mode:
+            # -----------------------------------------------------------------
+            currency = document.sale_currency_id
             
             if currency not in total:
                 # order, exposition, deadlined
