@@ -231,7 +231,7 @@ class SaleOrder(orm.Model):
                     (total[currency][0], f_number_bg_blue_bold),    
                     currency.symbol, # Payment
                     (total[currency][1], f_number_bg_blue_bold),    
-                    (total[currency][2], f_number_bg_blue_bold),    
+                    (total[currency][2], f_number_bg_red_bold),    
                     ], default_format=f_text_bg_blue, col=4)
             row += 1        
             
@@ -360,7 +360,7 @@ class SaleOrder(orm.Model):
                         (total[currency][0], f_number_bg_blue_bold),    
                         currency.symbol,
                         (total[currency][1], f_number_bg_blue_bold),    
-                        (total[currency][2], f_number_bg_blue_bold),
+                        (total[currency][2], f_number_bg_red_bold),
                         ], default_format=f_text_bg_blue, col=4)
                 row += 1        
 
@@ -481,10 +481,10 @@ class SaleOrder(orm.Model):
                     currency.symbol,
                     (total[currency][0], f_number_bg_blue_bold),    
                     (total[currency][1], f_number_bg_blue_bold),    
-                    (total[currency][2], f_number_bg_blue_bold),    
+                    (total[currency][2], f_number_bg_red_bold),    
                     currency.symbol,
                     (total[currency][3], f_number_bg_blue_bold),    
-                    (total[currency][4], f_number_bg_blue_bold),
+                    (total[currency][4], f_number_bg_red_bold),
                     ], default_format=f_text_bg_blue)
             row += 1        
 
