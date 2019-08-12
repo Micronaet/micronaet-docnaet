@@ -77,8 +77,14 @@ smtp = {
            fondo per unit&agrave di misura (in azzurro il mese attuale).<br/>
         </p>
 
-        <p><i>
-            Nota: In rosso le righe dei clienti con pagamenti scaduti.</i></p>
+        <p>
+            <i>Nota: In rosso le righe dei clienti con pagamenti scaduti.</i>
+        </p>
+        <p>
+            <i>Nota: Potrebbe capitare che ci siano differenti valute, il 
+               totale indicato in fondo verr&agrave; quindi spezzato in tutte
+               quelle rilevate.</i>
+        </p>
         
         <b>Micronaet S.r.l.</b>
         ''' % now,
