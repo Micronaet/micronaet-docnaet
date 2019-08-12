@@ -362,11 +362,16 @@ class SaleOrder(orm.Model):
         # ---------------------------------------------------------------------               
         ws_name = 'Clienti'
         excel_pool.create_worksheet(name=ws_name)
-        width = [40, 12, 12, 12, 
+        width = [
+            40, 
+            3, 12, 
+            3, 12, 12, 
             12, 12, 12, 40,
             ]
         header = [
-            'Partner', 'Ordini', 'Offerte', 'Off. perse', 
+            'Partner', 
+            'Val.', 'Ordini', 
+            'Val.', 'Offerte', 'Off. perse', 
             'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
             ]
         row = 0
@@ -379,14 +384,41 @@ class SaleOrder(orm.Model):
             ws_name, row, header, default_format=f_header)
         row += 1   
         
-        total = [
-            0.0, 0.0, 0.0, 
-            0.0, 0.0, 0.0,
-            ]
+        total = {}
         for partner in sorted(partner_total, key=lambda x: x.name):
             order, quotation, lost = partner_total[partner]
 
+            # -------------------------------------------------------------
+            # Update total in currency mode:
+            # -------------------------------------------------------------
+            currency = document.sale_currency_id
+            currency_payment = partner.duelist_currency_id or currency
+            
+            if currency not in total:
+                # order, exposition, deadlined
+                total[currency] = [
+                    0.0, 0.0, 0.0, 
+                    0.0, 0.0, 0.0,
+                    ]
+
+            if currency_payment not in total:
+                # order, exposition, deadlined
+                total[currency_payment] = [
+                    0.0, 0.0, 0.0, 
+                    0.0, 0.0, 0.0,
+                    ]
+
+            total[currency][0] += order
+            total[currency][1] += quotation # TODO problem if different currency
+            total[currency][2] += lost # TODO problem if different currency
+            
+            # Payment:
+            total[currency_payment][3] += partner.duelist_exposition_amount
+            total[currency_payment][4] += partner.duelist_uncovered_amount
+
+            # -----------------------------------------------------------------
             # Setup color:
+            # -----------------------------------------------------------------
             if partner.duelist_uncovered or partner.duelist_over_fido:
                 f_text_current = f_text_red
                 f_number_current = f_number_red
@@ -409,29 +441,24 @@ class SaleOrder(orm.Model):
                     get_partner_note(partner),
                     ], default_format=f_text_current)
 
-            # -------------------------------------------------------------
-            # Update total:
-            # -------------------------------------------------------------
-            total[0] += order
-            total[1] += quotation
-            total[2] += lost
-            
-            total[3] += partner.duelist_exposition_amount
-            total[4] += partner.duelist_uncovered_amount
-            
             row += 1
 
-        # Total page order:    
-        excel_pool.write_xls_line(
-            ws_name, row, [
-                'Totale',
-                (total[0], f_number),    
-                (total[1], f_number),    
-                (total[2], f_number_red),
-                    
-                (total[3], f_number),    
-                (total[4], f_number_red),    
-                ], default_format=f_text_current)
+        # ---------------------------------------------------------------------
+        # Total page order:
+        # ---------------------------------------------------------------------
+        for currency in sorted(total, key=lambda x: x.symbol):
+            excel_pool.write_xls_line(
+                ws_name, row, [
+                    'Totale',
+                    currency.symbol,
+                    (total[currency][0], f_number),    
+                    (total[currency][1], f_number),    
+                    (total[currency][2], f_number),    
+                    currency.symbol,
+                    (total[currency][3], f_number),    
+                    (total[currency][4], f_number_red),
+                    ], default_format=f_text_current)
+            row += 1        
 
         # ---------------------------------------------------------------------
         # Docnaet Product total:
