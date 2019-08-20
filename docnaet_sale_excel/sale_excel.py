@@ -329,7 +329,7 @@ class SaleOrder(orm.Model):
                 excel_pool.write_xls_line(
                     ws_name, row, [
                         partner.name,
-                        partner.account_agent_name or '',
+                        document.user_id.name or '', # Docnaet user
                         document.date,
                         document.deadline,
                         '%s %s' % (
