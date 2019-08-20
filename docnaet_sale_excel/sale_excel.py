@@ -200,7 +200,7 @@ class SaleOrder(orm.Model):
             excel_pool.write_xls_line(
                 ws_name, row, [
                     partner.name,
-                    '', #TODO order.user_id.name,
+                    partner.account_agent_name or '',
                     order.date_order,
                     order.date_deadline,
                     order.name,
@@ -329,7 +329,7 @@ class SaleOrder(orm.Model):
                 excel_pool.write_xls_line(
                     ws_name, row, [
                         partner.name,
-                        document.user_id.name,
+                        partner.account_agent_name or '',
                         document.date,
                         document.deadline,
                         '%s %s' % (
