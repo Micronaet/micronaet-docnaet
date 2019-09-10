@@ -91,11 +91,9 @@ class SaleOrder(orm.Model):
             3, 13, 13, 13, 40,
             ]
         header = [
-            'Cliente', 'Agente', 'Reponsabile',
-            
-            'Tipo', 'Data', 'Scadenza', 
-            'N. ordine Mexal', 'Val.', 'Totale', 
-            
+            'Cliente', 'Agente', 'Reponsabile',            
+            'Tipo', 'Data', 'Scad./Merce pronta', 
+            'N. ordine Mexal', 'Val.', 'Totale',             
             'Val.', 'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
             ]
             
