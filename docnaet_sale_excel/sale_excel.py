@@ -123,15 +123,11 @@ class SaleOrder(orm.Model):
         # Column:
         excel_pool.column_width(ws_name, width)
         
-        # Header:
-        excel_pool.write_xls_line(
-            ws_name, row, header, default_format=f_header)
-        row += 1   
-        
         sale_proxy = sale_pool.browse(
             cr, uid, sale_ids, context=context)
             
         total = {}
+        temp_list = []
         for order in sorted(
                 sale_proxy, 
                 key=lambda x: x.date_order,
@@ -197,8 +193,8 @@ class SaleOrder(orm.Model):
             else:
                 f_text_current = f_text
                 f_number_current = f_number
-            excel_pool.write_xls_line(
-                ws_name, row, [
+                
+            temp_list.append(([
                     partner.name,
                     partner.account_agent_name or '',
                     '',
@@ -218,15 +214,20 @@ class SaleOrder(orm.Model):
                         f_number_current),
                     (partner.duelist_fido or '', f_number_current),             
                     get_partner_note(partner),                    
-                    ], default_format=f_text_current)
-            row += 1
+                    ], f_text_current))
+                    
+            #excel_pool.write_xls_line(
+            #    ws_name, row, , default_format=f_text_current)
+            
         month_column = sorted(month_column)
         try:
             index_today = month_column.index(now)
         except:
             index_today = False
             
+        # ---------------------------------------------------------------------    
         # Total page order: 
+        # ---------------------------------------------------------------------    
         for currency in sorted(total, key=lambda x: x.symbol):
             excel_pool.write_xls_line(
                 ws_name, row, [
@@ -236,8 +237,21 @@ class SaleOrder(orm.Model):
                     currency.symbol, # Payment
                     (total[currency][1], f_number_bg_blue_bold),    
                     (total[currency][2], f_number_bg_red_bold),    
-                    ], default_format=f_text_bg_blue, col=4)
+                    ], default_format=f_text_bg_blue, col=6)
             row += 1        
+
+        # ---------------------------------------------------------------------    
+        # Data:
+        # ---------------------------------------------------------------------    
+        # Header:
+        excel_pool.write_xls_line(
+            ws_name, row, header, default_format=f_header)
+        
+        # Record:
+        for record, f_text_current in temp_list:    
+            row += 1   
+            excel_pool.write_xls_line(
+                ws_name, row, record, default_format=f_text_current)
             
         # ---------------------------------------------------------------------
         # Docnaet Quotation (pending and lost):
@@ -546,12 +560,6 @@ class SaleOrder(orm.Model):
                 # -------------------------------------------------------------
                 # Total setup:
                 # -------------------------------------------------------------
-                # TODO remove:
-                #index = month_column.index(deadline)
-                #if uom_code in total_row[index]:
-                #    total_row[index][uom_code] += subtotal
-                #else:    
-                #    total_row[index][uom_code] = subtotal
                 if uom_code not in uom_total:
                     uom_total[uom_code] = [0.0 for item in range(0, cols)]
                 index = month_column.index(deadline)
@@ -585,22 +593,6 @@ class SaleOrder(orm.Model):
                     default_format=f_number_bg_green_bold, 
                     col=start)
             row += 1
-            
-        #excel_pool.row_height(ws_name, [row, ], height=50)
-        #text_total_row = []
-        #for record in total_row:
-        #    res = ''
-        #    for uom_code in record:
-        #        res += '%s.00 %s\n' % (
-        #        record[uom_code],
-        #        uom_code,
-        #        )
-        #    text_total_row.append(res)
-    
-        #excel_pool.write_xls_line(
-        #    ws_name, row, text_total_row, 
-        #        default_format=f_number_bg_green_bold, 
-        #        col=start)
             
         if save_mode: # Save as a file:
             _logger.info('Save mode: %s' % save_mode)
