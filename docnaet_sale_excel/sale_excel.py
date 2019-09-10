@@ -247,13 +247,15 @@ class SaleOrder(orm.Model):
         # Header:
         excel_pool.write_xls_line(
             ws_name, row, header, default_format=f_header)
+        excel_pool.autofilter(ws_name, row, 0, row, len(header) - 1)            
         
         # Record:
         for record, f_text_current in temp_list:    
             row += 1   
             excel_pool.write_xls_line(
                 ws_name, row, record, default_format=f_text_current)
-            
+
+        
         # ---------------------------------------------------------------------
         # Docnaet Quotation (pending and lost):
         # ---------------------------------------------------------------------   
