@@ -231,14 +231,14 @@ class SaleOrder(orm.Model):
         for currency in sorted(total, key=lambda x: x.symbol):
             excel_pool.write_xls_line(
                 ws_name, row, [
-                    '', '', '', '', 
+                    '', '', '', '', '', 
                     'Totale',
                     currency.symbol, # Order
                     (total[currency][0], f_number_bg_blue_bold),    
                     currency.symbol, # Payment
                     (total[currency][1], f_number_bg_blue_bold),    
                     (total[currency][2], f_number_bg_red_bold),    
-                    ], default_format=f_text_bg_blue, col=6)
+                    ], default_format=f_text_bg_blue)#, col=6)
             row += 1        
 
         # ---------------------------------------------------------------------    
