@@ -88,7 +88,7 @@ smtp = {
         
         <b>Micronaet S.r.l.</b>
         ''' % now,
-    'subject': 'Dettaglio offerte e ordini aperti: %s' % now,    
+    'subject': 'PAN Dettaglio offerte e ordini aperti: %s' % now,    
     
     'folder': config.get('smtp', 'folder'),
     }
