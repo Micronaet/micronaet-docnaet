@@ -85,15 +85,16 @@ class SaleOrder(orm.Model):
         ws_name = 'Ordini'
         excel_pool.create_worksheet(name=ws_name)
         width = [
-            40, 20, 10, 10, 20,
-            3, 13,
+            40, 20, 20,
+            8, 10, 10, 
+            20, 3, 13, 
             3, 13, 13, 13, 40,
             ]
         header = [
-            'Partner', 
-            'Commerciale', 
-            'Data', 'Scadenza', 'Oggetto', 
-            'Val.', 'Totale', 
+            'Cliente', 'Agente', 'Reponsabile',
+            
+            'Tipo', 'Data', 'Scadenza', 
+            'N. ordine Mexal', 'Val.', 'Totale', 
             
             'Val.', 'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
             ]
@@ -101,7 +102,6 @@ class SaleOrder(orm.Model):
         sale_ids = sale_pool.search(cr, uid, [
             ('state', 'in', ('draft', 'sent', 'cancel')),
             ], context=context)
-
         row = 0
                 
         # Format:
@@ -201,11 +201,15 @@ class SaleOrder(orm.Model):
                 ws_name, row, [
                     partner.name,
                     partner.account_agent_name or '',
+                    '',
+                    
+                    '', # CEI
                     order.date_order,
                     order.date_deadline,
+
                     order.name,
                     order.currency_id.symbol, # Order:
-                    (order.amount_untaxed, f_number_current),                    
+                    (order.amount_untaxed, f_number_current),
 
                     currency_payment.symbol, # Payment:
                     (partner.duelist_exposition_amount or '',
@@ -213,7 +217,7 @@ class SaleOrder(orm.Model):
                     (partner.duelist_uncovered_amount or '', 
                         f_number_current),
                     (partner.duelist_fido or '', f_number_current),             
-                    get_partner_note(partner),
+                    get_partner_note(partner),                    
                     ], default_format=f_text_current)
             row += 1
         month_column = sorted(month_column)
@@ -256,7 +260,7 @@ class SaleOrder(orm.Model):
             3, 12, 12, 12, 40
             ]
         header = [
-            'Partner', 'Commerciale', 'Data', 'Scadenza', 'Oggetto', 
+            'Cliente', 'Commerciale', 'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
             'Val.', 'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
             ]
@@ -376,7 +380,7 @@ class SaleOrder(orm.Model):
             12, 40,
             ]
         header = [
-            'Partner', 
+            'Cliente', 
             'Val.', 'Ordini', 'Offerte', 'Off. perse', 
             'Val.', 'Pag. aperti', 'Di cui scaduti', 
             'FIDO', 'Note',

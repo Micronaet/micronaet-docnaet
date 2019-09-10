@@ -94,10 +94,12 @@ smtp = {
     }
 #group_name = 'docnaet_sale_excel.group_sale_statistic_mail'
 
-filename = os.path.expanduser(
-    os.path.join(smtp['folder'], 'stato_ordini.xlsx'))
+filename = 'PAN Stato_ordini %s.xlsx' % now.replace(
+    '/', '_').replace(':', '_').replace('-', '_')
+fullname = os.path.expanduser(
+    os.path.join(smtp['folder'], filename))
 context = {
-    'save_mode': filename,
+    'save_mode': fullname,
     }
 
 # -----------------------------------------------------------------------------
@@ -169,10 +171,10 @@ for to in smtp['to'].replace(' ', '').split(','):
 
 
     part = MIMEBase('application', 'octet-stream')
-    part.set_payload(open(filename, 'rb').read())
+    part.set_payload(open(fullname, 'rb').read())
     Encoders.encode_base64(part)
     part.add_header(
-        'Content-Disposition', 'attachment; filename="Stato vendite.xlsx"')
+        'Content-Disposition', 'attachment; filename="%s"' % filename)
 
     msg.attach(part)
 
