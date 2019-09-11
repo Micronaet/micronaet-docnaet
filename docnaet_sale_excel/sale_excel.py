@@ -42,6 +42,69 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class ResPartner(orm.Model):
+    """ Model name: Res Partner
+    """
+    
+    _inherit = 'res.partner'
+    
+    # -------------------------------------------------------------------------
+    # Import procedure:
+    # -------------------------------------------------------------------------
+    def import_account_agent_reference(self, cr, uid, fullname, context=None):
+        ''' Import Agent reference
+        '''
+        i = 0
+        _logger.info('Start import Agent')
+        for line in open(fullname, 'r'):
+            i += 1        
+            line = line.strip()
+            if not line:
+                _logger.warning('%s. Jump line: empty line' % i)
+                continue
+
+            row = line.split('|')
+            partner_code = row[0].strip()
+            partner_name = row[1].strip()
+            
+            agent_code = row[2].strip()
+            agent_name = row[3].strip()
+            
+            commercial_code = row[4].strip()
+            commercial_name = row[5].strip()
+            
+            if not partner_code:
+                _logger.warning('%s. Jump line: partner code empty' % i)
+                continue
+                
+            partner_ids = self.search(cr, uid, [
+                '|', '|',
+                ('sql_customer_code', '=', partner_code),
+                ('sql_supplier_code', '=', partner_code),
+                ('sql_destination_code', '=', partner_code),
+                ], context=context)
+
+            if not partner_ids:
+                _logger.warning('%s. Jump line: partner not found' % i)
+                continue
+                
+            self.write(cr, uid, partner_ids, {
+                'account_reference1_code': agent_code,
+                'account_reference1_name': agent_name,
+                'account_reference2_code': commercial_code,
+                'account_reference2_name': commercial_name,
+                }, context=context)
+            _logger.info('%s. Update line: %s' % (i, partner_code))
+        _logger.info('Start import Agent')
+        return True
+    
+    _columns = {
+        'account_reference1_code': fields.char('Agent Code', size=9),
+        'account_reference1_name': fields.char('Agent Name', size=40),
+        'account_reference2_code': fields.char('Commercial Code', size=9),
+        'account_reference2_name': fields.char('Commercial Name', size=40),
+        }
+
 class SaleOrder(orm.Model):
     """ Model name: SaleOrder
     """
@@ -205,8 +268,8 @@ class SaleOrder(orm.Model):
 
             temp_list.append(([
                     partner.name,
-                    partner.account_agent_name or '',
-                    '',
+                    partner.account_reference1_name or '',
+                    partner.account_reference2_name or '',
                     
                     cei,
                     order.date_order,
