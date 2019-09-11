@@ -55,7 +55,6 @@ class ResPartner(orm.Model):
         ''' Import Agent reference
         '''
         i = 0
-        import pdb; pdb.set_trace()
         _logger.info('Start import Agent')
         for line in open(fullname, 'r'):
             i += 1        
@@ -111,7 +110,12 @@ class SaleOrder(orm.Model):
     """
     
     _inherit = 'sale.order'
-    
+
+    _columns = {
+        # Not used here (added for an error)
+        'currency_id': fields.many2one('res.currency', 'Currency'),
+        }
+        
     def extract_sale_excel_report(self, cr, uid, context=None):
         ''' Schedule extract of sale quotation info
         '''
