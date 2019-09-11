@@ -55,6 +55,7 @@ class ResPartner(orm.Model):
         ''' Import Agent reference
         '''
         i = 0
+        import pdb; pdb.set_trace()
         _logger.info('Start import Agent')
         for line in open(fullname, 'r'):
             i += 1        
