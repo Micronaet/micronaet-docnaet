@@ -458,9 +458,9 @@ class SaleOrder(orm.Model):
             
             # Record:
             for record, f_text_current in temp_list:
+                row += 1   
                 excel_pool.write_xls_line(
                     ws_name, row, record, default_format=f_text_current)                
-                row += 1   
 
         # ---------------------------------------------------------------------
         # Docnaet Customer total:
