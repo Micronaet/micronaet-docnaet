@@ -439,7 +439,7 @@ class SaleOrder(orm.Model):
             for currency in sorted(total, key=lambda x: x.symbol):
                 excel_pool.write_xls_line(
                     ws_name, row, [
-                        '', '', '', '', 
+                        '', '', '', '',
                         'Totale',
                         currency.symbol,
                         (total[currency][0], f_number_bg_blue_bold),    
