@@ -214,9 +214,6 @@ class SaleOrder(orm.Model):
                     get_partner_note(partner),                    
                     ], f_text_current))
                     
-            #excel_pool.write_xls_line(
-            #    ws_name, row, , default_format=f_text_current)
-            
         month_column = sorted(month_column)
         try:
             index_today = month_column.index(now)
