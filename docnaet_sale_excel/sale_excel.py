@@ -431,7 +431,7 @@ class SaleOrder(orm.Model):
                             f_number_current),
                         (partner.duelist_fido or '', f_number_current),             
                         get_partner_note(partner),
-                        ], default_format=f_text_current))
+                        ], f_text_current))
 
             # -----------------------------------------------------------------
             # Total page order:
