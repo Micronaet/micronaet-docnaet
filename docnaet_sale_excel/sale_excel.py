@@ -191,13 +191,24 @@ class SaleOrder(orm.Model):
             else:
                 f_text_current = f_text
                 f_number_current = f_number
-                
+            
+            # C E I:
+            sql_type = (partner.sql_customer_code or '')[:3]
+            if sql_type == '201':
+                cei = 'Italia'
+            elif sql_type == '230':
+                cei = 'CEE'
+            elif sql_type == '270':
+                cei = 'Extra CEE'
+            else:
+                cei = ''
+
             temp_list.append(([
                     partner.name,
                     partner.account_agent_name or '',
                     '',
                     
-                    '', # CEI
+                    cei,
                     order.date_order,
                     order.date_deadline,
 
