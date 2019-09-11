@@ -148,7 +148,7 @@ class SaleOrder(orm.Model):
         ws_name = 'Ordini'
         excel_pool.create_worksheet(name=ws_name)
         width = [
-            40, 20, 20,
+            45, 20, 20,
             8, 10, 10, 
             20, 3, 13, 
             3, 13, 13, 13, 40,
@@ -342,7 +342,7 @@ class SaleOrder(orm.Model):
             ]
 
         width = [
-            38, 18, 10, 10, 50,
+            45, 18, 10, 10, 50,
             3, 12,
             3, 12, 12, 12, 40
             ]
@@ -471,7 +471,7 @@ class SaleOrder(orm.Model):
         ws_name = 'Clienti'
         excel_pool.create_worksheet(name=ws_name)
         width = [
-            40, 
+            50, 
             3, 12, 12, 12, 
             3, 12, 12, 
             12, 40,
