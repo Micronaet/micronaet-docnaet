@@ -363,15 +363,11 @@ class SaleOrder(orm.Model):
             # Column:
             excel_pool.column_width(ws_name, width)
             
-            # Header:
-            excel_pool.write_xls_line(
-                ws_name, row, header, default_format=f_header)
-            row += 1   
-
             document_proxy = docnaet_document.browse(
                 cr, uid, docnaet_ids, context=context)
 
             total = {}
+            temp_list = []
             for document in sorted(
                     document_proxy, 
                     key=lambda x: x.date,
@@ -416,8 +412,7 @@ class SaleOrder(orm.Model):
                     f_text_current = f_text
                     f_number_current = f_number
                     
-                excel_pool.write_xls_line(
-                    ws_name, row, [
+                temp_list.append(([
                         partner.name,
                         document.user_id.name or '', # Docnaet user
                         document.date,
@@ -436,8 +431,7 @@ class SaleOrder(orm.Model):
                             f_number_current),
                         (partner.duelist_fido or '', f_number_current),             
                         get_partner_note(partner),
-                        ], default_format=f_text_current)
-                row += 1
+                        ], default_format=f_text_current))
 
             # -----------------------------------------------------------------
             # Total page order:
@@ -453,6 +447,20 @@ class SaleOrder(orm.Model):
                         (total[currency][2], f_number_bg_red_bold),
                         ], default_format=f_text_bg_blue, col=4)
                 row += 1        
+
+            # -----------------------------------------------------------------
+            # Data:
+            # -----------------------------------------------------------------
+            # Header:
+            excel_pool.write_xls_line(
+                ws_name, row, header, default_format=f_header)
+            excel_pool.autofilter(ws_name, row, 0, row, len(header) - 1)            
+            
+            # Record:
+            for record, f_text_current in temp_list:
+                excel_pool.write_xls_line(
+                    ws_name, row, record, default_format=f_text_current)                
+                row += 1   
 
         # ---------------------------------------------------------------------
         # Docnaet Customer total:
@@ -570,14 +578,15 @@ class SaleOrder(orm.Model):
                     (total[currency][3], f_number_bg_blue_bold),    
                     (total[currency][4], f_number_bg_red_bold),
                     ], default_format=f_text_bg_blue)
-            row += 1        
-
+            row += 1     
+            
         # ---------------------------------------------------------------------
         # Data:
         # ---------------------------------------------------------------------
         # Header:
         excel_pool.write_xls_line(
             ws_name, row, header, default_format=f_header)
+        excel_pool.autofilter(ws_name, row, 0, row, len(header) - 1)            
         
         for record, f_text_current in temp_list:
             row += 1   
