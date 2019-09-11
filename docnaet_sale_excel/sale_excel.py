@@ -113,7 +113,7 @@ class SaleOrder(orm.Model):
 
     _columns = {
         # Not used here (added for an error)
-        'currency_id': fields.many2one('res.currency', 'Currency'),
+        #'currency_id': fields.many2one('res.currency', 'Currency'),
         }
         
     def extract_sale_excel_report(self, cr, uid, context=None):
