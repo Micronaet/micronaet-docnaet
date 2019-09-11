@@ -267,7 +267,8 @@ class SaleOrder(orm.Model):
                 cei = ''
 
             temp_list.append(([
-                    partner.name,
+                    '%s [%s]' % (
+                        partner.name, partner.sql_customer_code or ''),
                     partner.account_reference1_name or '',
                     partner.account_reference2_name or '',
                     
@@ -413,7 +414,8 @@ class SaleOrder(orm.Model):
                     f_number_current = f_number
                     
                 temp_list.append(([
-                        partner.name,
+                        '%s [%s]' % (
+                            partner.name, partner.sql_customer_code or ''),
                         document.user_id.name or '', # Docnaet user
                         document.date,
                         document.deadline,
@@ -531,21 +533,22 @@ class SaleOrder(orm.Model):
                 if first:
                     first = False
                     temp_list.append(([
-                            partner.name,
-                            
-                            currency.symbol,
-                            (order or '', f_number),                    
-                            (quotation or '', f_number),       
-                            (lost or '', f_number_red),                    
+                        '%s [%s]' % (
+                            partner.name, partner.sql_customer_code or ''),
+                        
+                        currency.symbol,
+                        (order or '', f_number),                    
+                        (quotation or '', f_number),       
+                        (lost or '', f_number_red),                    
 
-                            currency_payment.symbol,
-                            (partner.duelist_exposition_amount or '', 
-                                f_number_current),             
-                            (partner.duelist_uncovered_amount or '', 
-                                f_number_current),
-                            (partner.duelist_fido or '', f_number_current),             
-                            get_partner_note(partner),
-                            ], f_text_current))
+                        currency_payment.symbol,
+                        (partner.duelist_exposition_amount or '', 
+                            f_number_current),             
+                        (partner.duelist_uncovered_amount or '', 
+                            f_number_current),
+                        (partner.duelist_fido or '', f_number_current),             
+                        get_partner_note(partner),
+                        ], f_text_current))
                 else:            
                     temp_list.append(([
                             '',
