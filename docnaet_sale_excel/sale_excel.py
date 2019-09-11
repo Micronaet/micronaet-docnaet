@@ -111,11 +111,6 @@ class SaleOrder(orm.Model):
     
     _inherit = 'sale.order'
 
-    _columns = {
-        # Not used here (added for an error)
-        #'currency_id': fields.many2one('res.currency', 'Currency'),
-        }
-        
     def extract_sale_excel_report(self, cr, uid, context=None):
         ''' Schedule extract of sale quotation info
         '''
@@ -481,12 +476,9 @@ class SaleOrder(orm.Model):
         # Column:
         excel_pool.column_width(ws_name, width)
         
-        # Header:
-        excel_pool.write_xls_line(
-            ws_name, row, header, default_format=f_header)
-        row += 1   
         
         total = {}
+        temp_list = []
         for partner in sorted(partner_total, key=lambda x: x.name):
             currency_payment = partner.duelist_currency_id or currency
 
@@ -529,8 +521,7 @@ class SaleOrder(orm.Model):
                     f_number_current = f_number
                 if first:
                     first = False
-                    excel_pool.write_xls_line(
-                        ws_name, row, [
+                    temp_list.append(([
                             partner.name,
                             
                             currency.symbol,
@@ -545,11 +536,10 @@ class SaleOrder(orm.Model):
                                 f_number_current),
                             (partner.duelist_fido or '', f_number_current),             
                             get_partner_note(partner),
-                            ], default_format=f_text_current)
+                            ], f_text_current))
                 else:            
-                    excel_pool.write_xls_line(
-                        ws_name, row, [
-                            #partner.name,
+                    temp_list.append(([
+                            '',
                             
                             currency.symbol,
                             (order or '', f_number),                    
@@ -563,8 +553,7 @@ class SaleOrder(orm.Model):
                             #    f_number_current),
                             #(partner.duelist_fido or '', f_number_current),             
                             #get_partner_note(partner),
-                            ], default_format=f_text_current, col=1)
-                row += 1
+                            ], f_text_current))
 
         # ---------------------------------------------------------------------
         # Total page order:
@@ -582,6 +571,19 @@ class SaleOrder(orm.Model):
                     (total[currency][4], f_number_bg_red_bold),
                     ], default_format=f_text_bg_blue)
             row += 1        
+
+        # ---------------------------------------------------------------------
+        # Data:
+        # ---------------------------------------------------------------------
+        # Header:
+        excel_pool.write_xls_line(
+            ws_name, row, header, default_format=f_header)
+        
+        for record, f_text_current in temp_list:
+            row += 1   
+            excel_pool.write_xls_line(
+                ws_name, row, record, default_format=f_text_current)
+     
 
         # ---------------------------------------------------------------------
         # Docnaet Product total:
