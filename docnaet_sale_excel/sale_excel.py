@@ -189,6 +189,7 @@ class SaleOrder(orm.Model):
             
         total = {}
         temp_list = []
+        total_payment_done = []
         for order in sorted(
                 sale_proxy, 
                 key=lambda x: x.date_order,
@@ -224,8 +225,10 @@ class SaleOrder(orm.Model):
                 total[currency_payment] = [0.0, 0.0, 0.0] 
 
             total[currency][0] += order.amount_untaxed
-            total[currency_payment][1] += partner.duelist_exposition_amount
-            total[currency_payment][2] += partner.duelist_uncovered_amount
+            if (partner, currency) not in total_payment_done: # just once!
+                total_payment_done.append((partner, currency))
+                total[currency_payment][1] += partner.duelist_exposition_amount
+                total[currency_payment][2] += partner.duelist_uncovered_amount
 
             # -----------------------------------------------------------------            
             # Collect data: Product total
