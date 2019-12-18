@@ -820,28 +820,4 @@ class DocnaetDocument(orm.Model):
             'duplicated', help='Child document duplicated from this'),
         }
 
-
-class DocnaetUser(orm.Model):
-    """ Model name: ResUsers
-    """
-    
-    _name = 'docnaet.user'
-    
-    _columns = {
-        'name': fields.char('Docnaet user', size=5),
-    }
-DocnaetUser()
-        
-
-class ResUsers(orm.Model):
-    """ Model name: ResUsers
-    """
-    
-    _inherit = 'res.users'
-    
-    _columns = {
-        'docnaet_user_id': fields.many2one('docnaet.user', 'Docnaet user', required=True),
-    }
-ResUsers()
-        
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
