@@ -88,7 +88,15 @@ class UploadDocumentWizard(orm.TransientModel):
         private_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='user', context=context)
         
-        for f in os.listdir(private_folder):
+        try:
+            listdir = os.listdir(private_folder)
+        except:
+            raise osv.except_osv(
+                _('Error:'), 
+                _('Cannot access: %s' % private_folder),
+                )
+  
+        for f in listdir:
             try:
                 fullpath = os.path.join(private_folder, f)
             except:
