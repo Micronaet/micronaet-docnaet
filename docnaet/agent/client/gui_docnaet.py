@@ -4,7 +4,7 @@ import os
 import sys
 import subprocess
 from ConfigParser import ConfigParser
-from tkinter import *
+from Tkinter import *
 
 # -----------------------------------------------------------------------------
 # Utility:
