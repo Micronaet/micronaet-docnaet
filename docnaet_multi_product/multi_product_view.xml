@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="docnaet.view_docnaet_document_docnaet_search"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
-                    <field name="docnaet_product_ids" filter_domain="[('docnaet_product_ids.product_id','=',self)]"/>
+                    <field name="docnaet_product_ids" filter_domain="[('docnaet_product_ids','in',[self])]"/>
                     <filter name="quality_document_product" string="Has linked product" domain="[('docnaet_product_ids','!=',False)]"/>                    
                 </field>
             </field>
