@@ -42,11 +42,11 @@
 
         <!-- INHERITED quality.acceptation-->
         <record model="ir.ui.view" id="docnaet_normal_link_quality_acceptation_form_view">
-            <field name="name">Docnaet quality link</field>
+            <field name="name">Docnaet acceptation quality link</field>
             <field name="model">quality.acceptation</field>        
             <field name="inherit_id" ref="quality.view_quality_acceptation_form" />
             <field name="arch" type="xml">
-                <page string='Lines' position="after">
+                <page string="Lines" position="after">
                     <page string="Docnaet">
                         <group colspan="4" col="4">
                             <separator string="Documents linked" colspan="4"/>                            
@@ -59,11 +59,11 @@
 
         <!-- INHERITED quality.sampling-->
         <record model="ir.ui.view" id="docnaet_normal_link_quality_sampling_form_view">
-            <field name="name">Docnaet quality link</field>
+            <field name="name">Docnaet sampling quality link</field>
             <field name="model">quality.sampling</field>        
             <field name="inherit_id" ref="quality.view_quality_sampling_form" />
             <field name="arch" type="xml">
-                <page string='Note' position="before">
+                <page string="Note" position="before">
                     <page string="Docnaet">
                         <group colspan="4" col="4">
                             <separator string="Documents linked" colspan="4"/>                            
@@ -73,7 +73,57 @@
                 </page>
             </field>    
         </record>
-        
+
+        <!-- INHERITED quality.conformed-->
+        <record model="ir.ui.view" id="docnaet_normal_link_quality_conformed_form_view">
+            <field name="name">Docnaet conformed quality link</field>
+            <field name="model">quality.conformed</field>        
+            <field name="inherit_id" ref="quality.view_quality_conformed_form" />
+            <field name="arch" type="xml">
+                <page string="Comunications" position="before">
+                    <page string="Docnaet">
+                        <group colspan="4" col="4">
+                            <separator string="Documents linked" colspan="4"/>                            
+                            <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4" context="{'tree_view_ref': 'docnaet_quality.view_docnaet_document_embedded_list_tree'}"/>
+                        </group>                        
+                    </page>
+                </page>
+            </field>    
+        </record>
+
+        <!-- INHERITED quality.conformed.external-->
+        <record model="ir.ui.view" id="docnaet_normal_link_quality_conformed_external_form_view">
+            <field name="name">Docnaet external quality link</field>
+            <field name="model">quality.conformed.external</field>        
+            <field name="inherit_id" ref="quality.view_quality_conformed_external_form" />
+            <field name="arch" type="xml">
+                <page string="Description" position="after">
+                    <page string="Docnaet">
+                        <group colspan="4" col="4">
+                            <separator string="Documents linked" colspan="4"/>                            
+                            <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4" context="{'tree_view_ref': 'docnaet_quality.view_docnaet_document_embedded_list_tree'}"/>
+                        </group>                        
+                    </page>
+                </page>
+            </field>    
+        </record>
+
+        <!-- INHERITED quality.action-->
+        <record model="ir.ui.view" id="docnaet_normal_link_quality_action_form_view">
+            <field name="name">Docnaet action quality link</field>
+            <field name="model">quality.action</field>        
+            <field name="inherit_id" ref="quality.view_quality_action_form" />
+            <field name="arch" type="xml">
+                <page string="Esit" position="after">
+                    <page string="Docnaet">
+                        <group colspan="4" col="4">
+                            <separator string="Documents linked" colspan="4"/>                            
+                            <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4" context="{'tree_view_ref': 'docnaet_quality.view_docnaet_document_embedded_list_tree'}"/>
+                        </group>                        
+                    </page>
+                </page>
+            </field>    
+        </record>
     </data>
 </openerp>
 
