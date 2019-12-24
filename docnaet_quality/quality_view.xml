@@ -1,6 +1,32 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="view_docnaet_document_add_search">
+            <field name="name">docnaet.document.quality.search</field>
+            <field name="model">docnaet.document</field>
+            <field name="inherit_id" ref="docnaet.view_docnaet_document_docnaet_search"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="claim_id" />
+                    <field name="acceptation_id" />
+                    <field name="sampling_id" />
+                    <field name="conformed_id" />
+                    <field name="external_id" />
+                    <field name="action_id" />
+
+                    <filter name="quality_document_present" string="Has quality linked" domain="['|', '|', '|', '|', '|', ('claim_id','!=',False), ('acceptation_id','!=',False), ('sampling_id','!=',False), ('conformed_id','!=',False), ('external_id','!=',False), ('action_id','!=',False)]"/>                    
+                </field>
+                <filter name="group_partner" position="after">
+                    <filter name="group_partner" string="Claim" context="{'group_by': 'claim_id'}"/>
+                    <filter name="group_acceptation" string="Acceptation" context="{'group_by': 'acceptation_id'}"/>
+                    <filter name="group_sampling" string="Sampling" context="{'group_by': 'sampling_id'}"/>
+                    <filter name="group_conformed" string="Conformed" context="{'group_by': 'conformed_id'}"/>
+                    <filter name="group_external" string="External" context="{'group_by': 'external_id'}"/>
+                    <filter name="group_action" string="Action" context="{'group_by': 'action_id'}"/>
+                </filter>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="view_docnaet_document_hide_tree">
             <field name="name">docnaet.document.tree</field>
             <field name="model">docnaet.document</field>
@@ -12,8 +38,19 @@
                 <field name="language_id" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </field>
+
+                <field name="partner_id" position="after">
+                    <field name="claim_id" invisible="1"/>
+                    <field name="acceptation_id" invisible="1" />
+                    <field name="sampling_id" invisible="1" />
+                    <field name="conformed_id" invisible="1" />
+                    <field name="external_id" invisible="1" />
+                    <field name="action_id" invisible="1" />
+                </field>
+
             </field>
         </record>
+        
         <record model="ir.ui.view" id="view_docnaet_document_embedded_list_tree">
             <field name="name">docnaet.document.tree</field>
             <field name="model">docnaet.document</field>
