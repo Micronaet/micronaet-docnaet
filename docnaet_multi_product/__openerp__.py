@@ -22,7 +22,7 @@
 ###############################################################################
 
 {
-    'name': 'Docnaet: Multi partner',
+    'name': 'Docnaet: Multi product',
     'version': '0.1',
     'category': 'Docnaet',
     'description': '''  

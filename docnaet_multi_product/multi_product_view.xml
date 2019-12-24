@@ -2,6 +2,29 @@
 <openerp>
     <data>
         <!-- INHERITED docnaet.document -->
+        <record model="ir.ui.view" id="view_docnaet_document_product_search">
+            <field name="name">docnaet.document.product.search</field>
+            <field name="model">docnaet.document</field>
+            <field name="inherit_id" ref="docnaet.view_docnaet_document_docnaet_search"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="docnaet_product_ids" filter_domain="[('docnaet_product_ids.product_id','=',self)]"/>
+                    <filter name="quality_document_product" string="Has linked product" domain="[('docnaet_product_ids','!=',False)]"/>                    
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_docnaet_document_multi_product_tree">
+            <field name="name">docnaet.document.multi.product.tree</field>
+            <field name="model">docnaet.document</field>
+            <field name="inherit_id" ref="docnaet.docnaet_document_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <field name="docnaet_product_ids" widget="many2many_tags" />
+                </field>
+
+            </field>
+        </record>
+        
         <record model="ir.ui.view" id="docnaet_document_link_multi_product_form_view">
             <field name="name">Docnaet document product linked</field>
             <field name="model">docnaet.document</field>        
