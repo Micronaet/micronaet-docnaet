@@ -1,8 +1,25 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="view_docnaet_document_embedded_list_tree">
+            <field name="name">docnaet.document.tree</field>
+            <field name="model">docnaet.document</field>
+            <field name="priority" eval="40" />
+            <field name="arch" type="xml">
+                <tree string="Docnaet document" colors="grey:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
+                   <field name="protocol_id" />
+                   <field name="number" />
+                   <field name="date" />
+                   <field name="name" />
+                   <field name="partner_id" />
+                   <field name="state" />                                   
+                   <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
+                </tree>                            
+            </field>
+        </record>
+
         <!-- INHERITED docnaet.document -->
-        <record model="ir.ui.view" id="docnaet_document_link_quality_form_view">
+        <record model="ir.ui.view" id="docnaet_document_link_quality_claim_form_view">
             <field name="name">Docnaet document quality linked</field>
             <field name="model">docnaet.document</field>        
             <field name="inherit_id" ref="docnaet.docnaet_document_form_view" />
@@ -23,32 +40,40 @@
             </field>    
         </record>
 
-        <!-- INHERITED quality.claim-->
-        <record model="ir.ui.view" id="docnaet_normal_link_quality_form_view">
+        <!-- INHERITED quality.acceptation-->
+        <record model="ir.ui.view" id="docnaet_normal_link_quality_acceptation_form_view">
             <field name="name">Docnaet quality link</field>
-            <field name="model">quality.claim</field>        
-            <field name="inherit_id" ref="quality.view_quality_claim_form" />
+            <field name="model">quality.acceptation</field>        
+            <field name="inherit_id" ref="quality.view_quality_acceptation_form" />
             <field name="arch" type="xml">
-                <page string='Workflow' position="after">
+                <page string='Lines' position="after">
                     <page string="Docnaet">
                         <group colspan="4" col="4">
                             <separator string="Documents linked" colspan="4"/>                            
-                            <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4">
-                                <tree string="Docnaet document" colors="grey:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
-                                   <field name="protocol_id" />
-                                   <field name="number" />
-                                   <field name="date" />
-                                   <field name="name" />
-                                   <field name="partner_id" />
-                                   <field name="state" />                                   
-                                   <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
-                                </tree>                            
-                            </field>
+                            <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4" context="{'tree_view_ref': 'docnaet_quality.view_docnaet_document_embedded_list_tree'}"/>
+                        </group>                        
+                    </page>
+                </page>
+            </field>    
+        </record>        
+
+        <!-- INHERITED quality.sampling-->
+        <record model="ir.ui.view" id="docnaet_normal_link_quality_sampling_form_view">
+            <field name="name">Docnaet quality link</field>
+            <field name="model">quality.sampling</field>        
+            <field name="inherit_id" ref="quality.view_quality_sampling_form" />
+            <field name="arch" type="xml">
+                <page string='Note' position="before">
+                    <page string="Docnaet">
+                        <group colspan="4" col="4">
+                            <separator string="Documents linked" colspan="4"/>                            
+                            <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4" context="{'tree_view_ref': 'docnaet_quality.view_docnaet_document_embedded_list_tree'}"/>
                         </group>                        
                     </page>
                 </page>
             </field>    
         </record>
+        
     </data>
 </openerp>
 

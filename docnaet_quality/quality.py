@@ -30,7 +30,7 @@ import openerp.addons.decimal_precision as dp
 from openerp.osv import fields, osv, expression, orm
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-from openerp import SUPERUSER_ID, api
+from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
@@ -103,11 +103,11 @@ class QualityConformed(orm.Model):
             'docnaet.document', 'conformed_id', 'Document'),
         }
 
-class QualityExternal(orm.Model):
+class QualityConformedExternal(orm.Model):
     """ Model name: conformed
     """
     
-    _inherit = 'quality.external'
+    _inherit = 'quality.conformed.external'
     
     _columns = {
         'docnaet_ids': fields.one2many(
