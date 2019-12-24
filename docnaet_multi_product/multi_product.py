@@ -42,4 +42,30 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class DocnaetDocument(orm.Model):
+    """ Model name: DocnaetDocument
+    """
+    
+    _inherit = 'docnaet.document'
+    
+    _columns = {
+        'docnaet_product_ids': fields.many2many(
+            'product.product', 'docnaet_product_rel', 
+            'docnaet_id', 'product_id', 
+            'Products'),
+        }
+
+class ProductProduct(orm.Model):
+    """ Model name: DocnaetDocument
+    """
+    
+    _inherit = 'product.product'
+    
+    _columns = {
+        'product_docnaet_ids': fields.many2many(
+            'product.product', 'docnaet_product_rel', 
+            'docnaet_id', 'product_id', 
+            'Document'),
+        }
+            
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
