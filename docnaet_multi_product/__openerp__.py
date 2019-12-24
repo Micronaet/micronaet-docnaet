@@ -35,7 +35,7 @@
         'base',
         'docnaet',
         'docnaet_upload',
-        
+        'product',
         ],
     'init_xml': [],
     'demo': [],
