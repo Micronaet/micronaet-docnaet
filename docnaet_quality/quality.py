@@ -42,4 +42,88 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class DocnaetDocument(orm.Model):
+    """ Model name: DocnaetDocument
+    """
+    
+    _inherit = 'docnaet.document'
+    
+    _columns = {
+        'claim_id': fields.many2one('quality.claim', 'Claim'),
+        'acceptation_id': fields.many2one(
+            'quality.acceptation', 'Acceptation'),
+        'sampling_id': fields.many2one('quality.sampling', 'Sampling'),
+        'conformed_id': fields.many2one('quality.conformed', 'Conformed'),
+        'external_id': fields.many2one(
+            'quality.conformed.external', 'Conformed external'),
+        'action_id': fields.many2one('quality.action', 'Action'),
+        }
+
+class QualityClaim(orm.Model):
+    """ Model name: Claims
+    """
+    
+    _inherit = 'quality.claim'
+    
+    _columns = {
+        'docnaet_ids': fields.one2many(
+            'docnaet.document', 'claim_id', 'Document'),
+        }
+
+class QualityAcceptation(orm.Model):
+    """ Model name: acceptation
+    """
+    
+    _inherit = 'quality.acceptation'
+    
+    _columns = {
+        'docnaet_ids': fields.one2many(
+            'docnaet.document', 'acceptation_id', 'Document'),
+        }
+
+class QualitySampling(orm.Model):
+    """ Model name: sampling
+    """
+    
+    _inherit = 'quality.sampling'
+    
+    _columns = {
+        'docnaet_ids': fields.one2many(
+            'docnaet.document', 'sampling_id', 'Document'),
+        }
+
+class QualityConformed(orm.Model):
+    """ Model name: conformed
+    """
+    
+    _inherit = 'quality.conformed'
+    
+    _columns = {
+        'docnaet_ids': fields.one2many(
+            'docnaet.document', 'conformed_id', 'Document'),
+        }
+
+class QualityExternal(orm.Model):
+    """ Model name: conformed
+    """
+    
+    _inherit = 'quality.external'
+    
+    _columns = {
+        'docnaet_ids': fields.one2many(
+            'docnaet.document', 'external_id', 'Document'),
+        }
+
+class QualityAction(orm.Model):
+    """ Model name: conformed
+    """
+    
+    _inherit = 'quality.action'
+    
+    _columns = {
+        'docnaet_ids': fields.one2many(
+            'docnaet.document', 'action_id', 'Document'),
+        }
+
+        
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

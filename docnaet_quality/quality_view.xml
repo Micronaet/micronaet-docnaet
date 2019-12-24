@@ -1,7 +1,54 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <!-- INHERITED docnaet.document -->
+        <record model="ir.ui.view" id="docnaet_document_link_quality_form_view">
+            <field name="name">Docnaet document quality linked</field>
+            <field name="model">docnaet.document</field>        
+            <field name="inherit_id" ref="docnaet.docnaet_document_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="/form//notebook/page[@string='Linked objects']/group[@name='master']/separator" position="after">
+                    <group colspan="4" col="4">
+                        <separator string="Quality" colspan="4"/>
+                        <field name="claim_id" />
+                        <field name="acceptation_id" />
 
+                        <field name="sampling_id" />
+                        <field name="conformed_id" />
+
+                        <field name="external_id" />
+                        <field name="action_id" />
+                    </group>
+                </xpath>
+            </field>    
+        </record>
+
+        <!-- INHERITED quality.claim-->
+        <record model="ir.ui.view" id="docnaet_normal_link_quality_form_view">
+            <field name="name">Docnaet quality link</field>
+            <field name="model">quality.claim</field>        
+            <field name="inherit_id" ref="quality.view_quality_claim_form" />
+            <field name="arch" type="xml">
+                <page string='Workflow' position="after">
+                    <page string="Docnaet">
+                        <group colspan="4" col="4">
+                            <separator string="Documents linked" colspan="4"/>                            
+                            <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4">
+                                <tree string="Docnaet document" colors="grey:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
+                                   <field name="protocol_id" />
+                                   <field name="number" />
+                                   <field name="date" />
+                                   <field name="name" />
+                                   <field name="partner_id" />
+                                   <field name="state" />                                   
+                                   <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
+                                </tree>                            
+                            </field>
+                        </group>                        
+                    </page>
+                </page>
+            </field>    
+        </record>
     </data>
 </openerp>
 
