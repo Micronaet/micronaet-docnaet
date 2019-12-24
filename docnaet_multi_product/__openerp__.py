@@ -41,7 +41,7 @@
     'demo': [],
     'data': [
         #'security/ir.model.access.csv',    
-        'multi_partner_view.xml',
+        'multi_product_view.xml',
         ],
     'active': False,
     'installable': True,
