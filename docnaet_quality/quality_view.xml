@@ -19,6 +19,7 @@
             </field>
         </record>
 
+        <!-- CLEAN SEARCH: -->
         <record model="ir.ui.view" id="view_docnaet_document_add_search">
             <field name="name">docnaet.document.quality.search</field>
             <field name="model">docnaet.document</field>

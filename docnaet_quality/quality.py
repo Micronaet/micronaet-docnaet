@@ -170,6 +170,59 @@ class UploadDocumentWizard(orm.TransientModel):
         }            
 
 # Extra Search
+class DocnaetDocumentAdvancedSearchWizard(orm.TransientModel):
+    ''' Wizard for duplicate model
+    '''
+    _inherit = 'docnaet.document.advanced.search.wizard'
+    
+    def advanced_search(self, cr, uid, ids, context=None):
+        ''' Override search function add product:
+        '''
+        res = super(DocnaetDocumentAdvancedSearchWizard, self).advanced_search(
+            cr, uid, ids, context=context)
+
+        domain = res.get('domain')
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        
+        # ---------------------------------------------------------------------
+        # Extra Domain: 
+        # ---------------------------------------------------------------------
+        claim_id = current_proxy.claim_id.id or False
+        if claim_id:
+            domain.append(('claim_id', '=', claim_id))
+            
+        acceptation_id = current_proxy.acceptation_id.id or False
+        if acceptation_id:
+            domain.append(('acceptation_id', '=', acceptation_id))
+            
+        sampling_id = current_proxy.sampling_id.id or False
+        if sampling_id:
+            domain.append(('sampling_id', '=', sampling_id))
+            
+        conformed_id = current_proxy.conformed_id.id or False
+        if conformed_id:
+            domain.append(('conformed_id', '=', conformed_id))
+            
+        external_id = current_proxy.external_id.id or False
+        if external_id:
+            domain.append(('external_id', '=', external_id))
+            
+        action_id = current_proxy.action_id.id or False
+        if action_id:
+            domain.append(('action_id', '=', action_id))
+
+        return res
+    
+    _columns = {
+        'claim_id': fields.many2one('quality.claim', 'Claim'),
+        'acceptation_id': fields.many2one(
+            'quality.acceptation', 'Acceptation'),
+        'sampling_id': fields.many2one('quality.sampling', 'Sampling'),
+        'conformed_id': fields.many2one('quality.conformed', 'Conformed'),
+        'external_id': fields.many2one(
+            'quality.conformed.external', 'Conformed external'),
+        'action_id': fields.many2one('quality.action', 'Action'),
+        }
 
 # Duplication:
 class DocumentDuplication(orm.TransientModel):
