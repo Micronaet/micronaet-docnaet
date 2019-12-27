@@ -13,7 +13,7 @@
         </record>
 
         <record id="document_upload_form" model="ir.ui.view">
-            <field name="name">docnaet.document.upload.wizard.form</field>
+            <field name="name">docnaet.document.upload.wizard.product.form</field>
             <field name="model">docnaet.document.upload.wizard</field>
             <field name="inherit_id" ref="docnaet_upload.document_upload_form"/>
             <field name="arch" type="xml">

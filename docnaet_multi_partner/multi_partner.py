@@ -89,5 +89,44 @@ class DocnaetDocumentAdvancedSearchWizard(orm.TransientModel):
     
     _columns = {
         'docnaet_partner_id': fields.many2one('res.partner', 'Partner'),
-        }                    
+        }       
+
+class UploadDocumentWizard(orm.TransientModel):
+    ''' Wizard to upload document
+    '''
+    _inherit = 'docnaet.document.upload.wizard'
+    
+    def button_upload(self, cr, uid, ids, context=None):
+        ''' Button event for upload
+        '''
+        res = super(UploadDocumentWizard, self).button_upload(
+            cr, uid, ids, context=context)
+        
+        wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
+        if not wiz_proxy.docnaet_partner_ids:
+            return res
+
+        # ---------------------------------------------------------------------
+        # Extra update when partner is choosen:    
+        # ---------------------------------------------------------------------
+        docnaet_partner_ids = [
+            item.id for item in wiz_proxy.docnaet_partner_ids]
+        
+        # Select current imported:
+        document_pool = self.pool.get('docnaet.document')
+        domain = res.get('domain')
+        document_ids = document_pool.search(cr, uid, domain, context=context)
+        
+        # Update with partner list data:
+        document_pool.write(cr, uid, document_ids, {
+            'docnaet_partner_ids': [(6, 0, docnaet_partner_ids)],
+            }, context=context)
+        return res    
+
+    _columns = {
+        'docnaet_partner_ids': fields.many2many(
+            'res.partner', 'docnaet_multi_partner_wiz_rel', 
+            'wiz_id', 'partner_id', 
+            'Partner', domain="[('docnaet_enable', '=', True)]"),
+        }                                 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

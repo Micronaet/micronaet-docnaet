@@ -26,6 +26,35 @@
             </field>
         </record>
 
+        <record id="document_upload_form" model="ir.ui.view">
+            <field name="name">docnaet.document.upload.wizard.partner.form</field>
+            <field name="model">docnaet.document.upload.wizard</field>
+            <field name="inherit_id" ref="docnaet_upload.document_upload_form"/>
+            <field name="arch" type="xml">
+                <!--Hide-->
+                <separator string="Partner Filter:" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </separator>                
+                <field name="partner_name" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>                
+                <field name="country_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>                
+
+                <separator string="Default setup:" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </separator>                
+                <field name="default_partner_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>                
+
+                <field name="default_partner_id" position="before">
+                    <field name="docnaet_partner_ids" widget="many2many_tags"/>
+                </field>
+            </field>
+        </record>
+
         <!-- INHERITED docnaet.document -->
         <record model="ir.ui.view" id="view_docnaet_document_partner_search">
             <field name="name">docnaet.document.partner.search</field>

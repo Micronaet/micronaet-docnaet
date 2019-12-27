@@ -289,7 +289,7 @@ class UploadDocumentWizard(orm.TransientModel):
             #    ('uploaded', '=', True), 
             #    ('state', '=', 'draft'),
             #    ],
-            'domain': [('id', 'in', document_imported)]
+            'domain': [('id', 'in', document_imported)],
             'type': 'ir.actions.act_window',
             'context': context,
             }
