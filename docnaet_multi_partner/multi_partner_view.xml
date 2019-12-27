@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <!--ADVANCED SEARCH: -->
         <record model="ir.ui.view" id="view_document_advanced_search_partner_form">
             <field name="name">docnaet.document.advanced.search.wizard.partner.proform</field>
             <field name="model">docnaet.document.advanced.search.wizard</field>
@@ -26,6 +27,7 @@
             </field>
         </record>
 
+        <!--UPLOAD DOCUMENT: -->
         <record id="document_upload_form" model="ir.ui.view">
             <field name="name">docnaet.document.upload.wizard.partner.form</field>
             <field name="model">docnaet.document.upload.wizard</field>
@@ -61,6 +63,37 @@
             <field name="model">docnaet.document</field>
             <field name="inherit_id" ref="docnaet.view_docnaet_document_docnaet_search"/>
             <field name="arch" type="xml">
+                <!--Hide filter part: -->
+                <field name="partner_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>           
+                <field name="country_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>           
+
+                <!--Hide group part: -->
+                <field name="group_partner" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>           
+                <field name="group_partner_category" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>           
+                <field name="group_country" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>           
+
+                <!--Unhide removed part: -->
+                <field name="deadline_month" position="after">                
+                    <field name="date" string="Date from" filter_domain="[('date','&gt;=',self)]"/>
+                    <field name="date" string="Date to" filter_domain="[('date','&lt;=',self)]"/>
+                    <field name="deadline" string="Deadline from" filter_domain="[('deadline','&gt;=',self)]"/>
+                    <field name="deadline" string="Deadline to" filter_domain="[('deadline','&lt;=',self)]"/>
+                    <field name="priority" />
+                    <field name="docnaet_extension" />
+                    <field name="program_id" />
+                </field>
+
+                <!--Extra search: -->
                 <field name="partner_id" position="after">
                     <field name="docnaet_partner_ids" filter_domain="[('docnaet_partner_ids.name','ilike',self)]" string="Partner name"/>
                 </field>
