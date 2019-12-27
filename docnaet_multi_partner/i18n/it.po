@@ -1,0 +1,102 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* docnaet_multi_partner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-12-27 15:51+0000\n"
+"PO-Revision-Date: 2019-12-27 16:54+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: it\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#. module: docnaet_multi_partner
+#: view:docnaet.document:0
+msgid "Partner name"
+msgstr "Nome partner"
+
+#. module: docnaet_multi_partner
+#: view:docnaet.document:0
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: docnaet_multi_partner
+#: view:res.partner:0
+msgid "Open document"
+msgstr "Apri documento"
+
+#. module: docnaet_multi_partner
+#: view:res.partner:0
+msgid "Docnaet"
+msgstr "Docnaet"
+
+#. module: docnaet_multi_partner
+#: model:ir.model,name:docnaet_multi_partner.model_docnaet_document
+#: view:res.partner:0
+msgid "Docnaet document"
+msgstr "Documento docnaet"
+
+#. module: docnaet_multi_partner
+#: view:docnaet.document.upload.wizard:0
+msgid "Default setup:"
+msgstr "Impostazioni di default:"
+
+#. module: docnaet_multi_partner
+#: view:docnaet.document.upload.wizard:0
+msgid "Partner Filter:"
+msgstr "Filtro partner:"
+
+#. module: docnaet_multi_partner
+#: view:docnaet.document:0
+msgid "Date to"
+msgstr "Alla data"
+
+#. module: docnaet_multi_partner
+#: view:docnaet.document:0
+msgid "Deadline from"
+msgstr "Dalla scadenza"
+
+#. module: docnaet_multi_partner
+#: view:docnaet.document:0
+msgid "Date from"
+msgstr "Dalla data"
+
+#. module: docnaet_multi_partner
+#: view:docnaet.document:0 field:docnaet.document,docnaet_partner_ids:0
+#: field:docnaet.document.advanced.search.wizard,docnaet_partner_id:0
+#: field:docnaet.document.upload.wizard,docnaet_partner_ids:0
+#: model:ir.model,name:docnaet_multi_partner.model_res_partner
+msgid "Partner"
+msgstr "Partner"
+
+#. module: docnaet_multi_partner
+#: field:res.partner,partner_docnaet_ids:0
+msgid "Document"
+msgstr "Documento"
+
+#. module: docnaet_multi_partner
+#: view:docnaet.document:0
+msgid "Deadline to"
+msgstr "Alla scadenza"
+
+#. module: docnaet_multi_partner
+#: model:ir.model,name:docnaet_multi_partner.model_docnaet_document_advanced_search_wizard
+msgid "Advanced search"
+msgstr "Ricerca avanzata"
+
+#. module: docnaet_multi_partner
+#: view:res.partner:0
+msgid "Documents linked"
+msgstr "Documenti collegati"
+
+#. module: docnaet_multi_partner
+#: model:ir.model,name:docnaet_multi_partner.model_docnaet_document_upload_wizard
+msgid "Document upload"
+msgstr "Caricamento documenti"
