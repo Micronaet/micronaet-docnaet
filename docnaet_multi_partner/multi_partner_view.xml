@@ -72,15 +72,15 @@
                 </field>           
 
                 <!--Hide group part: -->
-                <field name="group_partner" position="attributes">
+                <filter name="group_partner" position="attributes">
                     <attribute name="invisible">1</attribute>
-                </field>           
-                <field name="group_partner_category" position="attributes">
+                </filter>           
+                <filter name="group_partner_category" position="attributes">
                     <attribute name="invisible">1</attribute>
-                </field>           
-                <field name="group_country" position="attributes">
+                </filter>           
+                <filter name="group_country" position="attributes">
                     <attribute name="invisible">1</attribute>
-                </field>           
+                </filter>           
 
                 <!--Unhide removed part: -->
                 <field name="deadline_month" position="after">                

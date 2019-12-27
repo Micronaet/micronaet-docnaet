@@ -128,4 +128,35 @@ class UploadDocumentWizard(orm.TransientModel):
             'wiz_id', 'product_id', 
             'Products'),
         }            
+
+class DocumentDuplication(orm.TransientModel):
+    ''' Wizard for duplicate model
+    '''
+    _inherit = 'docnaet.document.duplication.wizard'
+
+    def duplicate_operation(self, cr, uid, ids, mode='link', context=None):
+        ''' Override for write product in new
+        '''
+        res = super(DocumentDuplication, self).duplicate_operation(
+            cr, uid, ids, mode=mode, context=context)
+
+        # Update duplicated with original extra data:
+        document_pool = self.pool.get('docnaet.document')
+        original_id = context.get('active_id')
+        original = document_pool.browse(cr, uid, original_id, context=context)
+        if not original.docnaet_product_ids:
+            return res
+
+        docnaet_product_ids = [
+            item.id for item in original.docnaet_product_ids]
+
+        domain = res.get('domain')
+        destination_ids = document_pool.search(
+            cr, uid, domain, context=context)
+        
+        # Update with product list data:
+        document_pool.write(cr, uid, destination_ids, {
+            'docnaet_product_ids': [(6, 0, docnaet_product_ids)],
+            }, context=context)
+        return res    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
