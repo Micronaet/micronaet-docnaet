@@ -81,15 +81,23 @@
                 </field>
 
                 <field name="partner_id" position="after">
-                    <field name="claim_id" invisible="1"/>
-                    <field name="acceptation_id" invisible="1" />
-                    <field name="sampling_id" invisible="1" />
-                    <field name="conformed_id" invisible="1" />
-                    <field name="external_id" invisible="1" />
-                    <field name="action_id" invisible="1" />
+                    <field name="claim_id" invisible="not context.get('quality_mode', False)" />
+                    <field name="acceptation_id" invisible="not context.get('quality_mode', False)" />
+                    <field name="sampling_id" invisible="not context.get('quality_mode', False)" />
+                    <field name="conformed_id" invisible="not context.get('quality_mode', False)" />
+                    <field name="external_id" invisible="not context.get('quality_mode', False)" />
+                    <field name="action_id" invisible="not context.get('quality_mode', False)" />
                 </field>
-
             </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_docnaet_document_quality_mode_view">
+            <field name="name">Documenti (qualita)</field>
+            <field name="res_model">docnaet.document</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="docnaet.docnaet_document_tree_view"/>
+            <field name="context">{'search_default_quality_document_present': True, 'quality_mode': True}</field>
+            <field name="domain">['&amp;',('docnaet_mode','in',('all', 'docnaet')), '|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
         </record>
         
         <record model="ir.ui.view" id="view_docnaet_document_embedded_list_tree">
@@ -215,6 +223,8 @@
                 </page>
             </field>    
         </record>
+        
+        <menuitem parent="docnaet.docnaet_document" id="docnaet_document_document_quality" name="Documenti (qualita)" sequence="11" action="action_docnaet_document_quality_mode_view" />
     </data>
 </openerp>
 
