@@ -1,6 +1,17 @@
 <?xml version="1.0"?>
 <openerp>
-    <data>
+    <data>        
+        <record model="ir.ui.view" id="view_document_advanced_search_form">
+            <field name="name">docnaet.document.advanced.search.wizard.product.form</field>
+            <field name="model">docnaet.document.advanced.search.wizard</field>
+            <field name="inherit_id" ref="docnaet.document_advanced_search_form" />
+            <field name="arch" type="xml">
+                <field name="product_id" position="before">
+                    <field name="docnaet_product_id" />
+                </field>
+            </field>
+        </record>
+    
         <!-- INHERITED docnaet.document -->
         <record model="ir.ui.view" id="view_docnaet_document_product_search">
             <field name="name">docnaet.document.product.search</field>
@@ -22,7 +33,6 @@
                 <field name="partner_id" position="after">
                     <field name="docnaet_product_ids" widget="many2many_tags" />
                 </field>
-
             </field>
         </record>
         

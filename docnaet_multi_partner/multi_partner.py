@@ -52,7 +52,7 @@ class DocnaetDocument(orm.Model):
         'docnaet_partner_ids': fields.many2many(
             'res.partner', 'docnaet_multi_partner_rel', 
             'docnaet_id', 'partner_id', 
-            'Partner'),
+            'Partner', domain="[('docnaet_enable', '=', True)]"),
         }
 
 class ResPartner(orm.Model):
@@ -66,5 +66,28 @@ class ResPartner(orm.Model):
             'docnaet.document', 'docnaet_multi_partner_rel', 
             'partner_id', 'docnaet_id', 
             'Document'),
-        }            
+        }
+
+
+class DocnaetDocumentAdvancedSearchWizard(orm.TransientModel):
+    ''' Wizard for duplicate model
+    '''
+    _inherit = 'docnaet.document.advanced.search.wizard'
+
+    def advanced_search(self, cr, uid, ids, context=None):
+        ''' Override search function add product:
+        '''
+        res = super(DocnaetDocumentAdvancedSearchWizard, self).advanced_search(
+            cr, uid, ids, context=context)
+
+        domain = res.get('domain')
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        partner_id = current_proxy.docnaet_partner_id.id or False
+        if partner_id:
+            domain.append(('docnaet_partner_ids.id', '=', partner_id))
+        return res
+    
+    _columns = {
+        'docnaet_partner_id': fields.many2one('res.partner', 'Partner'),
+        }                    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

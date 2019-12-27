@@ -67,5 +67,27 @@ class ProductProduct(orm.Model):
             'product_id', 'docnaet_id', 
             'Document'),
         }
+
+class DocnaetDocumentAdvancedSearchWizard(orm.TransientModel):
+    ''' Wizard for duplicate model
+    '''
+    _inherit = 'docnaet.document.advanced.search.wizard'
+    
+    def advanced_search(self, cr, uid, ids, context=None):
+        ''' Override search function add product:
+        '''
+        res = super(DocnaetDocumentAdvancedSearchWizard, self).advanced_search(
+            cr, uid, ids, context=context)
+
+        domain = res.get('domain')
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        product_id = current_proxy.docnaet_product_id.id or False
+        if product_id:
+            domain.append(('docnaet_product_ids.id','=',product_id))
+        return res
+    
+    _columns = {
+        'docnaet_product_id': fields.many2one('product.product', 'Product'),
+        }
             
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

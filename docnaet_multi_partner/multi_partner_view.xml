@@ -1,6 +1,31 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="view_document_advanced_search_partner_form">
+            <field name="name">docnaet.document.advanced.search.wizard.partner.proform</field>
+            <field name="model">docnaet.document.advanced.search.wizard</field>
+            <field name="inherit_id" ref="docnaet.document_advanced_search_form" />
+            <field name="arch" type="xml">
+                <field name="partner_name" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="country_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="partner_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>                
+                <field name="docnaet_category_id" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>                
+
+
+                <field name="product_id" position="before">
+                    <field name="docnaet_partner_id" domain="[('docnaet_enable','=',True)]" colspan="4"/>
+                </field>                
+            </field>
+        </record>
+
         <!-- INHERITED docnaet.document -->
         <record model="ir.ui.view" id="view_docnaet_document_partner_search">
             <field name="name">docnaet.document.partner.search</field>
