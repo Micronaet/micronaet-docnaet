@@ -36,6 +36,7 @@
         'docnaet',
         'docnaet_upload',
         'product',
+        'docnaet_multi_partner', # For view data
         ],
     'init_xml': [],
     'demo': [],

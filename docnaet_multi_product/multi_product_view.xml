@@ -62,7 +62,7 @@
                                    <field name="number" />
                                    <field name="date" />
                                    <field name="name" />
-                                   <field name="partner_id" />
+                                   <field name="docnaet_partner_ids" widget="many2many_tags"/>
                                    <field name="language_id" readonly="context.get('embedded',False)"/>
                                    <field name="state" />                                   
                                    <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
