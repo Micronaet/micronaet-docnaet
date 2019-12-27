@@ -178,6 +178,7 @@ class UploadDocumentWizard(orm.TransientModel):
 
         # Partial mode
         file_selected = []
+        document_imported = []
 
         if file_mode == 'partial':
             file_selected = [
@@ -252,6 +253,7 @@ class UploadDocumentWizard(orm.TransientModel):
                 data['number'] = protocol_pool.assign_protocol_number(
                     cr, uid, data['protocol_id'], context=context)                
             item_id = document_pool.create(cr, uid, data, context=context)
+            document_imported.append(item_id)
 
             # -----------------------------------------------------------------
             # Labnaet alternative:
@@ -281,12 +283,13 @@ class UploadDocumentWizard(orm.TransientModel):
             'view_type': 'form',
             'view_mode': 'tree,form,calendar',
             'res_model': 'docnaet.document',
-            'domain': [
-                ('docnaet_mode', '=', docnaet_mode),
-                ('user_id', '=', uid), 
-                ('uploaded', '=', True), 
-                ('state', '=', 'draft'),
-                ],
+            #'domain': [
+            #    ('docnaet_mode', '=', docnaet_mode),
+            #    ('user_id', '=', uid), 
+            #    ('uploaded', '=', True), 
+            #    ('state', '=', 'draft'),
+            #    ],
+            'domain': [('id', 'in', document_imported)]
             'type': 'ir.actions.act_window',
             'context': context,
             }

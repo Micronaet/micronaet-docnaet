@@ -90,4 +90,42 @@ class DocnaetDocumentAdvancedSearchWizard(orm.TransientModel):
         'docnaet_product_id': fields.many2one('product.product', 'Product'),
         }
             
+class UploadDocumentWizard(orm.TransientModel):
+    ''' Wizard to upload document
+    '''
+    _inherit = 'docnaet.document.upload.wizard'
+    
+    def button_upload(self, cr, uid, ids, context=None):
+        ''' Button event for upload
+        '''
+        res = super(UploadDocumentWizard, self).button_upload(
+            cr, uid, ids, context=context)
+        
+        wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
+        if not wiz_proxy.docnaet_product_ids:
+            return res
+
+        # ---------------------------------------------------------------------
+        # Extra update when product is choosen:    
+        # ---------------------------------------------------------------------
+        docnaet_product_ids = [
+            item.id for item in wiz_proxy.docnaet_product_ids]
+        
+        # Select current imported:
+        document_pool = self.pool.get('docnaet.document')
+        domain = res.get('domain')
+        document_ids = document_pool.search(cr, uid, domain, context=context)
+        
+        # Update with product list data:
+        document_pool.write(cr, uid, document_ids, {
+            'docnaet_product_ids': [(6, 0, docnaet_product_ids)],
+            }, context=context)
+        return res    
+
+    _columns = {
+        'docnaet_product_ids': fields.many2many(
+            'product.product', 'docnaet_multi_product_wiz_rel', 
+            'wiz_id', 'product_id', 
+            'Products'),
+        }            
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

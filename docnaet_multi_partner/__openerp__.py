@@ -34,8 +34,7 @@
     'depends': [
         'base',
         'docnaet',
-        'docnaet_upload',
-        
+        'docnaet_upload', # To modify view
         ],
     'init_xml': [],
     'demo': [],
