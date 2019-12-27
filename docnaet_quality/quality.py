@@ -125,5 +125,81 @@ class QualityAction(orm.Model):
             'docnaet.document', 'action_id', 'Document'),
         }
 
+# Upload
+class UploadDocumentWizard(orm.TransientModel):
+    ''' Wizard to upload document
+    '''
+    _inherit = 'docnaet.document.upload.wizard'
+    
+    def button_upload(self, cr, uid, ids, context=None):
+        ''' Button event for upload
+        '''
+        res = super(UploadDocumentWizard, self).button_upload(
+            cr, uid, ids, context=context)
         
+        wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
+
+        # ---------------------------------------------------------------------
+        # Extra update when product is choosen:    
+        # ---------------------------------------------------------------------
+        # Select current imported:
+        document_pool = self.pool.get('docnaet.document')
+        domain = res.get('domain')
+        document_ids = document_pool.search(cr, uid, domain, context=context)
+        
+        # Update with product list data:
+        document_pool.write(cr, uid, document_ids, {
+            'claim_id': wiz_proxy.claim_id.id,
+            'acceptation_id': wiz_proxy.acceptation_id.id,
+            'sampling_id': wiz_proxy.sampling_id.id,
+            'conformed_id': wiz_proxy.conformed_id.id,
+            'external_id': wiz_proxy.external_id.id,
+            'action_id': wiz_proxy.action_id.id,
+            }, context=context)
+        return res    
+
+    _columns = {
+        'claim_id': fields.many2one('quality.claim', 'Claim'),
+        'acceptation_id': fields.many2one(
+            'quality.acceptation', 'Acceptation'),
+        'sampling_id': fields.many2one('quality.sampling', 'Sampling'),
+        'conformed_id': fields.many2one('quality.conformed', 'Conformed'),
+        'external_id': fields.many2one(
+            'quality.conformed.external', 'Conformed external'),
+        'action_id': fields.many2one('quality.action', 'Action'),
+        }            
+
+# Extra Search
+
+# Duplication:
+class DocumentDuplication(orm.TransientModel):
+    ''' Wizard for duplicate model
+    '''
+    _inherit = 'docnaet.document.duplication.wizard'
+
+    def duplicate_operation(self, cr, uid, ids, mode='link', context=None):
+        ''' Override for write product in new
+        '''
+        res = super(DocumentDuplication, self).duplicate_operation(
+            cr, uid, ids, mode=mode, context=context)
+
+        # Update duplicated with original extra data:
+        document_pool = self.pool.get('docnaet.document')
+        origin_id = context.get('active_id')
+        origin = document_pool.browse(cr, uid, origin_id, context=context)
+
+        domain = res.get('domain')
+        destination_ids = document_pool.search(
+            cr, uid, domain, context=context)
+        
+        # Update with product list data:
+        document_pool.write(cr, uid, destination_ids, {
+            'claim_id': origin.claim_id.id,
+            'acceptation_id': origin.acceptation_id.id,
+            'sampling_id': origin.sampling_id.id,
+            'conformed_id': origin.conformed_id.id,
+            'external_id': origin.external_id.id,
+            'action_id': origin.action_id.id,
+            }, context=context)
+        return res    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
