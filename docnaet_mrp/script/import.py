@@ -83,6 +83,7 @@ type_id = False
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
 print 'Read filesystem: %s' % filesystem_path
 not_found = []
+import pdb; pdb.set_trace()
 for root, folders, files in os.walk(filesystem_path):
     for folder in folders:
         date_folder = os.path.join(root, folder)
@@ -91,8 +92,14 @@ for root, folders, files in os.walk(filesystem_path):
             for filename in date_files:
                 name_part = filename.split('.')
                 if len(name_part) == 2:
+                    header_code = name_part[0][:2]
+                    if header_code = 'BO'
+                        hedear_code = 'B0'
+                    else:
+                        continue
+                    import pdb; pdb.set_trace()
                     mrp_name = '%s/%s' % (
-                        name_part[0][:2],
+                        header_code,
                         name_part[0][2:],
                         )
                         
@@ -110,6 +117,8 @@ for root, folders, files in os.walk(filesystem_path):
                 # Fields:
                 create_date = get_create_date(fullname)
                 name = 'Foglio di produzione %s' % mrp_name
+                name_search = 'Foglio di produzione %s' % mrp_name.replace(
+                    'B0', 'BO')
                 description = 'Scansione foglio di produzione %s [%s]' % (
                     mrp_name,
                     create_date,
@@ -164,7 +173,7 @@ for root, folders, files in os.walk(filesystem_path):
                     data['linked_mrp_id'] = linked_mrp_id
 
                 document_ids = docnaet_pool.search([
-                    ('name', '=', name),
+                    ('name', '=', name_search),
                     ])
                 if document_ids:
                     # Update
