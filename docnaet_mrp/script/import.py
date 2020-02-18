@@ -24,6 +24,7 @@ import erppeek
 import ConfigParser
 import time
 import pytz
+import shutil
 from datetime import datetime
 
 # ----------------
@@ -172,4 +173,5 @@ for root, folders, files in os.walk(filesystem_path):
                 docnaet_fullname = os.path.join(docnaet_path, '%s.%s' % (
                     docnaet_id, file_extension))
                 print '   Import file: %s > %s' % (fullname, docnaet_fullname)
+                shutil.copy(fullname, docnaet_fullname)
 
