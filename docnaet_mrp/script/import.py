@@ -94,7 +94,7 @@ for root, folders, files in os.walk(filesystem_path):
                 if len(name_part) == 2:
                     header_code = name_part[0][:2]
                     if header_code == 'BO':
-                        hedear_code = 'B0'
+                        header_code = 'B0'
                     else:
                         continue
                     import pdb; pdb.set_trace()
