@@ -1,0 +1,190 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* docnaet_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-01-25 14:17+0000\n"
+"PO-Revision-Date: 2019-01-25 15:18+0100\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: it\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#. module: docnaet_sale
+#: field:docnaet.document,linked_sale_id:0
+msgid "Linked sale"
+msgstr "Offerte collegate"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0 view:sale.order:0
+msgid "Open document"
+msgstr "Apri documento"
+
+#. module: docnaet_sale
+#: model:ir.model,name:docnaet_sale.model_docnaet_protocol
+msgid "Docnaet protocol"
+msgstr "Protocollo docnaet"
+
+#. module: docnaet_sale
+#: view:sale.order:0
+msgid "Docnaet"
+msgstr "Docnaet"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Duplicate"
+msgstr "Duplica"
+
+#. module: docnaet_sale
+#: field:docnaet.document,sale_state:0
+msgid "Sale state"
+msgstr "Stato offerta"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0 selection:docnaet.document,sale_state:0
+msgid "Pending"
+msgstr "Pendente"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "CRM"
+msgstr "CRM"
+
+#. module: docnaet_sale
+#: field:docnaet.document,sale_order_amount:0
+msgid "Total sale"
+msgstr "Totale offerta"
+
+#. module: docnaet_sale
+#: model:ir.actions.act_window,name:docnaet_sale.action_docnaet_sale_order_tree
+msgid "Offer"
+msgstr "Offer"
+
+#. module: docnaet_sale
+#: view:sale.order:0
+msgid "Documents linked"
+msgstr "Documenti collegati"
+
+#. module: docnaet_sale
+#: field:docnaet.document,link_sale:0
+msgid "Link"
+msgstr "Collegamento"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+#: model:ir.ui.menu,name:docnaet_sale.menu_docnaet_document_my_pending_order
+msgid "Pending offer"
+msgstr "Offerte pendenti"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Sale State"
+msgstr "Stato offerta"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Open document [R]"
+msgstr "Apri documento [R]"
+
+#. module: docnaet_sale
+#: field:docnaet.protocol,sale_management:0
+msgid "CRM management"
+msgstr "Gestione CRM"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0 selection:docnaet.document,sale_state:0
+msgid "Lost"
+msgstr "Persa"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Sale"
+msgstr "Vendita"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Document linked [R]!"
+msgstr "Documento collegato [R]!"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Scad."
+msgstr "Scad."
+
+#. module: docnaet_sale
+#: model:ir.ui.menu,name:docnaet_sale.menu_docnaet_document_document_offer
+msgid "Offerte"
+msgstr "Offerte"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Sale win"
+msgstr "Offerta vinta"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Docnaet sale offer"
+msgstr "Docnaet offerte"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Total"
+msgstr "Totale"
+
+#. module: docnaet_sale
+#: model:ir.actions.act_window,name:docnaet_sale.action_docnaet_my_sale_order_tree
+msgid "My Offer"
+msgstr "Mie offerte"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Sale currency"
+msgstr "Valuta offerta"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Sale pending"
+msgstr "Offerte pendenti"
+
+#. module: docnaet_sale
+#: model:ir.model,name:docnaet_sale.model_docnaet_document view:sale.order:0
+#: field:sale.order,docnaet_ids:0
+msgid "Docnaet document"
+msgstr "Documento docnaet"
+
+#. module: docnaet_sale
+#: help:docnaet.document,link_sale:0
+msgid "Link document in sale form"
+msgstr "Collegamento documento offerta"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Sale lost"
+msgstr "Offerta persa"
+
+#. module: docnaet_sale
+#: field:docnaet.document,sale_currency_id:0
+msgid "Currency"
+msgstr "Valuta"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0 selection:docnaet.document,sale_state:0
+msgid "Win"
+msgstr "Vinta"
+
+#. module: docnaet_sale
+#: model:ir.model,name:docnaet_sale.model_sale_order
+msgid "Sales Order"
+msgstr "Ordine di vendita"
+
+#. module: docnaet_sale
+#: view:docnaet.document:0
+msgid "Document linked!"
+msgstr "Documento collegato!"

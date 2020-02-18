@@ -103,6 +103,7 @@ class ResPartner(orm.Model):
         'account_reference1_name': fields.char('Agent Name', size=40),
         'account_reference2_code': fields.char('Commercial Code', size=9),
         'account_reference2_name': fields.char('Commercial Name', size=40),
+        # TODO add third reference
         }
 
 class SaleOrder(orm.Model):
