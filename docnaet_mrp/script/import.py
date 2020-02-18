@@ -155,6 +155,7 @@ for root, folders, files in os.walk(filesystem_path):
                     'note': note,
                     #'number': number,
                     'docnaet_extension': file_extension,
+                    'linked_mrp_id': linked_mrp_id,
                     }
 
                 document_ids = docnaet_pool.search([
