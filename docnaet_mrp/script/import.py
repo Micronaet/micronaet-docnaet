@@ -99,7 +99,7 @@ for root, folders, files in os.walk(filesystem_path):
                         
                 else:
                     print 'Old file %s' % filename
-                    mrp_name = 'MO/%s' % name_part[1]
+                    mrp_name = 'MO/0%s' % name_part[1]
                     
                     
                 extension = name_part[-1]
