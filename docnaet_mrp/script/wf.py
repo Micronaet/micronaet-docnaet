@@ -48,7 +48,7 @@ erp = erppeek.Client(
 document_pool = erp.DocnaetDocument
 document_ids = document_pool.search([
     ('state', '=', 'draft'), 
-    ('protocol_id', '!=', 78), # Only MRP forms
+    ('protocol_id', '=', 78), # Only MRP forms
     ])
 i = 0
 
