@@ -71,6 +71,7 @@ docnaet_pool = erp.DocnaetDocument
 # Fixed parameter (setup before):
 file_extension = 'pdf'
 
+program_id = 12
 company_id = 1
 partner_id = 1
 user_id = 1
@@ -147,6 +148,7 @@ for root, folders, files in os.walk(filesystem_path):
                     'user_id': user_id,
                     'protocol_id': protocol_id,
                     'language_id': language_id,
+                    'program_id': program_id,
                     'type_id': type_id,
                     'date': date,
                     #'create_date': create_date,
