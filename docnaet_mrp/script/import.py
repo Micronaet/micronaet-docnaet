@@ -99,8 +99,6 @@ for root, folders, files in os.walk(filesystem_path):
                 else:
                     print 'Old file %s' % filename
                     mrp_name = 'MO/0%s' % name_part[1]
-                import pdb; pdb.set_trace()
-                    
                     
                 extension = name_part[-1]
                 if extension.lower() != file_extension:
