@@ -104,6 +104,7 @@ for root, folders, files in os.walk(filesystem_path):
                         )
                         
                 else:
+                    continue
                     print 'Old file %s' % filename
                     mrp_name = 'MO/0%s' % name_part[1]
                     
