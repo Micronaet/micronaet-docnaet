@@ -33,7 +33,7 @@ server = config.get('OpenERP', 'server')
 port = config.get('OpenERP', 'port')
 dbname = config.get('OpenERP', 'dbname')
 user = config.get('OpenERP', 'user')
-password = config.get('OpenERP', 'password')
+password = config.get('OpenERP', 'pwd')
 
 # -----------------------------------------------------------------------------
 # Client ODOO:
