@@ -83,7 +83,6 @@ type_id = False
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
 print 'Read filesystem: %s' % filesystem_path
 not_found = []
-import pdb; pdb.set_trace()
 for root, folders, files in os.walk(filesystem_path):
     for folder in folders:
         date_folder = os.path.join(root, folder)
@@ -100,6 +99,7 @@ for root, folders, files in os.walk(filesystem_path):
                 else:
                     print 'Old file %s' % filename
                     mrp_name = 'MO/0%s' % name_part[1]
+                import pdb; pdb.set_trace()
                     
                     
                 extension = name_part[-1]
