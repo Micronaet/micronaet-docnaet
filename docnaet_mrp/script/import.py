@@ -99,14 +99,13 @@ for root, folders, files in os.walk(filesystem_path):
                     continue
                     mrp_name = name_part[1]
                     
-                import pdb; pdb.set_trace()
                     
                 extension = name_part[-1]
-
                 if extension.lower() != file_extension:
                     print 'Jump no PDF: %s' % filename
                     continue
                 
+                import pdb; pdb.set_trace()
                 fullname = os.path.join(date_root, filename)
 
                 # Fields:
