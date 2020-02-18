@@ -89,8 +89,14 @@ for root, folders, files in os.walk(filesystem_path):
         for date_root, date_folders, date_files in os.walk(date_folder):                
             for filename in date_files:
                 name_part = filename.split('.')
-
-                mrp_name = name_part[0]
+                if len(name_part) == 2:
+                    mrp_name = name_part[0]
+                else:
+                    print 'Strange file %s' % filename
+                    continue
+                    mrp_name = name_part[1]
+                    
+                    
                 extension = name_part[-1]
 
                 if extension.lower() != file_extension:
