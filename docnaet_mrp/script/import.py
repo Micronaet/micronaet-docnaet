@@ -38,8 +38,8 @@ dbname = config.get('OpenERP', 'dbname')
 user = config.get('OpenERP', 'user')
 password = config.get('OpenERP', 'pwd')
 
-filesystem_path = config.get('path', 'filesystem')
-docnaet_path = config.get('path', 'docnaet')
+filesystem_path = os.path.expanduser(config.get('path', 'filesystem'))
+docnaet_path = os.path.expanduser(config.get('path', 'docnaet'))
 
 def get_create_date(fullname):
     """ Extract create date from file:
@@ -61,6 +61,7 @@ erp = erppeek.Client(
     password=password,
     )
 print 'Connecting ODOO %s: %s:%s' % (dbname, server, port)    
+
 # Pool used:
 mrp_pool = erp.MrpProduction
 docnaet_pool = erp.DocnaetDocument
