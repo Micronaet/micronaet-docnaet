@@ -22,7 +22,7 @@
             <field name="model">mrp.production</field>        
             <field name="inherit_id" ref="production_line.default_mrp_production_form_view" />
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page[5]" position="after">
+                <page string="Righe ordine evase" position="after">
                     <page string="Docnaet">
                         <group colspan="4" col="4">
                             <separator string="Documents linked" colspan="4"/>                            
@@ -40,7 +40,7 @@
                             </field>
                         </group>                        
                     </page>
-                </xpath>
+                </page>
             </field>    
         </record>
     </data>
