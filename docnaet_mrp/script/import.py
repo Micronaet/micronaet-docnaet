@@ -80,11 +80,11 @@ type_id = False
 
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
 import pdb; pdb.set_trace()
-for root, folders, files in os.path.walk(filesystem_path):
+for root, folders, files in os.walk(filesystem_path):
     for folder in folders:
         date_folder = os.path.join(root, folder)
         date = '%s-%s-01' % (folder[:4], folder[4:6])
-        for date_root, date_folders, date_files in os.path.walk(date_folder):                
+        for date_root, date_folders, date_files in os.walk(date_folder):                
             for filename in date_files:
                 name_part = filename.split('.')
 
