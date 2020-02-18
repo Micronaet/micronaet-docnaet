@@ -79,7 +79,9 @@ language_id = 1
 type_id = False
 
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
+print 'Read filesystem: %s' % filesystem_path)
 import pdb; pdb.set_trace()
+
 for root, folders, files in os.walk(filesystem_path):
     for folder in folders:
         date_folder = os.path.join(root, folder)
