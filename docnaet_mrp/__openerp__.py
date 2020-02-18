@@ -32,6 +32,7 @@
     'depends': [
         'base',
         'docnaet',
+        'docnaet_download',
         'mrp',
         'production_line',
         ],

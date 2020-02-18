@@ -36,6 +36,7 @@
                                    <field name="language_id" readonly="context.get('embedded',False)"/>
                                    <field name="state" />                                   
                                    <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
+                                   <button name="button_file_download" string="Download document" type="object" icon="STOCK_SAVE" groups="docnaet_download.group_docnaet_download_users"/>
                                 </tree>                            
                             </field>
                         </group>                        
