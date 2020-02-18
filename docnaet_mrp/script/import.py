@@ -74,8 +74,8 @@ company_id = 1
 partner_id = 1
 user_id = 1
 priority_id = 3
-protocol_id = 0 # TODO
-language_id = 1 # TODO
+protocol_id = 78
+language_id = 1 
 type_id = False
 
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
