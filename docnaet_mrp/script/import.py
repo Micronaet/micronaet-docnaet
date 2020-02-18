@@ -82,6 +82,8 @@ type_id = False
 
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
 print 'Read filesystem: %s' % filesystem_path
+not_found = []
+import pdb; pdb.set_trace()
 for root, folders, files in os.walk(filesystem_path):
     for folder in folders:
         date_folder = os.path.join(root, folder)
@@ -96,9 +98,8 @@ for root, folders, files in os.walk(filesystem_path):
                         )
                         
                 else:
-                    print 'Strange file %s' % filename
-                    continue
-                    mrp_name = name_part[1]
+                    print 'Old file %s' % filename
+                    mrp_name = 'MO/%s' % name_part[1]
                     
                     
                 extension = name_part[-1]
@@ -124,10 +125,15 @@ for root, folders, files in os.walk(filesystem_path):
                 mrp_ids = mrp_pool.search([
                     ('name', '=', mrp_name),
                     ])
+                if len(mrp_ids) > 1:
+                    print 'Produzioni doppie trovate'
+                    import pdb; pdb.set_trace()
+                        
                 if mrp_ids:
                     linked_mrp_id = mrp_ids[0]
                 else:
                     print 'MRP %s not found!' % mrp_name
+                    not_found.append(mrp_name)
                     linked_mrp_id = False
                      
                 # -------------------------------------------------------------
@@ -176,3 +182,4 @@ for root, folders, files in os.walk(filesystem_path):
                 print '   Import file: %s > %s' % (fullname, docnaet_fullname)
                 shutil.copy(fullname, docnaet_fullname)
 
+print not_found
