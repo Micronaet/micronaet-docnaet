@@ -20,9 +20,9 @@
         <record model="ir.ui.view" id="docnaet_normal_link_mrp_form_view">
             <field name="name">Docnaet link</field>
             <field name="model">mrp.production</field>        
-            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="inherit_id" ref="production_line.default_mrp_production_form_view" />
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page" position="after">
+                <xpath expr="/form/sheet/notebook/page[5]" position="after">
                     <page string="Docnaet">
                         <group colspan="4" col="4">
                             <separator string="Documents linked" colspan="4"/>                            
