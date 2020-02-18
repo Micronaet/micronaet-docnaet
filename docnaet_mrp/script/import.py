@@ -89,7 +89,11 @@ for root, folders, files in os.walk(filesystem_path):
             for filename in date_files:
                 name_part = filename.split('.')
                 if len(name_part) == 2:
-                    mrp_name = name_part[0]
+                    mrp_name = '%s/%s' % (
+                        name_part[0][:2],
+                        name_part[0][2:],
+                        )
+                        
                 else:
                     print 'Strange file %s' % filename
                     continue
@@ -101,6 +105,7 @@ for root, folders, files in os.walk(filesystem_path):
 
                 if extension.lower() != file_extension:
                     print 'Jump no PDF: %s' % filename
+                    continue
                 
                 fullname = os.path.join(date_root, filename)
 
