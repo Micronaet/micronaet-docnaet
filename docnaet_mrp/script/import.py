@@ -93,7 +93,7 @@ for root, folders, files in os.walk(filesystem_path):
                 name_part = filename.split('.')
                 if len(name_part) == 2:
                     header_code = name_part[0][:2]
-                    if header_code = 'BO'
+                    if header_code == 'BO'
                         hedear_code = 'B0'
                     else:
                         continue
