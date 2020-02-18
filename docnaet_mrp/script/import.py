@@ -30,7 +30,7 @@ from datetime import datetime
 # Read parameters:
 # ----------------
 config = ConfigParser.ConfigParser()
-config.read(['config.cfg'])
+config.read(['./config.cfg'])
 
 server = config.get('OpenERP', 'server')
 port = config.get('OpenERP', 'port')
@@ -60,7 +60,7 @@ erp = erppeek.Client(
     user=user,
     password=password,
     )
-    
+print 'Connecting ODOO %s: %s:%s' % (dbname, server, port)    
 # Pool used:
 mrp_pool = erp.MrpProduction
 docnaet_pool = erp.DocnaetDocument
