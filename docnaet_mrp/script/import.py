@@ -82,7 +82,6 @@ type_id = False
 
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
 print 'Read filesystem: %s' % filesystem_path
-import pdb; pdb.set_trace()
 for root, folders, files in os.walk(filesystem_path):
     for folder in folders:
         date_folder = os.path.join(root, folder)
@@ -107,7 +106,6 @@ for root, folders, files in os.walk(filesystem_path):
                     print 'Jump no PDF: %s' % filename
                     continue
                 
-                import pdb; pdb.set_trace()
                 fullname = os.path.join(date_root, filename)
 
                 # Fields:
