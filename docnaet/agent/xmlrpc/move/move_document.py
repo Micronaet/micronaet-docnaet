@@ -64,7 +64,7 @@ document_ids = document_pool.search([
     ])
 
 # TODO protocol nedd to be manually moved in docnaet_mode labnaet:
-import pdb; pdb.set_trace()
+"""
 for doc in document_pool.browse(document_ids):
     labnaet_id = document_pool.get_counter_labnaet_id()
     docnaet_id = doc.id
@@ -89,12 +89,15 @@ for doc in document_pool.browse(document_ids):
         'docnaet_mode': 'labnaet',
         'labnaet_id': labnaet_id,
         })
-        
+"""        
 
 import pdb; pdb.set_trace()
 for document in document_pool.browse(document_ids):
     docnaet_id = document.id
-    from_file = os.path.join(from_path, docnaet_id)
+    from_file = os.path.join(
+        from_path, 
+        '%s.%s' % (docnaet_id, doc.docnaet_extension),
+        )
     try:
         os.remove(from_file)
     except: 
