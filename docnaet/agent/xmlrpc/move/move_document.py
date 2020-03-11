@@ -27,8 +27,8 @@ import shutil
 # Parameters:
 protocol_id = 78
 
-from_path = '/home/openerp/filestore/docnaet/1/store'
-to_path = '/home/openerp/filestore/labnaet/1/store'
+from_path = os.path.expanduser('~/filestore/docnaet/1/store')
+to_path = os.path.expanduser('~/filestore/labnaet/1/store')
     
 # -----------------------------------------------------------------------------
 # Read configuration parameter:
