@@ -65,22 +65,22 @@ document_ids = document_pool.search([
 
 # TODO protocol nedd to be manually moved in docnaet_mode labnaet:
 import pdb; pdb.set_trace()
-for document in document_pool.browse(document_ids):
-    labnaet_id = document_pool.get_counter_labnaet_id()
-    docnaet_id = document.id
+for doc in document_pool.browse(document_ids):
+    labnaet_id = doc_pool.get_counter_labnaet_id()
+    docnaet_id = doc.id
         
     # move file:
     from_file = os.path.join(
         from_path, 
-        '%s.%s' % (docnaet_id, docnaet.extension),
+        '%s.%s' % (docnaet_id, docnaet_extension),
         )
     to_file =  os.path.join(
         from_path, 
-        '%s.%s' % (labnaet_id, docnaet.extension),
+        '%s.%s' % (labnaet_id, docnaet_extension),
         )
     shutil.copy(from_file, to_file)
 
-    document_pool.write([document.id], {
+    document_pool.write([docnaet_id], {
         'docnaet_mode': 'labnaet',
         'labnaet_id': labnaet_id,
         })
