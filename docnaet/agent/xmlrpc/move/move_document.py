@@ -95,7 +95,10 @@ import pdb; pdb.set_trace()
 for document in document_pool.browse(document_ids):
     docnaet_id = document.id
     from_file = os.path.join(from_path, docnaet_id)
-    os.remove(from_file)
+    try:
+        os.remove(from_file)
+    except: 
+        print 'Cannot remove: %' % from_file    
     
     
     
