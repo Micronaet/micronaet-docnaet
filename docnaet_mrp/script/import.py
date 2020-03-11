@@ -95,9 +95,6 @@ for root, folders, files in os.walk(filesystem_path):
                     header_code = name_part[0][:2]
                     if header_code == 'BO':
                         header_code = 'B0'
-                    else:
-                        continue
-                    import pdb; pdb.set_trace()
                     mrp_name = '%s/%s' % (
                         header_code,
                         name_part[0][2:],
@@ -118,8 +115,6 @@ for root, folders, files in os.walk(filesystem_path):
                 # Fields:
                 create_date = get_create_date(fullname)
                 name = 'Foglio di produzione %s' % mrp_name
-                name_search = 'Foglio di produzione %s' % mrp_name.replace(
-                    'B0', 'BO')
                 description = 'Scansione foglio di produzione %s [%s]' % (
                     mrp_name,
                     create_date,
@@ -174,7 +169,7 @@ for root, folders, files in os.walk(filesystem_path):
                     data['linked_mrp_id'] = linked_mrp_id
 
                 document_ids = docnaet_pool.search([
-                    ('name', '=', name_search),
+                    ('name', '=', name),
                     ])
                 if document_ids:
                     # Update
