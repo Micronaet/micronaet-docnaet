@@ -69,11 +69,16 @@ for document in document_pool.browse(document_ids):
     labnaet_id = document_pool.get_counter_labnaet_id()
     docnaet_id = document.id
     
-    # docnaet_mode = 'labnaet'
+    document_pool.write([document.id], {
+        'docnaet_mode': 'labnaet',
+        'labnaet_id': labnaet_id,
+        
+        })
     
     # move file:
     from_file = os.path.join(from_path, docnaet_id)
     to_file =  os.path.join(from_path, labnaet_id)
+    
     
     shutil.copy(from_file, to_file)
     print 'Copy: %s > %s'
