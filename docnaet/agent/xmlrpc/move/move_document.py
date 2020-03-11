@@ -78,16 +78,17 @@ for doc in document_pool.browse(document_ids):
         to_path, 
         '%s.%s' % (labnaet_id, doc.docnaet_extension),
         )
+
+    if os.path.isfile(to_file):
+        print 'Copy failed, yet present: %s' % to_file        
+    else:
+        print 'Copy: %s > %s' % (from_file, to_file)
     shutil.copy(from_file, to_file)
 
     document_pool.write([docnaet_id], {
         'docnaet_mode': 'labnaet',
         'labnaet_id': labnaet_id,
         })
-    if os.path.isfile(to_file):
-        print 'Copy failed, yet present: %s' % to_file        
-    else:
-        print 'Copy: %s > %s' % (from_file, to_file)
         
 
 import pdb; pdb.set_trace()
