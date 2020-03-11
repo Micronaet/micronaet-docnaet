@@ -92,8 +92,8 @@ for doc in document_pool.browse(document_ids):
 """        
 
 import pdb; pdb.set_trace()
-for document in document_pool.browse(document_ids):
-    docnaet_id = document.id
+for doc in document_pool.browse(document_ids):
+    docnaet_id = doc.id
     from_file = os.path.join(
         from_path, 
         '%s.%s' % (docnaet_id, doc.docnaet_extension),
