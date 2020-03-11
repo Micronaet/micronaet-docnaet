@@ -102,7 +102,7 @@ for doc in document_pool.browse(document_ids):
         os.remove(from_file)
         print 'Remove: % / %s' % (from_file, tot)
     except: 
-        print 'Cannot remove: %' % from_file    
+        print 'Cannot remove: %s' % from_file    
     
     
     
