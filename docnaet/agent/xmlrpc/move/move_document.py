@@ -72,11 +72,11 @@ for doc in document_pool.browse(document_ids):
     # move file:
     from_file = os.path.join(
         from_path, 
-        '%s.%s' % (docnaet_id, docnaet_extension),
+        '%s.%s' % (docnaet_id, doc.docnaet_extension),
         )
     to_file =  os.path.join(
         from_path, 
-        '%s.%s' % (labnaet_id, docnaet_extension),
+        '%s.%s' % (labnaet_id, doc.docnaet_extension),
         )
     shutil.copy(from_file, to_file)
 
