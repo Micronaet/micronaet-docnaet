@@ -75,7 +75,7 @@ for doc in document_pool.browse(document_ids):
         '%s.%s' % (docnaet_id, doc.docnaet_extension),
         )
     to_file =  os.path.join(
-        from_path, 
+        to_path, 
         '%s.%s' % (labnaet_id, doc.docnaet_extension),
         )
     shutil.copy(from_file, to_file)
@@ -84,8 +84,11 @@ for doc in document_pool.browse(document_ids):
         'docnaet_mode': 'labnaet',
         'labnaet_id': labnaet_id,
         })
-
-    print 'Copy: %s > %s'
+    if os.path.isfile(to_file):
+        print 'Copy failed, yet present: %s' % to_file        
+    else:
+        print 'Copy: %s > %s' % (from_file, to_file)
+        
 
 import pdb; pdb.set_trace()
 for document in document_pool.browse(document_ids):
