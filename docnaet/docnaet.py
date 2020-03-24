@@ -501,7 +501,7 @@ class DocnaetDocument(orm.Model):
             #res_model': 'ir.actions.act_url',
             'type': 'ir.actions.act_url', 
             'url': final_url, 
-            'target': 'new', # self
+            'target': 'self',
             }
 
     # -------------------------------------------------------------------------
