@@ -132,7 +132,7 @@ for root, folders, files in os.walk(path):
                         print 'No partner code format: %s' % partner_code
                         continue
                     partner_ids = partner_pool.search([
-                        ('sql_supplier_code', '=', partner_code])    
+                        ('sql_supplier_code', '=', partner_code)])    
 
                     if not partner_ids:
                         print 'No partner code in ODOO: %s' % partner_code
@@ -142,7 +142,7 @@ for root, folders, files in os.walk(path):
                         print 'More partner code in ODOO: %s' % partner_code
                         continue
 
-                    sheet_index[sheet_code] = partner_ids[0]                    
+                    sheet_index[sheet_code] = partner_ids[0]                  
                 continue # Next sheet
             
             if ws_name not in sheet_index:
@@ -169,6 +169,10 @@ for root, folders, files in os.walk(path):
                 if file_link not in log_db[xls_file][ws_name]:
                     log_db[xls_file][ws_name][file_link] = False # Docnaet ID
                     
+                odoo_data = {
+                    'protocol_id': False,
+                    # TODO
+                    }
                 date_value = xldate_to_datetime(cell.value)
                 print 'Partner: %s, Sheet: %s, [%s:%s], Date: %s, Link %s' % (
                     partner_code,
