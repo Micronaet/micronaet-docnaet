@@ -46,13 +46,52 @@ class docnaet_import_datasheet_wizard(orm.TransientModel):
         assert len(ids) == 1, 'Works only with one record a time'
             
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
-            
+        import pdb; pdb.set_trace()
+        
+        default_path = wiz_proxy.default_path
+        filename = wiz_proxy.filename
+        
         # Pool used:
         document_pool = self.pool.get('docnaet.document')
         protocol_pool = self.pool.get('docnaet.protocol')
-        
+        partner_pool = self.pool.get('res.partner')
+
+        if filename:
+            files = [filename]
+        else:                 
+            for root, folders, files in os.walk(path)
+                break  # Update files list only with current folder
+
+        import pdb; pdb.set_trace()
+        log_text = ''            
+        for f in files:
+            if f.split('.')[-1] not in ('xls', 'xlsx'):
+                log_text.append('File not used: %s\n' % f)
+                continue
+            else:
+                log_text.append('File used: %s\n' % f)
+                
+            xls_file = os.path.join(path, f)        
+            wb = xlrd.open_workbook(xls_file)
+            for ws_name in wb.sheet_names():
+                ws = wb.sheet_by_name(ws_name)
+                for position in ws.hyperlink_map:
+                    row, col = position
+                    try:
+                        cell = ws.cell(row, col)
+                    except:
+                        print 'Cell not found', f, ws_name, row, col
+                        continue
+                    
+                    link = ws.hyperlink_map[position]
+                    if link.type != 'url':
+                        continue
+
+                    file_link = os.path.join(path, link.url_or_path)
+                    print ws_name, row, col, cell.value, file_link
+                                
     _columns = {
         'default_path': fields.char('Default path', size=180, required=True),
-        'filename': fields.char('File name', size=180, required=True),
+        'filename': fields.char('File name', size=180),
         }
 
