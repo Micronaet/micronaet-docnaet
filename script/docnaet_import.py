@@ -66,11 +66,11 @@ server = config.get('dbaccess', 'server')
 port = config.get('dbaccess', 'port')
 
 # ODOO Docnaet reference:
-odoo_path = 
-protocol_id = 
-language_id = 
-program_id = 
-extension = 
+odoo_path = 0
+protocol_id = 0
+language_id = 0
+program_id = 0
+extension = 0
 
 code_cell = 2
 sheet_cell = 3
