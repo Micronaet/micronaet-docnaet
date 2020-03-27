@@ -24,6 +24,13 @@ import sys
 import erppeek
 import xlrd
 import ConfigParser
+import pickle
+
+pickle_file = './log.p'
+try:
+    log_db = pickle.load(open(pickle_file, 'rb'))
+except:
+    log_db = {}    
 
 # -----------------------------------------------------------------------------
 # Read configuration parameter:
@@ -68,12 +75,17 @@ for root, folders, files in os.walk(path):
             continue
 
         xls_file = os.path.join(path, f)        
+        if xls_file not in log_db:
+            log_db[xls_file] = {}
         wb = xlrd.open_workbook(xls_file)
         for ws_name in wb.sheet_names():
             if ws_name in sheet_exclude:
                 print 'Sheet excluded: %s' % ws_name
                 continue
                 
+            if ws_name not in log_db[xls_file]:
+                log_db[xls_file][ws_name] = {}
+                   
             ws = wb.sheet_by_name(ws_name)
             for position in ws.hyperlink_map:
                 row, col = position
@@ -88,5 +100,8 @@ for root, folders, files in os.walk(path):
                     continue
 
                 file_link = os.path.join(path, link.url_or_path)
+                if file_link not in log_db[xls_file][ws_name]:
+                    log_db[xls_file][ws_name][file_link] = False # Docnaet ID
                 print ws_name, row, col, cell.value, file_link
 
+pickle.dump(open(pickle_file, 'wb'))
