@@ -102,7 +102,7 @@ for root, folders, files in os.walk(path):
                 
             partner_code = ws_name.split()[-1].strip()
             if not(partner_code[:2].isdigit() and partner_code[3:].isdigit() and \
-                partner[2:3] = '.'):
+                partner[2:3] == '.'):
                 print 'No partner code found in sheet: %s' % ws_name
                 continue
 
