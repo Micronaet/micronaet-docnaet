@@ -49,6 +49,7 @@ class DocnaetDocument(orm.Model):
     _inherit = 'docnaet.document'
     
     _columns = {
+        'supplier_code': fields.char('Codice fornitore', size=64),
         'docnaet_product_ids': fields.many2many(
             'product.product', 'docnaet_multi_product_rel', 
             'docnaet_id', 'product_id', 
@@ -82,11 +83,16 @@ class DocnaetDocumentAdvancedSearchWizard(orm.TransientModel):
         domain = res.get('domain')
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         product_id = current_proxy.docnaet_product_id.id or False
+        supplier_code = current_proxy.supplier_code
         if product_id:
-            domain.append(('docnaet_product_ids.id','=',product_id))
+            domain.append(('docnaet_product_ids.id', '=', product_id))
+        if supplier_code:
+            domain.append(('supplier_code', 'ilike', supplier_code))
+            
         return res
     
     _columns = {
+        'supplier_code': fields.char('Codice fornitore', size=64),    
         'docnaet_product_id': fields.many2one('product.product', 'Product'),
         }
             
@@ -102,7 +108,7 @@ class UploadDocumentWizard(orm.TransientModel):
             cr, uid, ids, context=context)
         
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
-        if not wiz_proxy.docnaet_product_ids:
+        if not wiz_proxy.docnaet_product_ids and not wiz_proxy.supplier_code:
             return res
 
         # ---------------------------------------------------------------------
@@ -118,11 +124,13 @@ class UploadDocumentWizard(orm.TransientModel):
         
         # Update with product list data:
         document_pool.write(cr, uid, document_ids, {
+            'supplier_code': wiz_proxy.supplier_code,
             'docnaet_product_ids': [(6, 0, docnaet_product_ids)],
             }, context=context)
         return res    
 
     _columns = {
+        'supplier_code': fields.char('Codice fornitore', size=64),
         'docnaet_product_ids': fields.many2many(
             'product.product', 'docnaet_multi_product_wiz_rel', 
             'wiz_id', 'product_id', 

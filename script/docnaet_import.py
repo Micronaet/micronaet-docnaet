@@ -53,7 +53,7 @@ def xldate_to_datetime(xldatetime):
 # -----------------------------------------------------------------------------
 # Read configuration parameter:
 # -----------------------------------------------------------------------------
-sheet_exclude = ['INDICE']
+sheet_exclude = []
 # From config file:
 cfg_file = os.path.expanduser('./openerp.cfg')
 
@@ -64,6 +64,16 @@ user = config.get('dbaccess', 'user')
 pwd = config.get('dbaccess', 'pwd')
 server = config.get('dbaccess', 'server')
 port = config.get('dbaccess', 'port')
+
+# ODOO Docnaet reference:
+odoo_path = 
+protocol_id = 
+language_id = 
+program_id = 
+extension = 
+
+code_cell = 2
+sheet_cell = 3
 
 path = config.get('server', 'path')
 selected_files = eval(config.get('server', 'files'))
@@ -81,6 +91,8 @@ odoo = erppeek.Client(
     
 # Pool used:
 document_pool = odoo.model('docnaet.document')
+partner_pool = odoo.model('res.partner')
+
 for root, folders, files in os.walk(path):
     for f in files:        
         if f.split('.')[-1] not in ('xls', 'xlsx'):
@@ -95,23 +107,47 @@ for root, folders, files in os.walk(path):
         if xls_file not in log_db:
             log_db[xls_file] = {}
         wb = xlrd.open_workbook(xls_file)
+        sheet_index = {}
         for ws_name in wb.sheet_names():
-            if ws_name in sheet_exclude:
-                print 'Sheet excluded: %s' % ws_name
-                continue
-                
-            partner_code = ws_name.split()[-1].strip()
-            if not(partner_code[:2].isdigit() and partner_code[3:].isdigit() and \
-                partner_code[2:3] == '.'):
-                print 'No partner code found in sheet: %s' % ws_name
-                continue
+            ws = wb.sheet_by_name(ws_name)
+            if ws_name == 'INDICE':             
+                for row in ws.nrows():
+                    partner_code = ws.cell(row, code_cell).value.strip()
+                    sheet_code = ws.cell(row, sheet_cell).value.strip()
+                    if not sheet_code:
+                        print 'No sheet code found row: %s' % (row + 1)
+                        continue
+                        
+                    if not partner_code:
+                        print 'No partner code found row: %s' % (row + 1)
+                        continue
+                        
+                    if not(partner_code[:2].isdigit() and \
+                            partner_code[3:].isdigit() and \
+                            partner_code[2:3] == '.'):
+                        print 'No partner code format: %s' % partner_code
+                        continue
+                    partner_ids = partner_pool.search([
+                        ('sql_supplier_code', '=', partner_code])    
 
-            # TODO Search partner
+                    if not partner_ids:
+                        print 'No partner code in ODOO: %s' % partner_code
+                        continue
+
+                    if len(partner_ids) > 1:
+                        print 'More partner code in ODOO: %s' % partner_code
+                        continue
+
+                    sheet_index[sheet_code] = partner_ids[0]                    
+                continue # Next sheet
+            
+            if ws_name not in sheet_index:
+                print 'Sheet not in index page: %s' % ws_name
+                continue
 
             if ws_name not in log_db[xls_file]:
                 log_db[xls_file][ws_name] = {}
                    
-            ws = wb.sheet_by_name(ws_name)
             for position in ws.hyperlink_map:
                 row, col = position
                 try:
