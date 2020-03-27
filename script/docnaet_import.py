@@ -112,7 +112,7 @@ for root, folders, files in os.walk(path):
             ws = wb.sheet_by_name(ws_name)
             if ws_name == 'INDICE':     
                 import pdb; pdb.set_trace()        
-                for row in ws.nrows():
+                for row in range(ws.nrows):
                     if not row:
                         continue # Jump first line
 
