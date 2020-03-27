@@ -110,8 +110,12 @@ for root, folders, files in os.walk(path):
         sheet_index = {}
         for ws_name in wb.sheet_names():
             ws = wb.sheet_by_name(ws_name)
-            if ws_name == 'INDICE':             
+            if ws_name == 'INDICE':     
+                import pdb; pdb.set_trace()        
                 for row in ws.nrows():
+                    if not row:
+                        continue # Jump first line
+
                     partner_code = ws.cell(row, code_cell).value.strip()
                     sheet_code = ws.cell(row, sheet_cell).value.strip()
                     if not sheet_code:
