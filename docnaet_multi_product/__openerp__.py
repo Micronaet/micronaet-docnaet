@@ -44,8 +44,6 @@
     'data': [
         #'security/ir.model.access.csv',    
         'multi_product_view.xml',
-        
-        'wizard/data_sheet_view.xml',
         ],
     'active': False,
     'installable': True,
