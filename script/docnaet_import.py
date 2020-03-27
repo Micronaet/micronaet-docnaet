@@ -28,6 +28,7 @@ import ConfigParser
 # -----------------------------------------------------------------------------
 # Read configuration parameter:
 # -----------------------------------------------------------------------------
+path = './dati'
 # From config file:
 cfg_file = os.path.expanduser('../openerp.cfg')
 
@@ -38,8 +39,6 @@ user = config.get('dbaccess', 'user')
 pwd = config.get('dbaccess', 'pwd')
 server = config.get('dbaccess', 'server')
 port = config.get('dbaccess', 'port')   # verify if it's necessary: getint
-
-path = os.path.expanduser(config.get('server', 'path'))
 
 # -----------------------------------------------------------------------------
 # Connect to ODOO:
@@ -60,9 +59,7 @@ for root, folders, files in os.walk(path):
         if f.split('.')[-1] not in ('xls', 'xlsx'):
             print 'File not used: %s' % f
             continue
-        else:
-            print 'File used: %s' % f
-            
+
         xls_file = os.path.join(path, f)        
         wb = xlrd.open_workbook(xls_file)
         for ws_name in wb.sheet_names():
