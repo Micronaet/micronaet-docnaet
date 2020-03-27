@@ -33,6 +33,23 @@ except:
     print('Log file not present, will be created: %s' % pickle_file)
     log_db = {}    
 
+# Utility:
+def xldate_to_datetime(xldatetime): 
+    """ Convert float, something like 43705.6158241088, to text date
+    """
+    import math
+    import datetime
+
+    start_date = datetime.datetime(1899, 12, 31)
+    (days, portion) = math.modf(xldatetime)
+
+    delta_days = datetime.timedelta(days=days)
+    #changing the variable name in the edit
+    secs = int(24 * 60 * 60 * portion)
+    delta_deconds = datetime.timedelta(seconds=secs)
+    result = (start_date + delta_days + delta_seconds)
+    return result.strftime("%Y-%m-%d %H:%M:%S")
+
 # -----------------------------------------------------------------------------
 # Read configuration parameter:
 # -----------------------------------------------------------------------------
@@ -84,6 +101,14 @@ for root, folders, files in os.walk(path):
                 print 'Sheet excluded: %s' % ws_name
                 continue
                 
+            partner_code = ws_name.split()[-1].strip()
+            if not(partner_code[:2].isdigit() and partner_code[3:].isdigit() and \
+                partner[2:3] = '.'):
+                print 'No partner code found in sheet: %s' % ws_name
+                continue
+
+            # TODO Search partner
+
             if ws_name not in log_db[xls_file]:
                 log_db[xls_file][ws_name] = {}
                    
@@ -103,6 +128,14 @@ for root, folders, files in os.walk(path):
                 file_link = os.path.join(path, link.url_or_path)
                 if file_link not in log_db[xls_file][ws_name]:
                     log_db[xls_file][ws_name][file_link] = False # Docnaet ID
-                print ws_name, row, col, cell.value, file_link
-
+                    
+                date_value = xldate_to_datetime(cell.value)
+                print 'Partner: %s, Sheet: %s, [%s:%s], Date: %s, Link %s' % (
+                    partner_id,
+                    ws_name, 
+                    row, 
+                    col, 
+                    date_value, 
+                    file_link,
+                    )
 pickle.dump(open(pickle_file, 'wb'))
