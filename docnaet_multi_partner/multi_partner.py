@@ -52,15 +52,17 @@ class DocnaetDocument(orm.Model):
     def document_confirmed(self, cr, uid, ids, context=None):
         ''' WF confirmed state (override with new check on partners)
         '''
-        current = self.browse(cr, uid, ids, context=context)
-        if not current.docnaet_partner_ids:
+        document = self.browse(cr, uid, ids, context=context)[0]
+        if not document.docnaet_partner_ids:
             raise osv.except_osv(
                 _('Partner'), 
                 _('No partners assigned, choose one before and confirm!'),
                 )
-        if not current.partner_id:
+
+        if not document.partner_id:
             self.write(cr, uid, ids, {
-                'partner_id': partner.company_id.id,
+                # First partner (not used):
+                'partner_id': document.docnaet_partner_ids[0].id, 
                 }, context=context)      
   
         return super(DocnaetDocument,self).document_confirmed(
