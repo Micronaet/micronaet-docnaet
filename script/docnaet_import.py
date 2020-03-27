@@ -28,6 +28,7 @@ import ConfigParser
 # -----------------------------------------------------------------------------
 # Read configuration parameter:
 # -----------------------------------------------------------------------------
+sheet_exclude = ['INDICE']
 # From config file:
 cfg_file = os.path.expanduser('./openerp.cfg')
 
@@ -37,9 +38,10 @@ dbname = config.get('dbaccess', 'dbname')
 user = config.get('dbaccess', 'user')
 pwd = config.get('dbaccess', 'pwd')
 server = config.get('dbaccess', 'server')
-port = config.get('dbaccess', 'port')   # verify if it's necessary: getint
+port = config.get('dbaccess', 'port')
 
-path = config.get('server', 'path')   # verify if it's necessary: getint
+path = config.get('server', 'path')
+selected_files = eval(config.get('server', 'files'))
 
 # -----------------------------------------------------------------------------
 # Connect to ODOO:
@@ -56,14 +58,22 @@ odoo = erppeek.Client(
 import pdb; pdb.set_trace()
 document_pool = odoo.model('docnaet.document')
 for root, folders, files in os.walk(path):
-    for f in files:
+    for f in files:        
         if f.split('.')[-1] not in ('xls', 'xlsx'):
             print 'File not used: %s' % f
+            continue
+        
+        if f not in selected_files:
+            print 'File not in selection: %s' % f
             continue
 
         xls_file = os.path.join(path, f)        
         wb = xlrd.open_workbook(xls_file)
         for ws_name in wb.sheet_names():
+            if ws_name in sheet_exclude:
+                print 'Sheet excluded: %s' % ws_name
+                continue
+                
             ws = wb.sheet_by_name(ws_name)
             for position in ws.hyperlink_map:
                 row, col = position
