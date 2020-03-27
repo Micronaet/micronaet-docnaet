@@ -180,7 +180,7 @@ for root, folders, files in os.walk(path):
                     request_date,
                     date_value,
                     )
-                note = 'Importato da file %s' % f
+                note = 'Importato da file %s' % xls_file
                         
                 file_link = os.path.join(path, link.url_or_path)
                 
