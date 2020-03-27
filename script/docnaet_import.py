@@ -51,7 +51,7 @@ odoo = erppeek.Client(
     user=user,
     password=pwd,
     )
-    
+
 # Pool used:
 import pdb; pdb.set_trace()
 document_pool = odoo.model('docnaet.document')
