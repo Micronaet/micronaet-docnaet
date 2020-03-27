@@ -46,7 +46,7 @@ def xldate_to_datetime(xldatetime):
     delta_days = datetime.timedelta(days=days)
     #changing the variable name in the edit
     secs = int(24 * 60 * 60 * portion)
-    delta_seconds = datetime.timedelta(seconds=secs)
+    delta_seconds = 0 #datetime.timedelta(seconds=secs)
     result = (start_date + delta_days + delta_seconds)
     return result.strftime("%Y-%m-%d %H:%M:%S")
 
