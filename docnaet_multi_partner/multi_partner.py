@@ -47,7 +47,32 @@ class DocnaetDocument(orm.Model):
     """
     
     _inherit = 'docnaet.document'
-    
+
+    # Override action partner_id hided
+    def document_confirmed(self, cr, uid, ids, context=None):
+        ''' WF confirmed state
+        '''        
+        assert len(ids) == 1, 'Works only with one record a time'
+        data = {'state': 'confirmed'}
+        
+        protocol_pool = self.pool.get('docnaet.protocol')
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        if not current_proxy.number:
+            protocol = current_proxy.protocol_id
+            if not protocol:
+                raise osv.except_osv(
+                    _('Protocol'), 
+                    _('No protocol assigned, choose one before and confirm!'),
+                    )
+            if not current_proxy.partner_ids:
+                raise osv.except_osv(
+                    _('Partner'), 
+                    _('No partner assigned, choose one before and confirm!'),
+                    )
+            data['number'] = protocol_pool.assign_protocol_number(
+                cr, uid, protocol.id, context=context)
+        return self.write(cr, uid, ids, data, context=context)
+
     _columns = {
         'docnaet_partner_ids': fields.many2many(
             'res.partner', 'docnaet_multi_partner_rel', 
