@@ -28,7 +28,6 @@ import ConfigParser
 # -----------------------------------------------------------------------------
 # Read configuration parameter:
 # -----------------------------------------------------------------------------
-path = './dati'
 # From config file:
 cfg_file = os.path.expanduser('./openerp.cfg')
 
@@ -39,6 +38,8 @@ user = config.get('dbaccess', 'user')
 pwd = config.get('dbaccess', 'pwd')
 server = config.get('dbaccess', 'server')
 port = config.get('dbaccess', 'port')   # verify if it's necessary: getint
+
+path = config.get('server', 'path')   # verify if it's necessary: getint
 
 # -----------------------------------------------------------------------------
 # Connect to ODOO:
