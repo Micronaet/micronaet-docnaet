@@ -27,13 +27,7 @@
                 <field name="view_mode">form</field>
                 <field name="view_id" ref="view_docnaet_import_datasheet_wizard_form"/>
                 <field name="target">new</field>
-                <field name="nodestroy">1</field>
         </record>
-        <menuitem 
-            parent="docnaet.docnaet_administration" 
-            id="menu_docnaet_import_datasheet_wizard" 
-            name="Import datasheet" 
-            sequence="90" 
-            action="action_view_docnaet_import_datasheet_wizard" />
+        <menuitem parent="docnaet.docnaet_administration" id="menu_docnaet_import_datasheet_wizard" name="Import datasheet" sequence="90" action="action_view_docnaet_import_datasheet_wizard" />
     </data>
 </openerp>
