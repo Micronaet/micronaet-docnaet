@@ -67,11 +67,11 @@ port = config.get('dbaccess', 'port')
 
 # ODOO Docnaet reference:
 odoo_path = 0
-protocol_id = 0
-language_id = 0
-program_id = 0
+protocol_id = 2
+language_id = 1
+program_id = 11 # TODO get from extension?
 company_id = 1
-user_id = 1
+user_id = 30 # Gloria
 
 code_cell = 2
 sheet_cell = 3
@@ -177,8 +177,8 @@ for root, folders, files in os.walk(path):
                 name = product_name
                 description = 'Fornitore %s, Richiesta %s, Aggiornata %s' % (
                     ws_name,
-                    request_date,
-                    date_value,
+                    request_date[:10],
+                    date_value[:10],
                     )
                 note = 'Importato da file %s' % xls_file
                         
@@ -221,7 +221,7 @@ for root, folders, files in os.walk(path):
                 else:
                     log_db[xls_file][ws_name][file_link] = \
                         document_pool.create(odoo_data).id
-                    pickle.dump(open(pickle_file, 'wb')) # History
+                    pickle.dump(log_db, open(pickle_file, 'wb')) # History
                 
                 # File operations:    
 
