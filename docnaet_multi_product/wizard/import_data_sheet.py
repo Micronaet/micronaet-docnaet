@@ -72,10 +72,10 @@ class docnaet_import_datasheet_wizard(orm.TransientModel):
         import pdb; pdb.set_trace()
         for f in selected_files:
             if f.split('.')[-1] not in ('xls', 'xlsx'):
-                log_text.append('File not used: %s\n' % f)
+                log_text += 'File not used: %s\n' % f
                 continue
             else:
-                log_text.append('File used: %s\n' % f)
+                log_text += 'File used: %s\n' % f
                 
             xls_file = os.path.join(path, f)        
             wb = xlrd.open_workbook(xls_file)
