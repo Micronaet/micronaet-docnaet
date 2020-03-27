@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!--docnaet.import.datasheet.wizard-->
+        <record id="view_docnaet_import_datasheet_wizard_form" model="ir.ui.view">
+            <field name="name">docnaet.import.datasheet.wizard.form</field>
+            <field name="model">docnaet.import.datasheet.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Datasheet import" version="7.0">
+                    <header>
+                        <button string="Cancel" special="cancel" icon='STOCK_CANCEL'/>
+                    </header>
+                    <sheet>
+                        <button string='Import file' name='import_operation' type='object' />
+                        <group>
+                            <field name="default_path" />
+                            <field name="filename" />
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="action_view_docnaet_import_datasheet_wizard" model="ir.actions.act_window">
+                <field name="name">Docnaet datasheet import</field>
+                <field name="res_model">docnaet.import.datasheet.wizard</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">form</field>
+                <field name="view_id" ref="view_docnaet_import_datasheet_wizard_form"/>
+                <field name="target">new</field>
+        </record>
+        <menuitem parent="docnaet.docnaet_administration" id="menu_docnaet_import_datasheet_wizard" name="Import datasheet" sequence="90" action="action_view_docnaet_import_datasheet_wizard" />
+    </data>
+</openerp>
