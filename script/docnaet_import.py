@@ -30,6 +30,7 @@ pickle_file = './log.p'
 try:
     log_db = pickle.load(open(pickle_file, 'rb'))
 except:
+    print('Log file not present, will be created: %s' % pickle_file)
     log_db = {}    
 
 # -----------------------------------------------------------------------------
