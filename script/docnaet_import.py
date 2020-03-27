@@ -131,7 +131,7 @@ for root, folders, files in os.walk(path):
                     
                 date_value = xldate_to_datetime(cell.value)
                 print 'Partner: %s, Sheet: %s, [%s:%s], Date: %s, Link %s' % (
-                    partner_id,
+                    partner_code,
                     ws_name, 
                     row, 
                     col, 
