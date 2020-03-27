@@ -95,7 +95,7 @@ else: # ends with [D] or nothing >> Docnaet
 #                                Parameters
 # -----------------------------------------------------------------------------
 # A. Static:
-close_tab = False # TODO put in config file
+# close_tab = False # TODO put in config file
 current_path = os.path.expanduser(os.path.dirname(__file__))
 
 # Read config file: XXX Manage error for file
@@ -196,6 +196,8 @@ else:
         title='File error:',
         )
 
+"""
+No more used, correct launching in Docnaet
 if close_tab:
     # -------------------------------------------------------------------------
     # T: Try closing TAB in Firefox
@@ -225,3 +227,4 @@ if close_tab:
     # -------------------------------------------------------------------------
     if document_pid:
         shell.AppActivate(document_pid)
+"""        
