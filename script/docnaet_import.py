@@ -80,7 +80,6 @@ odoo = erppeek.Client(
     )
     
 # Pool used:
-import pdb; pdb.set_trace()
 document_pool = odoo.model('docnaet.document')
 for root, folders, files in os.walk(path):
     for f in files:        
@@ -126,6 +125,7 @@ for root, folders, files in os.walk(path):
                     continue
 
                 file_link = os.path.join(path, link.url_or_path)
+                import pdb; pdb.set_trace()                
                 if file_link not in log_db[xls_file][ws_name]:
                     log_db[xls_file][ws_name][file_link] = False # Docnaet ID
                     
