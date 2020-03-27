@@ -70,7 +70,7 @@ odoo_path = 0
 protocol_id = 0
 language_id = 0
 program_id = 0
-extension = 0
+company_id = 1
 
 code_cell = 2
 sheet_cell = 3
@@ -148,7 +148,7 @@ for root, folders, files in os.walk(path):
             if ws_name not in sheet_index:
                 print 'Sheet not in index page: %s' % ws_name
                 continue
-
+            partner_id = sheet_index[ws_name]
             if ws_name not in log_db[xls_file]:
                 log_db[xls_file][ws_name] = {}
                    
@@ -164,22 +164,64 @@ for root, folders, files in os.walk(path):
                 if link.type != 'url':
                     continue
 
+                product_name = ws.cell(row, 0).value
+                supplier_code = ws.cell(row, 1).value
+                
+                try:
+                    request_date = xldate_to_datetime(ws.cell(row, 2).value)
+                except:
+                    request_date = ''
+                date_value = xldate_to_datetime(cell.value)
+
+                name = product_name
+                description = 'Fornitore %s, Richiesta %s, Aggiornata %s' % (
+                    ws_name,
+                    request_date,
+                    date_value,
+                    )
+                note = 'Importato da file %s' % f
+                        
                 file_link = os.path.join(path, link.url_or_path)
-                import pdb; pdb.set_trace()                
+                
                 if file_link not in log_db[xls_file][ws_name]:
                     log_db[xls_file][ws_name][file_link] = False # Docnaet ID
                     
+                docnaet_extension = file_link.split('.')[-1].lower()
+
                 odoo_data = {
-                    'protocol_id': False,
-                    # TODO
+                    'name': name,
+                    'supplier_code': supplier_code,                    
+                    'protocol_id': protocol_id,
+                    'description': description,
+                    'note': note,
+                    'number': False,
+                    'date': date_value,
+                    'language_id': language_id,
+                    'type_id': False,
+                    'company_id': company_id,
+                    'user_id': user_id,
+                    'partner_id': partner_id,
+                    'docnaet_partner_ids': [(6, 0, [partner_id])],
+                    'product_id': False,
+                    'docnaet_product_ids': False,
+                    'docnaet_extension': docnaet_extension,
+                    'docnaet_mode': 'docnaet',
+                    'imported': True,
+                    'program_id': program_id,
+                    #'priority': 'normal',
+                    #'state': 'draft',
                     }
-                date_value = xldate_to_datetime(cell.value)
-                print 'Partner: %s, Sheet: %s, [%s:%s], Date: %s, Link %s' % (
-                    partner_code,
-                    ws_name, 
-                    row, 
-                    col, 
-                    date_value, 
-                    file_link,
-                    )
-pickle.dump(open(pickle_file, 'wb'))
+                print odoo_data
+                import pdb; pdb.set_trace()                
+                
+                if log_db[xls_file][ws_name][file_link]: # Update
+                    document_pool.write(
+                        log_db[xls_file][ws_name][file_link], odoo_data)
+                else:
+                    log_db[xls_file][ws_name][file_link] = \
+                        document_pool.create(odoo_data).id
+                    pickle.dump(open(pickle_file, 'wb')) # History
+                
+                # File operations:    
+
+
