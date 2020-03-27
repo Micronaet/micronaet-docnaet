@@ -212,8 +212,6 @@ for root, folders, files in os.walk(path):
                     #'priority': 'normal',
                     #'state': 'draft',
                     }
-                print odoo_data
-                import pdb; pdb.set_trace()                
                 
                 if log_db[xls_file][ws_name][file_link]: # Update
                     document_pool.write(
