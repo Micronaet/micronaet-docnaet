@@ -94,7 +94,7 @@ odoo = erppeek.Client(
 # Pool used:
 SUPERUSER_ID = 1
 document_pool = odoo.model('docnaet.document')
-program_pool = odoo.model('docnaet.document.template.program')
+program_pool = odoo.model('docnaet.protocol.template.program')
 partner_pool = odoo.model('res.partner')
 mail_pool = odoo.model('mail.message')
 subtype_pool = odoo.model('mail.message.subtype')
