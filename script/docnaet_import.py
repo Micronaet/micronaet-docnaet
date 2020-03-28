@@ -263,4 +263,4 @@ for root, folders, files in os.walk(path):
                     shutil.copy(file_link, odoo_file)
         send_message('File: %s' % f, log_file.replace('\n', '<br/>')
 
-send_message('Log importazione completa', log_operation.replace('\n', '<br/>')
+send_message('Log importazione completa', log_operation.replace('\n', '<br/>'))
