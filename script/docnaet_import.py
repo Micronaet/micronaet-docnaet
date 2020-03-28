@@ -71,9 +71,8 @@ odoo_path = config.get('odoo', 'path')
 
 protocol_id = 2
 language_id = 1
-program_id = 11 # TODO get from extension?
 company_id = 1
-user_id = 30 # Gloria
+user_id = 1 #30 # Gloria
 
 code_cell = 2
 sheet_cell = 3
@@ -95,6 +94,7 @@ odoo = erppeek.Client(
 # Pool used:
 SUPERUSER_ID = 1
 document_pool = odoo.model('docnaet.document')
+program_pool = odoo.model('docnaet.document.template.program')
 partner_pool = odoo.model('res.partner')
 mail_pool = odoo.model('mail.message')
 subtype_pool = odoo.model('mail.message.subtype')
@@ -115,6 +115,11 @@ def send_message(subject, body):
             subject=subject,
             body=body,
             ))
+
+program_db = {}
+program_ids = program_pool.search([])
+for program in program_pool.browse(program_ids):
+    program_db[program.extension] = program.id
             
 log_operation = 'Selezione da configurazione: [%s]' % (selected_files, )
 for root, folders, files in os.walk(path):
@@ -215,7 +220,10 @@ for root, folders, files in os.walk(path):
                     log_db[xls_file][ws_name][file_link] = False # Docnaet ID
                     
                 docnaet_extension = file_link.split('.')[-1].lower()
-
+                program_id = program_db.get(docnaet_extension)
+                if not program_id:
+                    log_file += 'Estension not found %s\n' % docnaet_extension
+                    
                 odoo_data = {
                     'name': name,
                     'supplier_code': supplier_code,                    
