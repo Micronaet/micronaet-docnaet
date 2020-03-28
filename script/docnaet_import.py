@@ -122,11 +122,11 @@ for root, folders, files in os.walk(path):
     for f in files:
         log_file = ''
         if f.split('.')[-1] not in ('xls', 'xlsx'):
-            log_operation += 'File non Excel: %s\n' % f
+            # log_operation += 'File non Excel: %s\n' % f
             continue
         
         if f not in selected_files:
-            log_operation += 'File non nella selezione: %s' % f
+            # log_operation += 'File non nella selezione: %s' % f
             continue
 
         xls_file = os.path.join(path, f)        
