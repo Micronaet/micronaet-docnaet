@@ -116,7 +116,6 @@ def send_message(subject, body):
             body=body,
             ))
             
-import pdb; pdb.set_trace()
 log_operation = ''
 for root, folders, files in os.walk(path):
     for f in files:
@@ -257,9 +256,9 @@ for root, folders, files in os.walk(path):
 
 
                 if os.path.isfile(odoo_file):
-                    log_file += 'File presente in ODOO %s' % odoo_file
+                    log_file += 'File presente in ODOO %s\n' % odoo_file
                 else:
-                    log_file += 'Copying %s ODOO file' % odoo_file
+                    log_file += 'Copying %s ODOO file\n' % odoo_file
                     shutil.copy(file_link, odoo_file)
         send_message('File: %s' % f, log_file.replace('\n', '<br/>'))
 
