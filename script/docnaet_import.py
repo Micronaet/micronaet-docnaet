@@ -67,7 +67,8 @@ server = config.get('dbaccess', 'server')
 port = config.get('dbaccess', 'port')
 
 # ODOO Docnaet reference:
-odoo_path = 0
+odoo_path = config.get('odoo', 'path')
+
 protocol_id = 2
 language_id = 1
 program_id = 11 # TODO get from extension?
@@ -113,7 +114,6 @@ for root, folders, files in os.walk(path):
         for ws_name in wb.sheet_names():
             ws = wb.sheet_by_name(ws_name)
             if ws_name == 'INDICE':     
-                import pdb; pdb.set_trace()        
                 for row in range(ws.nrows):
                     if not row:
                         continue # Jump first line
@@ -226,9 +226,9 @@ for root, folders, files in os.walk(path):
                 # File operations:    
                 # -------------------------------------------------------------                    
                 odoo_id = log_db[xls_file][ws_name][file_link]
-                shutil.copy(
-                    file_link, 
-                    os.path.join(odoo_path, '%s.%s' % (
-                        odoo_id, docnaet_extension),
-                    ))
+                odoo_file = os.path.join(
+                    odoo_path, '%s.%s' % (odoo_id, docnaet_extension)
+
+                print('Copying %s ODOO file' % odoo_file)
+                shutil.copy(file_link, odoo_file))
                     
