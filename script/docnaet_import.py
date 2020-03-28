@@ -115,17 +115,18 @@ def send_message(subject, body):
             subject=subject,
             body=body,
             ))
-send_message('oggett', 'messaggio')
             
 import pdb; pdb.set_trace()
+log_operation = ''
 for root, folders, files in os.walk(path):
-    for f in files:        
+    for f in files:
+        log_file = ''
         if f.split('.')[-1] not in ('xls', 'xlsx'):
-            print 'File not used: %s' % f
+            log_operation += 'File non Excel: %s\n' % f
             continue
         
         if f not in selected_files:
-            print 'File not in selection: %s' % f
+            log_operation += 'File non nella selezione: %s' % f
             continue
 
         xls_file = os.path.join(path, f)        
@@ -143,34 +144,36 @@ for root, folders, files in os.walk(path):
                     partner_code = ws.cell(row, code_cell).value.strip()
                     sheet_code = ws.cell(row, sheet_cell).value.strip()
                     if not sheet_code:
-                        print 'No sheet code found row: %s' % (row + 1)
+                        log_file += 'No codice foglio riga: %s' % (row + 1)
                         continue
                         
                     if not partner_code:
-                        print 'No partner code found row: %s' % (row + 1)
+                        log_file += 'No codice fornitore riga: %s' % (row + 1)
                         continue
                         
                     if not(partner_code[:2].isdigit() and \
                             partner_code[3:].isdigit() and \
                             partner_code[2:3] == '.'):
-                        print 'No partner code format: %s' % partner_code
+                        log_file += 'Codce fornitore formato errato: %s' % \
+                            partner_code
                         continue
                     partner_ids = partner_pool.search([
                         ('sql_supplier_code', '=', partner_code)])    
 
                     if not partner_ids:
-                        print 'No partner code in ODOO: %s' % partner_code
+                        log_file += 'No codice partner in ODOO: %s' % \
+                            partner_code
                         continue
 
                     if len(partner_ids) > 1:
-                        print 'More partner code in ODOO: %s' % partner_code
+                        log_file += 'Troppi partner in ODOO: %s' % partner_code
                         continue
 
                     sheet_index[sheet_code] = partner_ids[0]                  
                 continue # Next sheet
             
             if ws_name not in sheet_index:
-                print 'Sheet not in index page: %s' % ws_name
+                log_file += 'Foglio non in indice: %s' % ws_name
                 continue
             partner_id = sheet_index[ws_name]
             if ws_name not in log_db[xls_file]:
@@ -181,7 +184,8 @@ for root, folders, files in os.walk(path):
                 try:
                     cell = ws.cell(row, col)
                 except:
-                    print 'Cell not found', f, ws_name, row, col
+                    log_file += 'Cella non trovata %s, [%s:%s]' % (
+                        ws_name, row, col)
                     continue
                 
                 link = ws.hyperlink_map[position]
@@ -251,6 +255,12 @@ for root, folders, files in os.walk(path):
                 odoo_file = os.path.join(
                     odoo_path, '%s.%s' % (odoo_id, docnaet_extension))
 
-                print('Copying %s ODOO file' % odoo_file)
-                shutil.copy(file_link, odoo_file)
-                    
+
+                if os.path.isfile(odoo_file):
+                    log_file += 'File presente in ODOO %s' % odoo_file
+                else:
+                    log_file += 'Copying %s ODOO file' % odoo_file
+                    shutil.copy(file_link, odoo_file)
+                send_message('File: %s' % f, log_file)
+
+send_message('Log importazione completa', log_operation)
