@@ -25,6 +25,7 @@ import erppeek
 import xlrd
 import ConfigParser
 import pickle
+import shutil
 
 pickle_file = './log.p'
 try:
