@@ -227,7 +227,7 @@ for root, folders, files in os.walk(path):
                 # -------------------------------------------------------------                    
                 odoo_id = log_db[xls_file][ws_name][file_link]
                 odoo_file = os.path.join(
-                    odoo_path, '%s.%s' % (odoo_id, docnaet_extension)
+                    odoo_path, '%s.%s' % (odoo_id, docnaet_extension))
 
                 print('Copying %s ODOO file' % odoo_file)
                 shutil.copy(file_link, odoo_file))
