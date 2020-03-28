@@ -143,36 +143,36 @@ for root, folders, files in os.walk(path):
                     partner_code = ws.cell(row, code_cell).value.strip()
                     sheet_code = ws.cell(row, sheet_cell).value.strip()
                     if not sheet_code:
-                        log_file += 'No codice foglio riga: %s' % (row + 1)
+                        log_file += 'No codice foglio riga: %s\n' % (row + 1)
                         continue
                         
                     if not partner_code:
-                        log_file += 'No codice fornitore riga: %s' % (row + 1)
+                        log_file += 'No codice fornitore riga: %s\n' % (row + 1)
                         continue
                         
                     if not(partner_code[:2].isdigit() and \
                             partner_code[3:].isdigit() and \
                             partner_code[2:3] == '.'):
-                        log_file += 'Codce fornitore formato errato: %s' % \
+                        log_file += 'Codce fornitore formato errato: %s\n' % \
                             partner_code
                         continue
                     partner_ids = partner_pool.search([
                         ('sql_supplier_code', '=', partner_code)])    
 
                     if not partner_ids:
-                        log_file += 'No codice partner in ODOO: %s' % \
+                        log_file += 'No codice partner in ODOO: %s\n' % \
                             partner_code
                         continue
 
                     if len(partner_ids) > 1:
-                        log_file += 'Troppi partner in ODOO: %s' % partner_code
+                        log_file += 'Troppi partner in ODOO: %s\n' % partner_code
                         continue
 
                     sheet_index[sheet_code] = partner_ids[0]                  
                 continue # Next sheet
             
             if ws_name not in sheet_index:
-                log_file += 'Foglio non in indice: %s' % ws_name
+                log_file += 'Foglio non in indice: %s\n' % ws_name
                 continue
             partner_id = sheet_index[ws_name]
             if ws_name not in log_db[xls_file]:
@@ -183,7 +183,7 @@ for root, folders, files in os.walk(path):
                 try:
                     cell = ws.cell(row, col)
                 except:
-                    log_file += 'Cella non trovata %s, [%s:%s]' % (
+                    log_file += 'Cella non trovata %s, [%s:%s]\n' % (
                         ws_name, row, col)
                     continue
                 
