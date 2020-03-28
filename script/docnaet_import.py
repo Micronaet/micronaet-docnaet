@@ -103,7 +103,6 @@ user_pool = odoo.model('res.users')
 def send_message(subject, body):
     """ Sends message to user_ids
     """
-    subtype_pool = oe.pool.get('mail.message.subtype')
     discussion_ids = subtype_pool.search([
         ('name', '=', 'Discussions'),
         ]) 
