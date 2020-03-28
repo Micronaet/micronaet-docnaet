@@ -220,7 +220,17 @@ for root, folders, files in os.walk(path):
                     log_db[xls_file][ws_name][file_link] = \
                         document_pool.create(odoo_data).id
                     pickle.dump(log_db, open(pickle_file, 'wb')) # History
-                
+
+                # -------------------------------------------------------------                    
                 # File operations:    
+                # -------------------------------------------------------------                    
+                odoo_id = log_db[xls_file][ws_name][file_link]
+                shutil.copy(
+                    file_link, 
+                    os.path.join(odoo_path, '%s.%s' % (
+                        odoo_id, docnaet_extension),
+                    )    
+                        
+                    
 
 
