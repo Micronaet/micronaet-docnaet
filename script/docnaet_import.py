@@ -229,8 +229,5 @@ for root, folders, files in os.walk(path):
                     file_link, 
                     os.path.join(odoo_path, '%s.%s' % (
                         odoo_id, docnaet_extension),
-                    )    
-                        
+                    ))
                     
-
-
