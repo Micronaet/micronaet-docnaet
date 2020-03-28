@@ -93,11 +93,31 @@ odoo = erppeek.Client(
     )
     
 # Pool used:
+SUPERUSER_ID = 1
 document_pool = odoo.model('docnaet.document')
 partner_pool = odoo.model('res.partner')
-mail_pool = odoo.model('mail.notification')
+mail_pool = odoo.model('mail.message')
+subtype_pool = odoo.model('mail.message.subtype')
+user_pool = odoo.model('res.users')
 
-mail_pool._notify(cr, uid, False, 'Messagio', context=context)   
+def send_message(subject, body):
+    """ Sends message to user_ids
+    """
+    subtype_pool = oe.pool.get('mail.message.subtype')
+    discussion_ids = subtype_pool.search([
+        ('name', '=', 'Discussions'),
+        ]) 
+    discussion = subtype_pool.browse(discussion_ids)[0]
+    users = [user_pool.browse(SUPERUSER_ID)]
+    mail_pool.create(values=dict(
+            type='email',
+            subtype_id=discussion.id,
+            partner_ids=[(4, u.partner_id.id) for u in users],
+            subject=subject,
+            body=body,
+            ))
+send_message('oggett', 'messaggio')
+            
 import pdb; pdb.set_trace()
 for root, folders, files in os.walk(path):
     for f in files:        
