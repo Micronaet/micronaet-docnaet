@@ -116,7 +116,7 @@ def send_message(subject, body):
             body=body,
             ))
             
-log_operation = ''
+log_operation = 'Selezione da configurazione: [%s]' % (selected_files, )
 for root, folders, files in os.walk(path):
     for f in files:
         log_file = ''
@@ -127,6 +127,7 @@ for root, folders, files in os.walk(path):
         if f not in selected_files:
             # log_operation += 'File non nella selezione: %s' % f
             continue
+        log_operation += 'File analizzato: %s\n' % f
 
         xls_file = os.path.join(path, f)        
         if xls_file not in log_db:
