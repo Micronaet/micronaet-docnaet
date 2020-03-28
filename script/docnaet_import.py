@@ -95,7 +95,10 @@ odoo = erppeek.Client(
 # Pool used:
 document_pool = odoo.model('docnaet.document')
 partner_pool = odoo.model('res.partner')
+mail_pool = odoo.model('mail.notification')
 
+mail_pool._notify(cr, uid, False, 'Messagio', context=context)   
+import pdb; pdb.set_trace()
 for root, folders, files in os.walk(path):
     for f in files:        
         if f.split('.')[-1] not in ('xls', 'xlsx'):
