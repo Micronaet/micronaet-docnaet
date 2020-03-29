@@ -97,8 +97,19 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="docnaet.docnaet_document_tree_view"/>
             <field name="context">{'search_default_quality_document_present': True, 'quality_mode': True}</field>
-            <field name="domain">['&amp;',('docnaet_mode','in',('all', 'docnaet')), '|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
+            <field name="domain">[('docnaet_mode','in',('all', 'docnaet'))]</field>
         </record>
+        <!--Override:-->
+        <record model="ir.actions.act_window" id="docnaet.action_docnaet_document_tree">
+            <field name="name">Documenti</field>
+            <field name="res_model">docnaet.document</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_id" ref="docnaet_document_tree_view"/>
+            <field name="view_id" ref="view_docnaet_document_docnaet_search"/>        
+            <field name="context">{}</field>
+            <field name="domain">[('docnaet_mode','in',('all', 'docnaet'))]</field>
+        </record>        
         
         <record model="ir.ui.view" id="view_docnaet_document_embedded_list_tree">
             <field name="name">docnaet.document.tree</field>
