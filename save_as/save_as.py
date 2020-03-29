@@ -100,7 +100,7 @@ class IrAttachment(orm.Model):
         except:
             raise osv.except_osv(
                 _('File non trovato'), 
-                _(u'File non trovato nella cartella documentale!'),
+                _(u'File non trovato nella gest. documentale!\n%s' % origin),
                 )    
         
         if not name:
