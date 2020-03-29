@@ -156,7 +156,7 @@
             <field name="model">quality.claim</field>        
             <field name="inherit_id" ref="quality.view_quality_claim_form" />
             <field name="arch" type="xml">
-                <page string="Lines" position="after">
+                <page string="Product" position="after">
                     <page string="Docnaet">
                         <group colspan="4" col="4">
                             <separator string="Documents linked" colspan="4"/>                            
