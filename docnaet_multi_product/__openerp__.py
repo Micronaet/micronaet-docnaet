@@ -34,10 +34,10 @@
     'depends': [
         'base',
         'docnaet',
-        'docnaet_upload',
         'product',
         'docnaet_multi_partner', # For view data
         'docnaet_upload', # For view data
+        'docnaet_download', # For button
         ],
     'init_xml': [],
     'demo': [],

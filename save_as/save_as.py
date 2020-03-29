@@ -104,7 +104,7 @@ class IrAttachment(orm.Model):
                 )    
         
         if not name:
-            name = 'file_download.%s' % extension
+            name = 'docnaet_download.%s' % extension
 
         # Return link for open temp file:
         return self._get_php_return_page(

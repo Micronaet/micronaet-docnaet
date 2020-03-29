@@ -54,6 +54,63 @@
             </field>
         </record>
         
+        <record model="ir.ui.view" id="view_docnaet_document_product_tree">
+            <field name="name">docnaet.document.product.tree</field>
+            <field name="model">docnaet.document</field>
+            <field name="arch" type="xml">
+                <tree string="Docnaet document" colors="brown:original_id!=False;grey:state=='draft';blue:state=='timed';black:state=='confirmed';red:state=='cancel'" editable="bottom">
+                   <button name="button_file_download" string="Download document" type="object" icon="STOCK_SAVE" groups="docnaet_download.group_docnaet_download_users"/>
+                   <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}" invisible="context.get('remote_document', False)"/>
+                   <button type="object" name="button_call_url_docnaet" string="Document linked!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"  invisible="context.get('remote_document', False)"/>
+                   <field name="protocol_id" required="1" readonly="1"/>
+                   <field name="number" readonly="1" />
+                   <field name="date" />
+                   <field name="date_month" invisible="1"/>
+                   <field name="docnaet_mode" invisible="1" />
+                   <field name="name" />
+                   <field name="description" />
+                   <field name="partner_id" />
+                   <field name="product_id" invisible="1"/>
+                   <field name="product_prefilter" />
+                   <field name="docnaet_product_ids" widget="many2many_tags" domain="[('name', 'ilike', product_prefilter)]"/>
+                   <field name="supplier_code" />
+                   <field name="user_id" invisible="1"/>
+                   <field name="type_id" invisible="1"/>
+                   <field name="language_id" invisible="1"/>
+                   <field name="priority" invisible="1"/>
+                   <field name="deadline" string="Scad." invisible="1" />
+                   <field name="deadline_month" invisible="1"/>
+                   <field name="deadline_info" invisible="1"/>
+                   <field name="program_id" invisible="1"/>
+                   <field name="original_id" invisible="1"/>
+                   <field name="country_id" invisible="1"/>
+                   <field name="docnaet_category_id" invisible="1"/>
+                   <field name="docnaet_extension" readonly="1"/>
+
+                   <!--WORKFLOW BUTTON-->
+                   <!--draft-->
+                   <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply"/>
+                   <button name="document_draft_timed" string="Timed" type="workflow" states="draft" icon="terp-go-today"/>
+                   <button name="document_confirmed_timed" string="Timed" type="workflow" states="confirmed" icon="terp-go-today"/>
+                   <button name="document_confirmed_cancel" string="Cancel" type="workflow" states="confirmed" icon="gtk-cancel"/>
+                   <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
+                   <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>               
+                   <button name="document_cancel_draft" string="Reactivate" type="workflow" states="cancel" icon="gtk-redo"/>
+                   <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_docnaet_document_quality_mode_view">
+            <field name="name">Documenti (prodotti)</field>
+            <field name="res_model">docnaet.document</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_docnaet_document_product_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[('docnaet_mode','in',('all', 'docnaet'))]</field>
+        </record>
+        
+        
         <record model="ir.ui.view" id="docnaet_document_link_multi_product_form_view">
             <field name="name">Docnaet document product linked</field>
             <field name="model">docnaet.document</field>        
@@ -103,6 +160,9 @@
                 </page>
             </field>    
         </record>        
+
+            <menuitem parent="docnaet.docnaet_document" id="docnaet_document_document_product" sequence="11" action="action_docnaet_document_quality_mode_view" />
+        
     </data>
 </openerp>
 

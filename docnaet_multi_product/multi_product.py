@@ -48,7 +48,8 @@ class DocnaetDocument(orm.Model):
     
     _inherit = 'docnaet.document'
     
-    _columns = {
+    _columns = {    
+        'product_prefilter': fields.char('Filtro prodotto', size=60),
         'supplier_code': fields.char('Codice fornitore', size=64),
         'docnaet_product_ids': fields.many2many(
             'product.product', 'docnaet_multi_product_rel', 
