@@ -35,6 +35,7 @@
             <field name="inherit_id" ref="docnaet.view_docnaet_document_docnaet_search"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="after">
+                    <field name="supplier_code" />
                     <field name="docnaet_product_ids" filter_domain="[('docnaet_product_ids.default_code','ilike',self)]" string="Product code"/>
                     <field name="docnaet_product_ids" filter_domain="[('docnaet_product_ids.name','ilike',self)]" string="Product name"/>
                     <filter name="quality_document_product" string="Has linked product" domain="[('docnaet_product_ids','!=',False)]"/>                    
