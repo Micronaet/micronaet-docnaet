@@ -200,7 +200,7 @@ for root, folders, files in os.walk(path):
                 product_name = ws.cell(row, 0).value
                 supplier_code = ws.cell(row, 1).value
                 if type(supplier_code) == float:
-                    supplier_code = str(int(supplier_code)
+                    supplier_code = str(int(supplier_code))
                 
                 try:
                     request_date = xldate_to_datetime(ws.cell(row, 2).value)
