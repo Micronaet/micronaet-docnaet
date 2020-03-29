@@ -72,7 +72,7 @@ odoo_path = config.get('odoo', 'path')
 protocol_id = 2
 language_id = 1
 company_id = 1
-user_id = 1 #30 # Gloria
+user_id = 30 # Gloria
 
 code_cell = 2
 sheet_cell = 3
