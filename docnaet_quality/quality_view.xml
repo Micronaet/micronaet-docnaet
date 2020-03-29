@@ -150,6 +150,23 @@
             </field>    
         </record>
 
+        <!-- INHERITED quality.claim-->
+        <record model="ir.ui.view" id="docnaet_normal_link_quality_claim_form_view">
+            <field name="name">Docnaet claim quality link</field>
+            <field name="model">quality.claim</field>        
+            <field name="inherit_id" ref="quality.view_quality_claim_form" />
+            <field name="arch" type="xml">
+                <page string="Lines" position="after">
+                    <page string="Docnaet">
+                        <group colspan="4" col="4">
+                            <separator string="Documents linked" colspan="4"/>                            
+                            <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4" context="{'tree_view_ref': 'docnaet_quality.view_docnaet_document_embedded_list_tree'}"/>
+                        </group>                        
+                    </page>
+                </page>
+            </field>    
+        </record>        
+
         <!-- INHERITED quality.acceptation-->
         <record model="ir.ui.view" id="docnaet_normal_link_quality_acceptation_form_view">
             <field name="name">Docnaet acceptation quality link</field>
