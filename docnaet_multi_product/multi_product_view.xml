@@ -1,6 +1,54 @@
 <?xml version="1.0"?>
 <openerp>
     <data>        
+        <!--docnaet.document.request-->
+        <record model="ir.ui.view" id="view_docnaet_document_request_search">
+            <field name="name">docnaet.document.request.search</field>
+            <field name="model">docnaet.document.request</field>
+            <field name="arch" type="xml">
+                <search string="Richieste" version="7.0">        
+                    <field name="name" />
+                    <field name="supplier_code" />
+                    <field name="partner_id" filter_domain="[('partner_id','=',self)]"/>
+                    <field name="user_id" filter_domain="[('user_uid','=',self)]"/>
+                    <filter name="state_ok" string="Fatte" domain="[('done','=',True)]"/>
+                    <filter name="state_ko" string="Pendenti" domain="[('done','=',False)]"/>
+                    <group expand="0" string="Group By...">
+                        <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
+                        <filter name="group_user" string="Utente" context="{'group_by': 'user_id'}"/>
+                        <filter name="group_date" string="Data" context="{'group_by': 'request_date'}"/>
+                        <filter string="OK" context="{'group_by': 'done'}" />
+                    </group>                
+                </search>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_docnaet_document_request_tree">
+            <field name="name">docnaet.document.request.tree</field>
+            <field name="model">docnaet.document.request</field>
+            <field name="arch" type="xml">
+                <tree string="Richieste" editable="bottom" colors="green:done==True;blue:done==False">
+                    <field name="partner_id" />
+                    <field name="name" />
+                    <field name="supplier_code" />
+                    <field name="note" />
+                    <field name="user_id" />
+                    <field name="request_date" />
+                    <field name="done" invisible="1" />
+                    <button name="mark_as_done" string="Arrivata!" type="object" attrs="{'invisible': [('done','=',True)]}"/>
+                    <button name="mark_as_undone" string="Non arrivata!" type="object" attrs="{'invisible': [('done','=',False)]}"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_docnaet_document_request_form">
+            <field name="name">Richieste</field>
+            <field name="res_model">docnaet.document.request</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_docnaet_document_request_tree"/>
+            <field name="context">{'search_default_state_ko': True}</field>
+            <field name="domain">[]</field>
+        </record>
+        
         <!--ADVANCED SEARCH: -->
         <record model="ir.ui.view" id="view_document_advanced_search_form">
             <field name="name">docnaet.document.advanced.search.wizard.product.form</field>
@@ -162,7 +210,8 @@
         </record>        
 
             <menuitem parent="docnaet.docnaet_document" id="docnaet_document_document_product" sequence="11" action="action_docnaet_document_quality_mode_view" />
-        
+                <menuitem parent="docnaet_document_document_product" id="docnaet_document_document_product_request" sequence="10" action="action_docnaet_document_request_form" />
+            
     </data>
 </openerp>
 

@@ -42,6 +42,44 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class DocnaetDocumentRequest(orm.Model):
+    """ Model name: Docnaet Document Requests
+    """
+    
+    _name = 'docnaet.document.request'
+    _order = 'name'
+    
+    def mark_as_undone(self, cr, uid, ids, context=None):
+        """ Mark as undone
+        """
+        return self.write(cr, uid, ids, {
+            'done': False,
+            }, context=context)
+
+    def mark_as_done(self, cr, uid, ids, context=None):
+        """ Mark as done
+        """
+        return self.write(cr, uid, ids, {
+            'done': True,
+            }, context=context)
+            
+    _columns = {    
+        'user_id': fields.many2one('res.users', 'Richiedente'),
+        'partner_id': fields.many2one(
+            'res.partner', 'Fornitore', required=True),
+        'name': fields.char('Descrizione richiesta', size=80),
+        'supplier_code': fields.char('Codice fornitore', size=80),
+        'request_date': fields.date('Data richiesta'),
+        'note': fields.text('Note'),
+        'done': fields.boolean('Chiusa'),
+        }
+    
+    _defaults = {
+        'user_id': lambda s, cr, uid, ctx: uid,
+        'request_date': lambda *x: datetime.now().strftime(
+            DEFAULT_SERVER_DATE_FORMAT),
+        }    
+
 class DocnaetDocument(orm.Model):
     """ Model name: DocnaetDocument
     """
