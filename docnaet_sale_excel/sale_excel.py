@@ -391,9 +391,11 @@ class SaleOrder(orm.Model):
                         0.0, # Lost
                         ]    
                 if ws_name == 'Offerte':        
-                    partner_total[partner][currency][1] += order.amount_untaxed
+                    partner_total[partner][currency][1] += \
+                        document.sale_order_amount
                 else:    
-                    partner_total[partner][currency][2] += order.amount_untaxed
+                    partner_total[partner][currency][2] += \
+                        document.sale_order_amount
                 
                 # -------------------------------------------------------------
                 # Update total in currency mode:
