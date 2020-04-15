@@ -347,12 +347,12 @@ class SaleOrder(orm.Model):
             ]
 
         width = [
-            45, 18, 10, 10, 50,
+            45, 20, 18, 10, 10, 50,
             3, 12,
             3, 12, 12, 12, 40
             ]
         header = [
-            'Cliente', 'Commerciale', 'Data', 'Scadenza', 'Oggetto', 
+            'Cliente', 'Nazione', 'Commerciale', 'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
             'Val.', 'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
             ]
@@ -421,6 +421,7 @@ class SaleOrder(orm.Model):
                 temp_list.append(([
                         '%s [%s]' % (
                             partner.name, partner.sql_customer_code or ''),
+                        partner.country_id.name or '',
                         document.user_id.name or '', # Docnaet user
                         document.date,
                         document.deadline,
@@ -446,7 +447,7 @@ class SaleOrder(orm.Model):
             for currency in sorted(total, key=lambda x: x.symbol):
                 excel_pool.write_xls_line(
                     ws_name, row, [
-                        '', '', '', '',
+                        '', '', '', '', '',
                         'Totale',
                         currency.symbol,
                         (total[currency][0], f_number_bg_blue_bold),    
