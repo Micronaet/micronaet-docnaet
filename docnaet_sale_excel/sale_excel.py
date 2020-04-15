@@ -477,13 +477,13 @@ class SaleOrder(orm.Model):
         ws_name = 'Clienti'
         excel_pool.create_worksheet(name=ws_name)
         width = [
-            50, 
+            50, 20,
             3, 12, 12, 12, 
             3, 12, 12, 
             12, 40,
             ]
         header = [
-            'Cliente', 
+            'Cliente', 'Nazione', 
             'Val.', 'Ordini', 'Offerte', 'Off. perse', 
             'Val.', 'Pag. aperti', 'Di cui scaduti', 
             'FIDO', 'Note',
@@ -541,6 +541,7 @@ class SaleOrder(orm.Model):
                     temp_list.append(([
                         '%s [%s]' % (
                             partner.name, partner.sql_customer_code or ''),
+                        partner.country_id.name or '',
                         
                         currency.symbol,
                         (order or '', f_number),                    
@@ -579,7 +580,7 @@ class SaleOrder(orm.Model):
         for currency in sorted(total, key=lambda x: x.symbol):
             excel_pool.write_xls_line(
                 ws_name, row, [
-                    'Totale',
+                    '', 'Totale',
                     currency.symbol,
                     (total[currency][0], f_number_bg_blue_bold),    
                     (total[currency][1], f_number_bg_blue_bold),    
