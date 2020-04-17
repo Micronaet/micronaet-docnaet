@@ -332,7 +332,7 @@ class SaleOrder(orm.Model):
             excel_pool.write_xls_line(
                 ws_name, row, record, default_format=f_text_current)
 
-        
+        excel_pool.freeze_panes(ws_name, 3, 1)        
         # ---------------------------------------------------------------------
         # Docnaet Quotation (pending and lost):
         # ---------------------------------------------------------------------   
