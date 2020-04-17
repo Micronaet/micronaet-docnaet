@@ -149,7 +149,8 @@ class SaleOrder(orm.Model):
         ws_name = 'Ordini'
         excel_pool.create_worksheet(name=ws_name)
         width = [
-            45, 20, 20, 20,
+            45, 20, 20, 
+            # 20,
             8, 10, 10, 
             20, 3, 13, 
             3, 13, 13, 13, 40,
@@ -355,7 +356,7 @@ class SaleOrder(orm.Model):
             3, 12, 12, 12, 40
             ]
         header = [
-            'Cliente', 'Nazione', 'Commerciale', 'Data', 'Scadenza', 'Oggetto', 
+            'Cliente', 'Nazione', 'Responsabile', 'Data', 'Scadenza', 'Oggetto', 
             'Val.', 'Totale', 
             'Val.', 'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
             ]
