@@ -19,7 +19,7 @@
                 <xpath expr="//notebook/page[1]" position="after">
                    <page string="Duelist" groups="sql_due_list_mailing.group_manager_duelist" attrs="{'invisible': [('duelist_ids','=',[])]}">
                        <field name="duelist_ids" readonly="1">
-                            <tree string="Payment duelist (red=deadlined)" colors="red:deadline&lt;=current_date" editable="bottom">
+                            <tree string="Payment duelist (red=deadlined)" colors="red:deadline&lt;=current_date and total&gt;=0" editable="bottom">
                                 <field name="name" />
                                 <field name="date" />
                                 <field name="deadline" />
