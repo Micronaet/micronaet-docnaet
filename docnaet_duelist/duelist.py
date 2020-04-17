@@ -59,7 +59,7 @@ class ResPartner(orm.Model):
             
             # This partner payment deadline:
             for payment in partner.duelist_ids:               
-                if payment.deadline < now:
+                if payment.deadline < now and payment.total > 0:
                     res[partner.id]['deadline_present'] = True
                     res[partner.id]['deadline_comment'] = _(
                         'PAGAMENTI SCADUTI!')
