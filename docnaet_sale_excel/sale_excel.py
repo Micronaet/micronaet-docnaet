@@ -332,7 +332,8 @@ class SaleOrder(orm.Model):
             excel_pool.write_xls_line(
                 ws_name, row, record, default_format=f_text_current)
 
-        excel_pool.freeze_panes(ws_name, 3, 1)        
+        excel_pool.freeze_panes(ws_name, 3, 1)    
+            
         # ---------------------------------------------------------------------
         # Docnaet Quotation (pending and lost):
         # ---------------------------------------------------------------------   
@@ -373,6 +374,8 @@ class SaleOrder(orm.Model):
             
             document_proxy = docnaet_document.browse(
                 cr, uid, docnaet_ids, context=context)
+
+            excel_pool.freeze_panes(ws_name, 2, 1)    
 
             total = {}
             temp_list = []
@@ -496,6 +499,7 @@ class SaleOrder(orm.Model):
                 
         # Column:
         excel_pool.column_width(ws_name, width)
+        excel_pool.freeze_panes(ws_name, 3, 1)    
         
         
         total = {}
@@ -633,6 +637,8 @@ class SaleOrder(orm.Model):
         # Header:
         excel_pool.write_xls_line(
             ws_name, row, header, default_format=f_header)        
+
+        excel_pool.freeze_panes(ws_name, 1, 2)    
             
         uom_total = {}
         for product in sorted(product_total, key=lambda x: x.default_code):
