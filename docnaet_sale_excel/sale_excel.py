@@ -155,7 +155,8 @@ class SaleOrder(orm.Model):
             3, 13, 13, 13, 40,
             ]
         header = [
-            'Cliente', 'Nazione', 'Agente', 'Reponsabile',            
+            'Cliente', 'Nazione', 'Responsabile', 
+            #'Agente',            
             'Tipo', 'Data', 'Scad./Merce pronta', 
             'N. ordine Mexal', 'Val.', 'Totale',             
             'Val.', 'Pag. aperti', 'Di cui scaduti', 'FIDO', 'Note',
@@ -275,7 +276,7 @@ class SaleOrder(orm.Model):
                         partner.name, partner.sql_customer_code or ''),
                     partner.country_id.name or '',
                     partner.account_reference1_name or '',
-                    partner.account_reference2_name or '',
+                    #partner.account_reference2_name or '',
                     
                     cei,
                     order.date_order,
@@ -306,7 +307,8 @@ class SaleOrder(orm.Model):
         for currency in sorted(total, key=lambda x: x.symbol):
             excel_pool.write_xls_line(
                 ws_name, row, [
-                    '', '', '', '', '', '', '',
+                    '', '', '', #'', 
+                    '', '', '',
                     'Totale',
                     currency.symbol, # Order
                     (total[currency][0], f_number_bg_blue_bold),    
