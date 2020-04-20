@@ -1,9 +1,10 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
 # ODOO (ex OpenERP) 
 # Open Source Management Solution
-# Copyright (C) 2001-2015 Micronaet S.r.l. (<http://www.micronaet.it>)
+# Copyright (C) 2001-2015 Micronaet S.r.l. (<https://micronaet.com>)
 # Developer: Nicola Riolini @thebrush (<https://it.linkedin.com/in/thebrush>)
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -19,38 +20,26 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
+
 {
-    'name': 'Docnaet',
-    'version': '0.0.1',
-    'category': 'Document Management',
-    'description': '''
-        Micronaet - Docnaet Document Manager
-        Default module for create structure to integrare Docnaet Management    
+    'name': 'Alternate code search for partner',
+    'version': '0.1',
+    'category': 'Base',
+    'description': '''        
+        Add also alternate search
         ''',
-    'author': 'Micronaet s.r.l.',
+    'author': 'Micronaet S.r.l. - Nicola Riolini',
     'website': 'http://www.micronaet.it',
+    'license': 'AGPL-3',
     'depends': [
-        'base',   
-        #'alternative_partner_search',
-        #'product',
-        #'web_m2o_enhanced', # XXX not work if enabled!
+        'base',
         ],
-    'init_xml': [], 
+    'init_xml': [],
+    'demo': [],
     'data': [
-        'security/docnaet_group.xml',
-        'security/ir.model.access.csv',
-
-        'data/config.xml',
-        'data/counter.xml',
-
-        'wizard/document_duplication_view.xml',
-        'docnaet_view.xml',
-        'docnaet_workflow.xml',
-
-        'wizard/search_view.xml',
+        'alternative_view.xml',
         ],
-    'demo_xml': [],
-    'active': False, 
-    'installable': True, 
-    #'application': True,
+    'active': False,
+    'installable': True,
+    'auto_install': False,
     }
