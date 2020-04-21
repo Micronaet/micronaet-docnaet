@@ -161,7 +161,7 @@ class ResPartner(orm.Model):
     # -------------------------------------------------------------------------
     # Override function:
     # -------------------------------------------------------------------------
-    def name_get(self, cr, uid, ids, context=None):
+    """def name_get(self, cr, uid, ids, context=None):
         ''' Add customer-fabric ID to name
         '''
         if context is None:
@@ -169,7 +169,7 @@ class ResPartner(orm.Model):
         name_mode = context.get('name_mode')
         
         res = []
-        for partner in self.browse(cr, uid, ids, context = context):
+        for partner in self.browse(cr, uid, ids, context=context):
             if name_mode == 'docnaet' and partner.alternative_search:
                 res.append((partner.id, '%s - %s' % (
                     partner.alternative_search,
@@ -177,7 +177,7 @@ class ResPartner(orm.Model):
                     )))
             else:
                 res.append((partner.id, partner.name))                
-        return res
+        return res"""
 
     _columns = {
         'docnaet_child_ids': fields.one2many(
