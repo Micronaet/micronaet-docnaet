@@ -157,6 +157,28 @@ class ResPartner(orm.Model):
     """    
     _inherit = 'res.partner'
 
+    
+    # -------------------------------------------------------------------------
+    # Override function:
+    # -------------------------------------------------------------------------
+    def name_get(self, cr, uid, ids, context=None):
+        ''' Add customer-fabric ID to name
+        '''
+        if context is None:
+            context = {}
+        name_mode = context.get('name_mode')
+        
+        res = []
+        for partner in self.browse(cr, uid, ids, context = context):
+            if name_mode == 'docnaet' and partner.alternative_search:
+                res.append((partner.id, '%s - %s' % (
+                    partner.alternative_search,
+                    partner.name,
+                    )))
+            else:
+                res.append((partner.id, partner.name))                
+        return res
+
     _columns = {
         'docnaet_child_ids': fields.one2many(
             'res.partner', 'docnaet_parent_id', 'Docnaet Ditte Collegate'),

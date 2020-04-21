@@ -844,7 +844,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_calendar_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>        
-        <field name="context">{'search_default_state_timed': True}</field>
+        <field name="context">{'search_default_state_timed': True, 'name_mode': 'docnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid)]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_my_document_tree">
@@ -854,7 +854,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>        
-        <field name="context">{}</field>
+        <field name="context">{'name_mode': 'docnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid)]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_document_tree">
@@ -864,7 +864,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>        
-        <field name="context">{}</field>
+        <field name="context">{'name_mode': 'docnaet'}</field>
         <field name="domain">['&amp;',('docnaet_mode','in',('all', 'docnaet')), '|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_document_draft_tree">
@@ -874,7 +874,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>        
-        <field name="context">{}</field>
+        <field name="context">{'name_mode': 'docnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('state','=','draft')]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_remote_document_tree">
@@ -883,7 +883,7 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
-        <field name="view_id" ref="view_docnaet_document_docnaet_search"/>        
+        <field name="search_view_id" ref="view_docnaet_document_docnaet_search"/>        
         <field name="context">{'remote_document':True}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet'))]</field>
     </record>
@@ -906,7 +906,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
-        <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
+        <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('user_id','=',uid)]</field>
     </record>
     <record model="ir.actions.act_window" id="action_labnaet_document_tree">
@@ -916,7 +916,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
-        <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
+        <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
         <field name="domain">['&amp;',('docnaet_mode','in',('all', 'labnaet')),'|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
     </record>
     <record model="ir.actions.act_window" id="action_labnaet_document_draft_tree">
@@ -926,7 +926,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
-        <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
+        <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('state','=','draft')]</field>
     </record>
         
