@@ -171,7 +171,7 @@ class ResPartnerAlternativeSearch(orm.Model):
     _inherit = 'res.partner'
 
     _columns = {
-        'alternative_search': fields.char('Ricerca alternativa', size=64),
+        'alternative_search': fields.char('Nome alternativo Docnaet', size=64),
         }
     
     def name_get(self, cr, uid, ids, context=None):
