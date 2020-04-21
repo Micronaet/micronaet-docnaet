@@ -217,10 +217,8 @@ class ResPartnerAlternativeSearch(orm.Model):
                     ])
             else:
                 new_args.append(record)                        
-        res = super(ResPartner, self).search(
+        return super(ResPartner, self).search(
             cr, uid, new_args, offset, limit, order, context, count)
-        _logger.error('Found %s [%s]' % (len(res), new_args))
-        return res
 
     def name_search(self, cr, uid, name, args=None, operator='ilike', 
             context=None, limit=80):
