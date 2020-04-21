@@ -174,9 +174,9 @@ class ResPartnerAlternativeSearch(orm.Model):
         'alternative_search': fields.char('Ricerca alternativa', size=64),
         }
     
-    """def name_get(self, cr, uid, ids, context=None):
-        ''' Add customer-fabric ID to name
-        '''
+    def name_get(self, cr, uid, ids, context=None):
+        """ Add customer-fabric ID to name
+        """
         if context is None:
             context = {}
         name_mode = context.get('name_mode')
@@ -184,14 +184,12 @@ class ResPartnerAlternativeSearch(orm.Model):
         res = []
         for partner in self.browse(cr, uid, ids, context=context):
             if name_mode == 'docnaet' and partner.alternative_search:
-                res.append((partner.id, '%s - %s' % (
-                    partner.alternative_search,
-                    partner.name,
-                    )))
+                res.append((partner.id, partner.alternative_search))
             else:
-                res.append((partner.id, partner.name))                
-        return res"""
-
+                res.append((partner.id, partner.name))
+        return res
+        
+        
     def search(self, cr, uid, args, offset=0, limit=None, order=None, 
             context=None, count=False):
         """ Return a list of integers based on search domain {args}
@@ -221,6 +219,7 @@ class ResPartnerAlternativeSearch(orm.Model):
                 new_args.append(record)                        
         res = super(ResPartner, self).search(
             cr, uid, new_args, offset, limit, order, context, count)
+        _logger.error('Found %s [%s]' % (len(res), new_args))
         return res
 
     def name_search(self, cr, uid, name, args=None, operator='ilike', 
@@ -235,7 +234,7 @@ class ResPartnerAlternativeSearch(orm.Model):
             @param args: other arguments
             @param operator: default operator is ilike, it can be change
             @param context: context arguments, like lang, time zone
-            @param limit: returns first n ids of complete result, default it is 80
+            @param limit: returns first n ids of complete result, default 80
             
             @return: return a list of tupples contains id, name
         """
@@ -244,13 +243,12 @@ class ResPartnerAlternativeSearch(orm.Model):
         if context is None:
             context = {}
 
-        ids = []
         if name:
             ids = self.search(cr, uid, [
-                '|',
                 ('name', 'ilike', name),
-                ('alternative_search', 'ilike', name),
                 ] + args, limit=limit)
+        else:        
+            ids = []
         return self.name_get(cr, uid, ids, context=context)
 
 class ProductProductDocnaet(orm.Model):
