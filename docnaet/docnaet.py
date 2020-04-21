@@ -152,15 +152,28 @@ class ResPartner(orm.Model):
             'res.partner.docnaet', 'Docnaet category'),
         }
         
-class ResPartner(orm.Model):
+class ResPartnerRelation(orm.Model):
     """ Model name: ResPartner
     """    
     _inherit = 'res.partner'
-
     
     # -------------------------------------------------------------------------
     # Override function:
     # -------------------------------------------------------------------------
+    _columns = {
+        'docnaet_child_ids': fields.one2many(
+            'res.partner', 'docnaet_parent_id', 'Docnaet Ditte Collegate'),
+        }    
+
+class ResPartnerAlternativeSearch(orm.Model):
+    """ Model name: ResPartner
+    """    
+    _inherit = 'res.partner'
+
+    _columns = {
+        'alternative_search': fields.char('Ricerca alternativa', size=64),
+        }
+    
     """def name_get(self, cr, uid, ids, context=None):
         ''' Add customer-fabric ID to name
         '''
@@ -179,10 +192,66 @@ class ResPartner(orm.Model):
                 res.append((partner.id, partner.name))                
         return res"""
 
-    _columns = {
-        'docnaet_child_ids': fields.one2many(
-            'res.partner', 'docnaet_parent_id', 'Docnaet Ditte Collegate'),
-        }    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, 
+            context=None, count=False):
+        """ Return a list of integers based on search domain {args}
+            @param cr: cursor to database
+            @param uid: id of current user
+            @param args: list of conditions to be applied in search opertion
+            @param offset: default from first record, you can start from n records
+            @param limit: number of records to be comes in answer from search opertion
+            @param order: ordering on any field(s)
+            @param context: context arguments, like lang, time zone
+            @param count: 
+            
+            @return: a list of integers based on search domain
+        """
+        if args is None:
+            args = []
+        
+        new_args = []
+        for record in args:
+            if record[0] == 'name':
+                new_args.extend([
+                    '|', 
+                    record, 
+                    ('alternative_search', 'ilike', record[2]),
+                    ])
+            else:
+                new_args.append(record)                        
+        res = super(ResPartner, self).search(
+            cr, uid, new_args, offset, limit, order, context, count)
+        return res
+
+    def name_search(self, cr, uid, name, args=None, operator='ilike', 
+            context=None, limit=80):
+        """ Return a list of tupples contains id, name, as internally its calls 
+            {def name_get}
+            result format : {[(id, name), (id, name), ...]}
+            
+            @param cr: cursor to database
+            @param uid: id of current user
+            @param name: name to be search 
+            @param args: other arguments
+            @param operator: default operator is ilike, it can be change
+            @param context: context arguments, like lang, time zone
+            @param limit: returns first n ids of complete result, default it is 80
+            
+            @return: return a list of tupples contains id, name
+        """
+        if args is None:
+            args = []
+        if context is None:
+            context = {}
+
+        ids = []
+        if name:
+            ids = self.search(cr, uid, [
+                '|',
+                ('name', 'ilike', name),
+                ('alternative_search', 'ilike', name),
+                ] + args, limit=limit)
+        return self.name_get(cr, uid, ids, context=context)
 
 class ProductProductDocnaet(orm.Model):
     ''' Object product.product.docnaet
