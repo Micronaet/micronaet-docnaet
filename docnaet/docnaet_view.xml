@@ -420,6 +420,61 @@
         </field>
     </record>-->
 
+    <record model="ir.ui.view" id="view_res_partner_docnaet_tree">
+        <field name="name">res.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="priority" eval="40" />
+        <field name="arch" type="xml">
+            <tree string="Contatti">
+	            <!--<field name="hide_partner" invisible="1" />
+	            <button name="button_show" string="Show" type="object" attrs="{'invisible':[('hide_partner','=',True)]}" icon="gtk-yes" modifiers="{'invisible': [['hide_partner', '=', true]]}"/>
+	            <button name="button_hide" string="Hide" type="object" attrs="{'invisible':[('hide_partner','=',False)]}" icon="gtk-no" modifiers="{'invisible': [['hide_partner', '=', false]]}"/>-->
+	            <field name="name" />
+	            <field name="alternative_search" modifiers="{}"/>
+	            <field name="type" />
+	            <field name="phone" />
+	            <field name="email" />
+	            <!--<field name="duelist_fido" />
+	            <field name="duelist_currency_id" />
+	            <field name="duelist_optin"/>
+	            <field name="duelist_mail" />-->
+	            
+	            <!--<field name="duelist_exposition_amount" />
+	            <field name="duelist_over_fido" />
+	            <field name="duelist_uncovered_amount" />
+	            <field name="duelist_uncovered" />-->
+	            <field name="user_id" invisible="1"/>
+	            <field name="is_company" />
+	            <field name="country" />
+	            <field name="country_id" invisible="1"/>
+	            <field name="parent_id" invisible="1" />
+                <button name="set_docnaet_on" string="Set Docnaet ON" type="object" attrs="{'invisible': [('docnaet_enable','=',True)]}" icon="star-off" groups="docnaet.group_docnaet_admin"/>
+                <button name="set_docnaet_off" string="Set Docnaet OFF" type="object" attrs="{'invisible': [('docnaet_enable','=',False)]}" icon="star-on" groups="docnaet.group_docnaet_admin"/>
+                <field name="docnaet_enable" invisible="1"/>
+            </tree>    	
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_res_partner_category_tree">
+        <field name="name">res.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                 <field name="alternative_search" />
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_res_partner_category_search">
+        <field name="name">res.partner.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                 <field name="alternative_search" />
+            </field>
+        </field>
+    </record>
+    
     <record model="ir.ui.view" id="view_res_partner_category_form">
         <field name="name">res.partner.form</field>
         <field name="model">res.partner</field>
@@ -448,8 +503,8 @@
         <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <!--<field name="view_id" ref="res_partner_tree_docnaet_view"/>
-        <field name="context">{'form_view_ref':'docnaet.res_partner_form_docnaet_view'}</field>-->
+        <field name="view_id" ref="view_res_partner_docnaet_tree"/>
+        <!--<field name="context">{'form_view_ref':'docnaet.res_partner_form_docnaet_view'}</field>-->
     </record>
     
     <!--res.country--> 

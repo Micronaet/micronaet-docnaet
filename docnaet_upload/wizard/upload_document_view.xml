@@ -20,11 +20,11 @@
                             <newline/>
                             
                             <separator string="Partner Filter:" colspan="2"/>
-                            <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id)" placeholder="Filter partner name..."/>
-                            <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id)"  placeholder="Filter partner country..."/>
+                            <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id,context)" placeholder="Filter partner name..." context="{'name_mode': 'docnaet'}"/>
+                            <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id,context)"  placeholder="Filter partner country..." context="{'name_mode': 'docnaet'}"/>
                                                         
                             <separator string="Default setup:" colspan="2"/>
-                            <field name="default_partner_id" options="{'limit': 10, 'create': false, 'create_edit': false}" />
+                            <field name="default_partner_id" options="{'limit': 10, 'create': false, 'create_edit': false}" context="{'name_mode': 'docnaet'}"/>
                             <field name="default_user_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
                             <field name="default_type_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
 
@@ -70,7 +70,7 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_upload_form"/>
             <field name="target">new</field>
-            <field name="context">{'default_docnaet_mode': 'docnaet', 'docnaet_mode': 'docnaet'}</field>
+            <field name="context">{'default_docnaet_mode': 'docnaet', 'docnaet_mode': 'docnaet', 'name_mode': 'docnaet'}</field>
         </record>
         <record id="action_labnaet_document_upload" model="ir.actions.act_window">
             <field name="name">Labnaet document upload</field>
@@ -79,7 +79,7 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_upload_form"/>
             <field name="target">new</field>
-            <field name="context">{'default_docnaet_mode': 'labnaet', 'docnaet_mode': 'labnaet'}</field>
+            <field name="context">{'default_docnaet_mode': 'labnaet', 'docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
         </record>
         <menuitem parent="docnaet.docnaet_document" id="docnaet_document_upload_menu" name="Upload document" sequence="40" action="action_docnaet_document_upload" />            
         <menuitem parent="docnaet.labnaet_document" id="labnaet_document_upload_menu" name="Upload document" sequence="40" action="action_labnaet_document_upload" />            
@@ -95,7 +95,7 @@
             target="new"
             key2="client_action_multi"
             multi="True"            
-            context="{'default_mode': 'reassign', 'default_default_user_id': False}"
+            context="{'default_mode': 'reassign', 'default_default_user_id': False, 'name_mode': 'docnaet'}"
             />
         
     </data>

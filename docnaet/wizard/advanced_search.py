@@ -44,23 +44,36 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
             country_id, category_id, context=None):
         ''' On change for domain purpose
         '''    
+        partner_pool = self.pool.get('res.partner')
         res = {}
         res['domain'] = {'partner_id': [
-            ('docnaet_enable','=',True),
+            ('docnaet_enable', '=', True),
             ]}        
         
-        if country_id:
-            res['domain']['partner_id'].append(
-                ('country_id','=',country_id),
-                )
         if partner_name:
+            res['domain']['partner_id'].extend([
+                ('name', 'ilike', partner_name)
+                ])
+            """    
+            domain = [
+                '|',
+                ('name', 'ilike', partner_name),
+                ('alternative_search', 'ilike', partner_name),
+                ]     
+            partner_ids = partner_pool.search(cr, uid, domain, context=context)  
             res['domain']['partner_id'].append(
-                ('name','ilike',partner_name),
-                )
+                ('id', 'in', partner_ids))
+            """
+            
+        if country_id:
+            res['domain']['partner_id'].extend([
+                ('country_id', '=', country_id)
+                ])
         if category_id:
-            res['domain']['partner_id'].append(
-                ('docnaet_category_id','=', category_id),
-                )
+            res['domain']['partner_id'].extend([
+                ('docnaet_category_id', '=', category_id)
+                ])
+        _logger.error('DOMAIN: %s' % (res, )) 
         return res
     
     def advanced_search(self, cr, uid, ids, context=None):
@@ -188,6 +201,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
             'domain': domain,
             'type': 'ir.actions.act_window',
             #'res_id': destination_id,  # IDs selected
+            'context': context,
             }
 
     _columns = {

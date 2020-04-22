@@ -22,9 +22,9 @@
                         <field name="protocol_id" colspan="4" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
                         <field name="number" />
 
-                        <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id)" />
-                        <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id)" />
-                        <field name="partner_id" domain="[('docnaet_enable','=',True)]"/>
+                        <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id,context)" context="{'name_mode': 'docnaet'}"/>
+                        <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id,context)" context="{'name_mode': 'docnaet'}"/>
+                        <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'name_mode': 'docnaet'}"/>
                         
                         <!--LABNAET Mode:-->
                         <field name="product_id" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
@@ -56,7 +56,7 @@
                                        <field name="docnaet_extension" />
 
                                        <field name="priority" options="{'limit': 10, 'create': false, 'create_edit': false}" />
-                                       <field name="docnaet_category_id" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id)" />                                       
+                                       <field name="docnaet_category_id" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id,context)" />                                       
                                  </group>
                             </page>
                         </notebook>
@@ -74,7 +74,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_advanced_search_form"/>
-            <field name="context">{'default_docnaet_mode': 'docnaet'}</field>
+            <field name="context">{'default_docnaet_mode': 'docnaet', 'name_mode': 'docnaet'}</field>
             <field name="target">new</field>
     </record>
     <!--LABNAET-->
@@ -84,7 +84,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_advanced_search_form"/>
-            <field name="context">{'default_docnaet_mode': 'labnaet'}</field>
+            <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
             <field name="target">new</field>
     </record>
 

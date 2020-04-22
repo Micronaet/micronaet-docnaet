@@ -76,7 +76,8 @@ class UploadDocumentWizard(orm.TransientModel):
         #    res['domain']['partner_id'].append(
         #        ('docnaet_category_id','=', category_id),
         #        )
-        _logger.warning('Filter: %s' % res)
+        #_logger.warning('Filter: %s' % res)
+        #res['domain']['default_partner_id'] = '%s' % res['domain']['default_partner_id']
         return res
 
     def private_listdir(self, cr, uid, context=None):
