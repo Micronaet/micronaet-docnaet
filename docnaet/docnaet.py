@@ -188,8 +188,8 @@ class ResPartnerAlternativeSearch(orm.Model):
             else:
                 res.append((partner.id, partner.name))
                 
-        _logger.error('>>>>> name_get %s [%s]' % (name_mode, context))
-        _logger.error('>>>>> name_get %s [%s]' % (name_mode, res))
+        #_logger.error('>>>>> name_get %s [%s]' % (name_mode, context))
+        #_logger.error('>>>>> name_get %s [%s]' % (name_mode, res))
         return res
         
         
@@ -220,7 +220,7 @@ class ResPartnerAlternativeSearch(orm.Model):
                     ])
             else:
                 new_args.append(record)                        
-        _logger.error('>>>>> search %s' % (args, ))
+        #_logger.error('>>>>> search %s' % (args, ))
         return super(ResPartner, self).search(
             cr, uid, new_args, offset, limit, order, context, count)
 
@@ -251,7 +251,7 @@ class ResPartnerAlternativeSearch(orm.Model):
                 ] + args, limit=limit)
         else:        
             ids = []
-        _logger.error('>>>>> name_search %s' % name)
+        #_logger.error('>>>>> name_search %s' % name)
         return self.name_get(cr, uid, ids, context=context)
 
 class ProductProductDocnaet(orm.Model):

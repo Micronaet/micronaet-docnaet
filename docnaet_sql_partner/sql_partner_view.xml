@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    <record model="ir.ui.view" id="view_res_partner_account_docnaet_tree">
+        <field name="name">res.partner.account.tree</field>
+        <field name="model">res.partner</field>
+        <field name="priority" eval="40" />
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                 <field name="sql_customer_code" />
+                 <field name="sql_supplier_code" />
+                 <field name="sql_destination_code" />
+            </field>
+        </field>
+    </record>   
+    </data>
+</openerp>    
+    
