@@ -430,9 +430,9 @@
                 <button name="button_show" string="Show" type="object" attrs="{'invisible':[('hide_partner','=',True)]}" icon="gtk-yes" modifiers="{'invisible': [['hide_partner', '=', true]]}"/>
                 <button name="button_hide" string="Hide" type="object" attrs="{'invisible':[('hide_partner','=',False)]}" icon="gtk-no" modifiers="{'invisible': [['hide_partner', '=', false]]}"/>-->
                 <field name="name" />
-                <field name="alternative_search" />
-                <field name="docnaet_parent_id" />
-                <field name="type" />
+                <field name="alternative_search" string="Nome docnaet"/>
+                <field name="docnaet_parent_id" string="Padre"/>
+                <field name="type" string="Tipo"/>
                 <field name="phone" />
                 <field name="email" />
                 <!--<field name="duelist_fido" />

@@ -21,7 +21,7 @@
 ##############################################################################
 
 {
-    'name' : 'Docnaet SQL Partner,
+    'name' : 'Docnaet SQL Partner',
     'version' : '0.0.1',
     'category' : 'Generic Modules/Customization',
     'description' : """

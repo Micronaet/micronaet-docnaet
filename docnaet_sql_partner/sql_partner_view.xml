@@ -4,12 +4,12 @@
     <record model="ir.ui.view" id="view_res_partner_account_docnaet_tree">
         <field name="name">res.partner.account.tree</field>
         <field name="model">res.partner</field>
-        <field name="priority" eval="40" />
+        <field name="inherit_id" ref="docnaet.view_res_partner_docnaet_tree"/>
         <field name="arch" type="xml">
             <field name="type" position="after">
-                 <field name="sql_customer_code" />
-                 <field name="sql_supplier_code" />
-                 <field name="sql_destination_code" />
+                 <field name="sql_customer_code" string="Cod. Cliente"/>
+                 <field name="sql_supplier_code" string="Cod. Forn."/>
+                 <field name="sql_destination_code" string="Cod. Dest."/>
             </field>
         </field>
     </record>   
