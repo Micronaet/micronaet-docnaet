@@ -255,7 +255,7 @@ class UploadDocumentWizard(orm.TransientModel):
 
             if docnaet_mode == 'labnaet':
                 labnaet_id = document_pool.get_counter_labnaet_id(
-                    cr, uid, context=context),
+                    cr, uid, context=context)
                 
                 data.update({
                     'labnaet_id': labnaet_id,
@@ -285,8 +285,7 @@ class UploadDocumentWizard(orm.TransientModel):
             if wiz_proxy.assign_protocol:
                 data['number'] = protocol_pool.assign_protocol_number(
                     cr, uid, data['protocol_id'], context=context)                
-            print data        
-            import pdb; pdb.set_trace()
+
             item_id = document_pool.create(cr, uid, data, context=context)
             document_imported.append(item_id)
 
