@@ -281,10 +281,11 @@ class UploadDocumentWizard(orm.TransientModel):
                                 })
             else:
                 labnaet_id = False
-            
+                        
             if wiz_proxy.assign_protocol:
                 data['number'] = protocol_pool.assign_protocol_number(
                     cr, uid, data['protocol_id'], context=context)                
+            print data        
             item_id = document_pool.create(cr, uid, data, context=context)
             document_imported.append(item_id)
 
