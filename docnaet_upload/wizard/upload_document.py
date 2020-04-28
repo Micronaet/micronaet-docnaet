@@ -229,7 +229,7 @@ class UploadDocumentWizard(orm.TransientModel):
             # Create record for document:
             # -----------------------------------------------------------------  
             extension = f.split('.')[-1].lower()
-            real_name = '.'.join(f.split('.')[:-1]  # Remove extension
+            real_name = '.'.join(f.split('.')[:-1])  # Remove extension
             if len(extension) > 4:
                 _logger.warning(
                     _('Extension must be <= 4 char (jump file %s!') % f)
