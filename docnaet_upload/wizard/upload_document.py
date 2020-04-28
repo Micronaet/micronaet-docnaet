@@ -266,7 +266,7 @@ class UploadDocumentWizard(orm.TransientModel):
                     mrp_pool = self.pool.get('mrp.production')
                     mrp_name = real_name.replace(' ', '')
                     if len(mrp_name) == 7:
-                        mrp_name = '%s/%s' % mrp_name[:2], mrp_name[2:]
+                        mrp_name = '%s/%s' % (mrp_name[:2], mrp_name[2:])
                         mrp_ids = mrp_pool.search(cr, uid, [
                             ('name', '=', mrp_name),
                             ], context=context)
