@@ -1,6 +1,17 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="view_docnaet_protocol_link_mrp_form">
+            <field name="name">Docnaet protocol link MRP</field>
+            <field name="model">docnaet.protocol</field>
+            <field name="inherit_id" ref="docnaet.view_docnaet_protocol_form"/>
+            <field name="arch" type="xml">
+                <notebook position="before">
+                    <field name="link_mrp" />
+                </notebook>    
+            </field>
+        </record>        
+    
         <record model="ir.actions.act_window" id="action_docnaet_my_document_to protocol_docnaet_tree">
             <field name="name">Uploaded to confirm</field>
             <field name="res_model">docnaet.document</field>

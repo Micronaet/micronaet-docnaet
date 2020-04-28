@@ -40,7 +40,17 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 
 _logger = logging.getLogger(__name__)
 
+class DocnaetProtocol(orm.Model):
+    ''' Protocol for MRP link
+    '''
+    _inherit = 'docnaet.protocol'
+    
+    _columns = {
+        'link_mrp': fields.boolean('Link', 
+            help='Link document in MRP form'),
+        }
 
+        
 class UploadDocumentWizard(orm.TransientModel):
     ''' Wizard to upload document
     '''
@@ -219,23 +229,15 @@ class UploadDocumentWizard(orm.TransientModel):
             # Create record for document:
             # -----------------------------------------------------------------  
             extension = f.split('.')[-1].lower()
+            real_name = '.'.join(f.split('.')[:-1]  # Remove extension
             if len(extension) > 4:
                 _logger.warning(
                     _('Extension must be <= 4 char (jump file %s!') % f)
                 continue
 
-            if docnaet_mode == 'labnaet':
-                labnaet_id = document_pool.get_counter_labnaet_id(
-                    cr, uid, context=context)
-            else:
-                labnaet_id = False
-        
             data = {
-                # Labnaet management:
+                'name': real_name,
                 'docnaet_mode': docnaet_mode,
-                'labnaet_id': labnaet_id,
-                
-                'name': _('Document %s') % f,
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
                 'user_id': wiz_proxy.default_user_id.id or uid, 
                 'partner_id': wiz_proxy.default_partner_id.id or False, 
@@ -250,6 +252,32 @@ class UploadDocumentWizard(orm.TransientModel):
                 'program_id': program_pool.get_program_from_extension(
                     cr, uid, extension, context=context)
                 }
+
+            if docnaet_mode == 'labnaet':
+                data.update({
+                    'labnaet_id': document_pool.get_counter_labnaet_id(
+                        cr, uid, context=context),
+                    })
+                        
+                # -------------------------------------------------------------    
+                # MRP Link:
+                # -------------------------------------------------------------    
+                if wiz_proxy.default_protocol_id.link_mrp:
+                    mrp_pool = self.pool.get('mrp.production')
+                    mrp_name = real_name.replace(' ', '')
+                    if len(mrp_name) == 7:
+                        mrp_name = '%s/%s' % mrp_name[:2], mrp_name[2:]
+                        mrp_ids = mrp_pool.search(cr, uid, [
+                            ('name', '=', mrp_name),
+                            ], context=context)
+                        if mrp_ids:
+                            real_name = 'Produzione: %s' % mrp_name
+                            data.update({
+                                'name': real_name,
+                                'link_mrp': True,
+                                'linked_mrp_id': mrp_ids[0],
+                                })
+        
             if wiz_proxy.assign_protocol:
                 data['number'] = protocol_pool.assign_protocol_number(
                     cr, uid, data['protocol_id'], context=context)                
