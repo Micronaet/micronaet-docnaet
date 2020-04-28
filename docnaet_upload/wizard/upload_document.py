@@ -254,9 +254,11 @@ class UploadDocumentWizard(orm.TransientModel):
                 }
 
             if docnaet_mode == 'labnaet':
+                labnaet_id = document_pool.get_counter_labnaet_id(
+                    cr, uid, context=context),
+                
                 data.update({
-                    'labnaet_id': document_pool.get_counter_labnaet_id(
-                        cr, uid, context=context),
+                    'labnaet_id': labnaet_id,
                     })
                         
                 # -------------------------------------------------------------    
@@ -277,7 +279,9 @@ class UploadDocumentWizard(orm.TransientModel):
                                 'link_mrp': True,
                                 'linked_mrp_id': mrp_ids[0],
                                 })
-        
+            else:
+                labnaet_id = False
+            
             if wiz_proxy.assign_protocol:
                 data['number'] = protocol_pool.assign_protocol_number(
                     cr, uid, data['protocol_id'], context=context)                
