@@ -286,6 +286,7 @@ class UploadDocumentWizard(orm.TransientModel):
                 data['number'] = protocol_pool.assign_protocol_number(
                     cr, uid, data['protocol_id'], context=context)                
             print data        
+            import pdb; pdb.set_trace()
             item_id = document_pool.create(cr, uid, data, context=context)
             document_imported.append(item_id)
 
