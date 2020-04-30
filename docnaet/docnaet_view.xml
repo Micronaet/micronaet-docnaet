@@ -630,7 +630,7 @@
                 <field name="priority" />
                 <field name="docnaet_extension" />
                 <field name="program_id" />-->
-                <field name="partner_id" filter_domain="['|',('partner_id.docnaet_parent_id','=',self),('partner_id','=',self)]" domain="[('docnaet_enable','=',True)]"/>
+                <field name="partner_id" filter_domain="['|',('partner_id.docnaet_parent_id','=',self),('partner_id','=',self)]" domain="[('docnaet_enable','=',True)]" />
                 <field name="country_id" />
                 
                 <!--<field name="docnaet_category_id" /> Cassandra want to remove-->
@@ -679,7 +679,7 @@
                 <field name="name" />
                 <field name="description" />
                 <field name="note" />
-                <field name="partner_id" filter_domain="[('partner_id','=',self)]" domain="[('docnaet_enable','=',True)]"/>
+                <field name="partner_id" filter_domain="[('partner_id','=',self)]" domain="[('docnaet_enable','=',True)]" />
                 <field name="user_id" filter_domain="[('user_id','=',self)]"/>
                 <field name="country_id" />
                 
@@ -814,7 +814,7 @@
                        <field name="search_country_id" on_change="onchange_country_partner_domain(search_partner_name,search_country_id)" placeholder="Filter partner country..." />
                        <newline/>
 
-                       <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'default_docnaet_enable': True}" options="{'limit': 10, 'create': false, 'create_edit': false}" />
+                       <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'name_mode': 'docnaet', 'default_docnaet_enable': True}" options="{'limit': 10, 'create': false, 'create_edit': false}" />
                        <field name="user_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
                        <newline/>
                        
@@ -886,7 +886,7 @@
         <field name="arch" type="xml">
             <calendar color="protocol_id" date_start="deadline" string="Document deadline">
                 <field name="name"/>
-                <field name="partner_id" /><!--domain="[('is_address','=',False)]"-->
+                <field name="partner_id" context="{'name_mode': 'docnaet'}"/><!--domain="[('is_address','=',False)]"-->
                 <field name="priority"/>
                 <field name="docnaet_mode" invisible="1"/>
             </calendar>
