@@ -58,21 +58,26 @@ class ResPartner(orm.Model):
             res[partner.id]['deadline_comment'] = False
             
             # This partner payment deadline:
-            for payment in partner.duelist_ids:               
-                if payment.deadline < now and payment.total > 0:
-                    res[partner.id]['deadline_present'] = True
-                    res[partner.id]['deadline_comment'] = _(
-                        'PAGAMENTI SCADUTI!')
-                    break
+            total_deadlined = 0
+            for payment in partner.duelist_ids:           
+                if payment.deadline < now: # and payment.total > 0:
+                    total_deadlined += payment.total
+            if total_deadlined > 0:
+                res[partner.id]['deadline_present'] = True
+                res[partner.id]['deadline_comment'] = _('PAGAMENTI SCADUTI!')
+                break
                     
             # Parent partner payment deadline:
+            total_deadlined = 0
             if partner.docnaet_parent_id:
                 for payment in partner.docnaet_parent_id.duelist_ids:               
                     if payment.deadline < now:
-                        res[partner.id]['deadline_present'] = True
-                        res[partner.id]['deadline_comment'] = _(
-                            'PAGAMENTI SCADUTI MASTER PARTNER!')
-                        break
+                        total_deadlined += payment.total
+            
+            if total_deadlined > 0:
+                res[partner.id]['deadline_present'] = True
+                res[partner.id]['deadline_comment'] = _('PAGAMENTI SCADUTI!')
+                break
         return res
 
     _columns = {
