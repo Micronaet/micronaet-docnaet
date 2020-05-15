@@ -53,6 +53,41 @@ class DocnaetDocument(orm.Model):
     _inherit = 'docnaet.document'
     
     # -------------------------------------------------------------------------
+    # Utility:
+    # -------------------------------------------------------------------------
+    def check_amount_present(self, cr, uid, ids, context=None):
+        """ Check if manatory amount
+        """
+        assert len(ids) == 1, 'Works only with one record a time'
+        
+        document = self.browse(cr, uid, ids, context=context)[0]
+        if document.protocol_id.sale_management and \
+                not document.no_sale_price and not document.sale_order_amount:
+            raise osv.except_osv(
+                _('Errore'), 
+                _('''Il documento richiede, nella sezione CRM, una indicazione
+                 di importo offerta obbligatoria (a meno di escluderla 
+                 impostando: 'nessuna valorizzazione')!'''),
+                )    
+        
+    # -------------------------------------------------------------------------
+    # OVERRIDE: Workflow docnaet event:
+    # -------------------------------------------------------------------------
+    def document_confirmed(self, cr, uid, ids, context=None):
+        """ Check before confirmed
+        """
+        self.check_amount_present(cr, uid, ids, context=context)
+        return super(DocnaetDocument, self).document_confirmed(
+            cr, uid, ids, context=context)
+
+    def document_timed(self, cr, uid, ids, context=None):
+        """ Check before timed
+        """
+        self.check_amount_present(cr, uid, ids, context=context)
+        return super(DocnaetDocument, self).document_timed(
+            cr, uid, ids, context=context)
+    
+    # -------------------------------------------------------------------------
     # Workflow sale event:
     # -------------------------------------------------------------------------
     def sale_order_pending(self, cr, uid, ids, context=None):
@@ -113,6 +148,12 @@ class DocnaetDocument(orm.Model):
             help='Link document in sale form'),
 
         # CRM management:
+        'sale_management': fields.related(
+            'protocol_id', 'sale_management', 
+            type='boolean', string='Gestione CRM'),
+        'no_sale_price': fields.boolean(
+            'Nessuna valorizzazione', 
+            help='Non va indicata la valorizzazione perchè non esiste'),
         'sale_comment': fields.text('Sale comment', 
             help='Why we lost or win the quotation'),
         'sale_order_amount': fields.float('Total sale', digits=(16, 2)),

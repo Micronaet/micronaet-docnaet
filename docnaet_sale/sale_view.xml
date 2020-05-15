@@ -72,10 +72,15 @@
             <field name="inherit_id" ref="docnaet.docnaet_document_form_view" />
             <field name="arch" type="xml">
                 <xpath expr="/form//notebook/page[@string='Linked objects']" position="after">
-                    <page string="CRM">
+                    <page string="CRM" attrs="{'invisible': [('sale_management','=',False)]}">
                         <group colspan="4" col="5" >                       
-                            <field name="sale_order_amount" widget="currency"/>
-                            <field name="sale_currency_id" widget="select"/>
+                            <field name="no_sale_price" />
+                            <field name="sale_management" invisible="1"/>
+                        </group>                       
+                        <group colspan="4" col="5" attrs="{'invisible': [('no_sale_price','=',True)]}">                       
+                            
+                            <field name="sale_order_amount" widget="currency" attrs="{'required': [('no_sale_price','=',False)]}"/>
+                            <field name="sale_currency_id" widget="select" />
                             <button name="sale_order_pending_offer" string="Pending offer" type="object" icon="STOCK_JUSTIFY_FILL"/>
                             
                             <field name="sale_state" readonly="1"/>
@@ -127,6 +132,17 @@
                 </xpath>
             </field>    
         </record>                
+        
+        <record model="ir.ui.view" id="view_docnaet_protocol_sale_form">
+            <field name="name">docnaet.protocol.form</field>
+            <field name="model">docnaet.protocol</field>
+            <field name="inherit_id" ref="docnaet.view_docnaet_protocol_form"/>
+            <field name="arch" type="xml">
+                <field name="docnaet_mode" position="after">
+                    <field name="sale_management" />
+                </field>
+            </field>
+        </record>
 
         <record model="ir.actions.act_window" id="action_docnaet_my_sale_order_tree">
             <field name="name">My Offer</field>
