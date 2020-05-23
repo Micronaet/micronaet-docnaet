@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>   
+        <!--docnaet.document-->
+        <record model="ir.ui.view" id="docnaet_document_form_gdoc_view">
+            <field name="name">Docnaet document</field>
+            <field name="model">docnaet.document</field>
+            <field name="inherit_id" ref="docnaet.docnaet_document_form_view"/>        
+            <field name="arch" type="xml">
+                 <field name="name" position="after">
+                      <field name="gdoc-link" colspan="5" attrs="{'invisible': [('gdoc-ling','=',False), ('state', '!=', 'draft') ]}"/>
+                 </field>
+                 
+                 <!--Hide unused button-->
+                 <button name="%(action_docnaet_document_duplication)d" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                 </button>   
+                 <button name="button_doc_info_docnaet" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                 </button>
+            </field>
+        </record>        
+        <record model="ir.ui.view" id="docnaet_document_tree_gdoc_view">
+            <field name="name">Docnaet document</field>
+            <field name="model">docnaet.document</field>
+            <field name="inherit_id" ref="docnaet.docnaet_document_tree_view"/>        
+            <field name="arch" type="xml">
+                 <field name="number" position="after">
+                      <field name="gdoc-link" invisible="1"/>
+                 </field>
+                 
+                 <!--Hide unused button-->
+                 <button name="%(action_docnaet_document_duplication)d" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                 </button>   
+            </field>
+        </record>        
+
+        <record model="ir.ui.view" id="docnaet_document_download_gdoc_tree_view">
+            <field name="name">Docnaet document</field>
+            <field name="model">docnaet.document</field>
+            <field name="inherit_id" ref="docnaet-download.docnaet_document_download_tree_view"/>
+            <field name="arch" type="xml">
+                <button name="button_file_download" position="attributes">
+                      <attribute name="invisible">1</attribute>
+                 </button>   
+            </field>
+        </record>    
+    </data>    
+</openerp>    
+    
