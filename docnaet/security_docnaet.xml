@@ -5,7 +5,7 @@
             <field name="name">Document for Sector filter rule</field>
             <field model="ir.model" name="model_id" ref="model_docnaet_document"/>
             <field eval="True" name="global"/>
-            <field name="domain_force">['|',('sector_id','=',False),('sector_id','in',[item.id for item in user.sector_ids])]</field>
+            <field name="domain_force">['|',('sector_id','=',1000000 if user.hide_generic else False),('sector_id','in',[item.id for item in user.sector_ids])]</field>
         </record>
         <record id="sector_filter_rule" model="ir.rule">
             <field name="name">Sector filter rule</field>

@@ -955,4 +955,7 @@ class ResUsers(orm.Model):
         'sector_ids': fields.many2many(
             'docnaet.sector', 'docnaet_document_sector_rel',
             'user_id', 'sector_id', 'Settori'),
+        'hide_generic': fields.boolean(
+            'Nascondi generico',
+            help='Nasconde i documenti non catalogati per settore')
     }

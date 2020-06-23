@@ -1,6 +1,6 @@
 import os
 
-path = './'
+path = '.'
 extensions = [
     'xls', 'xlsx',
     'doc', 'docx',
@@ -19,4 +19,4 @@ for root, folders, files in os.walk(path):
         if extension in extensions:
             print(fullname)
         else:
-            print('[Jumped] %s' % fullname.replace('/', '|*|'))
+            print('[Jumped] %s' % fullname.replace('\\', '|*|'))
