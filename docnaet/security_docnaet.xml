@@ -1,11 +1,17 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-        <record id="sector_filter_rule" model="ir.rule">
-            <field name="name">Sector filter rule</field>
+        <record id="document_sector_filter_rule" model="ir.rule">
+            <field name="name">Document for Sector filter rule</field>
             <field model="ir.model" name="model_id" ref="model_docnaet_document"/>
             <field eval="True" name="global"/>
             <field name="domain_force">['|',('sector_id','=',False),('sector_id','in',[item.id for item in user.sector_ids])]</field>
+        </record>
+        <record id="sector_filter_rule" model="ir.rule">
+            <field name="name">Sector filter rule</field>
+            <field model="ir.model" name="model_id" ref="model_docnaet_sector"/>
+            <field eval="True" name="global"/>
+            <field name="domain_force">[('id','in',[item.id for item in user.sector_ids])]</field>
         </record>
     </data>
 </openerp>
