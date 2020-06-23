@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-# ODOO (ex OpenERP) 
+# ODOO (ex OpenERP)
 # Open Source Management Solution
 # Copyright (C) 2001-2015 Micronaet S.r.l. (<http://www.micronaet.it>)
 # Developer: Nicola Riolini @thebrush (<https://it.linkedin.com/in/thebrush>)
@@ -12,7 +12,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
@@ -27,9 +27,9 @@ import openerp.netsvc as netsvc
 from openerp.osv import osv, orm, fields
 from datetime import datetime, timedelta
 from openerp.tools import (
-    DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+    DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 import openerp.addons.decimal_precision as dp
 from openerp.tools.translate import _
@@ -37,74 +37,75 @@ from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
+
 # TODO res.country (importabili con i partner)
 class ResCompany(orm.Model):
-    ''' Docnaet company extra fields
-    '''
+    """ Docnaet company extra fields
+    """
     _inherit = 'res.company'
-        
+
     def get_docnaet_folder_path(self, cr, uid, subfolder='root', context=None):
-        ''' Function for get (or create) root docnaet folder 
+        """ Function for get (or create) root docnaet folder
             (also create extra subfolder)
             subfolder: string value for sub root folder, valid value:
                 > 'store'
                 > 'private'
-            context: used field_path for read correct path name in company    
-        '''
+            context: used field_path for read correct path name in company
+        """
         if context is None:
             context = {}
         if 'docnaet_mode' not in context:
             _logger.error('No docnaet mode parameter in context!')
         field_path = '%s_path' % context.get('docnaet_mode', 'docnaet')
-        
+
         # Get docnaet path from company element
         company_ids = self.search(cr, uid, [], context=context)
         company_proxy = self.browse(cr, uid, company_ids, context=context)[0]
         docnaet_path = company_proxy.__getattr__(field_path)# XXX variable
-        
+
         # Folder structure:
         path = {}
         path['root'] = docnaet_path
         path['store'] = os.path.join(docnaet_path, 'store')
         path['private'] = os.path.join(docnaet_path, 'private')
         path['user'] = os.path.join(path['private'], str(uid))
-        
+
         # Create folder structure # TODO test if present
         for folder in path:
             if not os.path.isdir(path[folder]):
-                os.system('mkdir -p %s' % path[folder])        
+                os.system('mkdir -p %s' % path[folder])
         return path[subfolder]
 
     def assign_fax_fax(self, cr, uid, context=None):
-        ''' Assign protocol and update number in record
-        '''
+        """ Assign protocol and update number in record
+        """
         company_id = self.search(cr, uid, [], context=context)[0] # TODO
-        
+
         company_proxy = self.browse(cr, uid, company_id, context=context)
         number = company_proxy.next_fax
         self.write(cr, uid, company_id, {
             'next_fax': number + 1,
             }, context=context)
         return number
-        
+
     _columns = {
         'docnaet_path': fields.char(
             'Docnaet path', size=64, required=True,
-            help='Docnaet root path in file system for store docs'), 
+            help='Docnaet root path in file system for store docs'),
         'labnaet_path': fields.char(
             'Labnaet path', size=64, required=True,
-            help='Labnaet root path in file system for store docs'), 
+            help='Labnaet root path in file system for store docs'),
         'next_fax': fields.integer('Next fax number'),
         }
-        
+
 class DocnaetLanguage(orm.Model):
-    ''' Object docnaet.language
-    '''    
+    """ Object docnaet.language
+    """
     _name = 'docnaet.language'
     _description = 'Docnaet language'
     _order = 'name'
-                    
-    _columns = {        
+
+    _columns = {
         'name': fields.char('Language', size=64, required=True,
             translate=True),
         'code': fields.char('Code', size=16),
@@ -113,32 +114,32 @@ class DocnaetLanguage(orm.Model):
         }
 
 class ResPartnerDocnaet(orm.Model):
-    ''' Object res.partner.docnaet
-    '''    
+    """ Object res.partner.docnaet
+    """
     _name = 'res.partner.docnaet'
     _description = 'Partner category'
-                    
-    _columns = {        
+
+    _columns = {
         'name': fields.char('Docnaet type', size=64, required=True,
             translate=True),
         'note': fields.text('Note'),
         }
-        
+
 class ResPartner(orm.Model):
     """ Model name: ResPartner
-    """    
+    """
     _inherit = 'res.partner'
-    
+
     def set_docnaet_on(self, cr, uid, ids, context=None):
-        ''' Enalble docnaet partner
-        '''
+        """ Enalble docnaet partner
+        """
         return self.write(cr, uid, ids, {
             'docnaet_enable': True,
             }, context=context)
 
     def set_docnaet_off(self, cr, uid, ids, context=None):
-        ''' Disalble docnaet partner
-        '''
+        """ Disalble docnaet partner
+        """
         return self.write(cr, uid, ids, {
             'docnaet_enable': False,
             }, context=context)
@@ -151,49 +152,49 @@ class ResPartner(orm.Model):
         'docnaet_category_id': fields.many2one(
             'res.partner.docnaet', 'Docnaet category'),
         }
-        
+
 class ResPartnerRelation(orm.Model):
     """ Model name: ResPartner
-    """    
+    """
     _inherit = 'res.partner'
-    
+
     # -------------------------------------------------------------------------
     # Override function:
     # -------------------------------------------------------------------------
     _columns = {
         'docnaet_child_ids': fields.one2many(
             'res.partner', 'docnaet_parent_id', 'Docnaet Ditte Collegate'),
-        }    
+        }
 
 class ResPartnerAlternativeSearch(orm.Model):
     """ Model name: ResPartner
-    """    
+    """
     _inherit = 'res.partner'
 
     _columns = {
         'alternative_search': fields.char('Nome alternativo Docnaet', size=64),
         }
-    
+
     def name_get(self, cr, uid, ids, context=None):
         """ Add customer-fabric ID to name
         """
         if context is None:
             context = {}
         name_mode = context.get('name_mode')
-        
+
         res = []
         for partner in self.browse(cr, uid, ids, context=context):
             if name_mode == 'docnaet' and partner.alternative_search:
                 res.append((partner.id, partner.alternative_search))
             else:
                 res.append((partner.id, partner.name))
-                
+
         #_logger.error('>>>>> name_get %s [%s]' % (name_mode, context))
         #_logger.error('>>>>> name_get %s [%s]' % (name_mode, res))
         return res
-        
-        
-    def search(self, cr, uid, args, offset=0, limit=None, order=None, 
+
+
+    def search(self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
         """ Return a list of integers based on search domain {args}
             @param cr: cursor to database
@@ -203,41 +204,41 @@ class ResPartnerAlternativeSearch(orm.Model):
             @param limit: number of records to be comes in answer from search opertion
             @param order: ordering on any field(s)
             @param context: context arguments, like lang, time zone
-            @param count: 
-            
+            @param count:
+
             @return: a list of integers based on search domain
         """
         if args is None:
             args = []
-        
+
         new_args = []
         for record in args:
             if record[0] == 'name':
                 new_args.extend([
-                    '|', 
-                    record, 
+                    '|',
+                    record,
                     ('alternative_search', 'ilike', record[2]),
                     ])
             else:
-                new_args.append(record)                        
+                new_args.append(record)
         #_logger.error('>>>>> search %s' % (args, ))
         return super(ResPartner, self).search(
             cr, uid, new_args, offset, limit, order, context, count)
 
-    def name_search(self, cr, uid, name, args=None, operator='ilike', 
+    def name_search(self, cr, uid, name, args=None, operator='ilike',
             context=None, limit=80):
-        """ Return a list of tupples contains id, name, as internally its calls 
+        """ Return a list of tupples contains id, name, as internally its calls
             {def name_get}
             result format : {[(id, name), (id, name), ...]}
-            
+
             @param cr: cursor to database
             @param uid: id of current user
-            @param name: name to be search 
+            @param name: name to be search
             @param args: other arguments
             @param operator: default operator is ilike, it can be change
             @param context: context arguments, like lang, time zone
             @param limit: returns first n ids of complete result, default 80
-            
+
             @return: return a list of tupples contains id, name
         """
         if args is None:
@@ -249,18 +250,18 @@ class ResPartnerAlternativeSearch(orm.Model):
             ids = self.search(cr, uid, [
                 ('name', 'ilike', name),
                 ] + args, limit=limit)
-        else:        
+        else:
             ids = []
         #_logger.error('>>>>> name_search %s' % name)
         return self.name_get(cr, uid, ids, context=context)
 
 class ProductProductDocnaet(orm.Model):
-    ''' Object product.product.docnaet
-    '''    
+    """ Object product.product.docnaet
+    """
     _name = 'product.product.docnaet'
     _description = 'Product category'
-                    
-    _columns = {        
+
+    _columns = {
         'name': fields.char('Docnaet category', size=64, required=True,
             translate=True),
         'note': fields.text('Note'),
@@ -268,47 +269,47 @@ class ProductProductDocnaet(orm.Model):
 
 class DocnaetProduct(orm.Model):
     """ Model name: Docnaet product
-    """    
+    """
     _name = 'docnaet.product'
     _description = 'Docnaet Product'
 
-    _columns = {        
+    _columns = {
         'name': fields.char('Name', size=64, required=True,
             translate=True),
-        'default_code': fields.char('Default code', size=64),            
+        'default_code': fields.char('Default code', size=64),
         'docnaet_category_id': fields.many2one(
             'product.product.docnaet', 'Docnaet category'),
         'partner_id': fields.many2one('res.partner', 'Partner'),
-        #'product_id': fields.many2one('product.product', 'Product', 
+        #'product_id': fields.many2one('product.product', 'Product',
         #    help='Link to original product data'),
         'note': fields.text('Note'),
         }
 
 class DocnaetType(orm.Model):
-    ''' Object docnaet.type
-    '''    
+    """ Object docnaet.type
+    """
     _name = 'docnaet.type'
     _description = 'Docnaet type'
     _order = 'name'
-    
+
     # -------------------------------------------------------------------------
     # Button event:
     # -------------------------------------------------------------------------
     def set_invisibile(self, cr, uid, ids, context=None):
-        ''' Set as invisible protocol
-        '''
+        """ Set as invisible protocol
+        """
         return self.write(cr, uid, ids, {
-            'invisible': True,            
+            'invisible': True,
             }, context=context)
-            
+
     def set_visibile(self, cr, uid, ids, context=None):
-        ''' Set as invisible protocol
-        '''
+        """ Set as invisible protocol
+        """
         return self.write(cr, uid, ids, {
             'invisible': False,
             }, context=context)
 
-    _columns = {        
+    _columns = {
         'name': fields.char('Type', size=64, required=True, translate=True),
         'invisible': fields.boolean('Not used'),
         'note': fields.text('Note'),
@@ -320,14 +321,14 @@ class DocnaetType(orm.Model):
             help='Usually document management, but for future improvement also'
                 ' for manage other docs'),
         }
-        
+
     _defaults = {
         'docnaet_mode': lambda *x: 'docnaet',
         }
 
 class DocnaetProtocol(orm.Model):
-    ''' Object docnaet.protocol
-    '''    
+    """ Object docnaet.protocol
+    """
     _name = 'docnaet.protocol'
     _description = 'Docnaet protocol'
     _order = 'name'
@@ -336,34 +337,34 @@ class DocnaetProtocol(orm.Model):
     # Button event:
     # -------------------------------------------------------------------------
     def set_invisibile(self, cr, uid, ids, context=None):
-        ''' Set as invisible protocol
-        '''
+        """ Set as invisible protocol
+        """
         return self.write(cr, uid, ids, {
-            'invisible': True,            
+            'invisible': True,
             }, context=context)
-            
+
     def set_visibile(self, cr, uid, ids, context=None):
-        ''' Set as invisible protocol
-        '''
+        """ Set as invisible protocol
+        """
         return self.write(cr, uid, ids, {
             'invisible': False,
             }, context=context)
-            
+
     def assign_protocol_number(self, cr, uid, protocol_id, context=None):
-        ''' Assign protocol and update number in record
-        '''
-                
+        """ Assign protocol and update number in record
+        """
+
         protocol_proxy = self.browse(cr, uid, protocol_id, context=context)
         number = protocol_proxy.next
         self.write(cr, uid, protocol_id, {
             'next': number + 1,
             }, context=context)
         return number
-        
-    _columns = {        
+
+    _columns = {
         'name': fields.char('Protocol', size=64, required=True,
             translate=True),
-        'next': fields.integer('Next protocol', required=True), 
+        'next': fields.integer('Next protocol', required=True),
         'note': fields.text('Note', translate=True),
         # TODO default_application_id
         'invisible': fields.boolean('Not used'),
@@ -375,86 +376,86 @@ class DocnaetProtocol(orm.Model):
             help='Usually document management, but for future improvement also'
                 ' for manage other docs'),
         }
-        
+
     _defaults = {
         'docnaet_mode': lambda *x: 'docnaet',
         'next': lambda *x: 1,
-        }    
+        }
 
 class DocnaetProtocolTemplateProgram(orm.Model):
-    ''' Object docnaet.protocol.template.program
-    '''    
-    
+    """ Object docnaet.protocol.template.program
+    """
+
     _name = 'docnaet.protocol.template.program'
     _description = 'Docnaet program'
     _order = 'name'
-                   
+
     def get_program_from_extension(self, cr, uid, extension, context=None):
-        ''' Return program ID from extension
-        ''' 
+        """ Return program ID from extension
+        """
         program_ids = self.search(cr, uid, [
             ('extension', 'ilike', extension)
             ], context=context)
-            
+
         if program_ids:
             return program_ids[0]
-        else: 
+        else:
             return False
-            
-    _columns = {        
+
+    _columns = {
         'name': fields.char('Program', size=64, required=True, translate=True),
         'extension': fields.char('Extension', size=5),
         'note': fields.text('Note', translate=True),
         }
 
 class DocnaetProtocolTemplate(orm.Model):
-    ''' Object docnaet.protocol.template
-    '''    
-    
+    """ Object docnaet.protocol.template
+    """
+
     _name = 'docnaet.protocol.template'
     _description = 'Docnaet protocol template'
     _rec_name = 'lang_id'
     _order = 'lang_id'
 
     _columns = {
-        'lang_id': fields.many2one('docnaet.language', 'Language', 
+        'lang_id': fields.many2one('docnaet.language', 'Language',
             required=True),
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
-        'program_id': fields.many2one('docnaet.protocol.template.program', 
+        'program_id': fields.many2one('docnaet.protocol.template.program',
             'Program'),
         'note': fields.text('Note'),
         }
 
 class DocnaetProtocol(orm.Model):
-    ''' 2many fields
-    '''    
+    """ 2many fields
+    """
     _inherit = 'docnaet.protocol'
 
     _columns = {
-        'template_ids': fields.one2many('docnaet.protocol.template', 
+        'template_ids': fields.one2many('docnaet.protocol.template',
             'protocol_id', 'Template'),
         }
 
 class DocnaetDocument(orm.Model):
-    ''' Object docnaet.document
-    '''    
+    """ Object docnaet.document
+    """
     _name = 'docnaet.document'
     _description = 'Docnaet document'
     _order = 'date desc,number desc'
 
-    # -------------------------------------------------------------------------        
+    # -------------------------------------------------------------------------
     # Onchange event:
     # -------------------------------------------------------------------------
-    def onchange_country_partner_domain(self, cr, uid, ids, 
-            search_partner_name, search_country_id, #category_id, 
+    def onchange_country_partner_domain(self, cr, uid, ids,
+            search_partner_name, search_country_id, #category_id,
             context=None):
-        ''' On change for domain purpose
-        '''
+        """ On change for domain purpose
+        """
         res = {}
         res['domain'] = {'partner_id': [
             ('docnaet_enable', '=', True),
-            ]}        
-        
+            ]}
+
         if search_country_id:
             res['domain']['partner_id'].append(
                 ('country_id', '=', search_country_id),
@@ -465,10 +466,10 @@ class DocnaetDocument(orm.Model):
                 # Add or:
                 #res['domain']['partner_id'].extend([
                 #    '|' for item in range(1, len(partner_part))])
-                # Add partner list of ilike search:    
+                # Add partner list of ilike search:
                 res['domain']['partner_id'].extend([
                     ('name', 'ilike', p) for p in partner_part])
-            else:   
+            else:
                 res['domain']['partner_id'].append(
                     ('name', 'ilike', search_partner_name),
                     )
@@ -480,11 +481,11 @@ class DocnaetDocument(orm.Model):
         return res
 
     # -------------------------------------------------------------------------
-    # Workflow state event: 
+    # Workflow state event:
     # -------------------------------------------------------------------------
     def document_draft(self, cr, uid, ids, context=None):
-        ''' WF draft state
-        '''
+        """ WF draft state
+        """
         assert len(ids) == 1, 'Works only with one record a time'
         self.write(cr, uid, ids, {
             'state': 'draft',
@@ -492,23 +493,23 @@ class DocnaetDocument(orm.Model):
         return True
 
     def document_confirmed(self, cr, uid, ids, context=None):
-        ''' WF confirmed state
-        '''        
+        """ WF confirmed state
+        """
         assert len(ids) == 1, 'Works only with one record a time'
         data = {'state': 'confirmed'}
-        
+
         protocol_pool = self.pool.get('docnaet.protocol')
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         if not current_proxy.number:
             protocol = current_proxy.protocol_id
             if not protocol:
                 raise osv.except_osv(
-                    _('Protocol'), 
+                    _('Protocol'),
                     _('No protocol assigned, choose one before and confirm!'),
                     )
             if not current_proxy.partner_id:
                 raise osv.except_osv(
-                    _('Partner'), 
+                    _('Partner'),
                     _('No partner assigned, choose one before and confirm!'),
                     )
             data['number'] = protocol_pool.assign_protocol_number(
@@ -516,28 +517,28 @@ class DocnaetDocument(orm.Model):
         return self.write(cr, uid, ids, data, context=context)
 
     def document_suspended(self, cr, uid, ids, context=None):
-        ''' WF suspended state
-        '''
+        """ WF suspended state
+        """
         data = {'state': 'suspended'}
         return self.write(cr, uid, ids, data, context=context)
 
     def document_timed(self, cr, uid, ids, context=None):
-        ''' WF timed state
-        '''
+        """ WF timed state
+        """
         assert len(ids) == 1, 'Works only with one record a time'
         data = {'state': 'timed'}
-        
+
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         if not current_proxy.deadline:
             raise osv.except_osv(
-                _('Timed document'), 
+                _('Timed document'),
                 _('For timed document need a deadline!'),
                 )
         return self.write(cr, uid, ids, data, context=context)
 
     def document_cancel(self, cr, uid, ids, context=None):
-        ''' WF cancel state
-        '''
+        """ WF cancel state
+        """
         assert len(ids) == 1, 'Works only with one record a time'
         data = {'state': 'cancel'}
         return self.write(cr, uid, ids, data, context=context)
@@ -547,15 +548,15 @@ class DocnaetDocument(orm.Model):
     # -------------------------------------------------------------------------
     def dummy(self, cr, uid, ids, context=None):
         return True
-        
-    def call_docnaet_url(self, cr, uid, ids, mode, remote=False, context=None):    
-        ''' Call url in format: openerp://operation|argument 
+
+    def call_docnaet_url(self, cr, uid, ids, mode, remote=False, context=None):
+        """ Call url in format: openerp://operation|argument
             Cases:
             document|document_id.extension > open document
             folder|uid > open personal folder (for updload document)
-            
+
             NOTE: maybe expand the services
-        '''        
+        """
         handle = 'openerp' # TODO put in company as parameter
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
@@ -565,10 +566,10 @@ class DocnaetDocument(orm.Model):
         if doc_proxy.docnaet_mode == 'labnaet':
             app = '[L]'
             docnaet_mode = 'labnaet'
-        else:    
+        else:
             app = '' # TODO '[D]'
             docnaet_mode = 'docnaet'
-            
+
         # ---------------------------------------------------------------------
         #                           Operations
         # ---------------------------------------------------------------------
@@ -578,12 +579,12 @@ class DocnaetDocument(orm.Model):
                 cr, uid, doc_proxy, mode='filename', context=context)
             final_url = r'%s://document|%s%s' % (
                 handle, filename, app)
-        
-        # B. Open private folder:        
+
+        # B. Open private folder:
         elif mode == 'home':
             final_url = r'%s://folder|%s%s' % (
                 handle, uid, app)
-        
+
         # C. Open remote document:
         #if remote:
         #    final_url = '%s[R]' % final_url
@@ -591,8 +592,8 @@ class DocnaetDocument(orm.Model):
         return {
             'name': 'Open %s document' % docnaet_mode,
             #res_model': 'ir.actions.act_url',
-            'type': 'ir.actions.act_url', 
-            'url': final_url, 
+            'type': 'ir.actions.act_url',
+            'url': final_url,
             'target': 'self',
             }
 
@@ -600,21 +601,21 @@ class DocnaetDocument(orm.Model):
     # Button event:
     # -------------------------------------------------------------------------
     def assign_protocol_number(self, cr, uid, ids, context=None):
-        ''' Reassign protocol number (enabled only if protocol and number
+        """ Reassign protocol number (enabled only if protocol and number
             is present (in view)
             Used also for N records
-        '''
-        for document in self.browse(cr, uid, ids, context=context):        
+        """
+        for document in self.browse(cr, uid, ids, context=context):
             number = self.pool.get('docnaet.protocol').assign_protocol_number(
                 cr, uid, document.protocol_id.id, context=context)
             self.write(cr, uid, document.id, {
                 'number': number,
                 }, context=context)
-        return True                
+        return True
 
     def button_doc_info_docnaet(self, cr, uid, ids, context=None):
-        ''' Document info
-        '''
+        """ Document info
+        """
         assert len(ids) == 1, 'Works only with one record a time'
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         filename = self.get_document_filename(
@@ -628,18 +629,18 @@ class DocnaetDocument(orm.Model):
                 current_proxy.filename or '',
                 filename or '',
                 )
-             
+
         raise osv.except_osv(
-            _('Document info'), 
+            _('Document info'),
             message,
             )
     def button_assign_fax_number(self, cr, uid, ids, context=None):
-        ''' Assign fax number to document (next counter)
-        '''
+        """ Assign fax number to document (next counter)
+        """
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         if current_proxy.fax_number:
             raise osv.except_osv(
-                _('Fax error'), 
+                _('Fax error'),
                 _('Fax yet present!'),
                 )
         number = self.pool.get('res.company').assign_fax_fax(
@@ -649,39 +650,39 @@ class DocnaetDocument(orm.Model):
             }, context=context)
 
     def button_call_url_docnaet(self, cr, uid, ids, context=None):
-        ''' Call url function for prepare address and return for open doc:
-        '''
+        """ Call url function for prepare address and return for open doc:
+        """
         return self.call_docnaet_url(cr, uid, ids, 'open', context=context)
-    
+
     def button_call_url_remote_docnaet(self, cr, uid, ids, context=None):
-        ''' Call url function for prepare address and return for open doc:
+        """ Call url function for prepare address and return for open doc:
             (in remote mode)
-        '''
+        """
         return self.call_docnaet_url(
             cr, uid, ids, 'open', remote=True, context=context)
 
     def get_document_filename(
             self, cr, uid, document, mode='fullname', context=None):
-        ''' Recursive function for get filename        
+        """ Recursive function for get filename
             document: browse obj
             mode: fullname or filename only
-        '''
+        """
         if context is None:
             context = {}
         context['docnaet_mode'] = document.docnaet_mode
-        
+
         # 2 different ID:
         if document.docnaet_mode == 'labnaet':
             document_id = document.labnaet_id
         else: #'docnaet':
             document_id = document.id
-        
+
         company_pool = self.pool.get('res.company')
         if document.filename:
             store_folder = company_pool.get_docnaet_folder_path(
                 cr, uid, subfolder='store', context=context)
             filename = '%s.%s' % (
-                document.filename, 
+                document.filename,
                 document.docnaet_extension,
                 )
             if mode == 'filename':
@@ -701,46 +702,46 @@ class DocnaetDocument(orm.Model):
                 return os.path.join(store_folder, filename)
 
     def _refresh_partner_country_change(self, cr, uid, ids, context=None):
-        ''' When change partner in country change in document
-        '''        
+        """ When change partner in country change in document
+        """
         return self.pool.get('docnaet.document').search(cr, uid, [
             ('partner_id', 'in', ids)], context=context)
 
     def _refresh_partner_category_change(self, cr, uid, ids, context=None):
-        ''' When change partner in category change in document
-        '''        
+        """ When change partner in category change in document
+        """
         return self.pool.get('docnaet.document').search(cr, uid, [
             ('partner_id', 'in', ids)], context=context)
 
     def _refresh_product_category_change(self, cr, uid, ids, context=None):
-        ''' When change product category update docnaet document
-        '''        
+        """ When change product category update docnaet document
+        """
         return self.pool.get('docnaet.document').search(cr, uid, [
             ('product_id', 'in', ids)], context=context)
 
     def _refresh_category_auto_change(self, cr, uid, ids, context=None):
-        ''' When change partner in category change in document
+        """ When change partner in category change in document
             Used also for change product_id for update category
-        '''        
+        """
         return ids
 
     def _refresh_country_auto_change(self, cr, uid, ids, context=None):
-        ''' When change partner in category change in document
-        '''        
+        """ When change partner in category change in document
+        """
         return ids
 
     def _get_real_filename(self, cr, uid, ids, fields, args, context=None):
-        ''' Fields function for calculate 
-        '''
+        """ Fields function for calculate
+        """
         res = {}
         for item in self.browse(cr, uid, ids, context=context):
             res[item.id] = item.filename or item.original_id.id or ''
         return res
 
-    def _get_date_month_4_group(self, cr, uid, ids, fields, args, 
+    def _get_date_month_4_group(self, cr, uid, ids, fields, args,
             context=None):
-        ''' Fields function for calculate 
-        '''
+        """ Fields function for calculate
+        """
         res = {}
         for doc in self.browse(cr, uid, ids, context=context):
             if doc.date:
@@ -749,10 +750,10 @@ class DocnaetDocument(orm.Model):
                 res[doc.id] = _('Nessuna')
         return res
 
-    def _get_deadline_month_4_group(self, cr, uid, ids, fields, args, 
+    def _get_deadline_month_4_group(self, cr, uid, ids, fields, args,
             context=None):
-        ''' Fields function for calculate 
-        '''
+        """ Fields function for calculate
+        """
         res = {}
         for doc in self.browse(cr, uid, ids, context=context):
             if doc.deadline:
@@ -760,58 +761,58 @@ class DocnaetDocument(orm.Model):
             else:
                 res[doc.id] = _('Nessuna')
         return res
-    
+
     def _store_data_deadline_month(self, cr, uid, ids, context=None):
-        ''' if change date reload data
-        '''
+        """ if change date reload data
+        """
         _logger.warning('Change date_mont depend on date and deadline')
         return ids
-    
+
     def get_counter_labnaet_id(self, cr, uid, context=None):
-        ''' Return ID for labnaet_id
-        '''
+        """ Return ID for labnaet_id
+        """
         return int(self.pool.get('ir.sequence').get(
             cr, uid, 'docnaet.document.labnaet'))
 
-    _columns = {        
+    _columns = {
         'name': fields.char('Subject', size=180, required=True),
-        'labnaet_id': fields.integer('Labnaet ID', 
+        'labnaet_id': fields.integer('Labnaet ID',
             help='Secondary ID for document, keep data in different folder.'),
         'filename': fields.char('File name', size=200),
         'real_file': fields.function(
             _get_real_filename, method=True, size=20,
-            type='char', string='Real filename', store=False), 
+            type='char', string='Real filename', store=False),
         'description': fields.text('Description'),
         'note': fields.text('Note'),
-        
+
         'number': fields.char('N.', size=10),
         'fax_number': fields.char('Fax n.', size=10),
 
         'date': fields.date('Date', required=True),
         'date_month': fields.function(
-            _get_date_month_4_group, method=True, 
+            _get_date_month_4_group, method=True,
             type='char', string='Mese inser.', size=15,
             store={
                 'docnaet.document': (
                     _store_data_deadline_month, ['date'], 10),
-                }), 
-                        
+                }),
+
         'deadline_info': fields.char('Deadline info', size=64),
         'deadline': fields.date('Deadline'),
         'deadline_month': fields.function(
-            _get_deadline_month_4_group, method=True, 
-            type='char', string='Scadenza', size=15, 
+            _get_deadline_month_4_group, method=True,
+            type='char', string='Scadenza', size=15,
             store={
                 'docnaet.document': (
                     _store_data_deadline_month, ['deadline'], 10),
-                }), 
+                }),
 
-        # OpenERP many2one 
-        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol', 
+        # OpenERP many2one
+        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol',
             domain=[('invisible', '=', False)], #required=True
             ),
         'language_id': fields.many2one('docnaet.language', 'Language'),
-        'type_id': fields.many2one('docnaet.type', 'Type', 
+        'type_id': fields.many2one('docnaet.type', 'Type',
             domain=[('invisible', '=', False)]),
         'company_id': fields.many2one('res.company', 'Company'),
         'user_id': fields.many2one('res.users', 'User', required=True),
@@ -819,7 +820,7 @@ class DocnaetDocument(orm.Model):
         # Partner:
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'country_id': fields.related(
-            'partner_id', 'country_id', type='many2one', 
+            'partner_id', 'country_id', type='many2one',
             relation='res.country', string='Country',
             store={
                 'res.partner': (
@@ -856,15 +857,15 @@ class DocnaetDocument(orm.Model):
             'Search per Partner name', size=80),
         'search_country_id': fields.many2one(
             'res.country', 'Search per Country'),
-                
+
         'docnaet_extension': fields.char('Ext.', size=10),
         'program_id': fields.many2one(
             'docnaet.protocol.template.program', 'Type of document'),
 
         'original_id': fields.many2one('docnaet.document', 'Original',
             help='Parent orignal document after this duplication'),
-        'imported': fields.boolean('Imported'), 
-        'private': fields.boolean('Private'), 
+        'imported': fields.boolean('Imported'),
+        'private': fields.boolean('Private'),
         # Workflow date event:
         #'date_confirmed': fields.text('Confirmed event', required=True),
         #'date_suspended': fields.date('Suspended event', required=True),
@@ -882,29 +883,29 @@ class DocnaetDocument(orm.Model):
             ('low', 'Low'),
             ('normal', 'Normal'),
             ('high', 'high'),
-            ('highest', 'Highest'), 
+            ('highest', 'Highest'),
             ], 'Priority'),
-        
+
         'state': fields.selection([
             ('draft', 'Draft'),
             ('confirmed', 'Confirmed'),
             #('suspended', 'Suspended'),
             ('timed', 'Timed'),
-            ('cancel', 'Cancel'), 
+            ('cancel', 'Cancel'),
             ], 'State', readonly=True),
         }
-        
+
     _defaults = {
         'docnaet_mode': lambda *x: 'docnaet',
         'date': lambda *x: datetime.now().strftime(
             DEFAULT_SERVER_DATE_FORMAT),
         'priority': lambda *x: 'normal',
-        'state': lambda *x: 'draft',        
-        }    
+        'state': lambda *x: 'draft',
+        }
 
 class DocnaetDocument(orm.Model):
-    ''' Add extra relation fields
-    '''          
+    """ Add extra relation fields
+    """
     _inherit = 'docnaet.document'
 
     _columns = {

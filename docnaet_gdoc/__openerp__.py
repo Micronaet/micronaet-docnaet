@@ -31,7 +31,7 @@
     'depends': [
         'base',   
         'docnaet',
-        'docnaet-download',
+        'docnaet_download',
         ],
     'init_xml': [], 
     'data': [

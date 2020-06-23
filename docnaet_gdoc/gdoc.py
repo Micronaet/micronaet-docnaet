@@ -47,14 +47,15 @@ class DocnaetGdocDocument(orm.Model):
     def call_docnaet_url(self, cr, uid, ids, mode, remote=False, context=None):        
         """ Override open document
         """
-        gdoc-link = self.browse(cr, uid, ids, context=context)[0].gdoc-link
-        if gdoc-link:
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        url = current_proxy.gdoc_link
+        if url:
             return {
-                'name': 'Open %s G-Doc' % docnaet_mode,
+                'name': 'Open as G-Doc',
                 #res_model': 'ir.actions.act_url',
                 'type': 'ir.actions.act_url', 
-                'url': gdoc-link, 
-                'target': 'self',
+                'url': url, 
+                'target': 'new',
                 }
             
         else:  # Normal link:
@@ -62,6 +63,6 @@ class DocnaetGdocDocument(orm.Model):
                 cr, uid, ids, mode, remote=remote, context=context)    
         
     _columns = {
-        'gdoc-link': fields.char('G Link', size=180),
+        'gdoc_link': fields.char('G Link', size=180),
         }
     
