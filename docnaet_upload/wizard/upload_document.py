@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-# ODOO (ex OpenERP) 
+# ODOO (ex OpenERP)
 # Open Source Management Solution
 # Copyright (C) 2001-2015 Micronaet S.r.l. (<http://www.micronaet.it>)
 # Developer: Nicola Riolini @thebrush (<https://it.linkedin.com/in/thebrush>)
@@ -12,7 +12,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
@@ -32,42 +32,44 @@ from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 
 _logger = logging.getLogger(__name__)
 
+
 class DocnaetProtocol(orm.Model):
-    ''' Protocol for MRP link
-    '''
+    """ Protocol for MRP link
+    """
     _inherit = 'docnaet.protocol'
-    
+
     _columns = {
-        'link_mrp': fields.boolean('Link', 
+        'link_mrp': fields.boolean('Link',
             help='Link document in MRP form'),
         }
 
-        
+
 class UploadDocumentWizard(orm.TransientModel):
-    ''' Wizard to upload document
-    '''
+    """ Wizard to upload document
+    """
     _name = 'docnaet.document.upload.wizard'
     _description = 'Document upload'
 
-    def onchange_country_partner_domain(self, cr, uid, ids, partner_name,
-            country_id, 
-            #category_id, 
+    def onchange_country_partner_domain(
+            self, cr, uid, ids, partner_name,
+            country_id,
+            # category_id,
             context=None):
-        ''' On change for domain purpose
-        '''
+        """ On change for domain purpose
+        """
         res = {}
         res['domain'] = {'default_partner_id': [
             ('docnaet_enable', '=', True),
-            ]}        
-        
+            ]}
+
         if country_id:
             res['domain']['default_partner_id'].append(
                 ('country_id', '=', country_id),
@@ -77,11 +79,11 @@ class UploadDocumentWizard(orm.TransientModel):
                 partner_part = partner_name.split('+')
                 res['domain']['default_partner_id'].extend([
                     ('name', 'ilike', p) for p in partner_part])
-            else:   
+            else:
                 res['domain']['default_partner_id'].append(
                     ('name', 'ilike', partner_name),
                     )
-                
+
         #if category_id:
         #    res['domain']['partner_id'].append(
         #        ('docnaet_category_id','=', category_id),
@@ -91,34 +93,34 @@ class UploadDocumentWizard(orm.TransientModel):
         return res
 
     def private_listdir(self, cr, uid, context=None):
-        ''' Return private listdir list
-        '''
+        """ Return private listdir list
+        """
         res = []
-        
+
         company_pool = self.pool.get('res.company')
         private_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='user', context=context)
-        
+
         try:
             listdir = os.listdir(private_folder)
         except:
             raise osv.except_osv(
-                _('Error:'), 
+                _('Error:'),
                 _('Cannot access: %s' % private_folder),
                 )
-  
+
         for f in listdir:
             try:
                 fullpath = os.path.join(private_folder, f)
             except:
                 raise osv.except_osv(
-                    _('File upload'), 
+                    _('File upload'),
                     _('Change file name, character not permit: %s' % f),
-                    )    
+                    )
             if not os.path.isfile(fullpath):
                 continue
-            res.append((fullpath, f))          
-        return res                
+            res.append((fullpath, f))
+        return res
 
     def button_personal_folder(self, cr, uid, ids, context=None):
         # TODO complete open folder with agent procedure
@@ -127,14 +129,14 @@ class UploadDocumentWizard(orm.TransientModel):
             cr, uid, ids, mode='home', context=context)
 
     def button_reassign(self, cr, uid, ids, context=None):
-        ''' Button reassign wizard
-        '''
+        """ Button reassign wizard
+        """
         if context is None:
             context = {}
-        active_ids = context.get('active_ids', [])    
+        active_ids = context.get('active_ids', [])
         if not active_ids:
             raise osv.except_osv(
-                _('No selection'), 
+                _('No selection'),
                 _('Select document to reassign'),
                 )
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
@@ -146,21 +148,21 @@ class UploadDocumentWizard(orm.TransientModel):
         if current_proxy.default_protocol_id:
             data['protocol_id'] = current_proxy.default_protocol_id.id
         # TODO manage: assign protocol!
-        
+
         if current_proxy.default_type_id:
             data['type_id'] = current_proxy.default_type_id.id
         if current_proxy.default_language_id:
             data['language_id'] = current_proxy.default_language_id.id
-        
-        document_pool = self.pool.get('docnaet.document')
-        document_pool.write(cr, uid, active_ids, data, context=context)  
 
-        # Reassign protocol number:    
+        document_pool = self.pool.get('docnaet.document')
+        document_pool.write(cr, uid, active_ids, data, context=context)
+
+        # Reassign protocol number:
         if current_proxy.assign_protocol:
             document_pool.assign_protocol_number(
                 cr, uid, active_ids, context=context)
         # TODO reassign_confirm for change status in confirmed
-        
+
         model_pool = self.pool.get('ir.model.data')
         return {
             'type': 'ir.actions.act_window',
@@ -175,17 +177,17 @@ class UploadDocumentWizard(orm.TransientModel):
             'context': context,
             'target': 'current',
             'nodestroy': False,
-            }      
-        
+            }
+
     def button_upload(self, cr, uid, ids, context=None):
-        ''' Button event for upload
-        '''
+        """ Button event for upload
+        """
         if context is None:
             context = {}
 
         # TODO complete the load from folder:
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
-        file_mode = wiz_proxy.file_mode 
+        file_mode = wiz_proxy.file_mode
 
         # Partial mode
         file_selected = []
@@ -194,40 +196,40 @@ class UploadDocumentWizard(orm.TransientModel):
         if file_mode == 'partial':
             file_selected = [
                 item.name for item in wiz_proxy.document_ids if item.to_import]
-        
+
         company_pool = self.pool.get('res.company')
         document_pool = self.pool.get('docnaet.document')
         protocol_pool = self.pool.get('docnaet.protocol')
         program_pool = self.pool.get('docnaet.protocol.template.program')
 
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
-        
+
         # Difference between Docnaet and Labnaet:
         docnaet_mode = doc_proxy.docnaet_mode
         if not docnaet_mode:
             raise osv.except_osv(
-                _('Docnaet mode:'), 
+                _('Docnaet mode:'),
                 _('Cannot find document mode (labnaet or docnaet'),
                 )
         context['docnaet_mode'] = docnaet_mode
 
-        # ---------------------------------------------------------------------        
+        # ---------------------------------------------------------------------
         # Folder depend on doc/lab mode
-        # ---------------------------------------------------------------------        
+        # ---------------------------------------------------------------------
         # Store (output):
         store_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='store', context=context)
-        
+
         # Private (input):
         private_folder = self.private_listdir(cr, uid, context=context)
 
         for fullpath, f in private_folder:
             if file_mode == 'partial' and f not in file_selected:
                 continue # jumped
-            
+
             # -----------------------------------------------------------------
             # Create record for document:
-            # -----------------------------------------------------------------  
+            # -----------------------------------------------------------------
             extension = f.split('.')[-1].lower()
             real_name = '.'.join(f.split('.')[:-1])  # Remove extension
             if len(extension) > 4:
@@ -239,10 +241,10 @@ class UploadDocumentWizard(orm.TransientModel):
                 'name': real_name,
                 'docnaet_mode': docnaet_mode,
                 'protocol_id': wiz_proxy.default_protocol_id.id or False,
-                'user_id': wiz_proxy.default_user_id.id or uid, 
-                'partner_id': wiz_proxy.default_partner_id.id or False, 
-                'product_id': wiz_proxy.default_product_id.id or False,                 
-                'language_id': wiz_proxy.default_language_id.id or False, 
+                'user_id': wiz_proxy.default_user_id.id or uid,
+                'partner_id': wiz_proxy.default_partner_id.id or False,
+                'product_id': wiz_proxy.default_product_id.id or False,
+                'language_id': wiz_proxy.default_language_id.id or False,
                 'type_id': wiz_proxy.default_type_id.id or False,
                 'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),
                 'import_date': datetime.now().strftime(
@@ -256,14 +258,14 @@ class UploadDocumentWizard(orm.TransientModel):
             if docnaet_mode == 'labnaet':
                 labnaet_id = document_pool.get_counter_labnaet_id(
                     cr, uid, context=context)
-                
+
                 data.update({
                     'labnaet_id': labnaet_id,
                     })
-                        
-                # -------------------------------------------------------------    
+
+                # -------------------------------------------------------------
                 # MRP Link:
-                # -------------------------------------------------------------    
+                # -------------------------------------------------------------
                 if wiz_proxy.default_protocol_id.link_mrp:
                     mrp_pool = self.pool.get('mrp.production')
                     mrp_name = real_name.replace(' ', '')
@@ -281,10 +283,10 @@ class UploadDocumentWizard(orm.TransientModel):
                                 })
             else:
                 labnaet_id = False
-                        
+
             if wiz_proxy.assign_protocol:
                 data['number'] = protocol_pool.assign_protocol_number(
-                    cr, uid, data['protocol_id'], context=context)                
+                    cr, uid, data['protocol_id'], context=context)
 
             item_id = document_pool.create(cr, uid, data, context=context)
             document_imported.append(item_id)
@@ -305,7 +307,7 @@ class UploadDocumentWizard(orm.TransientModel):
                 )
             os.rename(fullpath, fullstore)
 
-            try:            
+            try:
                 os.system('chown openerp7:openerp7 %s' % fullstore)
                 os.system('chmod 775 %s' % fullstore)
                 _logger.info('Change permission to new file')
@@ -319,8 +321,8 @@ class UploadDocumentWizard(orm.TransientModel):
             'res_model': 'docnaet.document',
             #'domain': [
             #    ('docnaet_mode', '=', docnaet_mode),
-            #    ('user_id', '=', uid), 
-            #    ('uploaded', '=', True), 
+            #    ('user_id', '=', uid),
+            #    ('uploaded', '=', True),
             #    ('state', '=', 'draft'),
             #    ],
             'domain': [('id', 'in', document_imported)],
@@ -330,18 +332,18 @@ class UploadDocumentWizard(orm.TransientModel):
 
     def default_read_upload_folder(
             self, cr, uid, mode='html', context=None):
-        ''' Read folder and return html text
-        '''
+        """ Read folder and return html text
+        """
         if context is None:
             context = {}
-        docnaet_mode = context.get('docnaet_mode', 'docnaet')    
-        
+        docnaet_mode = context.get('docnaet_mode', 'docnaet')
+
         if mode == 'html':
             res = ''
         else:
             res = []
 
-        # Get private folder:        
+        # Get private folder:
         private_folder = self.private_listdir(cr, uid, context=context)
         for fullpath, f in private_folder:
             ts = datetime.fromtimestamp(
@@ -357,9 +359,9 @@ class UploadDocumentWizard(orm.TransientModel):
                     'name': f,
                     'date': ts,
                     'fullname': fullpath,
-                    }))  
-                              
-        if mode == 'html':        
+                    }))
+
+        if mode == 'html':
             return '''
                     <style>
                         .table_bf {
@@ -393,39 +395,39 @@ class UploadDocumentWizard(orm.TransientModel):
                     </table>
                 </p>''' % res
         else:
-            return res    
-        
-    
+            return res
+
+
     _columns = {
         'mode': fields.selection([
             ('upload', 'Upload mode'),
             ('reassign', 'Reassign mode'),
-            ], 'Mode'),            
+            ], 'Mode'),
 
         # Filter for partner:
         'partner_name': fields.char('Partner name', size=80),
         'country_id': fields.many2one('res.country', 'Country'),
-            
+
         'default_partner_id': fields.many2one(
             'res.partner', '>> Default partner',
             domain=[('docnaet_enable', '=', True)],
             ),
-            
+
         # Labnaet:
-        'default_product_id': fields.many2one('docnaet.product', 
+        'default_product_id': fields.many2one('docnaet.product',
             'Product'),
 
-        'assign_protocol': fields.boolean('Assign protocol', 
-            help='In upload mode assign protocol and next number'),    
-        'default_user_id': fields.many2one('res.users', 
+        'assign_protocol': fields.boolean('Assign protocol',
+            help='In upload mode assign protocol and next number'),
+        'default_user_id': fields.many2one('res.users',
             'User'),
         'default_protocol_id': fields.many2one(
-            'docnaet.protocol', 'Protocol', 
+            'docnaet.protocol', 'Protocol',
             domain=[('invisible', '=', False)],
             ),
-        'default_type_id': fields.many2one('docnaet.type', 
-            'Type'),            
-        'default_language_id': fields.many2one('docnaet.language', 
+        'default_type_id': fields.many2one('docnaet.type',
+            'Type'),
+        'default_language_id': fields.many2one('docnaet.language',
             'Language'),
         'folder_status': fields.text('Folder status'),
         'reassign_confirm': fields.boolean('Confirm after reassign',
@@ -448,37 +450,37 @@ class UploadDocumentWizard(orm.TransientModel):
         'mode': lambda *x: 'upload',
         'default_user_id': lambda s, cr, uid, ctx: uid,
         'folder_status': lambda s, cr, uid, ctx: s.default_read_upload_folder(
-            cr, uid, context=ctx), 
+            cr, uid, context=ctx),
         'file_mode': lambda *x: 'all',
         }
 
 class UploadDocumentFile(orm.TransientModel):
-    ''' Wizard to upload document
-    '''
+    """ Wizard to upload document
+    """
     _name = 'docnaet.document.upload.file'
     _description = 'Document upload file'
 
     _columns = {
         'to_import': fields.boolean('Import'),
-        'name': fields.char('File name', size=100, required=True, 
+        'name': fields.char('File name', size=100, required=True,
             readonly=True),
         'fullname': fields.char('Full name', size=400),
         'date': fields.date('Time stamp'),
         'wizard_id': fields.many2one(
             'docnaet.document.upload.wizard', 'Wizard'),
         }
-        
+
 class UploadDocumentWizard(orm.TransientModel):
-    ''' Wizard to upload document
-    '''
+    """ Wizard to upload document
+    """
     _inherit = 'docnaet.document.upload.wizard'
-    
+
     def get_default_file_ids(self, cr, uid, context=None):
-        ''' Load user files directly
-        '''        
+        """ Load user files directly
+        """
         if context is None:
             context = {}
-            
+
         res = self.default_read_upload_folder(
             cr, uid, mode='o2m', context=context)
         return res
@@ -487,9 +489,9 @@ class UploadDocumentWizard(orm.TransientModel):
         'document_ids': fields.one2many(
             'docnaet.document.upload.file', 'wizard_id', 'Files'),
         }
-    
+
     _defaults = {
         'document_ids': lambda s, cr, uid, ctx: s.get_default_file_ids(
             cr, uid, context=ctx),
-        }    
+        }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
