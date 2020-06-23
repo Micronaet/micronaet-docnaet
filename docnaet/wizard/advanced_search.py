@@ -215,7 +215,8 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol',
             domain=[('invisible', '=', False)]),
         'partner_id': fields.many2one('res.partner', 'Partner'),
-        #'docnaet_parent_id': fields.many2one('res.partner', 'Parent partner'),
+        'sector_id': fields.many2one('docnaet.sector', 'Settore'),
+        # 'docnaet_parent_id': fields.many2one('res.partner', 'Parent partner')
         'country_id': fields.many2one('res.country', 'Country'),
         'from_date': fields.date('From date'),
         'to_date': fields.date('To date'),

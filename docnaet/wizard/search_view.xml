@@ -58,7 +58,7 @@
                                        <field name="priority" options="{'limit': 10, 'create': false, 'create_edit': false}" />
                                        <field name="docnaet_category_id" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id,context)" />
 
-                                       <field name="sector_id" groups="docnaet.group_docnaet_sector_user"/>
+                                       <field name="sector_id" groups="docnaet.group_docnaet_sector_user" widget="selection"/>
                                  </group>
                             </page>
                         </notebook>
