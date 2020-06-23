@@ -403,7 +403,7 @@
                     <group colspan="4" col="4">
                         <field name="name" readonly="1" />
                         <newline/>
-                        <field name="sector_ids" colspan="4" widget="many2many_tags"/>
+                        <field name="sector_ids" colspan="4" widget="many2many_tags" groups="docnaet.group_docnaet_sector_admin"/>
                     </group>
                 </sheet>
             </form>
@@ -671,7 +671,7 @@
                 <field name="partner_id" filter_domain="['|',('partner_id.docnaet_parent_id','=',self),('partner_id','=',self)]" domain="[('docnaet_enable','=',True)]" />
                 <field name="country_id" />
 
-                <field name="sector_id" filter_domain="[('sector_id','=',self)]" groups="docnaet.model_docnaet_sector"/>
+                <field name="sector_id" filter_domain="[('sector_id','=',self)]" /> <!--TODO groups="docnaet.group_docnaet_sector_user"-->
 
                 <!--<field name="docnaet_category_id" /> Cassandra want to remove-->
                 <field name="user_id" filter_domain="[('user_id','=',self)]"/>
@@ -697,7 +697,7 @@
 
                     <filter name="group_country" string="Country" context="{'group_by': 'country_id'}"/>
                     <filter name="group_user" string="User" context="{'group_by': 'user_id'}"/>
-                    <filter name="group_sector" string="Sector" context="{'group_by': 'sector_id'}" groups="docnaet.model_docnaet_sector"/>
+                    <filter name="group_sector" string="Settore" context="{'group_by': 'sector_id'}" /><!--TODO groups="docnaet.group_docnaet_sector_user"-->
                     <filter name="group_protocol" string="Protocol" context="{'group_by': 'protocol_id'}"/>
                     <filter name="group_program" string="Program" context="{'group_by': 'program_id'}"/>
                     <filter name="group_extension" string="Extension" context="{'group_by': 'docnaet_extension'}"/>
@@ -778,7 +778,7 @@
                <field name="docnaet_mode" invisible="1" />
                <field name="name" />
                <field name="description" />
-               <field name="sector_id" groups="docnaet.model_docnaet_sector"/>
+               <field name="sector_id" groups="docnaet.group_docnaet_sector_admin"/>
                <field name="partner_id" />
                <field name="country_id" />
                <field name="product_id" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
@@ -887,7 +887,7 @@
                        <newline/>
 
                        <field name="docnaet_mode" groups="docnaet.group_docnaet_mode" />
-                       <field name="sector_id" groups="docnaet.model_docnaet_sector"/>
+                       <field name="sector_id" groups="docnaet.group_docnaet_sector_user" widget="selection"/>
 
                        <notebook colspan="5">
                            <page string="Extra info">
@@ -1060,7 +1060,7 @@
             <menuitem parent="docnaet_administration" id="docnaet_administration_program" name="Program" sequence="60" action="action_docnaet_protocol_template_program"/>
             <menuitem parent="docnaet_administration" id="docnaet_administration_type" name="Tipology" sequence="70" action="action_docnaet_type" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_language" name="Language" sequence="80" action="action_docnaet_language" />
-            <menuitem parent="docnaet_administration" id="menu_docnaet_sector" name="Settore" sequence="90" action="action_docnaet_sector" groups="docnaet.group_docnaet_sector_user"/>
+            <menuitem parent="docnaet_administration" id="menu_docnaet_sector" name="Settore" sequence="90" action="action_docnaet_sector" groups="docnaet.group_docnaet_sector_admin"/>
     </data>
 </openerp>
 

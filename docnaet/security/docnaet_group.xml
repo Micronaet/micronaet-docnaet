@@ -20,6 +20,11 @@
         <field name="category_id" ref="module_docnaet" />
         <field name="comment">Manage document with sector.</field>
     </record>
+    <record id="group_docnaet_sector_admin" model="res.groups">
+        <field name="name">Docnaet sector admin</field>
+        <field name="category_id" ref="module_docnaet" />
+        <field name="comment">Manage document with sector admin.</field>
+    </record>
     <record id="group_docnaet_admin" model="res.groups">
         <field name="name">Docnaet administrator</field>
         <field name="category_id" ref="module_docnaet" />
