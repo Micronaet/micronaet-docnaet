@@ -778,6 +778,7 @@
                <field name="docnaet_mode" invisible="1" />
                <field name="name" />
                <field name="description" />
+               <field name="sector_id" groups="docnaet.model_docnaet_sector"/>
                <field name="partner_id" />
                <field name="country_id" />
                <field name="product_id" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"/>
@@ -886,6 +887,7 @@
                        <newline/>
 
                        <field name="docnaet_mode" groups="docnaet.group_docnaet_mode" />
+                       <field name="sector_id" groups="docnaet.model_docnaet_sector"/>
 
                        <notebook colspan="5">
                            <page string="Extra info">
