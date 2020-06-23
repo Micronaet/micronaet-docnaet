@@ -30,22 +30,23 @@ from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 
 _logger = logging.getLogger(__name__)
 
+
 class DocnaetDocument(orm.Model):
-    ''' Add extra fields for integrare a link to docnaet document
-    '''
+    """ Add extra fields for integrare a link to docnaet document
+    """
     _inherit = 'docnaet.document'
-    
+
     _columns = {
         'import_date': fields.datetime('Import date'),
-        'uploaded': fields.boolean('Uploaded'),       
+        'uploaded': fields.boolean('Uploaded'),
         }
 
     _defaults = {
@@ -53,5 +54,3 @@ class DocnaetDocument(orm.Model):
             DEFAULT_SERVER_DATETIME_FORMAT),
         'uploaded': lambda *x: False,
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

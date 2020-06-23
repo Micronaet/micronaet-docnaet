@@ -1060,7 +1060,7 @@
             <menuitem parent="docnaet_administration" id="docnaet_administration_program" name="Program" sequence="60" action="action_docnaet_protocol_template_program"/>
             <menuitem parent="docnaet_administration" id="docnaet_administration_type" name="Tipology" sequence="70" action="action_docnaet_type" />
             <menuitem parent="docnaet_administration" id="docnaet_administration_language" name="Language" sequence="80" action="action_docnaet_language" />
-            <menuitem parent="docnaet_administration" id="menu_docnaet_sector" name="Settore" sequence="90" action="action_docnaet_sector" groups="docnaet.group_docnaet_sector_admin"/>
+            <menuitem parent="docnaet_administration" id="menu_docnaet_sector_admin" name="Settore" sequence="90" action="action_docnaet_sector" groups="docnaet.group_docnaet_sector_admin"/>
     </data>
 </openerp>
 
