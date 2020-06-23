@@ -18,31 +18,32 @@
                         <group colspan="4" col="2">
                             <field name="docnaet_mode" invisible="1"/> <!--groups="docnaet.group_docnaet_mode"-->
                             <newline/>
-                            
+
                             <separator string="Partner Filter:" colspan="2"/>
                             <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id,context)" placeholder="Filter partner name..." context="{'name_mode': 'docnaet'}"/>
                             <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id,context)"  placeholder="Filter partner country..." context="{'name_mode': 'docnaet'}"/>
-                                                        
+
                             <separator string="Default setup:" colspan="2"/>
                             <field name="default_partner_id" options="{'limit': 10, 'create': false, 'create_edit': false}" context="{'name_mode': 'docnaet'}"/>
                             <field name="default_user_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
                             <field name="default_type_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
 
-                            <field name="default_protocol_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>                                                        
-                            <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}" /> <!--,('is_address','=',False)-->                            
-                            
+                            <field name="default_protocol_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
+                            <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}" /> <!--,('is_address','=',False)-->
+
                             <field name="default_product_id" options="{'limit': 10, 'create': false, 'create_edit': false}" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
                             <field name="default_language_id" options="{'limit': 10, 'create': false, 'create_edit': false}" />
-                            
+                            <field name="default_sector_id" groups="docnaet.group_docnaet_sector_user" widget="selection"/>
+
                             <field name="file_mode" attrs="{'invisible': [('mode','!=','upload')]}"/>
-                            
+
                             <!--Visible in UPLOAD mode:-->
                             <group colspan="4" attrs="{'invisible': [('mode','!=','upload')]}">
                                 <group colspan="4" attrs="{'invisible': [('file_mode','!=','all')]}">
                                     <separator string="Docnaet folder status:" colspan="4" attrs="{'invisible': [('docnaet_mode','=','labnaet')]}"/>
                                     <separator string="Labnaet folder status:" colspan="4" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
                                     <field name="folder_status" widget="html" nolabel="1" readonly="1" colspan="4"/>
-                                </group>    
+                                </group>
                                 <group colspan="4" attrs="{'invisible': [('file_mode','!=','partial')]}">
                                     <separator string="Docnaet select file:" colspan="4" attrs="{'invisible': [('docnaet_mode','=','labnaet')]}"/>
                                     <separator string="Labnaet select file:" colspan="4" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
@@ -55,13 +56,13 @@
                                         </tree>
                                     </field>
                                 </group>
-                            </group>    
+                            </group>
                         </group>
                     </sheet>
                 </form>
             </field>
         </record>
-        
+
         <!--Upload mode:-->
         <record id="action_docnaet_document_upload" model="ir.actions.act_window">
             <field name="name">Docnaet document upload</field>
@@ -81,8 +82,8 @@
             <field name="target">new</field>
             <field name="context">{'default_docnaet_mode': 'labnaet', 'docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
         </record>
-        <menuitem parent="docnaet.docnaet_document" id="docnaet_document_upload_menu" name="Upload document" sequence="40" action="action_docnaet_document_upload" />            
-        <menuitem parent="docnaet.labnaet_document" id="labnaet_document_upload_menu" name="Upload document" sequence="40" action="action_labnaet_document_upload" />            
+        <menuitem parent="docnaet.docnaet_document" id="docnaet_document_upload_menu" name="Upload document" sequence="40" action="action_docnaet_document_upload" />
+        <menuitem parent="docnaet.labnaet_document" id="labnaet_document_upload_menu" name="Upload document" sequence="40" action="action_labnaet_document_upload" />
 
         <!--TODO Labnaet mode?!?!?-->
         <!--Reassign mode:-->
@@ -94,9 +95,9 @@
             view_type="form"
             target="new"
             key2="client_action_multi"
-            multi="True"            
+            multi="True"
             context="{'default_mode': 'reassign', 'default_default_user_id': False, 'name_mode': 'docnaet'}"
             />
-        
+
     </data>
 </openerp>

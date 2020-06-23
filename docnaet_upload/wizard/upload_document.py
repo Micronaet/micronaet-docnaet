@@ -84,12 +84,12 @@ class UploadDocumentWizard(orm.TransientModel):
                     ('name', 'ilike', partner_name),
                     )
 
-        #if category_id:
+        # if category_id:
         #    res['domain']['partner_id'].append(
         #        ('docnaet_category_id','=', category_id),
         #        )
-        #_logger.warning('Filter: %s' % res)
-        #res['domain']['default_partner_id'] = '%s' % res['domain']['default_partner_id']
+        # _logger.warning('Filter: %s' % res)
+        # res['domain']['default_partner_id'] = '%s' % res['domain']['default_partner_id']
         return res
 
     def private_listdir(self, cr, uid, context=None):
@@ -154,6 +154,12 @@ class UploadDocumentWizard(orm.TransientModel):
         if current_proxy.default_language_id:
             data['language_id'] = current_proxy.default_language_id.id
 
+        try:
+            if current_proxy.default_sector_id:
+                data['sector_id'] = current_proxy.default_sector_id.id
+        except:
+            pass
+
         document_pool = self.pool.get('docnaet.document')
         document_pool.write(cr, uid, active_ids, data, context=context)
 
@@ -169,9 +175,9 @@ class UploadDocumentWizard(orm.TransientModel):
             'name': _('Reassign characteristics'),
             'view_type': 'form',
             'view_mode': 'tree,form',
-            #'res_id': 1,
+            # 'res_id': 1,
             'res_model': 'docnaet.document',
-            #'view_id': view_id, # Fale
+            # 'view_id': view_id, # False
             'views': [(False, 'tree'), (False, 'form')],
             'domain': [('id', 'in', active_ids)],
             'context': context,
@@ -319,7 +325,7 @@ class UploadDocumentWizard(orm.TransientModel):
             'view_type': 'form',
             'view_mode': 'tree,form,calendar',
             'res_model': 'docnaet.document',
-            #'domain': [
+            # 'domain': [
             #    ('docnaet_mode', '=', docnaet_mode),
             #    ('user_id', '=', uid),
             #    ('uploaded', '=', True),
@@ -353,7 +359,7 @@ class UploadDocumentWizard(orm.TransientModel):
                 res += '<tr><td>%s</td><td>%s</td><td>%s</td></tr>' % (
                     f, ts, f.split('.')[-1])
 
-            else: # mode default one2many
+            else:  # mode default one2many
                 res.append((0, 0, {
                     'to_import': False,
                     'name': f,
@@ -397,12 +403,13 @@ class UploadDocumentWizard(orm.TransientModel):
         else:
             return res
 
-
     _columns = {
         'mode': fields.selection([
             ('upload', 'Upload mode'),
             ('reassign', 'Reassign mode'),
             ], 'Mode'),
+
+        'default_sector_id': fields.many2one('docnaet.sector', 'Settore'),
 
         # Filter for partner:
         'partner_name': fields.char('Partner name', size=80),
@@ -414,12 +421,14 @@ class UploadDocumentWizard(orm.TransientModel):
             ),
 
         # Labnaet:
-        'default_product_id': fields.many2one('docnaet.product',
-            'Product'),
+        'default_product_id': fields.many2one(
+            'docnaet.product', 'Product'),
 
-        'assign_protocol': fields.boolean('Assign protocol',
+        'assign_protocol': fields.boolean(
+            'Assign protocol',
             help='In upload mode assign protocol and next number'),
-        'default_user_id': fields.many2one('res.users',
+        'default_user_id': fields.many2one(
+            'res.users',
             'User'),
         'default_protocol_id': fields.many2one(
             'docnaet.protocol', 'Protocol',
