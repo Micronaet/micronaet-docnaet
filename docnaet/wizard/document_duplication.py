@@ -160,7 +160,7 @@ class document_duplication(orm.TransientModel):
             context = {}
 
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
-        #context['with_number'] = current_proxy.with_number
+        # context['with_number'] = current_proxy.with_number
         return self.duplicate_operation(
             cr, uid, ids, mode='document', context=context)
 
@@ -176,7 +176,7 @@ class document_duplication(orm.TransientModel):
 
     _columns = {
         # To remove
-        #'with_number': fields.boolean('With number'),
+        # 'with_number': fields.boolean('With number'),
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
         'docnaet_mode': fields.selection([
             ('docnaet', 'Docnaet'), # Only for docnaet
@@ -188,6 +188,5 @@ class document_duplication(orm.TransientModel):
         }
 
     _defaults = {
-        #'with_number': lambda *x: False,
+        # 'with_number': lambda *x: False,
         }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
