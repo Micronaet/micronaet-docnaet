@@ -251,6 +251,8 @@ class UploadDocumentWizard(orm.TransientModel):
                 'partner_id': wiz_proxy.default_partner_id.id or False,
                 'product_id': wiz_proxy.default_product_id.id or False,
                 'language_id': wiz_proxy.default_language_id.id or False,
+                'sector_id': current_proxy.default_sector_id.id or False,
+
                 'type_id': wiz_proxy.default_type_id.id or False,
                 'date': datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT),
                 'import_date': datetime.now().strftime(
