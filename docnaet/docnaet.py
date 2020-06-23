@@ -61,7 +61,7 @@ class ResCompany(orm.Model):
         # Get docnaet path from company element
         company_ids = self.search(cr, uid, [], context=context)
         company_proxy = self.browse(cr, uid, company_ids, context=context)[0]
-        docnaet_path = company_proxy.__getattr__(field_path)# XXX variable
+        docnaet_path = company_proxy.__getattr__(field_path)  # XXX variable
 
         # Folder structure:
         path = {}
@@ -98,6 +98,7 @@ class ResCompany(orm.Model):
         'next_fax': fields.integer('Next fax number'),
         }
 
+
 class DocnaetLanguage(orm.Model):
     """ Object docnaet.language
     """
@@ -106,12 +107,13 @@ class DocnaetLanguage(orm.Model):
     _order = 'name'
 
     _columns = {
-        'name': fields.char('Language', size=64, required=True,
-            translate=True),
+        'name': fields.char(
+            'Language', size=64, required=True, translate=True),
         'code': fields.char('Code', size=16),
         'iso_code': fields.char('ISO Code', size=16),
         'note': fields.text('Note'),
         }
+
 
 class ResPartnerDocnaet(orm.Model):
     """ Object res.partner.docnaet
@@ -125,13 +127,14 @@ class ResPartnerDocnaet(orm.Model):
         'note': fields.text('Note'),
         }
 
+
 class ResPartner(orm.Model):
     """ Model name: ResPartner
     """
     _inherit = 'res.partner'
 
     def set_docnaet_on(self, cr, uid, ids, context=None):
-        """ Enalble docnaet partner
+        """ Enable docnaet partner
         """
         return self.write(cr, uid, ids, {
             'docnaet_enable': True,
@@ -153,6 +156,7 @@ class ResPartner(orm.Model):
             'res.partner.docnaet', 'Docnaet category'),
         }
 
+
 class ResPartnerRelation(orm.Model):
     """ Model name: ResPartner
     """
@@ -165,6 +169,7 @@ class ResPartnerRelation(orm.Model):
         'docnaet_child_ids': fields.one2many(
             'res.partner', 'docnaet_parent_id', 'Docnaet Ditte Collegate'),
         }
+
 
 class ResPartnerAlternativeSearch(orm.Model):
     """ Model name: ResPartner
@@ -189,10 +194,9 @@ class ResPartnerAlternativeSearch(orm.Model):
             else:
                 res.append((partner.id, partner.name))
 
-        #_logger.error('>>>>> name_get %s [%s]' % (name_mode, context))
-        #_logger.error('>>>>> name_get %s [%s]' % (name_mode, res))
+        # _logger.error('>>>>> name_get %s [%s]' % (name_mode, context))
+        # _logger.error('>>>>> name_get %s [%s]' % (name_mode, res))
         return res
-
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
@@ -221,7 +225,7 @@ class ResPartnerAlternativeSearch(orm.Model):
                     ])
             else:
                 new_args.append(record)
-        #_logger.error('>>>>> search %s' % (args, ))
+        # _logger.error('>>>>> search %s' % (args, ))
         return super(ResPartner, self).search(
             cr, uid, new_args, offset, limit, order, context, count)
 
@@ -252,8 +256,9 @@ class ResPartnerAlternativeSearch(orm.Model):
                 ] + args, limit=limit)
         else:
             ids = []
-        #_logger.error('>>>>> name_search %s' % name)
+        # _logger.error('>>>>> name_search %s' % name)
         return self.name_get(cr, uid, ids, context=context)
+
 
 class ProductProductDocnaet(orm.Model):
     """ Object product.product.docnaet
@@ -262,10 +267,11 @@ class ProductProductDocnaet(orm.Model):
     _description = 'Product category'
 
     _columns = {
-        'name': fields.char('Docnaet category', size=64, required=True,
-            translate=True),
+        'name': fields.char(
+            'Docnaet category', size=64, required=True, translate=True),
         'note': fields.text('Note'),
         }
+
 
 class DocnaetProduct(orm.Model):
     """ Model name: Docnaet product
@@ -280,10 +286,11 @@ class DocnaetProduct(orm.Model):
         'docnaet_category_id': fields.many2one(
             'product.product.docnaet', 'Docnaet category'),
         'partner_id': fields.many2one('res.partner', 'Partner'),
-        #'product_id': fields.many2one('product.product', 'Product',
+        # 'product_id': fields.many2one('product.product', 'Product',
         #    help='Link to original product data'),
         'note': fields.text('Note'),
         }
+
 
 class DocnaetType(orm.Model):
     """ Object docnaet.type
@@ -314,7 +321,7 @@ class DocnaetType(orm.Model):
         'invisible': fields.boolean('Not used'),
         'note': fields.text('Note'),
         'docnaet_mode': fields.selection([
-            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('docnaet', 'Docnaet'),  # Only for docnaet
             ('labnaet', 'Labnaet'),
             ('all', 'All'),
             ], 'Docnaet mode', required=True,
@@ -325,6 +332,7 @@ class DocnaetType(orm.Model):
     _defaults = {
         'docnaet_mode': lambda *x: 'docnaet',
         }
+
 
 class DocnaetProtocol(orm.Model):
     """ Object docnaet.protocol
@@ -362,8 +370,8 @@ class DocnaetProtocol(orm.Model):
         return number
 
     _columns = {
-        'name': fields.char('Protocol', size=64, required=True,
-            translate=True),
+        'name': fields.char(
+            'Protocol', size=64, required=True, translate=True),
         'next': fields.integer('Next protocol', required=True),
         'note': fields.text('Note', translate=True),
         # TODO default_application_id
@@ -371,7 +379,7 @@ class DocnaetProtocol(orm.Model):
         'docnaet_mode': fields.selection([
             ('docnaet', 'Docnaet'), # Only for docnaet
             ('labnaet', 'Labnaet'),
-            #('all', 'All'), # TODO remove?!?
+            # ('all', 'All'), # TODO remove?!?
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'
                 ' for manage other docs'),
@@ -381,6 +389,7 @@ class DocnaetProtocol(orm.Model):
         'docnaet_mode': lambda *x: 'docnaet',
         'next': lambda *x: 1,
         }
+
 
 class DocnaetProtocolTemplateProgram(orm.Model):
     """ Object docnaet.protocol.template.program
@@ -408,6 +417,7 @@ class DocnaetProtocolTemplateProgram(orm.Model):
         'note': fields.text('Note', translate=True),
         }
 
+
 class DocnaetProtocolTemplate(orm.Model):
     """ Object docnaet.protocol.template
     """
@@ -418,13 +428,14 @@ class DocnaetProtocolTemplate(orm.Model):
     _order = 'lang_id'
 
     _columns = {
-        'lang_id': fields.many2one('docnaet.language', 'Language',
-            required=True),
+        'lang_id': fields.many2one(
+            'docnaet.language', 'Language', required=True),
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
         'program_id': fields.many2one('docnaet.protocol.template.program',
             'Program'),
         'note': fields.text('Note'),
         }
+
 
 class DocnaetProtocol(orm.Model):
     """ 2many fields
@@ -435,6 +446,7 @@ class DocnaetProtocol(orm.Model):
         'template_ids': fields.one2many('docnaet.protocol.template',
             'protocol_id', 'Template'),
         }
+
 
 class DocnaetDocument(orm.Model):
     """ Object docnaet.document
@@ -464,7 +476,7 @@ class DocnaetDocument(orm.Model):
             if '+' in search_partner_name:
                 partner_part = search_partner_name.split('+')
                 # Add or:
-                #res['domain']['partner_id'].extend([
+                # res['domain']['partner_id'].extend([
                 #    '|' for item in range(1, len(partner_part))])
                 # Add partner list of ilike search:
                 res['domain']['partner_id'].extend([
@@ -473,7 +485,7 @@ class DocnaetDocument(orm.Model):
                 res['domain']['partner_id'].append(
                     ('name', 'ilike', search_partner_name),
                     )
-        #if category_id:
+        # if category_id:
         #    res['domain']['partner_id'].append(
         #        ('docnaet_category_id','=', category_id),
         #        )
@@ -557,7 +569,7 @@ class DocnaetDocument(orm.Model):
 
             NOTE: maybe expand the services
         """
-        handle = 'openerp' # TODO put in company as parameter
+        handle = 'openerp'  # TODO put in company as parameter
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
         # ---------------------------------------------------------------------
@@ -586,12 +598,12 @@ class DocnaetDocument(orm.Model):
                 handle, uid, app)
 
         # C. Open remote document:
-        #if remote:
+        # if remote:
         #    final_url = '%s[R]' % final_url
 
         return {
             'name': 'Open %s document' % docnaet_mode,
-            #res_model': 'ir.actions.act_url',
+            # res_model': 'ir.actions.act_url',
             'type': 'ir.actions.act_url',
             'url': final_url,
             'target': 'self',
@@ -634,6 +646,7 @@ class DocnaetDocument(orm.Model):
             _('Document info'),
             message,
             )
+
     def button_assign_fax_number(self, cr, uid, ids, context=None):
         """ Assign fax number to document (next counter)
         """
@@ -674,7 +687,7 @@ class DocnaetDocument(orm.Model):
         # 2 different ID:
         if document.docnaet_mode == 'labnaet':
             document_id = document.labnaet_id
-        else: #'docnaet':
+        else:  #'docnaet':
             document_id = document.id
 
         company_pool = self.pool.get('res.company')
@@ -686,9 +699,9 @@ class DocnaetDocument(orm.Model):
                 document.docnaet_extension,
                 )
             if mode == 'filename':
-               return filename
-            else: #fullname:
-               return os.path.join(store_folder, filename)
+                return filename
+            else:  #fullname:
+                return os.path.join(store_folder, filename)
         elif document.original_id:
             return self.get_document_filename(
                 cr, uid, document.original_id, mode=mode, context=context)
@@ -698,7 +711,7 @@ class DocnaetDocument(orm.Model):
             filename = '%s.%s' % (document_id, document.docnaet_extension)
             if mode == 'filename':
                 return filename
-            else:# fullname mode:
+            else:  # fullname mode:
                 return os.path.join(store_folder, filename)
 
     def _refresh_partner_country_change(self, cr, uid, ids, context=None):
@@ -739,7 +752,7 @@ class DocnaetDocument(orm.Model):
         return res
 
     def _get_date_month_4_group(self, cr, uid, ids, fields, args,
-            context=None):
+                                context=None):
         """ Fields function for calculate
         """
         res = {}
@@ -751,7 +764,7 @@ class DocnaetDocument(orm.Model):
         return res
 
     def _get_deadline_month_4_group(self, cr, uid, ids, fields, args,
-            context=None):
+                                    context=None):
         """ Fields function for calculate
         """
         res = {}
@@ -809,7 +822,7 @@ class DocnaetDocument(orm.Model):
 
         # OpenERP many2one
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol',
-            domain=[('invisible', '=', False)], #required=True
+            domain=[('invisible', '=', False)],  # required=True
             ),
         'language_id': fields.many2one('docnaet.language', 'Language'),
         'type_id': fields.many2one('docnaet.type', 'Type',
@@ -867,13 +880,13 @@ class DocnaetDocument(orm.Model):
         'imported': fields.boolean('Imported'),
         'private': fields.boolean('Private'),
         # Workflow date event:
-        #'date_confirmed': fields.text('Confirmed event', required=True),
-        #'date_suspended': fields.date('Suspended event', required=True),
-        #'date_deadline': fields.date('Deadline event', required=True),
+        # 'date_confirmed': fields.text('Confirmed event', required=True),
+        # 'date_suspended': fields.date('Suspended event', required=True),
+        # 'date_deadline': fields.date('Deadline event', required=True),
         'docnaet_mode': fields.selection([
-            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('docnaet', 'Docnaet'),  # Only for docnaet
             ('labnaet', 'Labnaet'),
-            #('all', 'All'),
+            # ('all', 'All'),
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'
                 ' for manage other docs'),
@@ -889,7 +902,7 @@ class DocnaetDocument(orm.Model):
         'state': fields.selection([
             ('draft', 'Draft'),
             ('confirmed', 'Confirmed'),
-            #('suspended', 'Suspended'),
+            # ('suspended', 'Suspended'),
             ('timed', 'Timed'),
             ('cancel', 'Cancel'),
             ], 'State', readonly=True),
@@ -903,14 +916,14 @@ class DocnaetDocument(orm.Model):
         'state': lambda *x: 'draft',
         }
 
-class DocnaetDocument(orm.Model):
+
+class DocnaetDocumentRelations(orm.Model):
     """ Add extra relation fields
     """
     _inherit = 'docnaet.document'
 
     _columns = {
-        'duplicated_ids': fields.one2many('docnaet.document', 'original_id',
+        'duplicated_ids': fields.one2many(
+            'docnaet.document', 'original_id',
             'duplicated', help='Child document duplicated from this'),
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
