@@ -17,7 +17,7 @@
                     <group colspan="4" col="6">
                         <separator string="Docnaet advanced search:" colspan="6" attrs="{'invisible': [('docnaet_mode','=','labnaet')]}"/>
                         <separator string="Labnaet advanced search:" colspan="6" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
-                        
+
                         <field name="keywords" colspan="6"/>
                         <field name="protocol_id" colspan="4" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
                         <field name="number" />
@@ -25,12 +25,12 @@
                         <field name="partner_name" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id,context)" context="{'name_mode': 'docnaet'}"/>
                         <field name="country_id" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id,context)" context="{'name_mode': 'docnaet'}"/>
                         <field name="partner_id" domain="[('docnaet_enable','=',True)]" context="{'name_mode': 'docnaet'}"/>
-                        
+
                         <!--LABNAET Mode:-->
                         <field name="product_id" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
                         <field name="docnaet_product_category_id" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
                         <newline/>
-                        
+
                         <notebook colspan="6">
                             <page string="Simple">
                                  <group colspan="4" col="4">
@@ -38,16 +38,16 @@
                                         <field name="from_date" />
                                         <field name="to_date" />
                                         <field name="from_deadline" />
-                                        <field name="to_deadline" />                                      
+                                        <field name="to_deadline" />
                                  </group>
                             </page>
                             <page string="Advanced">
                                  <group colspan="4" col="4">
-                                       <field name="name" />                           
+                                       <field name="name" />
                                        <field name="user_id" options="{'limit': 10, 'create': false, 'create_edit': false}" />
-                                       
+
                                        <field name="description" />
-                                       <field name="note" />                               
+                                       <field name="note" />
 
                                        <field name="type_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
                                        <field name="language_id" options="{'limit': 10, 'create': false, 'create_edit': false}" domain="[('docnaet_mode','in',('all', docnaet_mode))]" />
@@ -56,7 +56,9 @@
                                        <field name="docnaet_extension" />
 
                                        <field name="priority" options="{'limit': 10, 'create': false, 'create_edit': false}" />
-                                       <field name="docnaet_category_id" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id,context)" />                                       
+                                       <field name="docnaet_category_id" on_change="onchange_country_partner_domain(partner_name,country_id,docnaet_category_id,context)" />
+
+                                       <field name="sector_id" groups="docnaet.group_docnaet_sector_user"/>
                                  </group>
                             </page>
                         </notebook>
@@ -88,8 +90,8 @@
             <field name="target">new</field>
     </record>
 
-   <menuitem parent="docnaet_document" id="docnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search_docnaet" /> 
-   <menuitem parent="labnaet_document" id="labnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search_labnaet" />            
-    
+   <menuitem parent="docnaet_document" id="docnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search_docnaet" />
+   <menuitem parent="labnaet_document" id="labnaet_document_advanced_search" name="Advanced search" sequence="30" action="action_document_advanced_search_labnaet" />
+
     </data>
 </openerp>

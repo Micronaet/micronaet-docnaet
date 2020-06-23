@@ -183,7 +183,7 @@ class document_duplication(orm.TransientModel):
             ('labnaet', 'Labnaet'),
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'
-                ' for manage other docs'),
+                 ' for manage other docs'),
 
         }
 
