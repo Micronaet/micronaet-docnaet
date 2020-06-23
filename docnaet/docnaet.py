@@ -892,7 +892,8 @@ class DocnaetDocument(orm.Model):
         'program_id': fields.many2one(
             'docnaet.protocol.template.program', 'Type of document'),
 
-        'original_id': fields.many2one('docnaet.document', 'Original',
+        'original_id': fields.many2one(
+            'docnaet.document', 'Original',
             help='Parent orignal document after this duplication'),
         'imported': fields.boolean('Imported'),
         'private': fields.boolean('Private'),
