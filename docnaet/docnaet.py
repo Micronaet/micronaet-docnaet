@@ -122,8 +122,22 @@ class ResPartnerDocnaet(orm.Model):
     _description = 'Partner category'
 
     _columns = {
-        'name': fields.char('Docnaet type', size=64, required=True,
+        'name': fields.char(
+            'Docnaet type', size=64, required=True,
             translate=True),
+        'note': fields.text('Note'),
+        }
+
+
+class DocnaetSector(orm.Model):
+    """ Object docnaet.sector
+    """
+    _name = 'docnaet.sector'
+    _description = 'Docnaet sector'
+
+    _columns = {
+        'name': fields.char(
+            'Settore', size=64, required=True, translate=True),
         'note': fields.text('Note'),
         }
 
@@ -458,8 +472,9 @@ class DocnaetDocument(orm.Model):
     # -------------------------------------------------------------------------
     # Onchange event:
     # -------------------------------------------------------------------------
-    def onchange_country_partner_domain(self, cr, uid, ids,
-            search_partner_name, search_country_id, #category_id,
+    def onchange_country_partner_domain(
+            self, cr, uid, ids,
+            search_partner_name, search_country_id,  # category_id,
             context=None):
         """ On change for domain purpose
         """
@@ -687,7 +702,7 @@ class DocnaetDocument(orm.Model):
         # 2 different ID:
         if document.docnaet_mode == 'labnaet':
             document_id = document.labnaet_id
-        else:  #'docnaet':
+        else:  # 'docnaet':
             document_id = document.id
 
         company_pool = self.pool.get('res.company')
@@ -700,12 +715,12 @@ class DocnaetDocument(orm.Model):
                 )
             if mode == 'filename':
                 return filename
-            else:  #fullname:
+            else:  # fullname:
                 return os.path.join(store_folder, filename)
         elif document.original_id:
             return self.get_document_filename(
                 cr, uid, document.original_id, mode=mode, context=context)
-        else: # Duplicate also file:
+        else:  # Duplicate also file:
             store_folder = company_pool.get_docnaet_folder_path(
                 cr, uid, subfolder='store', context=context)
             filename = '%s.%s' % (document_id, document.docnaet_extension)
@@ -789,7 +804,8 @@ class DocnaetDocument(orm.Model):
 
     _columns = {
         'name': fields.char('Subject', size=180, required=True),
-        'labnaet_id': fields.integer('Labnaet ID',
+        'labnaet_id': fields.integer(
+            'Labnaet ID',
             help='Secondary ID for document, keep data in different folder.'),
         'filename': fields.char('File name', size=200),
         'real_file': fields.function(
@@ -824,6 +840,7 @@ class DocnaetDocument(orm.Model):
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol',
             domain=[('invisible', '=', False)],  # required=True
             ),
+        'sector_id': fields.many2one('docnaet.sector', 'Settore'),
         'language_id': fields.many2one('docnaet.language', 'Language'),
         'type_id': fields.many2one('docnaet.type', 'Type',
             domain=[('invisible', '=', False)]),
@@ -927,3 +944,15 @@ class DocnaetDocumentRelations(orm.Model):
             'docnaet.document', 'original_id',
             'duplicated', help='Child document duplicated from this'),
         }
+
+
+class ResUsers(orm.Model):
+    """ Docnaet user extra fields
+    """
+    _inherit = 'res.users'
+
+    _columns = {
+        'sector_ids': fields.many2many(
+            'docnaet.sector', 'docnaet_document_sector_rel',
+            'user_id', 'sector_id', 'Settori'),
+    }

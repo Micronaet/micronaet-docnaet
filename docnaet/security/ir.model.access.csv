@@ -9,5 +9,4 @@
 "access_res_partner_docnaet_user","res.partner.docnaet","model_res_partner_docnaet","base.group_user",1,1,1,1
 "access_docnaet_product_user","docnaet.product","model_docnaet_product","base.group_user",1,1,1,1
 "access_product_product_docnaet_user","access_product_product_docnaet","model_product_product_docnaet","base.group_user",1,1,1,1
-
-
+"access_docnaet_sector_user","access_docnaet_sector_docnaet","model_docnaet_sector","base.group_user",1,1,1,1
