@@ -31,20 +31,20 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
     DATETIME_FORMATS_MAP,
     float_compare)
 
-
 _logger = logging.getLogger(__name__)
 
 
 class docnaet_document_advanced_search_wizard(orm.TransientModel):
-    ''' Wizard for duplicate model
-    '''
+    """ Wizard for duplicate model
+    """
     _name = 'docnaet.document.advanced.search.wizard'
     _description = 'Advanced search'
 
-    def onchange_country_partner_domain(self, cr, uid, ids, partner_name,
+    def onchange_country_partner_domain(
+            self, cr, uid, ids, partner_name,
             country_id, category_id, context=None):
-        ''' On change for domain purpose
-        '''
+        """ On change for domain purpose
+        """
         partner_pool = self.pool.get('res.partner')
         res = {}
         res['domain'] = {'partner_id': [
@@ -74,12 +74,13 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
             res['domain']['partner_id'].extend([
                 ('docnaet_category_id', '=', category_id)
                 ])
+
         _logger.error('DOMAIN: %s' % (res, ))
         return res
 
     def advanced_search(self, cr, uid, ids, context=None):
-        ''' Advanced search
-        '''
+        """ Advanced search
+        """
         assert len(ids) == 1, 'Works only with one record a time'
 
         # Pool used:
@@ -93,6 +94,7 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
         keywords = current_proxy.keywords or False
         partner_name = current_proxy.partner_name or False
         protocol_id = current_proxy.protocol_id.id or False
+        sector_id = current_proxy.sector_id.id or False
         partner_id = current_proxy.partner_id.id or False
         country_id = current_proxy.country_id.id or False
         from_date = current_proxy.from_date
@@ -136,6 +138,8 @@ class docnaet_document_advanced_search_wizard(orm.TransientModel):
             partner_ids.append(partner_id)
             domain.append(('partner_id', 'in', partner_ids))
 
+        if sector_id:
+            domain.append(('sector_id', '=', sector_id))
         if protocol_id:
             domain.append(('protocol_id', '=', protocol_id))
         if country_id:
