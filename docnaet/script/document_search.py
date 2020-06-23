@@ -14,7 +14,7 @@ extensions = [
 files = []
 for root, folders, files in os.walk(path):
     for file in files:
-        extension = file.split('.')[-1]
+        extension = file.split('.')[-1].lower()
         fullname = os.path.join(root, file)
         if extension in extensions:
             print(fullname)
