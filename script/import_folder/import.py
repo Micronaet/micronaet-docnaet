@@ -34,7 +34,7 @@ user_id = 44
 priority_id = 3
 protocol_id = 20
 language_id = 1
-type_id = False
+type_id = 10
 sector_id = 3
 
 config = ConfigParser.ConfigParser()
