@@ -37,7 +37,6 @@ language_id = 1
 type_id = False
 sector_id = 3
 
-pdb.set_trace()
 config = ConfigParser.ConfigParser()
 config.read(['./config.cfg'])
 
@@ -84,6 +83,7 @@ program_db = {}
 program_ids = program_pool.search([])
 for program in program_pool.browse(program_ids):
     program_db[program.extension] = program.id
+pdb.set_trace()
 
 
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
