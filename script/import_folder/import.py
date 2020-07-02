@@ -147,3 +147,11 @@ for root, folders, files in os.walk(filesystem_path):
             docnaet_id, extension))
         print('   Import file: %s > %s' % (fullname, docnaet_fullname))
         shutil.copy(fullname, docnaet_fullname)
+
+        try:
+            erp.exec_workflow(
+                'docnaet.document',
+                'document_draft_confirmed',
+                docnaet_id)
+        except:
+            pass
