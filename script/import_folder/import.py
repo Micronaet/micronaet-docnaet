@@ -100,8 +100,10 @@ for root, folders, files in os.walk(filesystem_path):
         fullname = os.path.join(root, filename)
         create_date = get_create_date(fullname)
         name = '.'.join(name_part[:-1])
-        description = fullname[remove_left:-len(extension) - 1].replace(
-            '/', ' >> ')
+        description = '%s (Tipo: %s)' % (
+            fullname[remove_left:-len(extension) - 1].replace('/', ' >> '),
+            extension,
+        )
 
         note = 'Importato con procedure automatica [%s]' % \
                datetime.now()
