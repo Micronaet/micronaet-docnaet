@@ -83,12 +83,9 @@ program_db = {}
 program_ids = program_pool.search([])
 for program in program_pool.browse(program_ids):
     program_db[program.extension] = program.id
-pdb.set_trace()
-
 
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
 print('Read filesystem: %s' % filesystem_path)
-pdb.set_trace()
 remove_left = len(filesystem_path) + 1
 for root, folders, files in os.walk(filesystem_path):
     for filename in files:
