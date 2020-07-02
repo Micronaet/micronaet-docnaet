@@ -37,6 +37,7 @@ language_id = 1
 type_id = False
 sector_id = 3
 
+pdb.set_trace()
 config = ConfigParser.ConfigParser()
 config.read(['./config.cfg'])
 
