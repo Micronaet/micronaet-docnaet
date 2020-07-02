@@ -89,7 +89,7 @@ pdb.set_trace()
 # TODO Attenzione ai documenti puntatori (doppio ciclo per assegnazione parent)
 print('Read filesystem: %s' % filesystem_path)
 pdb.set_trace()
-remove_left = len(filesystem_path)
+remove_left = len(filesystem_path) + 1
 for root, folders, files in os.walk(filesystem_path):
     for filename in files:
         name_part = filename.split('.')
@@ -100,7 +100,8 @@ for root, folders, files in os.walk(filesystem_path):
         fullname = os.path.join(root, filename)
         create_date = get_create_date(fullname)
         name = '.'.join(name_part[:-1])
-        description = fullname[remove_left:-len(extension)].replace('/', ' ')
+        description = fullname[remove_left:-len(extension) - 1].replace(
+            '/', ' >> ')
 
         note = 'Importato con procedure automatica [%s]' % \
                datetime.now()
