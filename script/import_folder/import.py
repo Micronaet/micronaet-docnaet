@@ -153,5 +153,6 @@ for root, folders, files in os.walk(filesystem_path):
                 'docnaet.document',
                 'document_draft_confirmed',
                 docnaet_id)
+            print('Confermato WF')
         except:
-            pass
+            print('Non confermato WF, già corretto')
