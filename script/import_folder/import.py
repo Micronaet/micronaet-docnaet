@@ -18,12 +18,9 @@
 #
 ###############################################################################
 import os
-import sys
-import csv
 import erppeek
 import ConfigParser
 import time
-import pytz
 import shutil
 from datetime import datetime
 import pdb
@@ -52,6 +49,7 @@ password = config.get('OpenERP', 'pwd')
 filesystem_path = os.path.expanduser(config.get('path', 'filesystem'))
 docnaet_path = os.path.expanduser(config.get('path', 'docnaet'))
 
+
 def get_create_date(fullname):
     """ Extract create date from file:
     """
@@ -61,6 +59,7 @@ def get_create_date(fullname):
     tz = str.format('{0:+06.2f}', float(time.timezone) / 3600)
     final = formatted + tz
     return final[:19]
+
 
 # --------------
 # Client erpeek:
@@ -123,7 +122,7 @@ for root, folders, files in os.walk(filesystem_path):
             'name': name,
             'description': description,
             'note': note,
-            #'number': number,
+            # 'number': number,
             'docnaet_extension': extension,
             }
 
