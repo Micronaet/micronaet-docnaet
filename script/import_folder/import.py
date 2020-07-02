@@ -132,10 +132,10 @@ for root, folders, files in os.walk(filesystem_path):
             ])
         if document_ids:
             # Update
-            docnaet_pool.write(document_ids, data)
+            # docnaet_pool.write(document_ids, data)
             print('Update record %s' % description)
             docnaet_id = document_ids[0]
-            # continue # File yet present!?!
+            continue # File yet present!?!
         else:
             # Create
             docnaet_id = docnaet_pool.create(data).id
