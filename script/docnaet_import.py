@@ -148,7 +148,7 @@ for root, folders, files in os.walk(path):
             if ws_name == 'INDICE':
                 for row in range(ws.nrows):
                     if not row:
-                        continue # Jump first line
+                        continue  # Jump first line
 
                     partner_code = ws.cell(row, code_cell).value.strip()
                     sheet_code = ws.cell(row, sheet_cell).value.strip()
@@ -157,7 +157,8 @@ for root, folders, files in os.walk(path):
                         continue
 
                     if not partner_code:
-                        log_file += 'No codice fornitore riga: %s\n' % (row + 1)
+                        log_file += 'No codice fornitore riga: %s\n' % (
+                                    row + 1)
                         continue
 
                     if not(partner_code[:2].isdigit() and
@@ -180,7 +181,7 @@ for root, folders, files in os.walk(path):
                         continue
 
                     sheet_index[sheet_code] = partner_ids[0]
-                continue # Next sheet
+                continue  # Next sheet
 
             if ws_name not in sheet_index:
                 log_file += 'Foglio non in indice: %s\n' % ws_name
@@ -224,7 +225,7 @@ for root, folders, files in os.walk(path):
                 file_link = os.path.join(path, link.url_or_path)
 
                 if file_link not in log_db[xls_file][ws_name]:
-                    log_db[xls_file][ws_name][file_link] = False # Docnaet ID
+                    log_db[xls_file][ws_name][file_link] = False  # Docnaet ID
 
                 docnaet_extension = file_link.split('.')[-1].lower()
                 program_id = program_db.get(docnaet_extension)
