@@ -52,6 +52,18 @@ class DocnaetDocument(orm.Model):
     '''
     _inherit = 'docnaet.document'
     
+    def onchange_no_sale_price(
+            self, cr, uid, ids, no_sale_price, context=None):
+        """ Clean price if removed check
+        """    
+        res = {}
+        if not no_sale_price:
+            return res
+        res['value'] = {
+            'sale_order_amount': 0.0,
+            }    
+        return res
+            
     # -------------------------------------------------------------------------
     # Utility:
     # -------------------------------------------------------------------------

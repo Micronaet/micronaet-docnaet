@@ -74,7 +74,7 @@
                 <xpath expr="/form//notebook/page[@string='Linked objects']" position="after">
                     <page string="CRM" attrs="{'invisible': [('sale_management','=',False)]}">
                         <group colspan="4" col="5" >                       
-                            <field name="no_sale_price" />
+                            <field name="no_sale_price" on_change="onchange_no_sale_price(no_sale_price)"/>
                             <field name="sale_management" invisible="1"/>
                         </group>                       
                         <group colspan="4" col="5" attrs="{'invisible': [('no_sale_price','=',True)]}">                       
