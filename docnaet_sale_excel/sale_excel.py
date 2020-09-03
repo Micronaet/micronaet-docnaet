@@ -791,7 +791,6 @@ class SaleOrder(orm.Model):
         # Header:
         excel_pool.write_xls_line(
             ws_name, row, header, default_format=f_header)
-        excel_pool.autofilter(ws_name, row, 0, row, len(header) - 1)
         header_row = row
 
         sale_proxy = sale_pool.browse(cr, uid, sale_ids, context=context)
@@ -853,7 +852,7 @@ class SaleOrder(orm.Model):
                 product_total[uom_id] += qty
 
                 excel_pool.write_xls_line(ws_name, row, [
-                    qty,
+                    (qty, f_number_current),
                     product.default_code or product.name,
                     ], col=col, default_format=f_text_current)
                 total_product += 1
@@ -885,6 +884,10 @@ class SaleOrder(orm.Model):
                 # TODO write in header row!
                 ws_name, header_row, header_line,
                 col=loop * 2 + start_col, default_format=f_header)
+        if max_product:
+            excel_pool.autofilter(
+                ws_name, header_row, 0, header_row, loop * 2 + start_col - 1)
+
         excel_pool.freeze_panes(ws_name, header_row, 1)
 
         if save_mode:  # Save as a file:
