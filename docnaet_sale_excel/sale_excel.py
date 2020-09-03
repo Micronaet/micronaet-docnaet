@@ -880,10 +880,12 @@ class SaleOrder(orm.Model):
         # TODO write header extra data
         header_line = ['Q.', 'Prodotto']
         for loop in range(max_product):
+            this_col = loop * 2 + start_col
             excel_pool.write_xls_line(
                 # TODO write in header row!
                 ws_name, header_row, header_line,
-                col=loop * 2 + start_col, default_format=f_header)
+                col=this_col, default_format=f_header)
+            excel_pool.column_width(ws_name, [10, 15], col=this_col)
         if max_product:
             excel_pool.autofilter(
                 ws_name, header_row, 0, header_row, loop * 2 + start_col - 1)
