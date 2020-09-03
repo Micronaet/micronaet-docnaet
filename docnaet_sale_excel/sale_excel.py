@@ -818,7 +818,7 @@ class SaleOrder(orm.Model):
                 f_text_current = f_text
                 f_number_current = f_number
 
-            deadline = order.date_deadline
+            deadline = order.date_deadline or ''
             excel_pool.write_xls_line(ws_name, row, [
                 '%s [%s]' % (
                     partner.name, partner.sql_customer_code or ''),
@@ -847,7 +847,7 @@ class SaleOrder(orm.Model):
                 if not product:
                     continue
 
-                line_deadline = (line.date_deadline or ' No')[:7]
+                line_deadline = line.date_deadline
                 uom_id = product.uom_id
                 qty = line.product_uom_qty
                 if uom_id not in product_total:
@@ -860,11 +860,12 @@ class SaleOrder(orm.Model):
                     ], col=col, default_format=f_text_current)
 
                 # Comment for different deadline:
-                if deadline != line_deadline:
+                if line_deadline and line_deadline != deadline:
                     excel_pool.write_comment(
                         row, col,
                         'Consegnare: %s' % line_deadline,
-                        parameters)
+                        # parameters,
+                    )
 
                 total_product += 1
                 if total_product > max_product:
