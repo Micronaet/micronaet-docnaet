@@ -738,7 +738,9 @@ class SaleOrder(orm.Model):
 
         # Collect data:
         now = ('%s' % datetime.now())[:7]
-
+        parameters = {
+            'width': 300,
+        }
         # ---------------------------------------------------------------------
         # Docnaet Order:
         # ---------------------------------------------------------------------
@@ -816,13 +818,14 @@ class SaleOrder(orm.Model):
                 f_text_current = f_text
                 f_number_current = f_number
 
+            deadline = order.date_deadline
             excel_pool.write_xls_line(ws_name, row, [
                 '%s [%s]' % (
                     partner.name, partner.sql_customer_code or ''),
                 '',  # TODO destination
                 order.name,
                 order.date_order,
-                order.date_deadline,
+                deadline,
 
                 # 'Carico', 'Prenotato', 'Preso', 'Vettore',
                 '', '', '', '',  # TODO get this data?
@@ -844,7 +847,7 @@ class SaleOrder(orm.Model):
                 if not product:
                     continue
 
-                # deadline = (line.date_deadline or ' No')[:7]
+                line_deadline = (line.date_deadline or ' No')[:7]
                 uom_id = product.uom_id
                 qty = line.product_uom_qty
                 if uom_id not in product_total:
@@ -855,6 +858,14 @@ class SaleOrder(orm.Model):
                     (qty, f_number_current),
                     product.default_code or product.name,
                     ], col=col, default_format=f_text_current)
+
+                # Comment for different deadline:
+                if deadline != line_deadline:
+                    excel_pool.write_comment(
+                        row, col,
+                        'Consegnare: %s' % line_deadline,
+                        parameters)
+
                 total_product += 1
                 if total_product > max_product:
                     max_product = total_product
