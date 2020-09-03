@@ -862,6 +862,7 @@ class SaleOrder(orm.Model):
                 # Comment for different deadline:
                 if line_deadline and line_deadline != deadline:
                     excel_pool.write_comment(
+                        ws_name,
                         row, col,
                         'Consegnare: %s' % line_deadline,
                         # parameters,
