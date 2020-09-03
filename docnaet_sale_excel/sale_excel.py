@@ -113,20 +113,25 @@ class SaleOrder(orm.Model):
 
     _inherit = 'sale.order'
 
+    # Function:
+    def get_partner_note(self, partner):
+        """ Return color information
+        """
+        return '%s%s' % (
+            '[Pagamenti scaduti presenti] ' if
+            partner.duelist_uncovered else '',
+
+            '[Fuori FIDO] ' if
+            partner.duelist_over_fido else '',
+        )
+
+    # -------------------------------------------------------------------------
+    # Report procedure:
+    # -------------------------------------------------------------------------
+    # Salesman:
     def extract_sale_excel_report(self, cr, uid, context=None):
         """ Schedule extract of sale quotation info
         """
-        # Function:
-        def get_partner_note(partner):
-            """ Return color information
-            """
-            return '%s%s' % (
-                '[Pagamenti scaduti presenti] ' if
-                partner.duelist_uncovered else '',
-
-                '[Fuori FIDO] ' if
-                partner.duelist_over_fido else '',
-                )
 
         if context is None:
             context = {}
@@ -295,7 +300,7 @@ class SaleOrder(orm.Model):
                     (partner.duelist_uncovered_amount or '',
                         f_number_current),
                     (partner.duelist_fido or '', f_number_current),
-                    get_partner_note(partner),
+                    self.get_partner_note(partner),
                     ], f_text_current))
 
         month_column = sorted(month_column)
@@ -449,7 +454,7 @@ class SaleOrder(orm.Model):
                         (partner.duelist_uncovered_amount or '',
                             f_number_current),
                         (partner.duelist_fido or '', f_number_current),
-                        get_partner_note(partner),
+                        self.get_partner_note(partner),
                         ], f_text_current))
 
             # -----------------------------------------------------------------
@@ -568,7 +573,7 @@ class SaleOrder(orm.Model):
                         (partner.duelist_uncovered_amount or '',
                             f_number_current),
                         (partner.duelist_fido or '', f_number_current),
-                        get_partner_note(partner),
+                        self.get_partner_note(partner),
                         ], f_text_current))
                 else:
                     temp_list.append(([
@@ -585,7 +590,7 @@ class SaleOrder(orm.Model):
                             # (partner.duelist_uncovered_amount or '',
                             #     f_number_current),
                             # (partner.duelist_fido or '', f_number_current),
-                            # get_partner_note(partner),
+                            # self.get_partner_note(partner),
                             ], f_text_current))
 
         # ---------------------------------------------------------------------
@@ -715,4 +720,181 @@ class SaleOrder(orm.Model):
                 'Statistiche vendite',
                 'Statistiche giornaliere vendite',
                 'sale_statistic.xlsx',
+                context=context)
+
+    def extract_sale_excel_account_report(self, cr, uid, context=None):
+        """ Schedule extract of sale account report
+        """
+
+        if context is None:
+            context = {}
+
+        save_mode = context.get('save_mode')
+        _logger.info('Start extract save mode: %s' % save_mode)
+
+        # Pool used:
+        excel_pool = self.pool.get('excel.writer')
+        sale_pool = self.pool.get('sale.order')
+
+        # Collect data:
+        now = ('%s' % datetime.now())[:7]
+
+        # ---------------------------------------------------------------------
+        # Docnaet Order:
+        # ---------------------------------------------------------------------
+        ws_name = 'Ordini'
+        excel_pool.create_worksheet(name=ws_name)
+        width = [
+            35, 30, 10,
+            8, 8,
+            10, 10, 5,
+            15,
+            ]
+        header = [
+            'Cliente', 'Destinazione', 'OC',
+            'Data', 'Scadenza',
+            'Carico', 'Prenotato', 'Preso',
+            'Vettore',
+            ]
+        start_col = len(header)
+
+        sale_ids = sale_pool.search(cr, uid, [
+            ('state', 'in', ('draft', 'sent', 'cancel')),
+            ('partner_id.sql_customer_code', '=ilike', '201%'),
+            ], context=context)
+        row = 0
+
+        # Format:
+        excel_pool.set_format()
+        f_title = excel_pool.get_format('title')
+        f_header = excel_pool.get_format('header')
+
+        f_text = excel_pool.get_format('text')
+        f_text_red = excel_pool.get_format('text_red')
+        f_text_bg_blue = excel_pool.get_format('bg_blue')
+
+        f_number = excel_pool.get_format('number')
+        f_number_red = excel_pool.get_format('number_red')
+        f_number_bg_blue = excel_pool.get_format('bg_blue_number')
+        f_number_bg_blue_bold = excel_pool.get_format('bg_blue_number_bold')
+        f_number_bg_red_bold = excel_pool.get_format('bg_red_number_bold')
+        f_number_bg_green_bold = excel_pool.get_format('bg_green_number_bold')
+
+        # Column:
+        excel_pool.column_width(ws_name, width)
+
+        # ---------------------------------------------------------------------
+        # Data:
+        # ---------------------------------------------------------------------
+        row = 0
+
+        # Header:
+        excel_pool.write_xls_line(
+            ws_name, row, header, default_format=f_header)
+        excel_pool.autofilter(ws_name, row, 0, row, len(header) - 1)
+        header_row = row
+
+        sale_proxy = sale_pool.browse(cr, uid, sale_ids, context=context)
+
+        product_total = {}  # Statistic for product (uom distinct)
+        max_product = 0  # For print headers after
+
+        for order in sorted(
+                sale_proxy,
+                key=lambda x: (x.partner_id.name, x.name)
+                ):
+            partner = order.partner_id
+
+            # -----------------------------------------------------------------
+            # Excel Header data:
+            # -----------------------------------------------------------------
+            # Setup color:
+            if partner.duelist_uncovered or partner.duelist_over_fido:
+                f_text_current = f_text_red
+                f_number_current = f_number_red
+            else:
+                f_text_current = f_text
+                f_number_current = f_number
+
+            excel_pool.write(ws_name, row, [
+                '%s [%s]' % (
+                    partner.name, partner.sql_customer_code or ''),
+                '',  # TODO destination
+                order.name,
+                order.date_order,
+                order.date_deadline,
+
+                # 'Carico', 'Prenotato', 'Preso', 'Vettore',
+                '', '', '', '',  # TODO get this data?
+
+                # (partner.duelist_exposition_amount or '', f_number_current),
+                # (partner.duelist_uncovered_amount or '', f_number_current),
+                # (partner.duelist_fido or '', f_number_current),
+                # self.get_partner_note(partner),
+                ], f_text_current)
+
+            # -----------------------------------------------------------------
+            # Line data:
+            # -----------------------------------------------------------------
+            col = start_col
+
+            total_product = 0
+            for line in order.order_line:
+                product = line.product_id
+                if not product:
+                    continue
+
+                # deadline = (line.date_deadline or ' No')[:7]
+                uom_id = product.uom_id
+                qty = line.product_uom_qty
+                if uom_id not in product_total:
+                    product_total[uom_id] = 0.0
+                product_total[uom_id] += qty
+
+                excel_pool.write(ws_name, row, [
+                    qty,
+                    product.default_code or product.name,
+                    ], col=col, default_format=f_text_current)
+                total_product += 1
+                if total_product > max_product:
+                    max_product = total_product
+                col += 2  # data line column are 2!
+
+        # ---------------------------------------------------------------------
+        # Total page order:
+        # ---------------------------------------------------------------------
+        """
+        TODO write after 
+        row = 0
+        for uom_id in sorted(product_total, key=lambda x: x.name):
+            excel_pool.write_xls_line(
+                ws_name, row, [
+                    '', '', '',  # TODO check position!
+                    '', '', '',
+                    'Totale',
+                    uom_id.name,
+                    (product_total[uom_id], f_number_bg_blue_bold),
+                    ], default_format=f_text_bg_blue)
+            row += 1
+        """
+        # TODO write header extra data
+        header_line = ['Q.', 'Prodotto']
+        for loop in range(max_product):
+            excel_pool.write(
+                # TODO write in header row!
+                ws_name, header_row, header_line,
+                col=loop * 2 + start_col, default_format=f_header)
+        excel_pool.freeze_panes(ws_name, header_line, 1)
+
+        if save_mode:  # Save as a file:
+            _logger.info('Save mode: %s' % save_mode)
+            return excel_pool.save_file_as(save_mode)
+        else:  # Send mail:
+            _logger.info('Send mail mode!')
+            return excel_pool.send_mail_to_group(
+                cr, uid,
+                'docnaet_sale_excel.group_sale_statistic_mail',
+                'Statistiche contabilità',
+                'Statistiche giornaliere contabili',
+                'sale_statistic_accounting.xlsx',
                 context=context)

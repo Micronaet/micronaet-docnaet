@@ -33,7 +33,6 @@ from email import Encoders
 # -----------------------------------------------------------------------------
 # Read configuration parameter:
 # -----------------------------------------------------------------------------
-# cfg_file = os.path.expanduser('../local.cfg')
 cfg_file = os.path.expanduser('../openerp.cfg')
 now = ('%s' % datetime.now())[:19]
 
@@ -51,50 +50,28 @@ odoo = {
 
 # Mail:
 smtp = {
-    'to': config.get('smtp', 'to'),
-    # 'subject': config.get('smtp', 'subject'),
-    # 'text': config.get('smtp', 'text'),
+    'to': config.get('smtp', 'account_to'),
     'text': '''
-        <p>Spett.li responsabili vendite,</p>
+        <p>Spett.li responsabili contab.,</p>
         <p>Questa &egrave; una mail automatica giornaliera inviata da 
             <b>OpenERP</b> con lo stato ordini in contabilit&agrave; e 
-            le offerte aperte o perse in <b>Docnaet</b>.
+            per gestione consegne.
         </p>
 
         <p>Situazione aggiornata alla data di riferimento: <b>%s</b></p>
 
         <p>
-        1. <b>Ordini</b>: Elenco ordini da consegnare, fonte Mexal
-           (aggiunte informazioni solvibili&agrave;).
-           Ordinamento per data decrescente.<br/>
-        2. <b>Offerte</b>: Documenti Docnaet valorizzati dagli agenti ancora 
-           da vincere o perdere<br/>
-        3. <b>Perse</b>: Offerte marcate come perse in Docnaet.<br/>
-        4. <b>Clienti</b>: Elenco ordini, offerte attive, offerte perse 
-           e dettaglio solvibilit&agrave; cliente. Ordinamento alfabetico.<br/>
-        5. <b>Prodotti</b>: Elenco ordini per prodotto suddivisi per mese di 
-           scadenza / consegna (colonna No = senza scadenza). Totalizzato in 
-           fondo per unit&agrave di misura (in azzurro il mese attuale).<br/>
-        </p>
-
-        <p>
             <i>Nota: In rosso le righe dei clienti con pagamenti scaduti.</i>
-        </p>
-        <p>
-            <i>Nota: Potrebbe capitare che ci siano differenti valute, il 
-               totale indicato in fondo verr&agrave; quindi spezzato in tutte
-               quelle rilevate.</i>
         </p>
         
         <b>Micronaet S.r.l.</b>
         ''' % now,
-    'subject': 'PAN Dettaglio offerte e ordini aperti: %s' % now,
+    'subject': 'PAN Dettaglio contabile offerte per consegna: %s' % now,
 
     'folder': config.get('smtp', 'folder'),
     }
-# group_name = 'docnaet_sale_excel.group_sale_statistic_mail'
 
-filename = 'PAN Stato_ordini %s.xlsx' % now.replace(
+filename = 'PAN stato consegne %s.xlsx' % now.replace(
     '/', '_').replace(':', '_').replace('-', '_')
 fullname = os.path.expanduser(
     os.path.join(smtp['folder'], filename))
@@ -120,24 +97,12 @@ odoo.context = context
 order = odoo.model('sale.order')
 
 # Launch extract procedure:
-order.extract_sale_excel_report()
-
-# -----------------------------------------------------------------------------
-# Extract mail list from group:
-# -----------------------------------------------------------------------------
-# group_name = group_name.split('.')
-# group_id = model.get_object_reference(
-#    group_name[0],
-#    group_name[1],
-#    )[1]
-# partner_name = []
-# for user in group_pool.browse(group_id).users:
-#    partner_ids.append(user.partner_id.email)
+order.extract_sale_excel_account_report()
 
 # -----------------------------------------------------------------------------
 # SMTP Sent:
 # -----------------------------------------------------------------------------
-# Get mailserver option:
+# Get mailer option:
 mailer_ids = mailer.search([])
 if not mailer_ids:
     print('[ERR] No mail server configured in ODOO')
@@ -158,7 +123,6 @@ if odoo_mailer.smtp_encryption in ('ssl', 'starttls'):
 else:
     print('[ERR] Connect only SMTP SSL server!')
     sys.exit()
-    # server_smtp.start() # TODO Check
 
 smtp_server.login(odoo_mailer.smtp_user, odoo_mailer.smtp_pass)
 for to in smtp['to'].replace(' ', '').split(','):
@@ -179,5 +143,4 @@ for to in smtp['to'].replace(' ', '').split(','):
 
     # Send mail:
     smtp_server.sendmail(odoo_mailer.smtp_user, to, msg.as_string())
-
 smtp_server.quit()
