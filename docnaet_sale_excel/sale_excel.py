@@ -803,6 +803,7 @@ class SaleOrder(orm.Model):
                 sale_proxy,
                 key=lambda x: (x.partner_id.name, x.name)
                 ):
+            row += 1
             partner = order.partner_id
 
             # -----------------------------------------------------------------
