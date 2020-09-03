@@ -884,7 +884,7 @@ class SaleOrder(orm.Model):
                 # TODO write in header row!
                 ws_name, header_row, header_line,
                 col=loop * 2 + start_col, default_format=f_header)
-        excel_pool.freeze_panes(ws_name, header_line, 1)
+        excel_pool.freeze_panes(ws_name, header_row, 1)
 
         if save_mode:  # Save as a file:
             _logger.info('Save mode: %s' % save_mode)
