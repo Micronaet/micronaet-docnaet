@@ -831,7 +831,7 @@ class SaleOrder(orm.Model):
                 # (partner.duelist_uncovered_amount or '', f_number_current),
                 # (partner.duelist_fido or '', f_number_current),
                 # self.get_partner_note(partner),
-                ], f_text_current)
+                ], default_format=f_text_current)
 
             # -----------------------------------------------------------------
             # Line data:
