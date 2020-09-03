@@ -816,7 +816,7 @@ class SaleOrder(orm.Model):
                 f_text_current = f_text
                 f_number_current = f_number
 
-            excel_pool.write(ws_name, row, [
+            excel_pool.write_xls_line(ws_name, row, [
                 '%s [%s]' % (
                     partner.name, partner.sql_customer_code or ''),
                 '',  # TODO destination
@@ -851,7 +851,7 @@ class SaleOrder(orm.Model):
                     product_total[uom_id] = 0.0
                 product_total[uom_id] += qty
 
-                excel_pool.write(ws_name, row, [
+                excel_pool.write_xls_line(ws_name, row, [
                     qty,
                     product.default_code or product.name,
                     ], col=col, default_format=f_text_current)
@@ -880,7 +880,7 @@ class SaleOrder(orm.Model):
         # TODO write header extra data
         header_line = ['Q.', 'Prodotto']
         for loop in range(max_product):
-            excel_pool.write(
+            excel_pool.write_xls_line(
                 # TODO write in header row!
                 ws_name, header_row, header_line,
                 col=loop * 2 + start_col, default_format=f_header)
