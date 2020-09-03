@@ -883,7 +883,8 @@ class SaleOrder(orm.Model):
             excel_pool.column_width(ws_name, [10, 15], col=this_col)
         if max_product:
             excel_pool.autofilter(
-                ws_name, header_row, 0, header_row, loop * 2 + start_col - 1)
+                ws_name, header_row, 0, header_row,
+                (loop + 1) * 2 + start_col - 1)
 
         excel_pool.freeze_panes(ws_name, header_row, 1)
 
