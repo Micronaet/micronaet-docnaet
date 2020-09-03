@@ -886,7 +886,7 @@ class SaleOrder(orm.Model):
                 ws_name, header_row, 0, header_row,
                 (loop + 1) * 2 + start_col - 1)
 
-        excel_pool.freeze_panes(ws_name, header_row, 1)
+        excel_pool.freeze_panes(ws_name, header_row + 1, 1)
 
         if save_mode:  # Save as a file:
             _logger.info('Save mode: %s' % save_mode)
