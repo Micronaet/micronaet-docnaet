@@ -863,20 +863,15 @@ class SaleOrder(orm.Model):
         # ---------------------------------------------------------------------
         # Total page order:
         # ---------------------------------------------------------------------
-        """
-        TODO write after 
-        row = 0
+        row += 2
         for uom_id in sorted(product_total, key=lambda x: x.name):
             excel_pool.write_xls_line(
                 ws_name, row, [
-                    '', '', '',  # TODO check position!
-                    '', '', '',
-                    'Totale',
-                    uom_id.name,
+                    'Totale %s' % uom_id.name,
                     (product_total[uom_id], f_number_bg_blue_bold),
                     ], default_format=f_text_bg_blue)
             row += 1
-        """
+
         # TODO write header extra data
         header_line = ['Q.', 'Prodotto']
         for loop in range(max_product):
