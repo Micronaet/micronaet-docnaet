@@ -673,7 +673,7 @@
 
                 <field name="sector_id" filter_domain="[('sector_id','=',self)]" /> <!--TODO groups="docnaet.group_docnaet_sector_user"-->
 
-                <!--<field name="docnaet_category_id" /> Cassandra want to remove-->
+                <field name="docnaet_category_id" /> <!--Cassandra want to remove, Edgardo restored 15/09/2020-->
                 <field name="user_id" filter_domain="[('user_id','=',self)]"/>
                 <field name="protocol_id" filter_domain="[('protocol_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
                 <field name="type_id" filter_domain="[('type_id','=',self)]" domain="[('docnaet_mode', 'in', ('docnaet', 'all'))]"/>
