@@ -164,7 +164,7 @@ for root, folders, files in os.walk(path):
                     if not(partner_code[:2].isdigit() and
                             partner_code[3:].isdigit() and
                             partner_code[2:3] == '.'):
-                        log_file += 'Codce fornitore formato errato: %s\n' % \
+                        log_file += 'Codice fornitore formato errato: %s\n' % \
                             partner_code
                         continue
                     partner_ids = partner_pool.search([
