@@ -37,7 +37,7 @@ config.read([cfg_file])
 host = config.get('dbaccess', 'dbname')
 user = config.get('dbaccess', 'user')
 password= config.get('dbaccess', 'pwd')
-database = config.get('dbaccess', 'server')
+database = config.get('dbaccess', 'host')
 
 # Filesystem:
 root_path = config.get('filesystem', 'root')
