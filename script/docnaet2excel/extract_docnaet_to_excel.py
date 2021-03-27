@@ -171,6 +171,7 @@ for item in sorted(database['document'], key=lambda x: (
     access = item['docAccesso']
     check = item['docControllo']
 
+    import pdb; pdb.set_trace()
     data = [
         'APRI', 
         link,  # 
