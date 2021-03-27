@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-# ODOO (ex OpenERP) 
+# ODOO (ex OpenERP)
 # Open Source Management Solution
 # Copyright (C) 2001-2015 Micronaet S.r.l. (<http://www.micronaet.it>)
 # Developer: Nicola Riolini @thebrush (<https://it.linkedin.com/in/thebrush>)
@@ -12,7 +12,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
@@ -50,7 +50,7 @@ connection = pymssql.connect(
     user=user,
     password=password,
     database=database,
-    as_dict=True,       
+    as_dict=True,
 )
 cr = connection.cursor()
 
@@ -101,7 +101,7 @@ for item in cr.fetchall():
 cr.execute('SELECT * FROM dbo.Documenti')
 for item in cr.fetchall()[130:150]:  # TODO remove me
     database['document'].append(item)
-    
+
 # -----------------------------------------------------------------------------
 # Generate XLSX files:
 # -----------------------------------------------------------------------------
@@ -111,20 +111,20 @@ excel_db = {}
 
 header = [
     u'APRI', u'Colleg.',
-    u'Azienda', 
+    u'Azienda',
     u'Protocollo', u'Numero', u'Fax',
     u'Data', u'Scadenza',
-    u'Cliente', u'Categoria', u'Nazione', 
+    u'Cliente', u'Categoria', u'Nazione',
     u'Tipologia', u'Lingua', u'Applicazione', u'Utente',
     u'Oggetto', u'Descrizione', u'Note',
-    u'File', u'Est.', 
+    u'File', u'Est.',
     # u'Creazione',
     ]
 width = [
     6, 5,
     30, 10, 10,
     12, 12,
-    25, 20, 20, 
+    25, 20, 20,
     25, 25, 25, 25,
     40, 40, 40,
     20,
@@ -138,15 +138,15 @@ def clean_text(text):
     if text[:1] == '=':
         text = '\'' + text
     return text
-        
-documents = sorted(database['document'], key=lambda x: (
-    x['docAzienda'], 
-    x['ID_protocollo'], 
-    x['docNumero'], 
-    ))
 
-documents = database['document']
-for item in documents:        
+documents = sorted(
+    database['document'],
+    reversed=True,
+    key=lambda x: x['docData'],
+    )
+
+#documents = database['document']
+for item in documents:
 
     # -------------------------------------------------------------------------
     # Select WB:
@@ -158,7 +158,7 @@ for item in documents:
         WB = ExcelWriter(excel_filename, verbose=True)
         excel_db[company_id] = {
             'wb': WB,
-            'ws': {},    
+            'ws': {},
             'format': {
                 'f_title': WB.get_format('title'),
                 'f_header': WB.get_format('header'),
@@ -168,14 +168,14 @@ for item in documents:
                 'f_number_red': WB.get_format('bg_red_number'),
                 },
             }
-        print('Creating %s' % excel_filename)    
-            
+        print('Creating %s' % excel_filename)
+
 
     # Readability:
     WB = excel_db[company_id]['wb']
     excel_format = excel_db[company_id]['format']
     WS = excel_db[company_id]['ws']
-        
+
 
     # -------------------------------------------------------------------------
     # Select WS:
@@ -183,8 +183,8 @@ for item in documents:
     protocol_id = item['ID_protocollo']
     protocol = database['protocol'].get(protocol_id, 'Sconosciuto')
     ws_name = protocol
-    
-    if protocol not in WS:    
+
+    if protocol not in WS:
         # Init setup:
         WS[protocol] = 0  # Row
         WB.create_worksheet(ws_name)
@@ -192,32 +192,32 @@ for item in documents:
 
         # Header:
         WB.write_xls_line(
-            ws_name, 
+            ws_name,
             WS[protocol],  # row
             header,
             excel_format['f_header'],
             )
-        print('Creating %s >> %s' % (excel_filename, ws_name))    
-        
+        print('Creating %s >> %s' % (excel_filename, ws_name))
+
     WS[protocol] += 1
     row = WS[protocol]
     item_id = item['ID_documento']
     language_id = item['ID_lingua']
     type_id = item['ID_tipologia']
     user_id = item['ID_utente']
-    application_id = ''    
+    application_id = ''
     partner_id = item['ID_cliente']
     category_id = '' #item['ID_cliente']
     country_id = ''
-    link = ''  # TODO 
+    link = ''  # TODO
     extension = item['docEstensione']
-    
+
     # Convert:
     data = '' if not item['docData'] else \
         item['docData'].strftime('%Y-%m-%d %H:%M:%S')
     deadline = '' if not item['docScadenza'] else \
         item['docScadenza'].strftime('%Y-%m-%d %H:%M:%S')
-    
+
     # Campi non usati:
     # support_id = item['ID_supporto']
     deadlined = item['docScaduto']
@@ -227,35 +227,35 @@ for item in documents:
     check = item['docControllo']
 
     data = [
-        'APRI', 
-        link,  # 
+        'APRI',
+        link,  #
         company,
-        protocol_id, item['docNumero'], item['docFax'], 
+        protocol_id, item['docNumero'], item['docFax'],
         data, deadline,
-        partner_id, category_id, country_id,         
-        type_id, language_id, application_id, user_id,      
-          
-        clean_text(item['docOggetto']), 
-        clean_text(item['docDescrizione']), 
+        partner_id, category_id, country_id,
+        type_id, language_id, application_id, user_id,
+
+        clean_text(item['docOggetto']),
+        clean_text(item['docDescrizione']),
         clean_text(item['docNote']),
-        
-        item['docFile'], extension, 
-        #item['docCreazioneEffettiva'],              
+
+        item['docFile'], extension,
+        #item['docCreazioneEffettiva'],
     ]
     WB.write_xls_line(ws_name, row, data, excel_format['f_text'])
 
     # TODO change (manage link):
-    filename = '%s.%s' % (item_id, extension) 
+    filename = '%s.%s' % (item_id, extension)
     fullname = os.path.join(
         root_path, str(company_id), str(protocol_id), filename)
     #fullname = r'\\%s\%s\%s\%s' % (
-    #    root_path, 
-    #    str(company_id), 
-    #    str(protocol_id), 
+    #    root_path,
+    #    str(company_id),
+    #    str(protocol_id),
     #    filename,
-    #    ) 
+    #    )
     url = 'file:///%s' % fullname
     cell = WB.rowcol_to_cell(row, 0)
-    WB.write_url(ws_name, cell, url, string='APRI')        
+    WB.write_url(ws_name, cell, url, string='APRI')
 WB.close_workbook()
 
