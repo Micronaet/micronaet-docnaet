@@ -99,17 +99,8 @@ for item in cr.fetchall()[130:150]:  # TODO remove me
 # -----------------------------------------------------------------------------
 ExcelWriter = excel_export.excel_wrapper.ExcelWriter
 
-# Create WB:
-WB = ExcelWriter('/home/openerp7/smb/docnaet/Docnaet.xlsx', verbose=True)
-excel_format = {
-    'f_title': WB.get_format('title'),
-    'f_header': WB.get_format('header'),
-    'f_text': WB.get_format('text'),
-    'f_number': WB.get_format('number'),
-    'f_text_red': WB.get_format('bg_red'),
-    'f_number_red': WB.get_format('bg_red_number'),
-    }
-    
+excel_db = {}
+
 header = [
     u'APRI', u'Colleg.',
     u'Azienda', 
@@ -132,14 +123,6 @@ width = [
     # 10,
     ]
 
-ws_name = 'Docnaet'
-WB.create_worksheet(ws_name)
-WB.column_width(ws_name, width)
-
-# Header:
-row = 0
-WB.write_xls_line(ws_name, row, header, excel_format['f_header'])
-
 def clean_text(text):
     """ Clean for Excel
     """
@@ -155,14 +138,61 @@ documents = sorted(database['document'], key=lambda x: (
     ))
 
 documents = database['document']
-for item in documents:
-        
-    row += 1    
-        
-    item_id = item['ID_documento']
+for item in documents:        
+
+    # -------------------------------------------------------------------------
+    # Select WB:
+    # -------------------------------------------------------------------------
     company_id = item['docAzienda']
+    company = database['company'].get(company_id, '')
+    if company_id not in excel_db:
+        excel_filename = '/home/openerp7/smb/docnaet/%s.xlsx' % company
+        excel_db[company_id] = {
+            'wb': ExcelWriter(
+                excel_filename, verbose=True),
+            'ws': {}    
+            'format': {
+                'f_title': WB.get_format('title'),
+                'f_header': WB.get_format('header'),
+                'f_text': WB.get_format('text'),
+                'f_number': WB.get_format('number'),
+                'f_text_red': WB.get_format('bg_red'),
+                'f_number_red': WB.get_format('bg_red_number'),
+                },
+            }
+        print('Creating %s' % excel_filename)    
+            
+
+    # Readability:
+    WB = excel_db[company_id]['wb']
+    excel_format = excel_db[company_id]['format']
+    WS = excel_db[company_id]['ws']
+        
+
+    # -------------------------------------------------------------------------
+    # Select WS:
+    # -------------------------------------------------------------------------
     protocol_id = item['ID_protocollo']
-    # database['protocol'].get(protocol_id),
+    protocol = database['protocol'].get(protocol_id, 'Sconosciuto')
+    ws_name = protocol
+    
+    if protocol not in WS:    
+        # Init setup:
+        WS[protocol] = 0  # Row
+        WB.create_worksheet(ws_name)
+        WB.column_width(ws_name, width)
+
+        # Header:
+        WB.write_xls_line(
+            ws_name, 
+            WS[protocol],  # row
+            header,
+            excel_format['f_header'],
+            )
+        print('Creating %s >> %s' % (excel_filename, ws_name))    
+        
+    WS[protocol] += 1    
+    item_id = item['ID_documento']
     language_id = item['ID_lingua']
     type_id = item['ID_tipologia']
     user_id = item['ID_utente']
@@ -174,7 +204,6 @@ for item in documents:
     extension = item['docEstensione']
     
     # Convert:
-    company = database['company'].get(company_id, '')
     data = '' if not item['docData'] else \
         item['docData'].strftime('%Y-%m-%d %H:%M:%S')
     deadline = '' if not item['docScadenza'] else \
