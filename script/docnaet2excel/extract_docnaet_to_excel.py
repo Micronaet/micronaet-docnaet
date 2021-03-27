@@ -205,7 +205,8 @@ for item in sorted(database['document'], key=lambda x: (
 
     # TODO change (manage link):
     filename = '%s.%s' % (item_id, extension) 
-    fullname = os.path.join(root_path, str(protocol_id), filename)
+    fullname = os.path.join(
+        root_path, str(company_id), str(protocol_id), filename)
     url = 'file://%s' % fullname
     cell = WB.rowcol_to_cell(row, 0)
     WB.write_url(ws_name, cell, url, string='APRI')        
