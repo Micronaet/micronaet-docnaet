@@ -104,14 +104,14 @@ excel_format = {
     }
     
 header = [
-    'APRI', 'Colleg.',
-    'Azienda', 
-    'Protocollo', 'Numero', 'Fax',
-    'Data', 'Scadenza',
-    'Cliente', 'Categoria', 'Nazione', 
-    'Tipologia', 'Lingua', 'Applicazione', 'Utente',
-    'Oggetto', 'Descrizione', 'Note',
-    'File', 'Est.', 'Creazione',
+    u'APRI', u'Colleg.',
+    u'Azienda', 
+    u'Protocollo', u'Numero', u'Fax',
+    u'Data', u'Scadenza',
+    u'Cliente', u'Categoria', u'Nazione', 
+    u'Tipologia', u'Lingua', u'Applicazione', u'Utente',
+    u'Oggetto', u'Descrizione', u'Note',
+    u'File', u'Est.', u'Creazione',
     ]
 width = [
     10, 5,
@@ -163,16 +163,16 @@ for item in sorted(database['document'], key=lambda x: (
     data = [
         'APRI', 
         link,  # 
-        item['docAzienda'],
-        protocol_id, item['docNumero'], item['docFax'], 
-        item['docData'], item['docScadenza'],         
-        partner_id, category_id, country_id,         
-        type_id, language_id, application_id, user_id,        
-        unicode(item['docOggetto']), unicode(item['docDescrizione']), 
-        unicode(item['docNote']),
-        item['docFile'], extension, item['docCreazioneEffettiva'],              
+        #item['docAzienda'],
+        #protocol_id, item['docNumero'], item['docFax'], 
+        #item['docData'], item['docScadenza'],         
+        #partner_id, category_id, country_id,         
+        #type_id, language_id, application_id, user_id,        
+        #unicode(item['docOggetto']), unicode(item['docDescrizione']), 
+        #unicode(item['docNote']),
+        #item['docFile'], extension, item['docCreazioneEffettiva'],              
     ]
-
+    continue
     # TODO change (manage link):
     filename = '%s.%s' % (item_id, extension) 
     fullname = os.path.join(root_path, str(protocol_id), filename)
