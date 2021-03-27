@@ -34,10 +34,10 @@ config = ConfigParser.ConfigParser()
 config.read([cfg_file])
 
 # SQL:
-host = config.get('dbaccess', 'dbname')
+host = config.get('dbaccess', 'host')
 user = config.get('dbaccess', 'user')
 password= config.get('dbaccess', 'pwd')
-database = config.get('dbaccess', 'host')
+database = config.get('dbaccess', 'dbname')
 
 # Filesystem:
 root_path = config.get('filesystem', 'root')
@@ -45,7 +45,6 @@ root_path = config.get('filesystem', 'root')
 # -----------------------------------------------------------------------------
 # MS SQL:
 # -----------------------------------------------------------------------------
-import pdb; pdb.set_trace()
 connection = pymssql.connect(
     host=host,
     user=user,
