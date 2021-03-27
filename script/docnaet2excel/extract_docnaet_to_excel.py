@@ -172,7 +172,7 @@ header = [
     # u'Protocollo',
     u'Numero', u'Fax',
     u'Data', u'Scadenza',
-    u'Cliente', u'Categoria', u'Nazione',
+    u'Cliente', u'Tipo', u'Nazione',
     u'Tipologia', u'Lingua',
     # u'Applicazione',
     u'Utente',
@@ -243,7 +243,7 @@ for item in documents:
         WB.create_worksheet(ws_name)
         WB.column_width(ws_name, width)
         WB.freeze_panes(ws_name, 1, 1)
-        WB.autofilter(ws_name, row, 0, row, len(header))
+        WB.autofilter(ws_name, row, 0, row, len(header) - 1)
 
         # Header:
         WB.write_xls_line(
@@ -261,8 +261,6 @@ for item in documents:
     type_id = item['ID_tipologia']
     user_id = item['ID_utente']
     partner_id = item['ID_cliente']
-    partner_type_id = ''
-    country_id = ''
     # category_id = ''  # item['ID_cliente']
     # application_id = ''
     link = ''  # TODO
@@ -277,6 +275,25 @@ for item in documents:
     type_name = database['type'].get(type_id, '')
     language_name = database['language'].get(language_id, '')
     user_name = database['user'].get(user_id, '')
+    partner_item = database['user'].get(partner_id)
+    if partner_item:
+        partner_name = '%s, %s %s (%s)' % (
+            item['cliRagioneSociale'],
+            item['cliCAP'],
+            item['cliPaese'],
+            item['cliProvincia'],
+        )
+        partner_type_id = item['ID_tipo']
+        country_id = item['ID_nazione']
+
+        partner_type_name = excel_db['partner_type'].get(partner_type_id, '')
+        country_name = excel_db['country'].get(country_id, '')
+        # cliIndirizzo, cliTelefono, cliFax, cliEmail, cliCodice
+        # ID_ditta
+    else:
+        partner_name = ''
+        partner_type_name = ''
+        country_name = ''
 
     # Campi non usati:
     # support_id = item['ID_supporto']
@@ -293,10 +310,10 @@ for item in documents:
         # protocol_id,
         item['docNumero'], item['docFax'],
         data, deadline,
-        partner_id, partner_type_id, country_id,
+        partner_name, partner_type_name, country_name,
         type_name, language_name,
         # application_id,
-        user_id,
+        user_name,
 
         clean_text(item['docOggetto']),
         clean_text(item['docDescrizione']),
