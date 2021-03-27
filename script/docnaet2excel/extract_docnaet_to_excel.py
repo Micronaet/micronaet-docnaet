@@ -138,6 +138,14 @@ WB.column_width(ws_name, width)
 row = 0
 WB.write_xls_line(ws_name, row, header, excel_format['f_text'])
 
+def clean_text(text):
+    """ Clean for Excel
+    """
+    text = unicode(text or '')
+    if text[:1] == '=':
+        text = '\'' + text
+    return text
+        
 for item in sorted(database['document'], key=lambda x: (
         x['docAzienda'], 
         x['ID_protocollo'], 
@@ -184,9 +192,9 @@ for item in sorted(database['document'], key=lambda x: (
         partner_id, category_id, country_id,         
         type_id, language_id, application_id, user_id,      
           
-        unicode(item['docOggetto']), 
-        unicode(item['docDescrizione']), 
-        unicode(item['docNote']),
+        clean_text(item['docOggetto'])), 
+        clean_text(item['docDescrizione']), 
+        clean_text(item['docNote']),
         
         item['docFile'], extension, 
         #item['docCreazioneEffettiva'],              
