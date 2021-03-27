@@ -19,7 +19,6 @@
 ###############################################################################
 import xlsxwriter
 from xlsxwriter.utility import xl_rowcol_to_cell
-
 from datetime import datetime, timedelta
 
 
