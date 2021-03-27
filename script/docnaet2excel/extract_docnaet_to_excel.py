@@ -42,6 +42,19 @@ database = config.get('dbaccess', 'dbname')
 # Filesystem:
 root_path = 'O:' or config.get('filesystem', 'root')  # TODO restore
 
+
+# -----------------------------------------------------------------------------
+# Utility:
+# -----------------------------------------------------------------------------
+def clean_text(text):
+    """ Clean for Excel
+    """
+    text = unicode(text or '')
+    if text[:1] == '=':
+        text = '\'' + text
+    return text
+
+
 # -----------------------------------------------------------------------------
 # MS SQL:
 # -----------------------------------------------------------------------------
@@ -130,21 +143,13 @@ width = [
     # 10,
     ]
 
-def clean_text(text):
-    """ Clean for Excel
-    """
-    text = unicode(text or '')
-    if text[:1] == '=':
-        text = '\'' + text
-    return text
-
 documents = sorted(
     database['document'],
     reverse=True,
     key=lambda x: x['docData'],
     )
 
-#documents = database['document']
+# documents = database['document']
 for item in documents:
 
     # -------------------------------------------------------------------------
