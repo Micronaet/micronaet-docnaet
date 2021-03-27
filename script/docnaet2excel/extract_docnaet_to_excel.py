@@ -91,7 +91,7 @@ for item in cr.fetchall():
 # Document:
 # -----------------------------------------------------------------------------
 cr.execute('SELECT * FROM dbo.Documenti')
-for item in cr.fetchall()[:10]:  # TODO remove me
+for item in cr.fetchall()[130:150]:  # TODO remove me
     database['document'].append(item)
     
 # -----------------------------------------------------------------------------
@@ -148,13 +148,14 @@ def clean_text(text):
         text = '\'' + text
     return text
         
-#for item in sorted(database['document'], key=lambda x: (
-#        x['docAzienda'], 
-#        x['ID_protocollo'], 
-#        x['docNumero'], 
-#        )):
+documents = sorted(database['document'], key=lambda x: (
+    x['docAzienda'], 
+    x['ID_protocollo'], 
+    x['docNumero'], 
+    ))
 
-for item in database['document']:
+documents = database['document']
+for item in documents:
         
     row += 1    
         
