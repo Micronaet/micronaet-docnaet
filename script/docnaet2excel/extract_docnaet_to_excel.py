@@ -176,7 +176,7 @@ for item in sorted(database['document'], key=lambda x: (
         link,  # 
         company,
         protocol_id, item['docNumero'], item['docFax'], 
-        #item['docData'], item['docScadenza'],         
+        item['docData'], item['docScadenza'],         
         #partner_id, category_id, country_id,         
         #type_id, language_id, application_id, user_id,      
           
