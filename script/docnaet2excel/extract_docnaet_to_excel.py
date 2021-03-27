@@ -70,16 +70,20 @@ cr = connection.cursor()
 database = {
     'document': [],
 
-    'application': {},
-    'category': {},
-    'partner': {},
     'company': {},
     'important': {},
     'language': {},
-    'country': {},
     'protocol': {},
     'type': {},
     'user': {},
+
+    'partner': {},
+    'partner_type': {},
+    'country': {},
+
+    # 'application': {},
+    # 'category': {},
+
     # 'product': {},
     # 'sent': {},
     # 'support': {},
@@ -102,20 +106,20 @@ for item in cr.fetchall():
     database['protocol'][item_id] = item['proDescrizione']
 
 # -----------------------------------------------------------------------------
-# Nazioni:
-# -----------------------------------------------------------------------------
-cr.execute('SELECT * FROM dbo.Nazioni')
-for item in cr.fetchall():
-    item_id = item['ID_nazione']
-    database['country'][item_id] = item  # nazDescrizione, nazNote
-
-# -----------------------------------------------------------------------------
 # Tipologie:
 # -----------------------------------------------------------------------------
 cr.execute('SELECT * FROM dbo.Tipologie')
 for item in cr.fetchall():
     item_id = item['ID_tipologia']
     database['type'][item_id] = item['tipDescrizione']
+
+# -----------------------------------------------------------------------------
+# Utenti:
+# -----------------------------------------------------------------------------
+cr.execute('SELECT * FROM dbo.Utenti')
+for item in cr.fetchall():
+    item_id = item['ID_utente']
+    database['user'][item_id] = item['uteDescrizione']
 
 # -----------------------------------------------------------------------------
 # Lingue:
@@ -126,7 +130,31 @@ for item in cr.fetchall():
     database['language'][item_id] = item['linDescrizione']
 
 # -----------------------------------------------------------------------------
-# Document:
+#                              Partner:
+# -----------------------------------------------------------------------------
+cr.execute('SELECT * FROM dbo.Clienti')
+for item in cr.fetchall():
+    item_id = item['ID_cliente']
+    database['partner'][item_id] = item
+
+# -----------------------------------------------------------------------------
+# Tipo Partner:
+# -----------------------------------------------------------------------------
+cr.execute('SELECT * FROM dbo.Tipologie')
+for item in cr.fetchall():
+    item_id = item['ID_tipologia']
+    database['partner_type'][item_id] = item['tipDescrizione']
+
+# -----------------------------------------------------------------------------
+# Nazioni:
+# -----------------------------------------------------------------------------
+cr.execute('SELECT * FROM dbo.Nazioni')
+for item in cr.fetchall():
+    item_id = item['ID_nazione']
+    database['country'][item_id] = item['nazDescrizione']
+
+# -----------------------------------------------------------------------------
+#                               Document:
 # -----------------------------------------------------------------------------
 cr.execute('SELECT * FROM dbo.Documenti')
 for item in cr.fetchall():  # TODO remove me
@@ -156,7 +184,7 @@ width = [
     6, 5,
     # 30, 10,
     10, 10,
-    15, 15,
+    18, 18,
     25, 20, 20,
     25, 25, 25,
     # 25,
@@ -229,10 +257,11 @@ for item in documents:
     language_id = item['ID_lingua']
     type_id = item['ID_tipologia']
     user_id = item['ID_utente']
-    application_id = ''
     partner_id = item['ID_cliente']
-    category_id = '' # item['ID_cliente']
+    partner_type_id = ''
     country_id = ''
+    # category_id = ''  # item['ID_cliente']
+    # application_id = ''
     link = ''  # TODO
     extension = item['docEstensione']
 
@@ -244,6 +273,7 @@ for item in documents:
 
     type_name = database['type'].get(type_id, '')
     language_name = database['language'].get(language_id, '')
+    user_name = database['user'].get(user_id, '')
 
     # Campi non usati:
     # support_id = item['ID_supporto']
@@ -260,7 +290,7 @@ for item in documents:
         # protocol_id,
         item['docNumero'], item['docFax'],
         data, deadline,
-        partner_id, category_id, country_id,
+        partner_id, partner_type_id, country_id,
         type_name, language_name,
         # application_id,
         user_id,
