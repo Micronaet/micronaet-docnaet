@@ -74,6 +74,14 @@ database = {
 # -----------------------------------------------------------------------------
 # Nazioni:
 # -----------------------------------------------------------------------------
+cr.execute('SELECT * FROM dbo.Ditte')
+for item in cr.fetchall():
+    item_id = item['ID_ditta']
+    database['company'][item_id] = item['ditRagioneSociale']
+
+# -----------------------------------------------------------------------------
+# Nazioni:
+# -----------------------------------------------------------------------------
 cr.execute('SELECT * FROM dbo.Nazioni')
 for item in cr.fetchall():
     item_id = item['ID_nazione']
@@ -139,6 +147,7 @@ for item in sorted(database['document'], key=lambda x: (
     row += 1    
         
     item_id = item['ID_documento']
+    company_id = item['docAzienda']
     protocol_id = item['ID_protocollo']
     # database['protocol'].get(protocol_id),
     language_id = item['ID_lingua']
@@ -151,6 +160,9 @@ for item in sorted(database['document'], key=lambda x: (
     link = ''  # TODO 
     extension = item['docEstensione']
     
+    # Convert:
+    company = database['company'].get(company_id, '')
+    
     # Campi non usati:
     # support_id = item['ID_supporto']
     deadlined = item['docScaduto']
@@ -162,7 +174,7 @@ for item in sorted(database['document'], key=lambda x: (
     data = [
         'APRI', 
         link,  # 
-        item['docAzienda'],
+        company,
         #protocol_id, item['docNumero'], item['docFax'], 
         #item['docData'], item['docScadenza'],         
         #partner_id, category_id, country_id,         
