@@ -192,7 +192,7 @@ for item in sorted(database['document'], key=lambda x: (
         partner_id, category_id, country_id,         
         type_id, language_id, application_id, user_id,      
           
-        clean_text(item['docOggetto'])), 
+        clean_text(item['docOggetto']), 
         clean_text(item['docDescrizione']), 
         clean_text(item['docNote']),
         
