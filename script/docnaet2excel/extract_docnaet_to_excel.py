@@ -173,10 +173,7 @@ for item in sorted(database['document'], key=lambda x: (
 
     # TODO change (manage link):
     filename = '%s.%s' % (item_id, extension) 
-    try:
-        fullname = os.path.join(root_path, protocol_id, filename)
-    except:
-        import pdb; pdb.set_trace()    
+    fullname = os.path.join(root_path, str(protocol_id), filename)
     url = 'file://%s' % fullname
     WB.write_xls_line(ws_name, row, data, excel_format['f_text'])
     cell = WB.rowcol_to_cell(row, 0)
