@@ -108,7 +108,6 @@ for item in cr.fetchall()[130:150]:  # TODO remove me
 ExcelWriter = excel_export.excel_wrapper.ExcelWriter
 
 excel_db = {}
-
 header = [
     u'APRI', u'Colleg.',
     u'Azienda',
