@@ -162,6 +162,8 @@ for item in sorted(database['document'], key=lambda x: (
     
     # Convert:
     company = database['company'].get(company_id, '')
+    data = item['docData'].strftime('%Y-%m-%d %H:%M:%S')
+    deadline = item['docScadenza'].strftime('%Y-%m-%d %H:%M:%S')
     
     # Campi non usati:
     # support_id = item['ID_supporto']
@@ -171,21 +173,21 @@ for item in sorted(database['document'], key=lambda x: (
     access = item['docAccesso']
     check = item['docControllo']
 
-    import pdb; pdb.set_trace()
     data = [
         'APRI', 
         link,  # 
         company,
         protocol_id, item['docNumero'], item['docFax'], 
-        item['docData'], item['docScadenza'],         
-        #partner_id, category_id, country_id,         
-        #type_id, language_id, application_id, user_id,      
+        data, deadline,
+        partner_id, category_id, country_id,         
+        type_id, language_id, application_id, user_id,      
           
-        #unicode(item['docOggetto']), 
-        #unicode(item['docDescrizione']), 
-        #unicode(item['docNote']),
+        unicode(item['docOggetto']), 
+        unicode(item['docDescrizione']), 
+        unicode(item['docNote']),
         
-        #item['docFile'], extension, item['docCreazioneEffettiva'],              
+        item['docFile'], extension, 
+        #item['docCreazioneEffettiva'],              
     ]
     WB.write_xls_line(ws_name, row, data, excel_format['f_text'])
     continue
