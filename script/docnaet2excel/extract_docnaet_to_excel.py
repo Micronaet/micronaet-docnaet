@@ -130,14 +130,13 @@ WB.column_width(ws_name, width)
 row = 0
 WB.write_xls_line(ws_name, row, header, excel_format['f_text'])
 
-for key in sorted(database['document'], key=lambda x: (
+for item in sorted(database['document'], key=lambda x: (
         x['docAzienda'], 
         x['ID_protocollo'], 
         x['docNumero'], 
         )):
         
-    row += 1
-    item = database['document'][key]
+    row += 1    
         
     item_id = item['ID_documento']
     protocol_id = item['ID_protocollo']
