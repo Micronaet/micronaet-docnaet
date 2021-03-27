@@ -92,8 +92,7 @@ for item in cr.fetchall()[:10]:  # TODO remove me
 ExcelWriter = excel_export.excel_wrapper.ExcelWriter
 
 # Create WB:
-# WB = ExcelWriter('/home/openerp7/smb/docnaet/Docnaet.xlsx', verbose=True)
-WB = ExcelWriter('./data/Docnaet.xlsx', verbose=True)
+WB = ExcelWriter('/home/openerp7/smb/docnaet/Docnaet.xlsx', verbose=True)
 excel_format = {
     'f_title': WB.get_format('title'),
     'f_header': WB.get_format('header'),
