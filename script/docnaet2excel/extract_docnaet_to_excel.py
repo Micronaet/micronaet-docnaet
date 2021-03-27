@@ -23,7 +23,6 @@
 import sys
 import os
 import pymssql
-import pdb; pdb.set_trace()
 import excel_export
 
 # -----------------------------------------------------------------------------
