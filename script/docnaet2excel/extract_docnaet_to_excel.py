@@ -45,7 +45,7 @@ root_path = config.get('filesystem', 'root')
 # -----------------------------------------------------------------------------
 # MS SQL:
 # -----------------------------------------------------------------------------
-connection = pymsql.connect(
+connection = pymssql.connect(
     host=host,
     user=user,
     password=password,
