@@ -191,7 +191,8 @@ for item in documents:
             )
         print('Creating %s >> %s' % (excel_filename, ws_name))    
         
-    WS[protocol] += 1    
+    WS[protocol] += 1
+    row = WS[protocol]
     item_id = item['ID_documento']
     language_id = item['ID_lingua']
     type_id = item['ID_tipologia']
