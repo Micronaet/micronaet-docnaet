@@ -136,7 +136,7 @@ WB.column_width(ws_name, width)
 
 # Header:
 row = 0
-WB.write_xls_line(ws_name, row, header, excel_format['f_text'])
+WB.write_xls_line(ws_name, row, header, excel_format['f_header'])
 
 def clean_text(text):
     """ Clean for Excel
