@@ -177,7 +177,7 @@ header = [
     # u'Applicazione',
     u'Utente',
     u'Oggetto', u'Descrizione', u'Note',
-    u'File', u'Est.',
+    u'File', u'Est.', 'ID',
     # u'Creazione',
     ]
 width = [
@@ -189,7 +189,7 @@ width = [
     25, 25, 25,
     # 25,
     40, 40, 40,
-    20,
+    20, 5
     # 10,
     ]
 
@@ -275,7 +275,7 @@ for item in documents:
     type_name = database['type'].get(type_id, '')
     language_name = database['language'].get(language_id, '')
     user_name = database['user'].get(user_id, '')
-    partner_item = database['user'].get(partner_id)
+    partner_item = database['partner'].get(partner_id)
     if partner_item:
         partner_name = '%s, %s %s (%s)' % (
             item['cliRagioneSociale'],
@@ -321,6 +321,7 @@ for item in documents:
 
         item['docFile'], extension,
         # item['docCreazioneEffettiva'],
+        item['ID_documento'],
     ]
     WB.write_xls_line(ws_name, row, data, excel_format['f_text'])
 
