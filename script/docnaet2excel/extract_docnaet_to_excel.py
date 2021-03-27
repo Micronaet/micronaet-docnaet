@@ -68,6 +68,8 @@ connection = pymssql.connect(
 cr = connection.cursor()
 
 database = {
+    'document': [],
+
     'application': {},
     'category': {},
     'partner': {},
@@ -75,13 +77,12 @@ database = {
     'important': {},
     'language': {},
     'country': {},
-    # 'product': {},
     'protocol': {},
-    # 'sent': {},
-    # 'support': {},
     'type': {},
     'user': {},
-    'document': [],
+    # 'product': {},
+    # 'sent': {},
+    # 'support': {},
     }
 
 # -----------------------------------------------------------------------------
@@ -112,7 +113,7 @@ for item in cr.fetchall():
 # Document:
 # -----------------------------------------------------------------------------
 cr.execute('SELECT * FROM dbo.Documenti')
-for item in cr.fetchall()[130:150]:  # TODO remove me
+for item in cr.fetchall():  # TODO remove me
     database['document'].append(item)
 
 # -----------------------------------------------------------------------------
