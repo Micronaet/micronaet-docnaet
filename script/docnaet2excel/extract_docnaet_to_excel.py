@@ -110,6 +110,14 @@ for item in cr.fetchall():
     database['country'][item_id] = item  # nazDescrizione, nazNote
 
 # -----------------------------------------------------------------------------
+# Tipologie:
+# -----------------------------------------------------------------------------
+cr.execute('SELECT * FROM dbo.Tipologie')
+for item in cr.fetchall():
+    item_id = item['ID_tipologia']
+    database['type'][item_id] = item['tipDescrizione']
+
+# -----------------------------------------------------------------------------
 # Document:
 # -----------------------------------------------------------------------------
 cr.execute('SELECT * FROM dbo.Documenti')
@@ -124,8 +132,9 @@ ExcelWriter = excel_export.excel_wrapper.ExcelWriter
 excel_db = {}
 header = [
     u'APRI', u'Colleg.',
-    u'Azienda',
-    u'Protocollo', u'Numero', u'Fax',
+    # u'Azienda',
+    # u'Protocollo',
+    u'Numero', u'Fax',
     u'Data', u'Scadenza',
     u'Cliente', u'Categoria', u'Nazione',
     u'Tipologia', u'Lingua', u'Applicazione', u'Utente',
@@ -135,8 +144,9 @@ header = [
     ]
 width = [
     6, 5,
-    30, 10, 10,
-    12, 12,
+    # 30, 10,
+    10, 10,
+    15, 15,
     25, 20, 20,
     25, 25, 25, 25,
     40, 40, 40,
@@ -181,7 +191,6 @@ for item in documents:
     excel_format = excel_db[company_id]['format']
     WS = excel_db[company_id]['ws']
 
-
     # -------------------------------------------------------------------------
     # Select WS:
     # -------------------------------------------------------------------------
@@ -222,6 +231,7 @@ for item in documents:
         item['docData'].strftime('%Y-%m-%d %H:%M:%S')
     deadline = '' if not item['docScadenza'] else \
         item['docScadenza'].strftime('%Y-%m-%d %H:%M:%S')
+    type_name = database['type'].get(type_id, '')
 
     # Campi non usati:
     # support_id = item['ID_supporto']
@@ -234,11 +244,12 @@ for item in documents:
     data = [
         'APRI',
         link,  #
-        company,
-        protocol_id, item['docNumero'], item['docFax'],
+        # company,
+        # protocol_id,
+        item['docNumero'], item['docFax'],
         data, deadline,
         partner_id, category_id, country_id,
-        type_id, language_id, application_id, user_id,
+        type_name, language_id, application_id, user_id,
 
         clean_text(item['docOggetto']),
         clean_text(item['docDescrizione']),
