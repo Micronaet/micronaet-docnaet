@@ -161,8 +161,8 @@ for item in sorted(database['document'], key=lambda x: (
 
     data = [
         'APRI', 
-        #link,  # 
-        #item['docAzienda'],
+        link,  # 
+        item['docAzienda'],
         #protocol_id, item['docNumero'], item['docFax'], 
         #item['docData'], item['docScadenza'],         
         #partner_id, category_id, country_id,         
