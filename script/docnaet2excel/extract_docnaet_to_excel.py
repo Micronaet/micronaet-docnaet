@@ -169,7 +169,7 @@ for item in sorted(database['document'], key=lambda x: (
         type_id, language_id, application_id, user_id,        
         #unicode(item['docOggetto']), unicode(item['docDescrizione']), 
         #unicode(item['docNote']),
-        #item['docFile'], extension, item['docCreazioneEffettiva'],              
+        item['docFile'], extension, item['docCreazioneEffettiva'],              
     ]
     continue
     # TODO change (manage link):
