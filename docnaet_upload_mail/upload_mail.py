@@ -301,4 +301,3 @@ class DocnaetProtocol(orm.Model):
             'docnaet.protocol.email', 'protocol_id', 'Account'),
         }
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:1111111

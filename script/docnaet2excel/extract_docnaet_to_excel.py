@@ -76,28 +76,14 @@ database = {
 cr.execute('SELECT * FROM dbo.Nazioni')
 for item in cr.fetchall():
     item_id = item['ID_nazione']
-    database['coountry'][item_id] = item  # nazDescrizione, nazNote
+    database['country'][item_id] = item  # nazDescrizione, nazNote
 
 # -----------------------------------------------------------------------------
 # Document:
 # -----------------------------------------------------------------------------
 cr.execute('SELECT * FROM dbo.Documenti')
-for item in cr.fetchall():
-    item_id = item['ID_documento']
-    protocol_id = item['ID_protocollo']
-    language_id = item['ID_lingua']
-    type_id = item['ID_tipologia']
-    # support_id = item['ID_supporto']
-    partner_id = item['ID_cliente']
-    
-    data = [
-        'APRI', 
-        'Protocollo', 'Numero', 'Data', 
-        'Cliente', 'Categoria', 'Nazione', 
-        'Tipologia', 'Lingua', 'Applicazione',
-        'Oggetto', 'Descrizione', 'Note',
-    ]
-    
+for item in cr.fetchall()[:10]:  # TODO remove me
+    database['document'].append(item)
     
 # -----------------------------------------------------------------------------
 # Generate XLSX files:
@@ -116,20 +102,23 @@ excel_format = {
     }
     
 header = [
-    'APRI', 
+    'APRI', 'Colleg.',
+    'Azienda', 
     'Protocollo', 'Numero', 'Fax',
     'Data', 'Scadenza',
     'Cliente', 'Categoria', 'Nazione', 
     'Tipologia', 'Lingua', 'Applicazione', 'Utente',
     'Oggetto', 'Descrizione', 'Note',
+    'File', 'Est.', 'Creazione',
     ]
 width = [
-    10, 
+    10, 5,
     30, 10, 10,
     12, 12,
     25, 20, 20, 
-    25, 25, 25,
+    25, 25, 25, 25,
     40, 40, 40,
+    20, 10,
     ]
 
 ws_name = 'Docnaet'
@@ -140,61 +129,52 @@ WB.column_width(ws_name, width)
 row = 0
 WB.write_xls_line(ws_name, row, header, excel_format['f_text'])
 
-for key in database['document']:
+for key in sorted(database['document'], key=lambda x: (
+        x['docAzienda'], 
+        x['ID_protocollo'], 
+        x['docNumero'], 
+        ):
+        
     row += 1
     item = database['document'][key]
-    
+        
     item_id = item['ID_documento']
     protocol_id = item['ID_protocollo']
     # database['protocol'].get(protocol_id),
     language_id = item['ID_lingua']
     type_id = item['ID_tipologia']
-    support_id = item['ID_supporto']
     user_id = item['ID_utente']
-    
+    application_id = ''    
     partner_id = item['ID_cliente']
-    category_id = '0' #item['ID_cliente']
-    country_id = '0'
-    #partner_type_id = '0'
+    category_id = '' #item['ID_cliente']
+    country_id = ''
+    link = ''  # TODO 
     
-    # Campi extra:
-    file_force = item['docFile']
+    # Campi non usati:
+    # support_id = item['ID_supporto']
     deadlined = item['docScaduto']
     suspended = item['docSospeso']
     suspended_reason = item['docMotivo']
     access = item['docAccesso']
-    company_id = item['docAzienda']
     check = item['docControllo']
-    extension = item['docEstensione']
-    timestamp = item['docCreazioneEffettiva']
-        
+
     data = [
         'APRI', 
-        protocol_id,
-        item['docNumero'], 
-        item['docFax'], 
-        
-        item['docData'], 
-        item['docScadenza'], 
-        
-        partner_id, 
-        category_id,
-        country_id, 
-        
-        type_id, 
-        language_id, 
-        
-        item['docOggetto'], 
-        item['docDescrizione'], 
-        item['docNote'],
+        link,  # 
+        item['docAzienda'],
+        protocol_id, item['docNumero'], item['docFax'], 
+        item['docData'], item['docScadenza'],         
+        partner_id, category_id, country_id,         
+        type_id, language_id, application_id, user_id,        
+        item['docOggetto'], item['docDescrizione'], item['docNote'],
+        item['docFile'], item['docEstensione'], item['docCreazioneEffettiva'],              
     ]
 
     # TODO change (manage link):
     filename = '%s.%s' % (item_id, extension) 
     fullname = os.path.join(root_path, protocol_id, filename)
     url = 'file://%s' % fullname
-    WB.write_xls_line(            
-        ws_name, row, data, excel_format['f_text'])
+    WB.write_xls_line(ws_name, row, data, excel_format['f_text'])
     cell = WB.rowcol_to_cell(row, 0)
     WB.write_url(ws_name, cell, url, string='Apri documento')        
 WB.close_workbook()
