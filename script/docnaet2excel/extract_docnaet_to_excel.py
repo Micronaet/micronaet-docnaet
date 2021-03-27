@@ -122,7 +122,7 @@ header = [
     # u'Creazione',
     ]
 width = [
-    10, 5,
+    6, 5,
     30, 10, 10,
     12, 12,
     25, 20, 20, 
@@ -148,11 +148,13 @@ def clean_text(text):
         text = '\'' + text
     return text
         
-for item in sorted(database['document'], key=lambda x: (
-        x['docAzienda'], 
-        x['ID_protocollo'], 
-        x['docNumero'], 
-        )):
+#for item in sorted(database['document'], key=lambda x: (
+#        x['docAzienda'], 
+#        x['ID_protocollo'], 
+#        x['docNumero'], 
+#        )):
+
+for item in database['document']:
         
     row += 1    
         
