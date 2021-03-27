@@ -150,7 +150,7 @@ for item in documents:
         excel_db[company_id] = {
             'wb': ExcelWriter(
                 excel_filename, verbose=True),
-            'ws': {}    
+            'ws': {},    
             'format': {
                 'f_title': WB.get_format('title'),
                 'f_header': WB.get_format('header'),
