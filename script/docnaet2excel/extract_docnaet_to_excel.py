@@ -45,6 +45,7 @@ root_path = config.get('filesystem', 'root')
 # -----------------------------------------------------------------------------
 # MS SQL:
 # -----------------------------------------------------------------------------
+import pdb; pdb.set_trace()
 connection = pymssql.connect(
     host=host,
     user=user,
