@@ -23,7 +23,7 @@
 import sys
 import os
 import pymssql
-import excel_export
+from . import excel_export
 
 # -----------------------------------------------------------------------------
 # Parameters:
