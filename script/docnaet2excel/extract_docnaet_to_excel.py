@@ -72,12 +72,20 @@ database = {
     }
 
 # -----------------------------------------------------------------------------
-# Nazioni:
+# Ditte:
 # -----------------------------------------------------------------------------
 cr.execute('SELECT * FROM dbo.Ditte')
 for item in cr.fetchall():
     item_id = item['ID_ditta']
     database['company'][item_id] = item['ditRagioneSociale']
+
+# -----------------------------------------------------------------------------
+# Protocollo:
+# -----------------------------------------------------------------------------
+cr.execute('SELECT * FROM dbo.Protocolli')
+for item in cr.fetchall():
+    item_id = item['ID_protocollo']
+    database['protocol'][item_id] = item['proDescrizione']
 
 # -----------------------------------------------------------------------------
 # Nazioni:
