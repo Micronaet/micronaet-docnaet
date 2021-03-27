@@ -140,7 +140,7 @@ def clean_text(text):
 
 documents = sorted(
     database['document'],
-    reversed=True,
+    reverse=True,
     key=lambda x: x['docData'],
     )
 
