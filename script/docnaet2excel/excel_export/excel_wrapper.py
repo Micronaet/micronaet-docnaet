@@ -57,8 +57,8 @@ class ExcelWriter:
         self._WS = {}
         self._log_operation('Created WB and file: %s' % self._filename)
 
-        self.set_format() # setup default format for text used
-        self.get_format() # Load database of formats
+        self.set_format()  # setup default format for text used
+        self.get_format()  # Load database of formats
 
     # -------------------------------------------------------------------------
     #                           PUBLIC METHOD:
@@ -122,6 +122,16 @@ class ExcelWriter:
 
         self._WS[name] = self._WB.add_worksheet(name)
         self._log_operation('New WS: %s' % name)
+
+    def freeze_panes(self, ws_name, row, col):
+        """ Lock row or column
+        """
+        self._WS[ws_name].freeze_panes(row, col)
+
+    def autofilter(self, ws_name, r1, c1, r2, c2):
+        """ Set auto filter
+        """
+        return self._WS[ws_name].autofilter(r1, c1, r2, c2)
 
     def merge_cell(self, ws_name, rectangle, default_format=False, data=''):
         """ Merge cell procedure:
@@ -375,7 +385,7 @@ class ExcelWriter:
                     'bg_color': '#DDDDDD',
                     'align': 'left',
                     'valign': 'vcenter',
-                    #'text_wrap': True,
+                    # 'text_wrap': True,
                     }),
 
                 # --------------
@@ -409,7 +419,7 @@ class ExcelWriter:
                     'border': F['border'],
                     'bg_color': '#ffc6af',
                     'align': 'left',
-                    #'valign': 'vcenter',
+                    # 'valign': 'vcenter',
                     }),
                 'bg_green': WB.add_format({
                     'bold': True,
@@ -546,7 +556,7 @@ class ExcelWriter:
                     # 'text_wrap': True
                     }),
                 'text_green': WB.add_format({
-                    'font_color': '#328238', ##99cc66
+                    'font_color': '#328238',  # #99cc66
                     'font_name': F['text'][0],
                     'font_size': F['text'][1],
                     'border': F['border'],

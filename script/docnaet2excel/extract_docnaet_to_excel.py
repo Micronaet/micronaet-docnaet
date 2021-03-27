@@ -239,8 +239,11 @@ for item in documents:
     if protocol not in WS:
         # Init setup:
         WS[protocol] = 0  # Row
+        row = WS[protocol]
         WB.create_worksheet(ws_name)
         WB.column_width(ws_name, width)
+        WB.freeze_panes(ws_name, 1, 1)
+        WB.autofilter(ws_name, row, 0, row, len(header))
 
         # Header:
         WB.write_xls_line(
