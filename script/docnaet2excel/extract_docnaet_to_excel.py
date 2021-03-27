@@ -118,7 +118,8 @@ header = [
     u'Cliente', u'Categoria', u'Nazione', 
     u'Tipologia', u'Lingua', u'Applicazione', u'Utente',
     u'Oggetto', u'Descrizione', u'Note',
-    u'File', u'Est.', u'Creazione',
+    u'File', u'Est.', 
+    # u'Creazione',
     ]
 width = [
     10, 5,
@@ -127,7 +128,8 @@ width = [
     25, 20, 20, 
     25, 25, 25, 25,
     40, 40, 40,
-    20, 10,
+    20,
+    # 10,
     ]
 
 ws_name = 'Docnaet'
@@ -200,12 +202,12 @@ for item in sorted(database['document'], key=lambda x: (
         #item['docCreazioneEffettiva'],              
     ]
     WB.write_xls_line(ws_name, row, data, excel_format['f_text'])
-    continue
+
     # TODO change (manage link):
     filename = '%s.%s' % (item_id, extension) 
     fullname = os.path.join(root_path, str(protocol_id), filename)
     url = 'file://%s' % fullname
     cell = WB.rowcol_to_cell(row, 0)
-    WB.write_url(ws_name, cell, url, string='Apri documento')        
+    WB.write_url(ws_name, cell, url, string='APRI')        
 WB.close_workbook()
 
