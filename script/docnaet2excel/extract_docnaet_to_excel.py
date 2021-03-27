@@ -133,7 +133,7 @@ for key in sorted(database['document'], key=lambda x: (
         x['docAzienda'], 
         x['ID_protocollo'], 
         x['docNumero'], 
-        ):
+        )):
         
     row += 1
     item = database['document'][key]
