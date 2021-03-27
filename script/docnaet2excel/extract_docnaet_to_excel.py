@@ -166,18 +166,20 @@ for item in sorted(database['document'], key=lambda x: (
         protocol_id, item['docNumero'], item['docFax'], 
         item['docData'], item['docScadenza'],         
         partner_id, category_id, country_id,         
-        type_id, language_id, application_id, user_id,        
+        type_id, language_id, application_id, user_id,      
+          
         unicode(item['docOggetto']), 
         unicode(item['docDescrizione']), 
         unicode(item['docNote']),
+        
         item['docFile'], extension, item['docCreazioneEffettiva'],              
     ]
+    WB.write_xls_line(ws_name, row, data, excel_format['f_text'])
     continue
     # TODO change (manage link):
     filename = '%s.%s' % (item_id, extension) 
     fullname = os.path.join(root_path, str(protocol_id), filename)
     url = 'file://%s' % fullname
-    WB.write_xls_line(ws_name, row, data, excel_format['f_text'])
     cell = WB.rowcol_to_cell(row, 0)
     WB.write_url(ws_name, cell, url, string='Apri documento')        
 WB.close_workbook()
