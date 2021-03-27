@@ -278,13 +278,13 @@ for item in documents:
     partner_item = database['partner'].get(partner_id)
     if partner_item:
         partner_name = '%s, %s %s (%s)' % (
-            item['cliRagioneSociale'],
-            item['cliCAP'],
-            item['cliPaese'],
-            item['cliProvincia'],
+            partner_item['cliRagioneSociale'],
+            partner_item['cliCAP'],
+            partner_item['cliPaese'],
+            partner_item['cliProvincia'],
         )
-        partner_type_id = item['ID_tipo']
-        country_id = item['ID_nazione']
+        partner_type_id = partner_item['ID_tipo']
+        country_id = partner_item['ID_nazione']
 
         partner_type_name = excel_db['partner_type'].get(partner_type_id, '')
         country_name = excel_db['country'].get(country_id, '')
