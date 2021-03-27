@@ -213,7 +213,7 @@ for item in sorted(database['document'], key=lambda x: (
     #    str(protocol_id), 
     #    filename,
     #    ) 
-    url = 'file://%s' % fullname
+    url = 'file:///%s' % fullname
     cell = WB.rowcol_to_cell(row, 0)
     WB.write_url(ws_name, cell, url, string='APRI')        
 WB.close_workbook()
