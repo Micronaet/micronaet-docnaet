@@ -118,6 +118,14 @@ for item in cr.fetchall():
     database['type'][item_id] = item['tipDescrizione']
 
 # -----------------------------------------------------------------------------
+# Lingue:
+# -----------------------------------------------------------------------------
+cr.execute('SELECT * FROM dbo.Lingue')
+for item in cr.fetchall():
+    item_id = item['ID_lingua']
+    database['language'][item_id] = item['linDescrizione']
+
+# -----------------------------------------------------------------------------
 # Document:
 # -----------------------------------------------------------------------------
 cr.execute('SELECT * FROM dbo.Documenti')
@@ -137,7 +145,9 @@ header = [
     u'Numero', u'Fax',
     u'Data', u'Scadenza',
     u'Cliente', u'Categoria', u'Nazione',
-    u'Tipologia', u'Lingua', u'Applicazione', u'Utente',
+    u'Tipologia', u'Lingua',
+    # u'Applicazione',
+    u'Utente',
     u'Oggetto', u'Descrizione', u'Note',
     u'File', u'Est.',
     # u'Creazione',
@@ -148,7 +158,8 @@ width = [
     10, 10,
     15, 15,
     25, 20, 20,
-    25, 25, 25, 25,
+    25, 25, 25,
+    # 25,
     40, 40, 40,
     20,
     # 10,
@@ -185,7 +196,6 @@ for item in documents:
             }
         print('Creating %s' % excel_filename)
 
-
     # Readability:
     WB = excel_db[company_id]['wb']
     excel_format = excel_db[company_id]['format']
@@ -221,7 +231,7 @@ for item in documents:
     user_id = item['ID_utente']
     application_id = ''
     partner_id = item['ID_cliente']
-    category_id = '' #item['ID_cliente']
+    category_id = '' # item['ID_cliente']
     country_id = ''
     link = ''  # TODO
     extension = item['docEstensione']
@@ -231,7 +241,9 @@ for item in documents:
         item['docData'].strftime('%Y-%m-%d %H:%M:%S')
     deadline = '' if not item['docScadenza'] else \
         item['docScadenza'].strftime('%Y-%m-%d %H:%M:%S')
+
     type_name = database['type'].get(type_id, '')
+    language_name = database['language'].get(language_id, '')
 
     # Campi non usati:
     # support_id = item['ID_supporto']
@@ -249,14 +261,16 @@ for item in documents:
         item['docNumero'], item['docFax'],
         data, deadline,
         partner_id, category_id, country_id,
-        type_name, language_id, application_id, user_id,
+        type_name, language_name,
+        # application_id,
+        user_id,
 
         clean_text(item['docOggetto']),
         clean_text(item['docDescrizione']),
         clean_text(item['docNote']),
 
         item['docFile'], extension,
-        #item['docCreazioneEffettiva'],
+        # item['docCreazioneEffettiva'],
     ]
     WB.write_xls_line(ws_name, row, data, excel_format['f_text'])
 
