@@ -147,9 +147,9 @@ for item in documents:
     company = database['company'].get(company_id, '')
     if company_id not in excel_db:
         excel_filename = '/home/openerp7/smb/docnaet/%s.xlsx' % company
+        WB = ExcelWriter(excel_filename, verbose=True)
         excel_db[company_id] = {
-            'wb': ExcelWriter(
-                excel_filename, verbose=True),
+            'wb': WB,
             'ws': {},    
             'format': {
                 'f_title': WB.get_format('title'),
