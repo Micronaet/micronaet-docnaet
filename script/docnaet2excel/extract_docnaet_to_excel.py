@@ -286,8 +286,8 @@ for item in documents:
         partner_type_id = partner_item['ID_tipo']
         country_id = partner_item['ID_nazione']
 
-        partner_type_name = excel_db['partner_type'].get(partner_type_id, '')
-        country_name = excel_db['country'].get(country_id, '')
+        partner_type_name = database['partner_type'].get(partner_type_id, '')
+        country_name = database['country'].get(country_id, '')
         # cliIndirizzo, cliTelefono, cliFax, cliEmail, cliCodice
         # ID_ditta
     else:
