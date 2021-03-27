@@ -162,8 +162,10 @@ for item in sorted(database['document'], key=lambda x: (
     
     # Convert:
     company = database['company'].get(company_id, '')
-    data = item['docData'].strftime('%Y-%m-%d %H:%M:%S')
-    deadline = item['docScadenza'].strftime('%Y-%m-%d %H:%M:%S')
+    data = '' if not item['docData'] else \
+        item['docData'].strftime('%Y-%m-%d %H:%M:%S')
+    deadline = '' if not item['docScadenza'] else \
+        item['docScadenza'].strftime('%Y-%m-%d %H:%M:%S')
     
     # Campi non usati:
     # support_id = item['ID_supporto']
