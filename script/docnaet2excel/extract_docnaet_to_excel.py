@@ -40,7 +40,7 @@ password= config.get('dbaccess', 'pwd')
 database = config.get('dbaccess', 'dbname')
 
 # Filesystem:
-root_path = 'O:' or config.get('filesystem', 'root')  # TODO restore
+root_path = config.get('filesystem', 'root')  # TODO restore
 
 
 # -----------------------------------------------------------------------------
@@ -185,7 +185,7 @@ width = [
     # 30, 10,
     10, 10,
     18, 18,
-    25, 20, 20,
+    45, 20, 20,
     25, 25, 25,
     # 25,
     40, 40, 40,
