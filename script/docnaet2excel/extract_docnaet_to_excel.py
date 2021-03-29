@@ -36,11 +36,12 @@ config.read([cfg_file])
 # SQL:
 host = config.get('dbaccess', 'host')
 user = config.get('dbaccess', 'user')
-password= config.get('dbaccess', 'pwd')
+password = config.get('dbaccess', 'pwd')
 database = config.get('dbaccess', 'dbname')
 
 # Filesystem:
 root_path = config.get('filesystem', 'root')  # TODO restore
+excel_path = config.get('filesystem', 'excel')  # TODO restore
 
 
 # -----------------------------------------------------------------------------
@@ -208,7 +209,8 @@ for item in documents:
     company_id = item['docAzienda']
     company = database['company'].get(company_id, '')
     if company_id not in excel_db:
-        excel_filename = '/home/openerp7/smb/docnaet/%s.xlsx' % company
+        # excel_filename = '/home/openerp7/smb/docnaet/%s.xlsx' % company
+        excel_filename = './data/%s.xlsx' % company
         WB = ExcelWriter(excel_filename, verbose=True)
         excel_db[company_id] = {
             'wb': WB,
