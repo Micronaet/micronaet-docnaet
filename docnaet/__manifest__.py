@@ -16,7 +16,7 @@
         ],
     'init_xml': [],
     'data': [
-        # 'security/docnaet_group.xml',
+        'security/docnaet_group.xml',
         'security/ir.model.access.csv',
 
         # 'data/config.xml',

@@ -60,10 +60,10 @@ class ResCompany(models.Model):
         return number
 
     docnaet_path = fields.Char(
-        'Docnaet path', size=64, required=True,
+        'Docnaet path', size=64,
         help='Docnaet root path in file system for store docs')
     labnaet_path = fields.Char(
-        'Labnaet path', size=64, required=True,
+        'Labnaet path', size=64,
         help='Labnaet root path in file system for store docs')
     next_fax = fields.Integer('Next fax number')
 
@@ -372,7 +372,7 @@ class DocnaetProtocol(models.Model):
     _inherit = 'docnaet.protocol'
 
     template_ids = fields.One2many(
-        'docnaet.protocol.template', 'protocol_id', 'Template'),
+        'docnaet.protocol.template', 'protocol_id', 'Template')
 
 
 class DocnaetDocument(models.Model):
@@ -493,12 +493,11 @@ class DocnaetDocument(models.Model):
             NOTE: maybe expand the services
         """
         handle = 'openerp'  # TODO put in company as parameter
-        doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
         # ---------------------------------------------------------------------
         # Labnaet mode:
         # ---------------------------------------------------------------------
-        if doc_proxy.docnaet_mode == 'labnaet':
+        if self.docnaet_mode == 'labnaet':
             app = '[L]'
             docnaet_mode = 'labnaet'
         else:
@@ -510,15 +509,14 @@ class DocnaetDocument(models.Model):
         # ---------------------------------------------------------------------
         # A. Open document:
         if mode == 'open':
-            filename = self.get_document_filename(
-                cr, uid, doc_proxy, mode='filename', context=context)
+            filename = self.get_document_filename(mode='filename')
             final_url = r'%s://document|%s%s' % (
                 handle, filename, app)
 
         # B. Open private folder:
         elif mode == 'home':
             final_url = r'%s://folder|%s%s' % (
-                handle, uid, app)
+                handle, self.user.id, app)
 
         # C. Open remote document:
         # if remote:
@@ -593,11 +591,12 @@ class DocnaetDocument(models.Model):
         return self.call_docnaet_url('open', remote=True)
 
     @api.model
-    def get_document_filename(self, document, mode='fullname'):
+    def get_document_filename(self, mode='fullname'):
         """ Recursive function for get filename
             document: browse obj
             mode: fullname or filename only
         """
+        document = self
         self.env.context['docnaet_mode'] = document.docnaet_mode
 
         # 2 different ID:
@@ -619,11 +618,10 @@ class DocnaetDocument(models.Model):
             else:  # fullname:
                 return os.path.join(store_folder, filename)
         elif document.original_id:
-            return self.get_document_filename(
-                cr, uid, document.original_id, mode=mode, context=context)
+            return document.original_id.get_document_filename(mode=mode)
         else:  # Duplicate also file:
             store_folder = company_pool.get_docnaet_folder_path(
-                cr, uid, subfolder='store', context=context)
+                subfolder='store')
             filename = '%s.%s' % (document_id, document.docnaet_extension)
             if mode == 'filename':
                 return filename
@@ -710,7 +708,7 @@ class DocnaetDocument(models.Model):
         return int(self.env['ir.sequence'].get(
             'docnaet.document.labnaet'))
 
-    name = fields.Char('Subject', size=180, required=True),
+    name = fields.Char('Subject', size=180, required=True)
     labnaet_id = fields.Integer(
         'Labnaet ID',
         help='Secondary ID for document, keep data in different folder.')
@@ -724,15 +722,15 @@ class DocnaetDocument(models.Model):
     number = fields.Char('N.', size=10)
     fax_number = fields.Char('Fax n.', size=10)
 
-    date = fields.date('Date', required=True, default=fields.Datetime.now())
+    date = fields.Date('Date', required=True, default=fields.Datetime.now())
     date_month = fields.Char(
         compute='_get_date_month_4_group', method=True,
         string='Mese inser.', size=15,
         # 'docnaet.document' _store_data_deadline_month, ['date']
         )
 
-    deadline_info = fields.Char('Deadline info', size=64),
-    deadline = fields.date('Deadline')
+    deadline_info = fields.Char('Deadline info', size=64)
+    deadline = fields.Date('Deadline')
     deadline_month = fields.Char(
         compute='_get_deadline_month_4_group', method=True,
         string='Scadenza', size=15,
@@ -760,7 +758,7 @@ class DocnaetDocument(models.Model):
         # 'docnaet.document': _refresh_country_auto_change, ['partner_id'], 10)
     )
     docnaet_category_id = fields.Many2one(
-        'res.partner.docnaet', 'partner_id.docnaet_category_id',
+        'res.partner.docnaet', related='partner_id.docnaet_category_id',
         string='Partner category',
         # 'res.partner': _refresh_partner_category_change, 'docnaet_category_id
         # 'docnaet.document': _refresh_category_auto_change, ['partner_id']
@@ -829,7 +827,7 @@ class ResUsers(models.Model):
     """
     _inherit = 'res.users'
 
-    sector_ids = fields.many2many(
+    sector_ids = fields.Many2many(
         'docnaet.sector', 'docnaet_document_sector_rel',
         'user_id', 'sector_id', 'Settori')
     hide_generic = fields.Boolean(
