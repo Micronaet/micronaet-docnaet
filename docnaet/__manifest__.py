@@ -23,7 +23,7 @@
         # 'data/counter.xml',
 
         # 'wizard/document_duplication_view.xml',
-        # 'docnaet_view.xml',
+        'docnaet_view.xml',
         # 'alternative_view.xml',
         # 'docnaet_workflow.xml',
 
