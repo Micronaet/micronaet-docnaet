@@ -20,8 +20,8 @@
     'init_xml': [],
     'demo': [],
     'data': [
-        #'upload_view.xml',
-        #'wizard/upload_document_view.xml',
+        'upload_view.xml',
+        'wizard/upload_document_view.xml',
         ],
     'active': False,
     'installable': True,
