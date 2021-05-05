@@ -7,7 +7,7 @@
         <field name="name">docnaet.document.duplication.wizard.form</field>
         <field name="model">docnaet.document.duplication.wizard</field>
         <field name="arch" type="xml">
-            <form string="Document duplication" version="7.0">
+            <form string="Document duplication">
                 <header>
                     <button string="Cancel" special="cancel" icon='STOCK_CANCEL'/>
                 </header>

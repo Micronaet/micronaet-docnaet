@@ -196,7 +196,7 @@ class DocnaetDocumentAdvancedSearchWizard(models.TransientModel):
     type_id = fields.Many2one(
         'docnaet.type', 'Type',
         domain=[('invisible', '=', False)])
-    number = fields.Char('N.', size=10),
+    number = fields.Char('N.', size=10)
     language_id = fields.Many2one('docnaet.language', 'Language')
     program_id = fields.Many2one(
         'docnaet.protocol.template.program', 'Type of document')
@@ -206,7 +206,7 @@ class DocnaetDocumentAdvancedSearchWizard(models.TransientModel):
         )
     # Labnaet:
     product_id = fields.Many2one(
-        'docnaet.product', 'Product'),
+        'docnaet.product', 'Product')
     docnaet_product_category_id = fields.Many2one(
         'product.product.docnaet', 'Product category',
         )

@@ -3,4 +3,4 @@
 
 
 from . import docnaet
-import wizard
+from . import wizard
