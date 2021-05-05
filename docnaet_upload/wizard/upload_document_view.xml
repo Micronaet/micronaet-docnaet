@@ -11,7 +11,7 @@
                         <field name="mode" invisible="1"/>
                         <button string='Home folder' name='button_personal_folder' type='object' icon='gtk-directory-remote' attrs="{'invisible': [('mode','!=','upload')]}"/>
                         <button string="Cancel" special="cancel" icon='STOCK_CANCEL'/>
-                        <button string='Upload' name='button_upload' type='object' icon='STOCK_APPLY' attrs="{'invisible': [('mode','!=','upload')]}"/>
+                        <button string='Upload' name='button_upload' type='object' icon='fa-cloud-upload fa-2x' attrs="{'invisible': [('mode','!=','upload')]}"/>
                         <button string='Riassegna' name='button_reassign' type='object' icon='STOCK_APPLY' attrs="{'invisible': [('mode','!=','reassign')]}"/>
                     </header>
                     <sheet>
