@@ -396,7 +396,7 @@ class UploadDocumentFile(models.TransientModel):
     to_import = fields.Boolean('Import')
     name = fields.Char(
         'File name', size=100, required=True, readonly=True)
-    fullname = fields.Char('Full name', size=400),
+    fullname = fields.Char('Full name', size=400)
     date = fields.Date('Time stamp')
     wizard_id = fields.Many2one(
         'docnaet.document.upload.wizard', 'Wizard')
@@ -415,4 +415,4 @@ class UploadDocumentWizard(models.TransientModel):
     document_ids = fields.One2many(
         'docnaet.document.upload.file', 'wizard_id', 'Files',
         default=lambda s: s.get_default_file_ids()
-    ),
+    )
