@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import os
+import pdb
 import sys
 import logging
 from odoo import api, fields, models
@@ -33,6 +34,7 @@ class ResCompany(models.Model):
 
         # Get docnaet path from company element
         company_proxy = self.env.user.company_id
+        pdb.set_trace()
         docnaet_path = company_proxy.__getattr__(field_path)  # XXX variable
 
         # Folder structure:
