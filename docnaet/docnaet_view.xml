@@ -583,7 +583,7 @@
         <field name="model">docnaet.document</field>
         <field name="arch" type="xml">
             <search string="Docnaet document">
-                <!--<field name="number" />
+                <field name="number" />
                 <field name="date_month" string="Data AAAA-MM"/>
                 <field name="deadline_month" string="Scadenza AAAA-MM"/>
 
