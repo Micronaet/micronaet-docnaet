@@ -84,7 +84,7 @@
 
         <!--TODO Labnaet mode?!?!?-->
         <!--Reassign mode:-->
-        <act_window id="act_docnaet_document_reassign_wizard"
+        <!--<act_window id="act_docnaet_document_reassign_wizard"
             name="Riassegna caratteristiche"
             res_model="docnaet.document.upload.wizard"
             src_model="docnaet.document"
@@ -93,7 +93,7 @@
             key2="client_action_multi"
             multi="True"
             context="{'default_mode': 'reassign', 'default_default_user_id': False, 'name_mode': 'docnaet'}"
-            />
+            />-->
 
     </data>
 </openerp>
