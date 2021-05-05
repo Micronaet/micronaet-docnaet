@@ -16,6 +16,7 @@
                     </header>
                     <sheet>
                         <group colspan="4" col="3">
+                            <label for="docnaet_mode"/>
                             <field name="docnaet_mode" invisible="1"/> <!--groups="docnaet.group_docnaet_mode"-->
                             <newline/>
 
