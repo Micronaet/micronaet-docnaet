@@ -37,13 +37,14 @@
                             <field name="default_protocol_id" options="{'no_create': True}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
                             <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}" /> <!--,('is_address','=',False)-->
 
-                            <label for="default_product_id"/>
+                            <label for="default_product_id" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
                             <field name="default_product_id" options="{'no_create': True}" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
                             <label for="default_language_id"/>
                             <field name="default_language_id" options="{'no_create': True}" />
                             <label for="default_sector_id"/>
                             <field name="default_sector_id" groups="docnaet.group_docnaet_sector_user" widget="selection"/>
 
+                            <label for="file_mode" attrs="{'invisible': [('mode','!=','upload')]}"/>
                             <field name="file_mode" attrs="{'invisible': [('mode','!=','upload')]}"/>
 
                             <!--Visible in UPLOAD mode:-->
