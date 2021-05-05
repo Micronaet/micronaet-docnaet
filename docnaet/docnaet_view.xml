@@ -30,7 +30,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_sector">
         <field name="name">Docnaet sector</field>
         <field name="res_model">docnaet.sector</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_docnaet_sector_tree"/>
         <field name="context">{}</field>
@@ -89,7 +88,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_product">
         <field name="name">Docnaet product</field>
         <field name="res_model">docnaet.product</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_docnaet_product_tree"/>
         <field name="context">{}</field>
@@ -125,7 +123,6 @@
     <record model="ir.actions.act_window" id="action_product_product_docnaet">
         <field name="name">Docnaet product category</field>
         <field name="res_model">product.product.docnaet</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_product_product_docnaet_tree"/>
         <field name="context">{}</field>
@@ -164,7 +161,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_protocol_template_program">
         <field name="name">Programs type</field>
         <field name="res_model">docnaet.protocol.template.program</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_docnaet_protocol_template_program_tree"/>
         <field name="context">{}</field>
@@ -252,7 +248,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_protocol">
         <field name="name">Docnaet protocol</field>
         <field name="res_model">docnaet.protocol</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_docnaet_protocol_tree"/>
     </record>
@@ -298,7 +293,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_type">
         <field name="name">Docnaet type</field>
         <field name="res_model">docnaet.type</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_docnaet_type_tree"/>
     </record>
@@ -338,7 +332,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_language">
         <field name="name">Docnaet language</field>
         <field name="res_model">docnaet.language</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_docnaet_language_tree"/>
     </record>
@@ -372,7 +365,6 @@
     <record model="ir.actions.act_window" id="action_res_partner_docnaet">
         <field name="name">Partner docnaet category</field>
         <field name="res_model">res.partner.docnaet</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_docnaet_partner_tree"/>
     </record>
@@ -409,7 +401,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_users_form">
         <field name="name">User</field>
         <field name="res_model">res.users</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="res_users_tree_docnaet_view"/>
         <field name="context">{'form_view_ref':'docnaet.res_users_form_docnaet_view'}</field>
@@ -486,7 +477,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_partner_form">
         <field name="name">Partner</field>
         <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_res_partner_docnaet_tree"/>
     </record>
@@ -522,7 +512,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_country_form">
         <field name="name">Country</field>
         <field name="res_model">res.country</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="res_country_tree_docnaet_view"/>
         <field name="context">{'form_view_ref':'docnaet.res_country_form_docnaet_view'}</field>
@@ -583,7 +572,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_company_form">
         <field name="name">Company</field>
         <field name="res_model">res.company</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="res_company_tree_docnaet_view"/>
         <field name="context">{'form_view_ref':'docnaet.res_company_form_docnaet_view'}</field>
@@ -867,7 +855,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_deadline_document_tree">
         <field name="name">My documents deadline</field>
         <field name="res_model">docnaet.document</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_calendar_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
@@ -877,7 +864,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_my_document_tree">
         <field name="name">My Documents</field>
         <field name="res_model">docnaet.document</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
@@ -887,7 +873,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_document_tree">
         <field name="name">Documents</field>
         <field name="res_model">docnaet.document</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
@@ -897,7 +882,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_document_draft_tree">
         <field name="name">Draft documents</field>
         <field name="res_model">docnaet.document</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
@@ -907,7 +891,6 @@
     <record model="ir.actions.act_window" id="action_docnaet_remote_document_tree">
         <field name="name">Remote documents</field>
         <field name="res_model">docnaet.document</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="search_view_id" ref="view_docnaet_document_docnaet_search"/>
@@ -919,7 +902,6 @@
     <record model="ir.actions.act_window" id="action_labnaet_deadline_document_tree">
         <field name="name">My documents deadline</field>
         <field name="res_model">docnaet.document</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_calendar_view"/>
         <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
@@ -929,7 +911,6 @@
     <record model="ir.actions.act_window" id="action_labnaet_my_document_tree">
         <field name="name">My Documents</field>
         <field name="res_model">docnaet.document</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
@@ -939,7 +920,6 @@
     <record model="ir.actions.act_window" id="action_labnaet_document_tree">
         <field name="name">Documents</field>
         <field name="res_model">docnaet.document</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
@@ -949,7 +929,6 @@
     <record model="ir.actions.act_window" id="action_labnaet_document_draft_tree">
         <field name="name">Draft documents</field>
         <field name="res_model">docnaet.document</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>

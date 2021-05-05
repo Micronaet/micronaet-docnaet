@@ -108,7 +108,7 @@ class DocumentDuplication(models.TransientModel):
                 _logger.error('Cannot set property of file')
 
         return {
-            'view_type': 'form',
+            # 'view_type': 'form',
             'view_mode': 'form,tree,calendar',
             'res_model': 'docnaet.document',
             'domain': [('id', '=', destination_proxy.id)],

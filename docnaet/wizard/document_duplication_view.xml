@@ -26,7 +26,6 @@
     <record id="action_docnaet_document_duplication" model="ir.actions.act_window">
             <field name="name">Docnaet document duplication</field>
             <field name="res_model">docnaet.document.duplication.wizard</field>
-            <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_duplication_form"/>
             <field name="target">new</field>

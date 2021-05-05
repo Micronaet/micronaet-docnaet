@@ -166,7 +166,7 @@ class DocnaetDocumentAdvancedSearchWizard(models.TransientModel):
             domain.append(('id', 'in', keyword_ids))
 
         return {
-            'view_type': 'form',
+            # 'view_type': 'form',
             'view_mode': 'tree,form,calendar',
             'res_model': 'docnaet.document',
             'domain': domain,
