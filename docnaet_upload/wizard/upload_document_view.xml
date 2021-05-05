@@ -21,7 +21,7 @@
 
                             <separator string="Partner Filter:" colspan="2"/>
                             <field name="partner_name" placeholder="Filter partner name..." context="{'name_mode': 'docnaet'}"/> <!--TODO on_change="onchange_country_partner_domain(partner_name,country_id,context)" -->
-                            <field name="country_id" placeholder="Filter partner country..." context="{'name_mode': 'docnaet'}"/> <!--TODO on_change="onchange_country_partner_domain(partner_name,country_id,context)"-->
+                            <field name="country_id" placeholder="Filter partner country..." options="{'no_create': True}"  context="{'name_mode': 'docnaet'}"/> <!--TODO on_change="onchange_country_partner_domain(partner_name,country_id,context)"-->
 
                             <separator string="Default setup:" colspan="2"/>
                             <field name="default_partner_id" options="{'no_create': True}" context="{'name_mode': 'docnaet'}"/><!--{'limit': 10, 'create': false, 'create_edit': false}-->
