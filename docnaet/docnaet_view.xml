@@ -578,7 +578,7 @@
     </record>
 
     <!--docnaet.document-->
-    <record model="ir.ui.view" id="view_docnaet_document_docnaet_search">
+    <!--<record model="ir.ui.view" id="view_docnaet_document_docnaet_search">
         <field name="name">docnaet.document.search</field>
         <field name="model">docnaet.document</field>
         <field name="arch" type="xml">
@@ -608,7 +608,7 @@
                 <filter name="state_cancel" string="Cancel state" domain="[('state','=','cancel')]"/>
 
                 <filter name="linked_document" string="Linked document" domain="[('original_id','!=',False)]"/>
-                <filter name="original_document" string="Original document" domain="[('original_id','=',False)]"/>-->
+                <filter name="original_document" string="Original document" domain="[('original_id','=',False)]"/>
 
                 <group expand="0" string="Group By">
                     <filter name="group_date_month" string="Data" context="{'group_by': 'date_month'}"/>
@@ -646,7 +646,6 @@
                 <field name="user_id" filter_domain="[('user_id','=',self)]"/>
                 <field name="country_id" />
 
-                <!--LABNAET EXTRA FILTER:-->
                 <field name="product_id" filter_domain="[('product_id','=',self)]" />
                 <field name="docnaet_product_category_id" />
 
@@ -668,7 +667,6 @@
                     <filter name="group_partner" string="Partner" context="{'group_by': 'partner_id'}"/>
                     <filter name="group_partner_category" string="Partner category" context="{'group_by': 'docnaet_category_id'}"/>
 
-                    <!--Labnaet Extra filter:-->
                     <filter name="group_product" string="Product" context="{'group_by': 'product_id'}" />
                     <filter name="group_product_category" string="Product category" context="{'group_by': 'docnaet_product_category_id'}" />
 
@@ -683,7 +681,7 @@
                 </group>
            </search>
         </field>
-    </record>
+    </record>-->
     <record model="ir.ui.view" id="docnaet_document_tree_view">
         <field name="name">Docnaet document</field>
         <field name="model">docnaet.document</field>
