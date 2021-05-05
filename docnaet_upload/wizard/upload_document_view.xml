@@ -67,7 +67,6 @@
         <record id="action_docnaet_document_upload" model="ir.actions.act_window">
             <field name="name">Docnaet document upload</field>
             <field name="res_model">docnaet.document.upload.wizard</field>
-            <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_upload_form"/>
             <field name="target">new</field>
@@ -76,8 +75,6 @@
         <record id="action_labnaet_document_upload" model="ir.actions.act_window">
             <field name="name">Labnaet document upload</field>
             <field name="res_model">docnaet.document.upload.wizard</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
             <field name="view_id" ref="document_upload_form"/>
             <field name="target">new</field>
             <field name="context">{'default_docnaet_mode': 'labnaet', 'docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
@@ -92,7 +89,6 @@
             res_model="docnaet.document.upload.wizard"
             src_model="docnaet.document"
             view_mode="form"
-            view_type="form"
             target="new"
             key2="client_action_multi"
             multi="True"
