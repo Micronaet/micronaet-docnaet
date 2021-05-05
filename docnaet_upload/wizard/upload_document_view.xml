@@ -59,6 +59,7 @@
                             </group>
                         </group>
                     </sheet>
+                    <footer/>
                 </form>
             </field>
         </record>
