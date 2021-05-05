@@ -1,46 +1,247 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* docnaet
+#	* docnaet
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 7.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-06-29 13:55+0000\n"
-"PO-Revision-Date: 2018-06-29 16:03+0100\n"
+"POT-Creation-Date: 2021-05-05 06:13+0000\n"
+"PO-Revision-Date: 2021-05-05 06:13+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: it\n"
-"X-Generator: Poedit 1.6.10\n"
 
 #. module: docnaet
-#: field:docnaet.document,imported:0
-msgid "Imported"
-msgstr "Importato"
+#: model:ir.ui.menu,name:docnaet.docnaet_administration
+msgid "Administration"
+msgstr "Amministrazione"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Open document"
-msgstr "Apri documento"
+#: model:ir.ui.view,arch_db:docnaet.document_advanced_search_form
+msgid "Advanced"
+msgstr "Avanzato"
 
 #. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Evemelt"
-msgstr "Evemelt"
+#: model:ir.actions.act_window,name:docnaet.action_document_advanced_search_docnaet
+#: model:ir.actions.act_window,name:docnaet.action_document_advanced_search_labnaet
+#: model:ir.model,name:docnaet.model_docnaet_document_advanced_search_wizard
+#: model:ir.ui.menu,name:docnaet.docnaet_document_advanced_search
+#: model:ir.ui.menu,name:docnaet.labnaet_document_advanced_search
+#: model:ir.ui.view,arch_db:docnaet.document_advanced_search_form
+msgid "Advanced search"
+msgstr "Ricerca avanzata"
 
 #. module: docnaet
-#: model:ir.model,name:docnaet.model_docnaet_document_import_wizard
-msgid "Document import"
-msgstr "Importa documento"
+#: model:res.groups,comment:docnaet.group_docnaet_agent
+msgid "Agent group for docnaet managerment"
+msgstr "Gruppo agenti amministrazione docnaet"
 
 #. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Borace Raffinato Gran. Deca"
-msgstr "Borace Raffinato Gran. Deca"
+#: selection:docnaet.type,docnaet_mode:0
+msgid "All"
+msgstr "Tutti"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_docnaet_tree
+msgid "Azienda"
+msgstr "Azienda"
+
+#. module: docnaet
+#: selection:docnaet.document,state:0
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_tree_view
+#: model:ir.ui.view,arch_db:docnaet.document_advanced_search_form
+#: model:ir.ui.view,arch_db:docnaet.document_duplication_form
+msgid "Cancel"
+msgstr "Annulla"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Cancel state"
+msgstr "Stato annullato"
+
+#. module: docnaet
+#: code:addons/docnaet/wizard/document_duplication.py:29
+#, python-format
+msgid "Cannot found original document"
+msgstr "Cannot found original document"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+msgid "Categorie"
+msgstr "Categorie"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_product_search
+msgid "Category"
+msgstr "Categoria"
+
+#. module: docnaet
+#: model:ir.model.fields,help:docnaet.field_docnaet_document_duplicated_ids
+msgid "Child document duplicated from this"
+msgstr "Documenti figlio duplicati da questo"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_language_code
+msgid "Code"
+msgstr "Codice"
+
+#. module: docnaet
+#: model:ir.model,name:docnaet.model_res_company
+msgid "Companies"
+msgstr "Aziende"
+
+#. module: docnaet
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_company_form
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_company_id
+#: model:ir.ui.menu,name:docnaet.docnaet_administration_company
+msgid "Company"
+msgstr "Azienda"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.res_company_form_docnaet_view
+#: model:ir.ui.view,arch_db:docnaet.res_company_tree_docnaet_view
+#: model:ir.ui.view,arch_db:docnaet.res_country_form_docnaet_view
+#: model:ir.ui.view,arch_db:docnaet.res_country_tree_docnaet_view
+msgid "Company docnaet"
+msgstr "Azienda docnaet"
+
+#. module: docnaet
+#: selection:docnaet.document,state:0
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_tree_view
+msgid "Confirmed"
+msgstr "Confermato"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Confirmed state"
+msgstr "Stato confermato"
+
+#. module: docnaet
+#: model:ir.model,name:docnaet.model_res_partner
+msgid "Contact"
+msgstr "Contatto"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_docnaet_tree
+msgid "Contatti"
+msgstr "Contatti"
+
+#. module: docnaet
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_country_form
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_country_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_country_id
+#: model:ir.ui.menu,name:docnaet.docnaet_administration_country
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Country"
+msgstr "Nazione"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_create_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_create_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_duplication_wizard_create_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_language_create_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product_create_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_create_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_create_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_program_create_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_sector_create_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_type_create_uid
+#: model:ir.model.fields,field_description:docnaet.field_product_product_docnaet_create_uid
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_create_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_create_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_duplication_wizard_create_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_language_create_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product_create_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_create_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_create_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_program_create_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_sector_create_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_type_create_date
+#: model:ir.model.fields,field_description:docnaet.field_product_product_docnaet_create_date
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Data"
+msgstr "Data"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Data AAAA-MM"
+msgstr "Data AAAA-MM"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_date
+msgid "Date"
+msgstr "Data"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.document_advanced_search_form
+msgid "Date filter:"
+msgstr "Filtri data:"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_deadline
+#: model:ir.ui.menu,name:docnaet.docnaet_document_deadline
+#: model:ir.ui.menu,name:docnaet.labnaet_document_deadline
+msgid "Deadline"
+msgstr "Scadenza"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_deadline_info
+msgid "Deadline info"
+msgstr "Info scadenza"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product_default_code
+msgid "Default code"
+msgstr "Codice"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_description
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_description
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_display_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_display_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_duplication_wizard_display_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_language_display_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product_display_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_display_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_display_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_program_display_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_sector_display_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_type_display_name
+#: model:ir.model.fields,field_description:docnaet.field_product_product_docnaet_display_name
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_display_name
+msgid "Display Name"
+msgstr "Nome Completo"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+msgid "Doc info"
+msgstr "Doc info"
 
 #. module: docnaet
 #: selection:docnaet.document,docnaet_mode:0
@@ -50,43 +251,31 @@ msgstr "Borace Raffinato Gran. Deca"
 #: selection:docnaet.type,docnaet_mode:0
 #: model:ir.module.category,name:docnaet.module_docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_document
-#: model:ir.ui.menu,name:docnaet.docnaet_root view:res.company:0
+#: model:ir.ui.menu,name:docnaet.docnaet_root
+#: model:ir.ui.view,arch_db:docnaet.res_company_form_view
 msgid "Docnaet"
 msgstr "Docnaet"
 
 #. module: docnaet
-#: view:docnaet.document:0
-#: field:docnaet.document,docnaet_product_category_id:0
-#: field:docnaet.document.advanced.search.wizard,docnaet_product_category_id:0
-#: model:ir.model,name:docnaet.model_product_product_docnaet
-#: model:ir.ui.menu,name:docnaet.menu_product_product_docnaet
-msgid "Product category"
-msgstr "Categoria prodotto"
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_child_ids
+#: model:ir.model.fields,field_description:docnaet.field_res_users_docnaet_child_ids
+msgid "Docnaet Ditte Collegate"
+msgstr "Docnaet Ditte Collegate"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Extra info"
-msgstr "Info extra"
+#: model:ir.model,name:docnaet.model_docnaet_product
+msgid "Docnaet Product"
+msgstr "Prodotto docnaet"
 
 #. module: docnaet
-#: field:docnaet.protocol,template_ids:0
-msgid "Template"
-msgstr "Modello"
+#: model:res.groups,name:docnaet.group_docnaet_admin
+msgid "Docnaet administrator"
+msgstr "Amministratore docnaet"
 
 #. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Tetraborato di potassio"
-msgstr "Tetraborato di potassio"
-
-#. module: docnaet
-#: view:docnaet.document:0 selection:docnaet.document,state:0
-msgid "Timed"
-msgstr "A tempo"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Rame solfato zoo"
-msgstr "Rame solfato zoo"
+#: model:ir.ui.view,arch_db:docnaet.document_advanced_search_form
+msgid "Docnaet advanced search:"
+msgstr "Ricerca avanzata Docnaet:"
 
 #. module: docnaet
 #: model:res.groups,name:docnaet.group_docnaet_agent
@@ -94,83 +283,42 @@ msgid "Docnaet agent"
 msgstr "Agente docnaet"
 
 #. module: docnaet
-#: view:docnaet.document.advanced.search.wizard:0
-#: model:ir.actions.act_window,name:docnaet.action_document_advanced_search_docnaet
-#: model:ir.actions.act_window,name:docnaet.action_document_advanced_search_labnaet
-#: model:ir.model,name:docnaet.model_docnaet_document_advanced_search_wizard
-#: model:ir.ui.menu,name:docnaet.docnaet_document_advanced_search
-#: model:ir.ui.menu,name:docnaet.labnaet_document_advanced_search
-msgid "Advanced search"
-msgstr "Ricerca avanzata"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product_docnaet_category_id
+#: model:ir.model.fields,field_description:docnaet.field_product_product_docnaet_name
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_category_id
+#: model:ir.model.fields,field_description:docnaet.field_res_users_docnaet_category_id
+msgid "Docnaet category"
+msgstr "Categoria docnaet"
 
 #. module: docnaet
-#: field:docnaet.document,duplicated_ids:0
-msgid "duplicated"
-msgstr "duplicato"
+#: model:ir.model,name:docnaet.model_docnaet_document
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_tree_view
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+msgid "Docnaet document"
+msgstr "Documento docnaet"
 
 #. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Rame solfato cristalli medi"
-msgstr "Rame solfato cristalli medi"
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_document_duplication
+msgid "Docnaet document duplication"
+msgstr "Docnaet duplicazione documenti"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Linked objects"
-msgstr "Oggetti collegati"
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_language
+#: model:ir.model,name:docnaet.model_docnaet_language
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_language_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_language_tree
+msgid "Docnaet language"
+msgstr "Lingua docnaet"
 
 #. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Soda caustica microperle"
-msgstr "Soda caustica microperle"
-
-#. module: docnaet
-#: field:docnaet.document,company_id:0
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_company_form
-#: model:ir.ui.menu,name:docnaet.docnaet_administration_company
-msgid "Company"
-msgstr "Azienda"
-
-#. module: docnaet
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_document_draft_tree
-#: model:ir.actions.act_window,name:docnaet.action_labnaet_document_draft_tree
-msgid "Draft documents"
-msgstr "Documento bozza"
-
-#. module: docnaet
-#: model:ir.ui.menu,name:docnaet.docnaet_document_remote_ocument
-msgid "Documenti remoti"
-msgstr "Documenti remoti"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Pallets"
-msgstr "Bancali"
-
-#. module: docnaet
-#: view:res.partner:0
-msgid "Set Docnaet OFF"
-msgstr ">> Docnaet OFF"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Sodio bicarbonato"
-msgstr "Sodio bicarbonato"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Zaclon ZR Flux"
-msgstr "Zaclon ZR Flux"
-
-#. module: docnaet
-#: selection:docnaet.document,priority:0
-#: selection:docnaet.document.advanced.search.wizard,priority:0
-msgid "Highest"
-msgstr "Altissima"
-
-#. module: docnaet
-#: field:docnaet.language,iso_code:0
-msgid "ISO Code"
-msgstr "Codice ISO"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_docnaet_mode
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_docnaet_mode
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_duplication_wizard_docnaet_mode
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_docnaet_mode
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_type_docnaet_mode
+msgid "Docnaet mode"
+msgstr "Modalità Docnaet"
 
 #. module: docnaet
 #: model:res.groups,name:docnaet.group_docnaet_mode
@@ -178,113 +326,153 @@ msgid "Docnaet mode management"
 msgstr "Gestione modalità docnaet"
 
 #. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Acidi Bicarbossilici"
-msgstr "Acidi Bicarbossilici"
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_parent_id
+#: model:ir.model.fields,field_description:docnaet.field_res_users_docnaet_parent_id
+msgid "Docnaet parent partner"
+msgstr "Docnaet parent partner"
 
 #. module: docnaet
-#: field:docnaet.document,filename:0
-msgid "File name"
-msgstr "Nome file"
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_enable
+#: model:ir.model.fields,field_description:docnaet.field_res_users_docnaet_enable
+msgid "Docnaet partner"
+msgstr "Docnaet partner"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Doc info"
-msgstr "Doc info"
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_partner_tree
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_docnaet_form
+msgid "Docnaet partner category"
+msgstr "Categorie partner docnaet"
 
 #. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,protocol_id:0
-#: field:docnaet.document.advanced.search.wizard,protocol_id:0
-#: field:docnaet.document.duplication.wizard,protocol_id:0
-#: field:docnaet.protocol,name:0 field:docnaet.protocol.template,protocol_id:0
-#: model:ir.ui.menu,name:docnaet.docnaet_administration_protocol
-msgid "Protocol"
-msgstr "Protocollo"
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_category_form
+msgid "Docnaet partner collegati"
+msgstr "Docnaet partner collegati"
 
 #. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Zinco/Ammonio cloruro"
-msgstr "Zinco/Ammonio cloruro"
+#: model:ir.model.fields,field_description:docnaet.field_res_company_docnaet_path
+msgid "Docnaet path"
+msgstr "Percorso docnaet"
 
 #. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,deadline_month:0
-msgid "Scadenza"
-msgstr "Scadenza"
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_product
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_product_search
+msgid "Docnaet product"
+msgstr "Prodotto docnaet"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Link OpenERP document"
-msgstr "Collega documento OpenERP"
+#: model:ir.actions.act_window,name:docnaet.action_product_product_docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_product_product_docnaet_form
+#: model:ir.ui.view,arch_db:docnaet.view_product_product_docnaet_tree
+msgid "Docnaet product category"
+msgstr "Categoria prodotto docnaet"
 
 #. module: docnaet
-#: selection:docnaet.document,priority:0
-#: selection:docnaet.document.advanced.search.wizard,priority:0
-msgid "Low"
-msgstr "Bassa"
+#: model:ir.model,name:docnaet.model_docnaet_protocol_template_program
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_product_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_product_tree
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_template_program_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_template_program_tree
+msgid "Docnaet program"
+msgstr "Programma docnaet"
 
 #. module: docnaet
-#: view:docnaet.product:0
-msgid "Group By..."
-msgstr "Raggruppa per..."
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_protocol
+#: model:ir.model,name:docnaet.model_docnaet_protocol
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_tree
+msgid "Docnaet protocol"
+msgstr "Protocollo docnaet"
 
 #. module: docnaet
-#: view:docnaet.document.advanced.search.wizard:0
-msgid "Simple"
-msgstr "Semplice"
+#: model:res.groups,name:docnaet.group_docnaet_protocol_management
+msgid "Docnaet protocol management"
+msgstr "Docnaet protocol management"
 
 #. module: docnaet
-#: view:docnaet.document.duplication.wizard:0
+#: model:ir.model,name:docnaet.model_docnaet_protocol_template
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_template_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_template_tree
+msgid "Docnaet protocol template"
+msgstr "Modello protocollo"
+
+#. module: docnaet
+#: model:res.groups,name:docnaet.group_docnaet_remote_user
+msgid "Docnaet remote user"
+msgstr "Utente remoto docnaet"
+
+#. module: docnaet
+#: model:ir.model.fields,help:docnaet.field_res_company_docnaet_path
+msgid "Docnaet root path in file system for store docs"
+msgstr "Percorso base del file system per deposito documenti"
+
+#. module: docnaet
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_sector
+#: model:ir.model,name:docnaet.model_docnaet_sector
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_sector_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_sector_tree
+msgid "Docnaet sector"
+msgstr "Docnaet sector"
+
+#. module: docnaet
+#: model:res.groups,name:docnaet.group_docnaet_sector_admin
+msgid "Docnaet sector admin"
+msgstr "Docnaet sector admin"
+
+#. module: docnaet
+#: model:res.groups,name:docnaet.group_docnaet_sector_user
+msgid "Docnaet sector user"
+msgstr "Docnaet sector user"
+
+#. module: docnaet
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_type
+#: model:ir.model,name:docnaet.model_docnaet_type
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_name
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_type_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_type_tree
+msgid "Docnaet type"
+msgstr "Tipo docnaet"
+
+#. module: docnaet
+#: model:res.groups,name:docnaet.group_docnaet_user
+msgid "Docnaet user"
+msgstr "Utente docnaet"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_calendar_view
+msgid "Document deadline"
+msgstr "Scadenza documento"
+
+#. module: docnaet
+#: model:ir.module.category,description:docnaet.module_docnaet
+msgid "Document document management group."
+msgstr "Gruppo gestione documenti "
+
+#. module: docnaet
 #: model:ir.model,name:docnaet.model_docnaet_document_duplication_wizard
+#: model:ir.ui.view,arch_db:docnaet.document_duplication_form
 msgid "Document duplication"
 msgstr "Duplicazione documento"
 
 #. module: docnaet
-#: help:docnaet.document,original_id:0
-msgid "Parent orignal document after this duplication"
-msgstr "Documento padre originale dopo questa duplicazione"
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_tree_view
+msgid "Document linked [R]!"
+msgstr "Documento collegato [R]!"
 
 #. module: docnaet
-#: field:docnaet.document,deadline:0
-#: model:ir.ui.menu,name:docnaet.docnaet_document_deadline
-#: model:ir.ui.menu,name:docnaet.labnaet_document_deadline
-msgid "Deadline"
-msgstr "Scadenza"
-
-#. module: docnaet
-#: field:docnaet.document.advanced.search.wizard,from_date:0
-msgid "From date"
-msgstr "Dalla data"
-
-#. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,partner_id:0
-#: field:docnaet.document.advanced.search.wizard,partner_id:0
-#: view:docnaet.product:0 field:docnaet.product,partner_id:0
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_partner_form
-#: model:ir.model,name:docnaet.model_res_partner
-#: model:ir.ui.menu,name:docnaet.docnaet_administration_partner
-msgid "Partner"
-msgstr "Partner"
-
-#. module: docnaet
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_my_document_tree
-#: model:ir.actions.act_window,name:docnaet.action_labnaet_my_document_tree
-msgid "My Documents"
-msgstr "I miei documenti"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Ossido di Zinco 99.9 - Pharma"
-msgstr "Ossido di Zinco 99.9 - Pharma"
-
-#. module: docnaet
-#: view:docnaet.document:0
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_tree_view
 msgid "Document linked!"
 msgstr "Documento collegato!"
 
 #. module: docnaet
-#: view:docnaet.document:0 selection:docnaet.document,state:0
-msgid "Confirmed"
-msgstr "Confermato"
+#: model:ir.ui.menu,name:docnaet.docnaet_document_document
+#: model:ir.ui.menu,name:docnaet.labnaet_document_document
+msgid "Documenti"
+msgstr "Documenti"
+
+#. module: docnaet
+#: model:ir.ui.menu,name:docnaet.docnaet_document_remote_ocument
+msgid "Documenti remoti"
+msgstr "Documenti remoti"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_document_tree
@@ -293,482 +481,159 @@ msgid "Documents"
 msgstr "Documenti"
 
 #. module: docnaet
-#: help:docnaet.document,duplicated_ids:0
-msgid "Child document duplicated from this"
-msgstr "Documenti figlio duplicati da questo"
-
-#. module: docnaet
-#: model:ir.model,name:docnaet.model_docnaet_product
-msgid "Docnaet Product"
-msgstr "Prodotto docnaet"
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Filter partner country..."
-msgstr "Filtra nazione cliente..."
-
-#. module: docnaet
-#: field:docnaet.document,state:0
-msgid "State"
-msgstr "Stato"
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Confirmed state"
-msgstr "Stato confermato"
-
-#. module: docnaet
-#: view:res.company:0 view:res.country:0
-msgid "Company docnaet"
-msgstr "Azienda docnaet"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Antischiuma siliconico B10"
-msgstr "Antischiuma siliconico B10"
-
-#. module: docnaet
-#: field:docnaet.document,docnaet_extension:0
-#: field:docnaet.document.advanced.search.wizard,docnaet_extension:0
-msgid "Ext."
-msgstr "Est."
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Pallets 100x120"
-msgstr "Pallets 100x120"
-
-#. module: docnaet
-#: field:docnaet.document,deadline_info:0
-msgid "Deadline info"
-msgstr "Info scadenza"
-
-#. module: docnaet
-#: selection:docnaet.document,priority:0
-#: selection:docnaet.document.advanced.search.wizard,priority:0
-msgid "Lowest"
-msgstr "Bassissima"
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Document deadline"
-msgstr "Scadenza documento"
-
-#. module: docnaet
-#: field:docnaet.document,search_country_id:0
-msgid "Search per Country"
-msgstr "Ricerca per nazione"
-
-#. module: docnaet
-#: view:docnaet.language:0
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_language
-#: model:ir.model,name:docnaet.model_docnaet_language
-msgid "Docnaet language"
-msgstr "Lingua docnaet"
-
-#. module: docnaet
-#: model:ir.ui.menu,name:docnaet.docnaet_document_my_document
-#: model:ir.ui.menu,name:docnaet.labnaet_document_my_document
-msgid "My document"
-msgstr "Mio documento"
-
-#. module: docnaet
-#: view:docnaet.document.duplication.wizard:0
-msgid "Link document"
-msgstr "Documento collegato"
-
-#. module: docnaet
-#: field:docnaet.document,fax_number:0
-msgid "Fax n."
-msgstr "Fax n."
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Group By"
-msgstr "Raggruppa per"
-
-#. module: docnaet
-#: field:docnaet.document.advanced.search.wizard,from_deadline:0
-msgid "From deadline"
-msgstr "Dalla scadenza"
-
-#. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,docnaet_category_id:0
-#: field:docnaet.document.advanced.search.wizard,docnaet_category_id:0
-#: model:ir.model,name:docnaet.model_res_partner_docnaet
-msgid "Partner category"
-msgstr "Categoria partner"
-
-#. module: docnaet
-#: field:docnaet.document,number:0
-#: field:docnaet.document.advanced.search.wizard,number:0
-msgid "N."
-msgstr "N."
-
-#. module: docnaet
-#: help:res.company,docnaet_path:0
-msgid "Docnaet root path in file system for store docs"
-msgstr "Percorso base del file system per deposito documenti"
-
-#. module: docnaet
-#: view:docnaet.document.advanced.search.wizard:0
-msgid "Advanced"
-msgstr "Avanzato"
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Filter partner name..."
-msgstr "Filtra nome partner..."
-
-#. module: docnaet
-#: view:docnaet.document:0 field:docnaet.protocol.template.program,extension:0
-msgid "Extension"
-msgstr "Estensione"
-
-#. module: docnaet
-#: help:res.company,labnaet_path:0
-msgid "Labnaet root path in file system for store docs"
-msgstr "Labnaet root path in file system for store docs"
-
-#. module: docnaet
-#: field:docnaet.document.advanced.search.wizard,keywords:0
-msgid "Keywords"
-msgstr "Parole chiave"
-
-#. module: docnaet
-#: view:docnaet.document.advanced.search.wizard:0
-msgid "Date filter:"
-msgstr "Filtri data:"
-
-#. module: docnaet
-#: view:res.users:0
-msgid "User docnaet"
-msgstr "Utente docnaet"
-
-#. module: docnaet
-#: view:docnaet.document.advanced.search.wizard:0
-msgid "Search"
-msgstr "Ricerca"
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Linked document"
-msgstr "Documento collegato"
-
-#. module: docnaet
-#: field:docnaet.document,real_file:0
-msgid "Real filename"
-msgstr "Nome reale file"
-
-#. module: docnaet
-#: field:docnaet.document,date_month:0
-msgid "Mese inser."
-msgstr "Mese inser."
-
-#. module: docnaet
-#: field:docnaet.protocol,next:0
-msgid "Next protocol"
-msgstr "Prossimo protocollo"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Potassio cloruro"
-msgstr "Potassio cloruro"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Paraffina 56/58"
-msgstr "Paraffina 56/58"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Benzotriazolo"
-msgstr "Benzotriazolo"
-
-#. module: docnaet
-#: field:res.company,docnaet_path:0
-msgid "Docnaet path"
-msgstr "Percorso docnaet"
-
-#. module: docnaet
-#: field:docnaet.product,docnaet_category_id:0
-#: field:product.product.docnaet,name:0
-#: field:res.partner,docnaet_category_id:0
-msgid "Docnaet category"
-msgstr "Categoria docnaet"
-
-#. module: docnaet
-#: field:docnaet.document,name:0
-#: field:docnaet.document.advanced.search.wizard,name:0
-msgid "Subject"
-msgstr "Oggetto"
-
-#. module: docnaet
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_remote_document_tree
-msgid "Remote documents"
-msgstr "Documenti remoti"
-
-#. module: docnaet
-#: view:docnaet.product:0
-msgid "Category"
-msgstr "Categoria"
-
-#. module: docnaet
-#: model:res.groups,name:docnaet.group_labnaet_admin
-msgid "Labnaet administrator"
-msgstr "Amministratore labnaet"
-
-#. module: docnaet
-#: model:res.groups,name:docnaet.group_docnaet_admin
-msgid "Docnaet administrator"
-msgstr "Amministratore docnaet"
-
-#. module: docnaet
-#: view:docnaet.protocol:0
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_protocol
-#: model:ir.model,name:docnaet.model_docnaet_protocol
-msgid "Docnaet protocol"
-msgstr "Protocollo docnaet"
-
-#. module: docnaet
-#: model:ir.ui.menu,name:docnaet.docnaet_administration
-msgid "Administration"
-msgstr "Amministrazione"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Ammonio Cloruro"
-msgstr "Ammonio Cloruro"
-
-#. module: docnaet
-#: field:docnaet.product,default_code:0
-msgid "Default code"
-msgstr "Codice"
-
-#. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,note:0
-#: field:docnaet.document.advanced.search.wizard,note:0
-#: view:docnaet.language:0 field:docnaet.language,note:0
-#: view:docnaet.product:0 field:docnaet.product,note:0 view:docnaet.protocol:0
-#: field:docnaet.protocol,note:0 view:docnaet.protocol.template:0
-#: field:docnaet.protocol.template,note:0
-#: view:docnaet.protocol.template.program:0
-#: field:docnaet.protocol.template.program,note:0 view:docnaet.type:0
-#: field:docnaet.type,note:0 view:product.product.docnaet:0
-#: field:product.product.docnaet,note:0 view:res.partner.docnaet:0
-#: field:res.partner.docnaet,note:0
-msgid "Note"
-msgstr "Note"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Soimul S 45/SIN"
-msgstr "Soimul S 45/SIN"
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Duplicate"
-msgstr "Duplica"
-
-#. module: docnaet
-#: view:docnaet.document:0 field:docnaet.protocol.template,program_id:0
-#: field:docnaet.protocol.template.program,name:0
-#: model:ir.ui.menu,name:docnaet.docnaet_administration_program
-msgid "Program"
-msgstr "Programma"
-
-#. module: docnaet
 #: selection:docnaet.document,state:0
 msgid "Draft"
 msgstr "Bozza"
 
 #. module: docnaet
-#: view:docnaet.document:0
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_document_draft_tree
+#: model:ir.actions.act_window,name:docnaet.action_labnaet_document_draft_tree
+msgid "Draft documents"
+msgstr "Documento bozza"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
 msgid "Draft state"
 msgstr "Stato bozza"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Timed state"
-msgstr "Stato a tempo"
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_tree_view
+msgid "Duplicate"
+msgstr "Duplica"
 
 #. module: docnaet
-#: model:res.groups,comment:docnaet.group_docnaet_mode
-msgid "Manage docnaet mode for Docnaet and Labnaet"
-msgstr "Gestisce modalità docnaet per Docnaet e Labnaet"
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Status"
-msgstr "Stato"
-
-#. module: docnaet
-#: selection:docnaet.document,priority:0
-#: selection:docnaet.document.advanced.search.wizard,priority:0
-msgid "Normal"
-msgstr "Normale"
-
-#. module: docnaet
-#: view:docnaet.document.advanced.search.wizard:0
-msgid "Docnaet advanced search:"
-msgstr "Ricerca avanzata Docnaet:"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Aciso Fosforico tecn. 75% 53Be"
-msgstr "Aciso Fosforico tecn. 75% 53Be"
-
-#. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,user_id:0
-#: field:docnaet.document.advanced.search.wizard,user_id:0
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_users_form
-#: model:ir.ui.menu,name:docnaet.docnaet_administration_user
-msgid "User"
-msgstr "Utente"
-
-#. module: docnaet
-#: field:docnaet.document,date:0
-msgid "Date"
-msgstr "Data"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Verserve S (Idrossilamina Solfato)"
-msgstr "Verserve S (Idrossilamina Solfato)"
-
-#. module: docnaet
-#: view:res.partner:0
-msgid "Set Docnaet ON"
-msgstr ">> Docnaet ON"
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Data"
-msgstr "Data"
-
-#. module: docnaet
-#: field:docnaet.document.advanced.search.wizard,to_deadline:0
-msgid "To deadline"
-msgstr "Alla scadenza"
-
-#. module: docnaet
-#: model:ir.actions.act_window,name:docnaet.action_product_product_docnaet
-#: view:product.product.docnaet:0
-msgid "Docnaet product category"
-msgstr "Categoria prodotto docnaet"
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Open document [R]"
-msgstr "Apri documento [R]"
-
-#. module: docnaet
-#: field:docnaet.document,docnaet_mode:0
-#: field:docnaet.document.advanced.search.wizard,docnaet_mode:0
-#: field:docnaet.document.duplication.wizard,docnaet_mode:0
-#: field:docnaet.protocol,docnaet_mode:0 field:docnaet.type,docnaet_mode:0
-msgid "Docnaet mode"
-msgstr "Modalità Docnaet"
-
-#. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,language_id:0
-#: field:docnaet.document.advanced.search.wizard,language_id:0
-#: field:docnaet.language,name:0 field:docnaet.protocol.template,lang_id:0
-#: model:ir.ui.menu,name:docnaet.docnaet_administration_language
-msgid "Language"
-msgstr "Lingua"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Pentaborato di Potassio"
-msgstr "Pentaborato di Potassio"
-
-#. module: docnaet
-#: model:ir.model,name:docnaet.model_res_company
-msgid "Companies"
-msgstr "Aziende"
-
-#. module: docnaet
-#: view:docnaet.protocol.template:0
-#: model:ir.model,name:docnaet.model_docnaet_protocol_template
-msgid "Docnaet protocol template"
-msgstr "Modello protocollo"
-
-#. module: docnaet
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_protocol_template_program
-msgid "Programs type"
-msgstr "Tipi di programma"
-
-#. module: docnaet
-#: field:docnaet.document,labnaet_id:0
-msgid "Labnaet ID"
-msgstr "Labnaet ID"
-
-#. module: docnaet
-#: model:ir.actions.act_window,name:docnaet.action_res_partner_docnaet
-#: model:ir.ui.menu,name:docnaet.docnaet_administration_partner_docnaet
-msgid "Partner docnaet category"
-msgstr "Categoria partner docnaet"
-
-#. module: docnaet
-#: model:res.groups,name:docnaet.group_docnaet_user
-msgid "Docnaet user"
-msgstr "Utente docnaet"
-
-#. module: docnaet
-#: view:docnaet.protocol:0 view:docnaet.type:0
-msgid "Set invisible"
-msgstr "Imposta visibile"
-
-#. module: docnaet
-#: field:docnaet.document,original_id:0
-msgid "Original"
-msgstr "Originale"
-
-#. module: docnaet
-#: view:docnaet.document.duplication.wizard:0
+#: model:ir.ui.view,arch_db:docnaet.document_duplication_form
 msgid "Duplicate document"
 msgstr "Documento duplicato"
 
 #. module: docnaet
-#: field:docnaet.document,priority:0
-#: field:docnaet.document.advanced.search.wizard,priority:0
-msgid "Priority"
-msgstr "Priorità"
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+msgid "Duplicated in"
+msgstr "Duplicato in"
 
 #. module: docnaet
-#: view:docnaet.protocol:0 view:docnaet.type:0
-msgid "Set visible"
-msgstr "Imposta visibile"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_docnaet_extension
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_docnaet_extension
+msgid "Ext."
+msgstr "Est."
 
 #. module: docnaet
-#: field:docnaet.language,code:0
-msgid "Code"
-msgstr "Codice"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_program_extension
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Extension"
+msgstr "Estensione"
 
 #. module: docnaet
-#: model:res.groups,comment:docnaet.group_docnaet_user
-#: model:res.groups,comment:docnaet.group_labnaet_user
-msgid "User that access to documents."
-msgstr "Utente che accede ai documenti"
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+msgid "Extra info"
+msgstr "Info extra"
 
 #. module: docnaet
-#: help:docnaet.document,docnaet_mode:0
-#: help:docnaet.document.advanced.search.wizard,docnaet_mode:0
-#: help:docnaet.document.duplication.wizard,docnaet_mode:0
-#: help:docnaet.protocol,docnaet_mode:0 help:docnaet.type,docnaet_mode:0
-msgid ""
-"Usually document management, but for future improvement also for manage "
-"other docs"
-msgstr ""
-"Abitualmente gestione documenti, ma per futuri sviluppi anche utilizzato per "
-"gestire altri documenti"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_fax_number
+msgid "Fax n."
+msgstr "Fax n."
 
 #. module: docnaet
-#: view:docnaet.product:0
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_product
-msgid "Docnaet product"
-msgstr "Prodotto docnaet"
+#: code:addons/docnaet/docnaet.py:574
+#, python-format
+msgid "Fax yet present!"
+msgstr "Fax yet present!"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_filename
+msgid "File name"
+msgstr "Nome file"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+msgid "Filter partner country..."
+msgstr "Filtra nazione cliente..."
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+msgid "Filter partner name..."
+msgstr "Filtra nome partner..."
+
+#. module: docnaet
+#: code:addons/docnaet/docnaet.py:469
+#, python-format
+msgid "For timed document need a deadline!"
+msgstr "For timed document need a deadline!"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_from_date
+msgid "From date"
+msgstr "Dalla data"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_from_deadline
+msgid "From deadline"
+msgstr "Dalla scadenza"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Group By"
+msgstr "Raggruppa per"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_product_search
+msgid "Group By..."
+msgstr "Raggruppa per..."
+
+#. module: docnaet
+#: selection:docnaet.document,priority:0
+#: selection:docnaet.document.advanced.search.wizard,priority:0
+msgid "Highest"
+msgstr "Altissima"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_duplication_wizard_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_language_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_program_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_sector_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_type_id
+#: model:ir.model.fields,field_description:docnaet.field_product_product_docnaet_id
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_id
+msgid "ID"
+msgstr "ID"
+
+#. module: docnaet
+#: code:addons/docnaet/docnaet.py:556
+#, python-format
+msgid "ID: %s\n"
+"Origin ID: %s\n"
+"Extension: %s\n"
+"Old filename: %s\n"
+"Document: %s"
+msgstr "ID: %s\n"
+"Origin ID: %s\n"
+"Extension: %s\n"
+"Old filename: %s\n"
+"Document: %s"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_language_iso_code
+msgid "ISO Code"
+msgstr "Codice ISO"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_imported
+msgid "Imported"
+msgstr "Importato"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_keywords
+msgid "Keywords"
+msgstr "Parole chiave"
 
 #. module: docnaet
 #: selection:docnaet.document,docnaet_mode:0
@@ -781,135 +646,175 @@ msgid "Labnaet"
 msgstr "Labnaet"
 
 #. module: docnaet
-#: field:docnaet.document,search_partner_name:0
-msgid "Search per Partner name"
-msgstr "Ricerca per nome partner"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_labnaet_id
+msgid "Labnaet ID"
+msgstr "Labnaet ID"
 
 #. module: docnaet
-#: model:ir.module.category,description:docnaet.module_docnaet
-msgid "Document document management group."
-msgstr "Gruppo gestione documenti "
+#: model:res.groups,name:docnaet.group_labnaet_admin
+msgid "Labnaet administrator"
+msgstr "Amministratore labnaet"
 
 #. module: docnaet
-#: view:docnaet.document:0 selection:docnaet.document,state:0
-#: view:docnaet.document.advanced.search.wizard:0
-#: view:docnaet.document.duplication.wizard:0
-msgid "Cancel"
-msgstr "Annulla"
+#: model:ir.ui.view,arch_db:docnaet.document_advanced_search_form
+msgid "Labnaet advanced search:"
+msgstr "Labnaet ricerca avanzata:"
 
 #. module: docnaet
-#: field:res.company,next_fax:0
-msgid "Next fax number"
-msgstr "Prossimo numero fax"
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Labnaet document"
+msgstr "Labnaet document"
 
 #. module: docnaet
-#: view:docnaet.type:0
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_type
-#: model:ir.model,name:docnaet.model_docnaet_type
-#: field:res.partner.docnaet,name:0
-msgid "Docnaet type"
-msgstr "Tipo docnaet"
+#: model:ir.model.fields,field_description:docnaet.field_res_company_labnaet_path
+msgid "Labnaet path"
+msgstr "Percorso labnaet"
 
 #. module: docnaet
-#: help:docnaet.document,labnaet_id:0
-msgid "Secondary ID for document, keep data in different folder."
-msgstr "ID Secondario per documenti, tiene i dati in cartelle differenti"
+#: model:ir.model.fields,help:docnaet.field_res_company_labnaet_path
+msgid "Labnaet root path in file system for store docs"
+msgstr "Labnaet root path in file system for store docs"
 
 #. module: docnaet
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_document_duplication
-msgid "Docnaet document duplication"
-msgstr "Docnaet duplicazione documenti"
+#: model:res.groups,name:docnaet.group_labnaet_user
+msgid "Labnaet user"
+msgstr "Utente Labnaet"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Reactivate"
-msgstr "Riattiva"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_language_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_language_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_language_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_lang_id
+#: model:ir.ui.menu,name:docnaet.docnaet_administration_language
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Language"
+msgstr "Lingua"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Scadenza AAAA-MM"
-msgstr "Scadenza AAAA-MM"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document___last_update
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard___last_update
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_duplication_wizard___last_update
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_language___last_update
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product___last_update
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol___last_update
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template___last_update
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_program___last_update
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_sector___last_update
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_type___last_update
+#: model:ir.model.fields,field_description:docnaet.field_product_product_docnaet___last_update
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet___last_update
+msgid "Last Modified on"
+msgstr "Data di ultima modifica"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Cancel state"
-msgstr "Stato annullato"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_write_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_duplication_wizard_write_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_write_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_language_write_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product_write_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_program_write_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_write_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_write_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_sector_write_uid
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_type_write_uid
+#: model:ir.model.fields,field_description:docnaet.field_product_product_docnaet_write_uid
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_write_uid
+msgid "Last Updated by"
+msgstr "Ultima modifica di"
 
 #. module: docnaet
-#: field:res.partner,docnaet_enable:0
-msgid "Docnaet partner"
-msgstr "Docnaet partner"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_write_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_duplication_wizard_write_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_write_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_language_write_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product_write_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_program_write_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_write_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_write_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_sector_write_date
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_type_write_date
+#: model:ir.model.fields,field_description:docnaet.field_product_product_docnaet_write_date
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_write_date
+msgid "Last Updated on"
+msgstr "Ultima modifica il"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+msgid "Link OpenERP document"
+msgstr "Collega documento OpenERP"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.document_duplication_form
+msgid "Link document"
+msgstr "Documento collegato"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Linked document"
+msgstr "Documento collegato"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+msgid "Linked objects"
+msgstr "Oggetti collegati"
 
 #. module: docnaet
 #: selection:docnaet.document,priority:0
 #: selection:docnaet.document.advanced.search.wizard,priority:0
-msgid "high"
-msgstr "alta"
+msgid "Low"
+msgstr "Bassa"
 
 #. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Rame Solfato neve 25% CU"
-msgstr "Rame Solfato neve 25% CU"
+#: selection:docnaet.document,priority:0
+#: selection:docnaet.document.advanced.search.wizard,priority:0
+msgid "Lowest"
+msgstr "Bassissima"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Original document"
-msgstr "Documento originale"
+#: model:res.groups,comment:docnaet.group_docnaet_mode
+msgid "Manage docnaet mode for Docnaet and Labnaet"
+msgstr "Gestisce modalità docnaet per Docnaet e Labnaet"
 
 #. module: docnaet
-#: model:ir.ui.menu,name:docnaet.docnaet_document_document
-#: model:ir.ui.menu,name:docnaet.labnaet_document_document
-msgid "Documenti"
-msgstr "Documenti"
+#: model:res.groups,comment:docnaet.group_docnaet_sector_admin
+msgid "Manage document with sector admin."
+msgstr "Manage document with sector admin."
 
 #. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Dibutiltiourea"
-msgstr "Dibutiltiourea"
+#: model:res.groups,comment:docnaet.group_docnaet_sector_user
+msgid "Manage document with sector."
+msgstr "Manage document with sector."
 
 #. module: docnaet
-#: field:docnaet.document.advanced.search.wizard,partner_name:0
-msgid "Partner name"
-msgstr "Nome partner"
+#: model:res.groups,comment:docnaet.group_docnaet_protocol_management
+msgid "Manage protocol"
+msgstr "Manage protocol"
 
 #. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,description:0
-#: field:docnaet.document.advanced.search.wizard,description:0
-msgid "Description"
-msgstr "Descrizione"
+#: model:ir.model.fields,help:docnaet.field_res_partner_docnaet_parent_id
+#: model:ir.model.fields,help:docnaet.field_res_users_docnaet_parent_id
+msgid "Master partner also searchable"
+msgstr "Master partner also searchable"
 
 #. module: docnaet
-#: model:res.groups,name:docnaet.group_docnaet_remote_user
-msgid "Docnaet remote user"
-msgstr "Utente remoto docnaet"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_date_month
+msgid "Mese inser."
+msgstr "Mese inser."
 
 #. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Soda caustica soluz. 30%"
-msgstr "Soda caustica soluz. 30%"
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_my_document_tree
+#: model:ir.actions.act_window,name:docnaet.action_labnaet_my_document_tree
+msgid "My Documents"
+msgstr "I miei documenti"
 
 #. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,type_id:0
-#: field:docnaet.document.advanced.search.wizard,type_id:0
-#: field:docnaet.type,name:0
-msgid "Type"
-msgstr "Tipo"
-
-#. module: docnaet
-#: model:res.groups,comment:docnaet.group_docnaet_agent
-msgid "Agent group for docnaet managerment"
-msgstr "Gruppo agenti amministrazione docnaet"
-
-#. module: docnaet
-#: field:docnaet.document.advanced.search.wizard,to_date:0
-msgid "To date"
-msgstr "Alla data"
-
-#. module: docnaet
-#: model:res.groups,comment:docnaet.group_docnaet_admin
-#: model:res.groups,comment:docnaet.group_labnaet_admin
-msgid "User that can see the configuration forms"
-msgstr "Utente che può utilizzare la parte di configurazione"
+#: model:ir.ui.menu,name:docnaet.docnaet_document_my_document
+#: model:ir.ui.menu,name:docnaet.labnaet_document_my_document
+msgid "My document"
+msgstr "Mio documento"
 
 #. module: docnaet
 #: model:ir.actions.act_window,name:docnaet.action_docnaet_deadline_document_tree
@@ -918,75 +823,361 @@ msgid "My documents deadline"
 msgstr "Scadenze miei documenti"
 
 #. module: docnaet
-#: field:docnaet.protocol,invisible:0 field:docnaet.type,invisible:0
-msgid "Not used"
-msgstr "Non usato"
-
-#. module: docnaet
-#: field:docnaet.product,name:0
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product_name
 msgid "Name"
 msgstr "Nome"
 
 #. module: docnaet
-#: view:docnaet.document.advanced.search.wizard:0
-msgid "Labnaet advanced search:"
-msgstr "Labnaet ricerca avanzata:"
+#: model:ir.model.fields,help:docnaet.field_res_users_hide_generic
+msgid "Nasconde i documenti non catalogati per settore"
+msgstr "Nasconde i documenti non catalogati per settore"
 
 #. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,country_id:0
-#: field:docnaet.document.advanced.search.wizard,country_id:0
-#: model:ir.actions.act_window,name:docnaet.action_docnaet_country_form
-#: model:ir.ui.menu,name:docnaet.docnaet_administration_country
-msgid "Country"
-msgstr "Nazione"
+#: model:ir.model.fields,field_description:docnaet.field_res_users_hide_generic
+msgid "Nascondi generico"
+msgstr "Nascondi generico"
 
 #. module: docnaet
-#: view:docnaet.document:0 field:docnaet.document,product_id:0
-#: field:docnaet.document.advanced.search.wizard,product_id:0
+#: code:addons/docnaet/docnaet.py:684
+#: code:addons/docnaet/docnaet.py:694
+#, python-format
+msgid "Nessuna"
+msgstr "Nessuna"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_res_company_next_fax
+msgid "Next fax number"
+msgstr "Prossimo numero fax"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_next
+msgid "Next protocol"
+msgstr "Prossimo protocollo"
+
+#. module: docnaet
+#: code:addons/docnaet/docnaet.py:450
+#, python-format
+msgid "No partner assigned, choose one before and confirm!"
+msgstr "No partner assigned, choose one before and confirm!"
+
+#. module: docnaet
+#: code:addons/docnaet/docnaet.py:446
+#, python-format
+msgid "No protocol assigned, choose one before and confirm!"
+msgstr "No protocol assigned, choose one before and confirm!"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_alternative_search
+#: model:ir.model.fields,field_description:docnaet.field_res_users_alternative_search
+msgid "Nome alternativo Docnaet"
+msgstr "Nome alternativo Docnaet"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_docnaet_tree
+msgid "Nome docnaet"
+msgstr "Nome docnaet"
+
+#. module: docnaet
+#: selection:docnaet.document,priority:0
+#: selection:docnaet.document.advanced.search.wizard,priority:0
+msgid "Normal"
+msgstr "Normale"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_invisible
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_type_invisible
+msgid "Not used"
+msgstr "Non usato"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_note
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_note
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_language_note
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product_note
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_note
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_note
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_program_note
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_sector_note
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_type_note
+#: model:ir.model.fields,field_description:docnaet.field_product_product_docnaet_note
+#: model:ir.model.fields,field_description:docnaet.field_res_partner_docnaet_note
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_language_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_product_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_template_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_template_program_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_sector_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_type_form
+#: model:ir.ui.view,arch_db:docnaet.view_product_product_docnaet_form
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_docnaet_form
+msgid "Note"
+msgstr "Note"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_tree_view
+msgid "Open document"
+msgstr "Apri documento"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_tree_view
+msgid "Open document [R]"
+msgstr "Apri documento [R]"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_original_id
+msgid "Original"
+msgstr "Originale"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Original document"
+msgstr "Documento originale"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_docnaet_tree
+msgid "Padre"
+msgstr "Padre"
+
+#. module: docnaet
+#: model:ir.model.fields,help:docnaet.field_docnaet_document_original_id
+msgid "Parent orignal document after this duplication"
+msgstr "Documento padre originale dopo questa duplicazione"
+
+#. module: docnaet
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_partner_form
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_partner_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_partner_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_product_partner_id
+#: model:ir.ui.menu,name:docnaet.docnaet_administration_partner
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_product_search
+msgid "Partner"
+msgstr "Partner"
+
+#. module: docnaet
+#: model:ir.model,name:docnaet.model_res_partner_docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_docnaet_category_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_docnaet_category_id
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Partner category"
+msgstr "Categoria partner"
+
+#. module: docnaet
+#: model:ir.actions.act_window,name:docnaet.action_res_partner_docnaet
+#: model:ir.ui.menu,name:docnaet.docnaet_administration_partner_docnaet
+msgid "Partner docnaet category"
+msgstr "Categoria partner docnaet"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_partner_name
+msgid "Partner name"
+msgstr "Nome partner"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_priority
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_priority
+msgid "Priority"
+msgstr "Priorità"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_private
+msgid "Private"
+msgstr "Privato"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_product_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_product_id
 #: model:ir.ui.menu,name:docnaet.menu_docnaet_product
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
 msgid "Product"
 msgstr "Prodotto"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Document linked [R]!"
-msgstr "Documento collegato [R]!"
+#: model:ir.model,name:docnaet.model_product_product_docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_docnaet_product_category_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_docnaet_product_category_id
+#: model:ir.ui.menu,name:docnaet.menu_product_product_docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Product category"
+msgstr "Categoria prodotto"
 
 #. module: docnaet
-#: view:res.partner.docnaet:0
-msgid "Docnaet partner category"
-msgstr "Categorie partner docnaet"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_program_id_1476
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_program_name
+#: model:ir.ui.menu,name:docnaet.docnaet_administration_program
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Program"
+msgstr "Programma"
 
 #. module: docnaet
-#: model:res.groups,name:docnaet.group_labnaet_user
-msgid "Labnaet user"
-msgstr "Utente Labnaet"
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_protocol_template_program
+msgid "Programs type"
+msgstr "Tipi di programma"
 
 #. module: docnaet
-#: field:res.company,labnaet_path:0
-msgid "Labnaet path"
-msgstr "Percorso labnaet"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_protocol_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_duplication_wizard_protocol_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_protocol_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_protocol_id
+#: model:ir.ui.menu,name:docnaet.docnaet_administration_protocol
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Protocol"
+msgstr "Protocollo"
 
 #. module: docnaet
-#: view:docnaet.document:0
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_tree_view
+msgid "Reactivate"
+msgstr "Riattiva"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_real_file
+msgid "Real filename"
+msgstr "Nome reale file"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
 msgid "Reassign"
 msgstr "Riassegna"
 
 #. module: docnaet
-#: view:docnaet.product:0 view:docnaet.protocol.template.program:0
-#: model:ir.model,name:docnaet.model_docnaet_protocol_template_program
-msgid "Docnaet program"
-msgstr "Programma docnaet"
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_remote_document_tree
+msgid "Remote documents"
+msgstr "Documenti remoti"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Duplicated in"
-msgstr "Duplicato in"
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_tree_view
+msgid "Scad."
+msgstr "Scad."
 
 #. module: docnaet
-#: selection:docnaet.type,docnaet_mode:0
-msgid "All"
-msgstr "Tutti"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_deadline_month
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Scadenza"
+msgstr "Scadenza"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Scadenza AAAA-MM"
+msgstr "Scadenza AAAA-MM"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.document_advanced_search_form
+msgid "Search"
+msgstr "Ricerca"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_search_country_id
+msgid "Search per Country"
+msgstr "Ricerca per nazione"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_search_partner_name
+msgid "Search per Partner name"
+msgstr "Ricerca per nome partner"
+
+#. module: docnaet
+#: model:ir.model.fields,help:docnaet.field_docnaet_document_labnaet_id
+msgid "Secondary ID for document, keep data in different folder."
+msgstr "ID Secondario per documenti, tiene i dati in cartelle differenti"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_category_form
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_docnaet_tree
+msgid "Set Docnaet OFF"
+msgstr ">> Docnaet OFF"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_category_form
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_docnaet_tree
+msgid "Set Docnaet ON"
+msgstr ">> Docnaet ON"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_tree
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_type_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_type_tree
+msgid "Set invisible"
+msgstr "Imposta visibile"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_protocol_tree
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_type_form
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_type_tree
+msgid "Set visible"
+msgstr "Imposta visibile"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_sector_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_sector_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_sector_name
+#: model:ir.ui.menu,name:docnaet.menu_docnaet_sector_admin
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+msgid "Settore"
+msgstr "Settore"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_res_users_sector_ids
+msgid "Settori"
+msgstr "Settori"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.document_advanced_search_form
+msgid "Simple"
+msgstr "Semplice"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_state
+msgid "State"
+msgstr "Stato"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Status"
+msgstr "Stato"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_name
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_name
+msgid "Subject"
+msgstr "Oggetto"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_protocol_template_ids
+msgid "Template"
+msgstr "Modello"
+
+#. module: docnaet
+#: selection:docnaet.document,state:0
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_form_view
+#: model:ir.ui.view,arch_db:docnaet.docnaet_document_tree_view
+msgid "Timed"
+msgstr "A tempo"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Timed state"
+msgstr "Stato a tempo"
+
+#. module: docnaet
+#: model:ir.ui.view,arch_db:docnaet.view_res_partner_docnaet_tree
+msgid "Tipo"
+msgstr "Tipo"
 
 #. module: docnaet
 #: model:ir.ui.menu,name:docnaet.docnaet_administration_type
@@ -994,44 +1185,85 @@ msgid "Tipology"
 msgstr "Tipologia"
 
 #. module: docnaet
-#: view:docnaet.document:0 model:ir.model,name:docnaet.model_docnaet_document
-msgid "Docnaet document"
-msgstr "Documento docnaet"
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_to_date
+msgid "To date"
+msgstr "Alla data"
 
 #. module: docnaet
-#: field:docnaet.document,program_id:0
-#: field:docnaet.document.advanced.search.wizard,program_id:0
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_to_deadline
+msgid "To deadline"
+msgstr "Alla scadenza"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_type_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_type_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_type_name
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "Type"
+msgstr "Tipo"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_program_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_program_id
 msgid "Type of document"
 msgstr "Tipo di documento"
 
 #. module: docnaet
-#: view:docnaet.document:0
-msgid "Scad."
-msgstr "Scad."
+#: model:ir.actions.act_window,name:docnaet.action_docnaet_users_form
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_advanced_search_wizard_user_id
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_user_id
+#: model:ir.ui.menu,name:docnaet.docnaet_administration_user
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_docnaet_search
+#: model:ir.ui.view,arch_db:docnaet.view_docnaet_document_labnaet_search
+msgid "User"
+msgstr "Utente"
 
 #. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Ammonio cloruro"
-msgstr "Ammonio cloruro"
-
-#. module: docnaet
-#: field:docnaet.document,private:0
-msgid "Private"
-msgstr "Privato"
-
-#. module: docnaet
-#: model:docnaet.product,name:0
-msgid "Bibutiltidurea"
-msgstr "Bibutiltidurea"
-
-#. module: docnaet
-#: view:docnaet.document:0
-msgid "Data AAAA-MM"
-msgstr "Data AAAA-MM"
+#: model:ir.ui.view,arch_db:docnaet.res_users_form_docnaet_view
+#: model:ir.ui.view,arch_db:docnaet.res_users_tree_docnaet_view
+msgid "User docnaet"
+msgstr "Utente docnaet"
 
 #. module: docnaet
 #: model:res.groups,comment:docnaet.group_docnaet_remote_user
 msgid "User that access to documents remotely (with local database readonly)."
-msgstr ""
-"Utente che accede ai documenti da remoto (con database locale in sola "
-"lettura)."
+msgstr "Utente che accede ai documenti da remoto (con database locale in sola lettura)."
+
+#. module: docnaet
+#: model:res.groups,comment:docnaet.group_docnaet_user
+#: model:res.groups,comment:docnaet.group_labnaet_user
+msgid "User that access to documents."
+msgstr "Utente che accede ai documenti"
+
+#. module: docnaet
+#: model:res.groups,comment:docnaet.group_docnaet_admin
+#: model:res.groups,comment:docnaet.group_labnaet_admin
+msgid "User that can see the configuration forms"
+msgstr "Utente che può utilizzare la parte di configurazione"
+
+#. module: docnaet
+#: model:ir.model,name:docnaet.model_res_users
+msgid "Users"
+msgstr "Utenti"
+
+#. module: docnaet
+#: model:ir.model.fields,help:docnaet.field_docnaet_document_advanced_search_wizard_docnaet_mode
+#: model:ir.model.fields,help:docnaet.field_docnaet_document_docnaet_mode
+#: model:ir.model.fields,help:docnaet.field_docnaet_document_duplication_wizard_docnaet_mode
+#: model:ir.model.fields,help:docnaet.field_docnaet_protocol_docnaet_mode
+#: model:ir.model.fields,help:docnaet.field_docnaet_type_docnaet_mode
+msgid "Usually document management, but for future improvement also for manage other docs"
+msgstr "Abitualmente gestione documenti, ma per futuri sviluppi anche utilizzato per gestire altri documenti"
+
+#. module: docnaet
+#: model:ir.model.fields,field_description:docnaet.field_docnaet_document_duplicated_ids
+msgid "duplicated"
+msgstr "duplicato"
+
+#. module: docnaet
+#: selection:docnaet.document,priority:0
+#: selection:docnaet.document.advanced.search.wizard,priority:0
+msgid "high"
+msgstr "alta"
+
