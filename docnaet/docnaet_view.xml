@@ -583,7 +583,7 @@
         <field name="model">docnaet.document</field>
         <field name="arch" type="xml">
             <search string="Docnaet document">
-                <field name="number" />
+                <!--<field name="number" />
                 <field name="date_month" string="Data AAAA-MM"/>
                 <field name="deadline_month" string="Scadenza AAAA-MM"/>
 
@@ -608,7 +608,7 @@
                 <filter name="state_cancel" string="Cancel state" domain="[('state','=','cancel')]"/>
 
                 <filter name="linked_document" string="Linked document" domain="[('original_id','!=',False)]"/>
-                <filter name="original_document" string="Original document" domain="[('original_id','=',False)]"/>
+                <filter name="original_document" string="Original document" domain="[('original_id','=',False)]"/>-->
 
                 <group expand="0" string="Group By">
                     <filter name="group_date_month" string="Data" context="{'group_by': 'date_month'}"/>
