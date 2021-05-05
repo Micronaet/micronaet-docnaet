@@ -34,8 +34,7 @@ class ResCompany(models.Model):
 
         # Get docnaet path from company element
         company_proxy = self.env.user.company_id
-        pdb.set_trace()
-        docnaet_path = company_proxy.__getattr__(field_path)  # XXX variable
+        docnaet_path = company_proxy.__getattribute__(field_path)
 
         # Folder structure:
         path = {}
