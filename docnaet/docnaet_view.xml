@@ -730,16 +730,16 @@
 
                <!--WORKFLOW BUTTON-->
                <!--draft-->
-               <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply"/>
-               <button name="document_draft_timed" string="Timed" type="workflow" states="draft" icon="terp-go-today"/>
+               <button name="document_confirmed" string="Confirmed" type="object" states="draft" icon="gtk-apply"/>
+               <button name="document_timed" string="Timed" type="object" states="draft" icon="terp-go-today"/>
                <!--confirmed-->
-               <button name="document_confirmed_timed" string="Timed" type="workflow" states="confirmed" icon="terp-go-today"/>
-               <button name="document_confirmed_cancel" string="Cancel" type="workflow" states="confirmed" icon="gtk-cancel"/>
+               <button name="document_timed" string="Timed" type="object" states="confirmed" icon="terp-go-today"/>
+               <button name="document_cancel" string="Cancel" type="object" states="confirmed" icon="gtk-cancel"/>
                <!--timed-->
-               <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
-               <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
+               <button name="document_confirmed" string="Confirmed" type="object" states="timed" icon="gtk-apply"/>
+               <button name="document_cancel" string="Cancel" type="object" states="timed" icon="gtk-cancel"/>
 
-               <button name="document_cancel_draft" string="Reactivate" type="workflow" states="cancel" icon="gtk-redo"/>
+               <button name="document_draft" string="Reactivate" type="object" states="cancel" icon="gtk-redo"/>
                <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" context="{'default_docnaet_mode': docnaet_mode}"/>
                <field name="state" invisible="1"/>
             </tree>
@@ -753,18 +753,18 @@
             <form string="Docnaet document">
                <header>
                    <!--draft-->
-                   <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply"/>
-                   <button name="document_draft_timed" string="Timed" type="workflow" states="draft" icon="terp-go-today"/>
+                   <button name="document_confirmed" string="Confirmed" type="object" states="draft" icon="gtk-apply"/>
+                   <button name="document_timed" string="Timed" type="object" states="draft" icon="terp-go-today"/>
 
                    <!--confirmed-->
-                   <button name="document_confirmed_timed" string="Timed" type="workflow" states="confirmed" icon="terp-go-today"/>
-                   <button name="document_confirmed_cancel" string="Cancel" type="workflow" states="confirmed" icon="gtk-cancel"/>
+                   <button name="document_timed" string="Timed" type="object" states="confirmed" icon="terp-go-today"/>
+                   <button name="document_cancel" string="Cancel" type="object" states="confirmed" icon="gtk-cancel"/>
 
                    <!--timed-->
-                   <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
-                   <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
+                   <button name="document_confirmed" string="Confirmed" type="object" states="timed" icon="gtk-apply"/>
+                   <button name="document_cancel" string="Cancel" type="object" states="timed" icon="gtk-cancel"/>
 
-                   <button name="document_cancel_draft" string="Reactivate" type="workflow" states="cancel" icon="gtk-redo"/>
+                   <button name="document_draft" string="Reactivate" type="object" states="cancel" icon="gtk-redo"/>
 
                    <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" colspan="1" invisible="context.get('remote_document', False)" context="{'default_docnaet_mode': docnaet_mode}"/>
 
