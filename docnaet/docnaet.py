@@ -41,7 +41,7 @@ class ResCompany(models.Model):
         docnaet_path = os.path.expanduser(docnaet_path)
         # Folder structure:
         path = {}
-        path['root'] = os.path.expanduser(docnaet_path)
+        path['root'] = docnaet_path
         path['store'] = os.path.join(docnaet_path, 'store')
         path['private'] = os.path.join(docnaet_path, 'private')
         path['user'] = os.path.join(path['private'], str(self.env.user.id))
