@@ -397,7 +397,7 @@ class UploadDocumentFile(models.TransientModel):
     name = fields.Char(
         'File name', size=100, required=True, readonly=True)
     fullname = fields.Char('Full name', size=400),
-    date = fields.date('Time stamp')
+    date = fields.Date('Time stamp')
     wizard_id = fields.Many2one(
         'docnaet.document.upload.wizard', 'Wizard')
 
