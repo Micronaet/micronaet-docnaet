@@ -6,7 +6,7 @@
             <field name="name">docnaet.document.upload.wizard.form</field>
             <field name="model">docnaet.document.upload.wizard</field>
             <field name="arch" type="xml">
-                <form string="Document upload" version="7.0">
+                <form string="Document upload">
                     <header>
                         <field name="mode" invisible="1"/>
                         <button string='Home folder' name='button_personal_folder' type='object' icon='gtk-directory-remote' attrs="{'invisible': [('mode','!=','upload')]}"/>
@@ -48,7 +48,7 @@
                                     <separator string="Docnaet select file:" colspan="4" attrs="{'invisible': [('docnaet_mode','=','labnaet')]}"/>
                                     <separator string="Labnaet select file:" colspan="4" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
                                     <field name="document_ids" nolabel="1">
-                                        <tree string="Files:" editable="bottom" colors="red:to_import==False">
+                                        <tree string="Files:" editable="bottom" ><!--colors="red:to_import==False"-->
                                             <field name="to_import" />
                                             <field name="name" readonly="True"/>
                                             <field name="date" readonly="True"/>
