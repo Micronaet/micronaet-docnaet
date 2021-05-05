@@ -4,6 +4,7 @@
 import os
 import sys
 import logging
+import shutil
 from odoo import api, fields, models
 from datetime import datetime, timedelta
 from odoo.tools.translate import _
@@ -111,53 +112,27 @@ class DocumentDuplication(models.TransientModel):
             'view_mode': 'form,tree,calendar',
             'res_model': 'docnaet.document',
             'domain': [('id', '=', destination_proxy.id)],
-            # 'domain': [
-            #    '|',
-            #    ('state','!=','draft'),
-            #    '&',
-            #    ('user_id','=',uid),
-            #    ('state','=','draft'),
-            #    ('docnaet_mode', '=', docnaet_mode),
-            #    ],
             'type': 'ir.actions.act_window',
             'res_id': destination_proxy.id,  # IDs selected
             }
 
-    def duplication_document(self, cr, uid, ids, context=None):
+    @api.multi
+    def duplication_document(self):
         """ Duplicate document and file
         """
-        if context is None:
-            context = {}
-
-        current_proxy = self.browse(cr, uid, ids, context=context)[0]
-        # context['with_number'] = current_proxy.with_number
-        return self.duplicate_operation(
-            cr, uid, ids, mode='document', context=context)
+        return self.duplicate_operation(mode='document')
 
     @api.multi
     def linked_document(self):
         """ Duplicate record but not file
         """
-        if context is None:
-            context = {}
+        self.env.context['linked_document'] = True
+        return self.duplicate_operation(mode='link')
 
-        context['linked_document'] = True
-        return self.duplicate_operation(
-            cr, uid, ids, mode='link', context=context)
-
-    _columns = {
-        # To remove
-        # 'with_number': fields.boolean('With number'),
-        'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
-        'docnaet_mode': fields.selection([
-            ('docnaet', 'Docnaet'), # Only for docnaet
-            ('labnaet', 'Labnaet'),
-            ], 'Docnaet mode', required=True,
-            help='Usually document management, but for future improvement also'
-                 ' for manage other docs'),
-
-        }
-
-    _defaults = {
-        # 'with_number': lambda *x: False,
-        }
+    protocol_id = fields.Many2one('docnaet.protocol', 'Protocol')
+    docnaet_mode = fields.Selection([
+        ('docnaet', 'Docnaet'),  # Only for docnaet
+        ('labnaet', 'Labnaet'),
+        ], 'Docnaet mode', required=True,
+        help='Usually document management, but for future improvement also'
+             ' for manage other docs')
