@@ -29,7 +29,7 @@
         'wizard/search_view.xml',
 
         # Security:
-        'security_docnaet.xml',
+        # TODO 'security_docnaet.xml',
         ],
     'demo_xml': [],
     'active': False,
