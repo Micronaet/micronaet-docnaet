@@ -279,7 +279,7 @@
         <field name="name">Docnaet type</field>
         <field name="model">docnaet.type</field>
         <field name="arch" type="xml">
-            <tree string="Docnaet type" colors="grey:invisible==True">
+            <tree string="Docnaet type"><!--colors="grey:invisible==True"-->
                 <field name="invisible" invisible="1" />
                 <field name="name" />
                 <field name="docnaet_mode" groups="docnaet.group_docnaet_mode" />
@@ -688,7 +688,7 @@
         <field name="name">Docnaet document</field>
         <field name="model">docnaet.document</field>
         <field name="arch" type="xml">
-            <tree string="Docnaet document" colors="brown:original_id!=False;grey:state=='draft';blue:state=='timed';black:state=='confirmed';red:state=='cancel'">
+            <tree string="Docnaet document" ><!--colors="brown:original_id!=False;grey:state=='draft';blue:state=='timed';black:state=='confirmed';red:state=='cancel'"-->
                <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}" invisible="context.get('remote_document', False)"/>
                <button type="object" name="button_call_url_docnaet" string="Document linked!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"  invisible="context.get('remote_document', False)"/>
                <button type="object" name="button_call_url_remote_docnaet" string="Open document [R]" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}" invisible="not context.get('remote_document', False)"/>
