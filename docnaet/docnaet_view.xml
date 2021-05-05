@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
-    <!--docnaet.product-->
+    <!--docnaet.sector-->
     <record model="ir.ui.view" id="view_docnaet_sector_form">
         <field name="name">Docnaet sector</field>
         <field name="model">docnaet.sector</field>
