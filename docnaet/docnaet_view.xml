@@ -629,7 +629,7 @@
                 </group>
            </search>
         </field>
-    </record>
+    </record>-->
     <record model="ir.ui.view" id="view_docnaet_document_labnaet_search">
         <field name="name">docnaet.document.labnaet.search</field>
         <field name="model">docnaet.document</field>
@@ -681,7 +681,7 @@
                 </group>
            </search>
         </field>
-    </record>-->
+    </record>
     <record model="ir.ui.view" id="docnaet_document_tree_view">
         <field name="name">Docnaet document</field>
         <field name="model">docnaet.document</field>
@@ -855,7 +855,7 @@
         <field name="res_model">docnaet.document</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_calendar_view"/>
-        <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
+        <!--<field name="search_view_id" ref="view_docnaet_document_docnaet_search"/>-->
         <field name="context">{'search_default_state_timed': True, 'name_mode': 'docnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid)]</field>
     </record>
@@ -864,7 +864,7 @@
         <field name="res_model">docnaet.document</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
-        <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
+        <!--<field name="search_view_id" ref="view_docnaet_document_docnaet_search"/>-->
         <field name="context">{'name_mode': 'docnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid)]</field>
     </record>
@@ -873,7 +873,7 @@
         <field name="res_model">docnaet.document</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
-        <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
+        <!--<field name="search_view_id" ref="view_docnaet_document_docnaet_search"/>-->
         <field name="context">{'name_mode': 'docnaet'}</field>
         <field name="domain">['&amp;',('docnaet_mode','in',('all', 'docnaet')), '|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
     </record>
@@ -882,7 +882,7 @@
         <field name="res_model">docnaet.document</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
-        <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
+        <!--<field name="search_view_id" ref="view_docnaet_document_docnaet_search"/>-->
         <field name="context">{'name_mode': 'docnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('state','=','draft')]</field>
     </record>
@@ -891,7 +891,7 @@
         <field name="res_model">docnaet.document</field>
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
-        <field name="search_view_id" ref="view_docnaet_document_docnaet_search"/>
+        <!--<field name="search_view_id" ref="view_docnaet_document_docnaet_search"/>-->
         <field name="context">{'remote_document':True}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet'))]</field>
     </record>
