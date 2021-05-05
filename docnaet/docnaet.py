@@ -38,7 +38,7 @@ class ResCompany(models.Model):
         if not docnaet_path:
             raise exceptions.Warning(
                 'Compilare i percorsi dati nei parametri di ODOO')
-
+        docnaet_path = os.path.expanduser(docnaet_path)
         # Folder structure:
         path = {}
         path['root'] = os.path.expanduser(docnaet_path)
