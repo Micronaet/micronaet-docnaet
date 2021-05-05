@@ -233,7 +233,7 @@
         <field name="name">Docnaet protocol</field>
         <field name="model">docnaet.protocol</field>
         <field name="arch" type="xml">
-            <tree string="Docnaet protocol" colors="grey:invisible==True">
+            <tree string="Docnaet protocol"><!--colors="grey:invisible==True"-->
                 <field name="invisible" invisible="1"/>
                 <field name="name" />
                 <field name="next" />
