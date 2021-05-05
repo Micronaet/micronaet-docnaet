@@ -22,12 +22,12 @@
         'data/config.xml',
         # 'data/counter.xml',
 
-        # 'wizard/document_duplication_view.xml',
+        'wizard/document_duplication_view.xml',
         'docnaet_view.xml',
         # 'alternative_view.xml',
         # 'docnaet_workflow.xml',
 
-        # 'wizard/search_view.xml',
+        'wizard/search_view.xml',
 
         # Security:
         # 'security_docnaet.xml',
