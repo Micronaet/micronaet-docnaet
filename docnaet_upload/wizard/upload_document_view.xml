@@ -22,18 +22,26 @@
                             <separator string="Partner Filter:" colspan="3"/>
                             <label for="partner_name"/>
                             <field name="partner_name" placeholder="Filter partner name..." context="{'name_mode': 'docnaet'}" colspan="2"/> <!--TODO on_change="onchange_country_partner_domain(partner_name,country_id,context)" -->
+                            <label for="country_id"/>
                             <field name="country_id" placeholder="Filter partner country..." options="{'no_create': True}"  context="{'name_mode': 'docnaet'}"/> <!--TODO on_change="onchange_country_partner_domain(partner_name,country_id,context)"-->
 
                             <separator string="Default setup:" colspan="3"/>
+                            <label for="default_partner_id"/>
                             <field name="default_partner_id" options="{'no_create': True}" context="{'name_mode': 'docnaet'}"/><!--{'limit': 10, 'create': false, 'create_edit': false}-->
+                            <label for="default_user_id"/>
                             <field name="default_user_id" options="{'no_create': True}"/>
+                            <label for="default_type_id"/>
                             <field name="default_type_id" options="{'no_create': True}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
 
+                            <label for="default_protocol_id"/>
                             <field name="default_protocol_id" options="{'no_create': True}" domain="[('docnaet_mode','in',('all', docnaet_mode))]"/>
                             <field name="assign_protocol" attrs="{'invisible': [('default_protocol_id','=',False)]}" /> <!--,('is_address','=',False)-->
 
+                            <label for="default_product_id"/>
                             <field name="default_product_id" options="{'no_create': True}" attrs="{'invisible': [('docnaet_mode','=','docnaet')]}"/>
+                            <label for="default_language_id"/>
                             <field name="default_language_id" options="{'no_create': True}" />
+                            <label for="default_sector_id"/>
                             <field name="default_sector_id" groups="docnaet.group_docnaet_sector_user" widget="selection"/>
 
                             <field name="file_mode" attrs="{'invisible': [('mode','!=','upload')]}"/>
