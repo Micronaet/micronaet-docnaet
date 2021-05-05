@@ -740,11 +740,11 @@
                <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
 
                <button name="document_cancel_draft" string="Reactivate" type="workflow" states="cancel" icon="gtk-redo"/>
+               <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" context="{'default_docnaet_mode': docnaet_mode}"/>
                <field name="state" invisible="1"/>
             </tree>
         </field>
     </record>
-    <!--<button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" context="{'default_docnaet_mode': docnaet_mode}"/>-->
 
     <record model="ir.ui.view" id="docnaet_document_form_view">
         <field name="name">Docnaet document</field>
@@ -765,6 +765,8 @@
                    <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
 
                    <button name="document_cancel_draft" string="Reactivate" type="workflow" states="cancel" icon="gtk-redo"/>
+
+                   <button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" colspan="1" invisible="context.get('remote_document', False)" context="{'default_docnaet_mode': docnaet_mode}"/>
 
                    <field name="state" widget="statusbar" readonly="1" />
                </header>
@@ -846,7 +848,6 @@
             </form>
         </field>
     </record>
-    <!--<button type="action" name="%(action_docnaet_document_duplication)d" string="Duplicate" icon="STOCK_DND_MULTIPLE" colspan="1" invisible="context.get('remote_document', False)" context="{'default_docnaet_mode': docnaet_mode}"/>-->
     <record model="ir.ui.view" id="docnaet_document_calendar_view">
         <field name="name">docnaet.document.calendar</field>
         <field name="model">docnaet.document</field>
