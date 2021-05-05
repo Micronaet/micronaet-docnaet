@@ -47,7 +47,6 @@ class DocnaetDocumentAdvancedSearchWizard(models.TransientModel):
         _logger.error('DOMAIN: %s' % (res, ))
         return res
 
-    @api.multi
     def advanced_search(self):
         """ Advanced search
         """

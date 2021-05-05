@@ -116,13 +116,11 @@ class DocumentDuplication(models.TransientModel):
             'res_id': destination_proxy.id,  # IDs selected
             }
 
-    @api.multi
     def duplication_document(self):
         """ Duplicate document and file
         """
         return self.duplicate_operation(mode='document')
 
-    @api.multi
     def linked_document(self):
         """ Duplicate record but not file
         """

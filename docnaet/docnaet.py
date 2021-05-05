@@ -109,7 +109,6 @@ class ResPartner(models.Model):
     """
     _inherit = 'res.partner'
 
-    @api.multi
     def set_docnaet_on(self):
         """ Enable docnaet partner
         """
@@ -117,7 +116,6 @@ class ResPartner(models.Model):
             'docnaet_enable': True,
             })
 
-    @api.multi
     def set_docnaet_off(self):
         """ Disable docnaet partner
         """
@@ -142,7 +140,6 @@ class ResPartnerRelation(models.Model):
         'res.partner', 'docnaet_parent_id', 'Docnaet Ditte Collegate')
     alternative_search = fields.Char('Nome alternativo Docnaet', size=64)
 
-    @api.multi
     def name_get(self):
         """ Add customer-fabric ID to name
         """
@@ -245,7 +242,6 @@ class DocnaetType(models.Model):
     # -------------------------------------------------------------------------
     # Button event:
     # -------------------------------------------------------------------------
-    @api.multi
     def set_invisibile(self):
         """ Set as invisible protocol
         """
@@ -253,7 +249,6 @@ class DocnaetType(models.Model):
             'invisible': True,
             })
 
-    @api.multi
     def set_visibile(self):
         """ Set as invisible protocol
         """
@@ -283,7 +278,6 @@ class DocnaetProtocol(models.Model):
     # -------------------------------------------------------------------------
     # Button event:
     # -------------------------------------------------------------------------
-    @api.multi
     def set_invisibile(self):
         """ Set as invisible protocol
         """
@@ -291,7 +285,6 @@ class DocnaetProtocol(models.Model):
             'invisible': True,
             })
 
-    @api.multi
     def set_visibile(self):
         """ Set as invisible protocol
         """
@@ -422,7 +415,6 @@ class DocnaetDocument(models.Model):
     # -------------------------------------------------------------------------
     # Workflow state event:
     # -------------------------------------------------------------------------
-    @api.multi
     def document_draft(self):
         """ WF draft state
         """
@@ -431,7 +423,6 @@ class DocnaetDocument(models.Model):
             'state': 'draft',
             })
 
-    @api.multi
     def document_confirmed(self,):
         """ WF confirmed state
         """
@@ -453,13 +444,11 @@ class DocnaetDocument(models.Model):
                 protocol.id)
         return self.write(data)
 
-    @api.multi
     def document_suspended(self):
         """ WF suspended state
         """
         return self.write({'state': 'suspended'})
 
-    @api.multi
     def document_timed(self):
         """ WF timed state
         """
@@ -469,7 +458,6 @@ class DocnaetDocument(models.Model):
             raise exceptions.Warning(_('For timed document need a deadline!'))
         return self.write({'state': 'timed'})
 
-    @api.multi
     def document_cancel(self):
         """ WF cancel state
         """
@@ -479,7 +467,6 @@ class DocnaetDocument(models.Model):
     # -------------------------------------------------------------------------
     # Utility:
     # -------------------------------------------------------------------------
-    @api.multi
     def dummy(self):
         return True
 
@@ -533,7 +520,6 @@ class DocnaetDocument(models.Model):
     # -------------------------------------------------------------------------
     # Button event:
     # -------------------------------------------------------------------------
-    @api.multi
     def assign_protocol_number(self):
         """ Reassign protocol number (enabled only if protocol and number
             is present (in view)
@@ -547,7 +533,6 @@ class DocnaetDocument(models.Model):
                 })
         return True
 
-    @api.multi
     def button_doc_info_docnaet(self):
         """ Document info
         """
@@ -566,7 +551,6 @@ class DocnaetDocument(models.Model):
 
         raise exceptions.Warning(message)
 
-    @api.multi
     def button_assign_fax_number(self):
         """ Assign fax number to document (next counter)
         """
@@ -577,13 +561,11 @@ class DocnaetDocument(models.Model):
             'fax_number': number,
             })
 
-    @api.multi
     def button_call_url_docnaet(self):
         """ Call url function for prepare address and return for open doc:
         """
         return self.call_docnaet_url('open')
 
-    @api.multi
     def button_call_url_remote_docnaet(self):
         """ Call url function for prepare address and return for open doc:
             (in remote mode)
@@ -629,7 +611,6 @@ class DocnaetDocument(models.Model):
                 return os.path.join(store_folder, filename)
 
     '''
-    @api.multi
     def _refresh_partner_country_change(self):
         """ When change partner in country change in document
         """
@@ -637,7 +618,6 @@ class DocnaetDocument(models.Model):
             ('partner_id', 'in', self.mapped['id']),
         ])
 
-    @api.multi
     def _refresh_partner_category_change(self):
         """ When change partner in category change in document
         """
@@ -645,35 +625,30 @@ class DocnaetDocument(models.Model):
             ('partner_id', 'in', self.mapped['id']),
         ])
 
-    @api.multi
     def _refresh_product_category_change(self):
         """ When change product category update docnaet document
         """
         return self.env['docnaet.document'].search([
             ('product_id', 'in', self.mapped['id']),
         ])
-    "@api.multi
     def _refresh_category_auto_change(self):
         """ When change partner in category change in document
             Used also for change product_id for update category
         """
         return self.mapped['id']
 
-    @api.multi
     def _refresh_country_auto_change(self):
         """ When change partner in category change in document
         """
         return self.mapped['id']
     '''
 
-    @api.multi
     def _get_real_filename(self):
         """ Fields function for calculate
         """
         for doc in self:
             doc.real_file = doc.filename or doc.original_id.id or ''
 
-    @api.multi
     def _get_date_month_4_group(self):
         """ Fields function for calculate
         """
@@ -683,7 +658,6 @@ class DocnaetDocument(models.Model):
             else:
                 doc.date_month = _('Nessuna')
 
-    @api.multi
     def _get_deadline_month_4_group(self):
         """ Fields function for calculate
         """
@@ -694,14 +668,12 @@ class DocnaetDocument(models.Model):
                 doc.deadline_month = _('Nessuna')
 
     '''    
-    @api.multi
     def _store_data_deadline_month(self):
         """ if change date reload data
         """
         _logger.warning('Change date_mont depend on date and deadline')
         return ids'''
 
-    @api.multi
     def get_counter_labnaet_id(self):
         """ Return ID for labnaet_id
         """
