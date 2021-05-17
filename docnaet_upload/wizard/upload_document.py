@@ -7,6 +7,7 @@ import logging
 from odoo import api, fields, models
 from odoo.tools.translate import _
 from odoo import exceptions
+from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
@@ -288,7 +289,7 @@ class UploadDocumentWizard(models.TransientModel):
         # Get private folder:
         private_folder = self.private_listdir()
         for fullpath, f in private_folder:
-            ts = fields.Datetime.fromtimestamp(
+            ts = datetime.fromtimestamp(
                 os.path.getmtime(fullpath)).strftime('%Y/%m/%d')
             ts = ts.replace('/', '-')
             if mode == 'html':
