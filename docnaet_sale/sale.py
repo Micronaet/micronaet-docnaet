@@ -137,12 +137,15 @@ class DocnaetDocument(orm.Model):
                         'in OpenERP.<br/>Mail automatida di OpenERP' \
                         '</p>' % user.name
             html_body += '<p><table' \
-                         'class="{border-collapse: collapse; margin: 25px 0;'\
-                         'font-size: 0.9em; font-family: sans-serif;'\
-                         'min-width: 500px;' \
-                         'box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);'\
-                         '}"><tr>' \
-                         '<th>Comando</td><th>Data</th><th>Cliente</th>' \
+                         'class="{' \
+                         '   border-collapse: collapse;' \
+                         '   margin: 25px 0;' \
+                         '   font-size: 0.9em; ' \
+                         '   font-family: sans-serif;'\
+                         '   min-width: 500px;' \
+                         '   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);'\
+                         '   }">' \
+                         '<tr><th>Comando</td><th>Data</th><th>Cliente</th>' \
                          '<th>Dettaglio</th><th>Oggetto</th>' \
                          '<th>Scadenza</th></tr>'
 
