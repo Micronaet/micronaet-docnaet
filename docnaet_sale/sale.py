@@ -132,7 +132,8 @@ class DocnaetDocument(orm.Model):
                 _logger.error('Cannot send mail, no address on user!')
                 continue
 
-            html_body = '<p>Spett.le %s<br/>in allegato il dettaglio delle ' \
+            html_body = '<html><body>' \
+                        '<p>Spett.le %s<br/>in allegato il dettaglio delle ' \
                         'offerte scadute oggi, il link permette di aprirle ' \
                         'in OpenERP.<br/>Mail automatida di OpenERP' \
                         '</p>' % user.name
@@ -163,7 +164,7 @@ class DocnaetDocument(orm.Model):
                         document.name or '',
                         document.deadline or '',
                         )
-
+            html_body += '</table></body></html>'
             print('Sending mail to: %s ...' % to)
             msg = MIMEMultipart()
             msg['Subject'] = 'CRM OpenERP: Dettaglio offerte scadute'
