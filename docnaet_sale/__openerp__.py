@@ -38,6 +38,7 @@
     'demo': [],
     'data': [
         'sale_view.xml',
+        'pending_scheduler.xml',
         ],
     'active': False,
     'installable': True,

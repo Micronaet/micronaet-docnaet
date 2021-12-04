@@ -18,6 +18,7 @@
 #
 ###############################################################################
 import os
+import pdb
 import sys
 import logging
 import openerp
@@ -30,40 +31,81 @@ from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 
 _logger = logging.getLogger(__name__)
 
+
 class DocnaetProtocol(orm.Model):
-    ''' Add extra fields for integrare a link to docnaet document
-    '''
+    """ Add extra fields for integrare a link to docnaet document
+    """
     _inherit = 'docnaet.protocol'
-    
+
     _columns = {
         'sale_management': fields.boolean('CRM management'),
         }
 
+
+class ResCompany(orm.Model):
+    """ Add extra fields for docnaet parameter
+    """
+    _inherit = 'res.company'
+
+    _columns = {
+        'docnaet_mask_link': fields.char(
+            'Maschera link', size=120,
+            help='Maschera da utilizzare per inviara i link dei documenti'
+                 'tramite email, lasciare la %s per indicare la posizione'
+                 'dell\'ID documento'),
+        }
+
+
 class DocnaetDocument(orm.Model):
-    ''' Add extra fields for integrare a link to docnaet document
-    '''
+    """ Add extra fields for integrare a link to docnaet document
+    """
     _inherit = 'docnaet.document'
-    
+
+    def scheduled_raise_pending_offer(self, cr, uid, context=None):
+        """ Mail when offer passed limit
+        """
+        pdb.set_trace()
+        user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
+        company = user.company_id
+        docnaet_mask_link = company.docnaet_mask_link
+
+        now = datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT)[:10]
+        pending_ids = self.browse(cr, uid, [
+            ('sale_state', '=', 'pending'),
+            ('sale_order_amount', '>', 0),
+            ('deadline', '<=', now),
+        ], context=context)
+        user_mail = {}
+        for document in self.browse(cr, uid, pending_ids, context=context):
+            user = document.user_id
+            if user not in user_mail:
+                user_mail[user] = []
+            user_mail[user].append(document.id)
+
+        for user in user_mail:
+            html_body = ''
+        return True
+
     def onchange_no_sale_price(
             self, cr, uid, ids, no_sale_price, context=None):
         """ Clean price if removed check
-        """    
+        """
         res = {}
         if not no_sale_price:
             return res
         res['value'] = {
             'sale_order_amount': 0.0,
-            }    
+            }
         return res
-            
+
     # -------------------------------------------------------------------------
     # Utility:
     # -------------------------------------------------------------------------
@@ -71,17 +113,17 @@ class DocnaetDocument(orm.Model):
         """ Check if manatory amount
         """
         assert len(ids) == 1, 'Works only with one record a time'
-        
+
         document = self.browse(cr, uid, ids, context=context)[0]
         if document.protocol_id.sale_management and \
                 not document.no_sale_price and not document.sale_order_amount:
             raise osv.except_osv(
-                _('Errore'), 
+                _('Errore'),
                 _('''Il documento richiede, nella sezione CRM, una indicazione
                  di importo offerta obbligatoria (a meno di escluderla 
                  impostando: 'nessuna valorizzazione')!'''),
-                )    
-        
+                )
+
     # -------------------------------------------------------------------------
     # OVERRIDE: Workflow docnaet event:
     # -------------------------------------------------------------------------
@@ -98,32 +140,34 @@ class DocnaetDocument(orm.Model):
         self.check_amount_present(cr, uid, ids, context=context)
         return super(DocnaetDocument, self).document_timed(
             cr, uid, ids, context=context)
-    
+
     # -------------------------------------------------------------------------
     # Workflow sale event:
     # -------------------------------------------------------------------------
     def sale_order_pending(self, cr, uid, ids, context=None):
-        ''' Workflow set pending
-        '''
+        """ Workflow set pending
+        """
         return self.write(cr, uid, ids, {
             'sale_state': 'pending',
             }, context=context)
+
     def sale_order_win(self, cr, uid, ids, context=None):
-        ''' Workflow set win
-        '''
+        """ Workflow set win
+        """
         return self.write(cr, uid, ids, {
             'sale_state': 'win',
             }, context=context)
+
     def sale_order_lost(self, cr, uid, ids, context=None):
-        ''' Workflow set lost
-        '''
+        """ Workflow set lost
+        """
         return self.write(cr, uid, ids, {
             'sale_state': 'lost',
             }, context=context)
-    
+
     def sale_order_pending_offer(self, cr, uid, ids, context=None):
-        ''' Return view of pending offer
-        '''
+        """ Return view of pending offer
+        """
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         partner_id = current_proxy.partner_id.id
         document_ids = self.search(cr, uid, [
@@ -138,35 +182,36 @@ class DocnaetDocument(orm.Model):
                 'name': _('Pending offer'),
                 'view_type': 'form',
                 'view_mode': 'tree,form',
-                #'res_id': 1,
+                # 'res_id': 1,
                 'res_model': 'docnaet.document',
-                'view_id': view_id, # False
+                'view_id': view_id,  # False
                 'views': [(False, 'tree'), (False, 'form')],
                 'domain': [('id', 'in', document_ids)],
                 'context': context,
-                'target': 'current', # 'new'
+                'target': 'current',  # 'new'
                 'nodestroy': False,
                 }
         else:
             raise osv.except_osv(
-                _('Info:'), 
+                _('Info:'),
                 _('No pending offer!'),
                 )
 
     _columns = {
         'linked_sale_id': fields.many2one(
             'sale.order', 'Linked sale'),
-        'link_sale': fields.boolean('Link', 
+        'link_sale': fields.boolean(
+            'Link',
             help='Link document in sale form'),
 
         # CRM management:
         'sale_management': fields.related(
-            'protocol_id', 'sale_management', 
+            'protocol_id', 'sale_management',
             type='boolean', string='Gestione CRM'),
         'no_sale_price': fields.boolean(
-            'Nessuna valorizzazione', 
-            help='Non va indicata la valorizzazione perchè non esiste'),
-        'sale_comment': fields.text('Sale comment', 
+            'Nessuna valorizzazione',
+            help='Non va indicata la valorizzazione perché non esiste'),
+        'sale_comment': fields.text('Sale comment',
             help='Why we lost or win the quotation'),
         'sale_order_amount': fields.float('Total sale', digits=(16, 2)),
         'sale_currency_id': fields.many2one('res.currency', 'Currency'),
@@ -180,17 +225,17 @@ class DocnaetDocument(orm.Model):
     _defaults = {
         'sale_state': lambda *x: 'pending',
         'link_sale': lambda *x: True,
-        'sale_currency_id': lambda *x: 1, # TODO better
+        'sale_currency_id': lambda *x: 1,  # TODO better
         }
+
 
 class SaleOrder(orm.Model):
-    ''' Add extra fields for integrare docnaet document
-    '''
+    """ Add extra fields for integrare docnaet document
+    """
     _inherit = 'sale.order'
-    
+
     _columns = {
-        'docnaet_ids': fields.one2many('docnaet.document', 'linked_sale_id',
+        'docnaet_ids': fields.one2many(
+            'docnaet.document', 'linked_sale_id',
             'Docnaet document'),
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
