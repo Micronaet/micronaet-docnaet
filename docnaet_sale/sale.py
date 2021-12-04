@@ -50,17 +50,17 @@ _logger = logging.getLogger(__name__)
 class CRMLostDetail(orm.Model):
     """ Model name: CRM Lost Detail
     """
-    
+
     _name = 'crm.lost.detail'
     _description = 'Dettaglio offerta persa'
     _rec_name = 'name'
     _order = 'name'
-    
+
     _columns = {
         'name': fields.char(
-            'Name', size=64, required=True, 
+            'Name', size=64, required=True,
             ),
-        'note': fields.text('Note'),    
+        'note': fields.text('Note'),
     }
 
 
@@ -353,6 +353,10 @@ class DocnaetDocument(orm.Model):
             ('win', 'Win'),
             ('lost', 'Lost'),
             ], 'Sale state'),
+        'sale_lost_cause_ids': fields.many2many(
+            'crm.lost.detail', 'crm_sale_state_lost_rel',
+            'document_id', 'lost_id',
+            'Motivi perdita'),
         }
 
     _defaults = {
