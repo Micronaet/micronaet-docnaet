@@ -72,6 +72,7 @@
                <button name="sale_order_pending" string="Pending" type="object" attrs="{'invisible': [('sale_state','not in',('win', 'lost'))]}" colspan="1" icon="STOCK_UNDO"/>
                <button name="sale_order_win" string="Win" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost'))]}" colspan="1" icon="STOCK_YES" />
                <button name="sale_order_lost" string="Lost" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost'))]}" colspan="1" icon="STOCK_NO"/>
+               <button name="sale_order_remake" string="Rinegoziata" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost'))]}" colspan="1" icon="STOCK_NO"/>
 
                <field name="sale_state"/>
                <field name="state" invisible="1"/>
@@ -90,6 +91,7 @@
                      <filter name="state_sale_pending" string="Sale pending" domain="[('sale_state','=','pending'),('sale_order_amount', '>', 0)]"/>
                      <filter name="state_sale_win" string="Sale win" domain="[('sale_state','=','win')]"/>
                      <filter name="state_sale_lost" string="Sale lost" domain="[('sale_state','=','lost')]"/>
+                     <filter name="state_sale_remake" string="Rinegoziate" domain="[('sale_state','=','remake')]"/>
                  </filter>
                  <filter name="group_language" position="after">
                      <filter name="group_sale_state" string="Sale State" context="{'group_by': 'sale_state'}"/>
@@ -115,10 +117,13 @@
                             <field name="sale_currency_id" widget="select" />
                             <button name="sale_order_pending_offer" string="Pending offer" type="object" icon="STOCK_JUSTIFY_FILL"/>
 
-                            <field name="sale_state" readonly="1"/>
+                            <field name="sale_state" readonly="2"/>
+                            <newline/>
                             <button name="sale_order_pending" string="Pending" type="object" attrs="{'invisible': [('sale_state','not in',('win', 'lost'))]}" colspan="1" icon="STOCK_UNDO"/>
                             <button name="sale_order_win" string="Win" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost'))]}" colspan="1" icon="STOCK_YES" />
                             <button name="sale_order_lost" string="Lost" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost'))]}" colspan="1" icon="STOCK_NO"/>
+                            <button name="sale_order_remake" string="Rinegoziata" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost'))]}" colspan="1" icon="STOCK_NO"/>
+
                             <field name="sale_lost_cause_ids" widget="many2many_tags" colspan="4" attrs="{'invisible': [('sale_state','!=','lost')]}"/>
 
                             <separator string="Sale comment:" colspan="5"/>

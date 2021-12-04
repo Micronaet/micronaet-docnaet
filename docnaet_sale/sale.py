@@ -298,6 +298,13 @@ class DocnaetDocument(orm.Model):
             'sale_state': 'lost',
             }, context=context)
 
+    def sale_order_remake(self, cr, uid, ids, context=None):
+        """ Workflow set remake
+        """
+        return self.write(cr, uid, ids, {
+            'sale_state': 'remake',
+            }, context=context)
+
     def sale_order_pending_offer(self, cr, uid, ids, context=None):
         """ Return view of pending offer
         """
@@ -352,6 +359,7 @@ class DocnaetDocument(orm.Model):
             ('pending', 'Pending'),
             ('win', 'Win'),
             ('lost', 'Lost'),
+            ('remake', 'Rinegoziata'),
             ], 'Sale state'),
         'sale_lost_cause_ids': fields.many2many(
             'crm.lost.detail', 'crm_sale_state_lost_rel',
