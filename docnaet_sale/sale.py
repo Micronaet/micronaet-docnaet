@@ -125,9 +125,7 @@ class DocnaetDocument(orm.Model):
 
         smtp_server.login(mailer.smtp_user, mailer.smtp_pass)
         for user in user_mail:
-            # todo debug:
-            to = 'nicola.riolini@micronaet.com' or user.email
-            # ccn = 'nicola.riolini@micronaet.com'
+            to = user.email
             if not to:
                 _logger.error('Cannot send mail, no address on user!')
                 continue
