@@ -78,13 +78,13 @@ class DocnaetDocument(orm.Model):
         docnaet_mask_link = company.docnaet_mask_link
 
         now = datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT)[:10]
-        pending_ids = self.browse(cr, uid, [
+        document_ids = self.search(cr, uid, [
             ('sale_state', '=', 'pending'),
             ('sale_order_amount', '>', 0),
             ('deadline', '<=', now),
         ], context=context)
         user_mail = {}
-        for document in self.browse(cr, uid, pending_ids, context=context):
+        for document in self.browse(cr, uid, document_ids, context=context):
             user = document.user_id
             if user not in user_mail:
                 user_mail[user] = []
@@ -92,6 +92,9 @@ class DocnaetDocument(orm.Model):
 
         for user in user_mail:
             html_body = ''
+            for document_id in user_mail[user]:
+                href = docnaet_mask_link % document_id
+
         return True
 
     def onchange_no_sale_price(
