@@ -1,6 +1,26 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <record model="ir.ui.view" id="view_crm_lost_detail_tree">
+            <field name="name">crm.lost.detail.tree</field>
+            <field name="model">crm.lost.detail</field>
+            <field name="arch" type="xml">
+                <tree string="Motifi perdita" editable="bottom" >
+                    <field name="name" />
+                    <field name="note" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_crm_lost_detail">
+            <field name="name">Motivi perdita</field>
+            <field name="res_model">crm.lost.detail</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_crm_lost_detail_tree"/>
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+        </record>
+
         <!--for docnaet admin:-->
         <record model="ir.ui.view" id="res_company_form_docnaet_view">
             <field name="name">Docnaet CRM link</field>
@@ -179,6 +199,7 @@
 
         <menuitem parent="docnaet.docnaet_document" id="menu_docnaet_document_document_offer" name="Offerte" sequence="12" action="action_docnaet_sale_order_tree" />
         <menuitem parent="docnaet.docnaet_document_my_document" id="menu_docnaet_document_my_pending_order" name="Pending offer" sequence="40" action="action_docnaet_my_sale_order_tree" />
+        <menuitem parent="docnaet.docnaet_administration" id="mrnu_crm_lost_detail" name="CRM Motivazioni" sequence="90" action="action_crm_lost_detail" />
 
     </data>
 </openerp>

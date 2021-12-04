@@ -47,6 +47,23 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 _logger = logging.getLogger(__name__)
 
 
+class CRMLostDetail(orm.Model):
+    """ Model name: CRM Lost Detail
+    """
+    
+    _name = 'crm.lost.detail'
+    _description = 'Dettaglio offerta persa'
+    _rec_name = 'name'
+    _order = 'name'
+    
+    _columns = {
+        'name': fields.char(
+            'Name', size=64, required=True, 
+            ),
+        'note': fields.text('Note'),    
+    }
+
+
 class DocnaetProtocol(orm.Model):
     """ Add extra fields for integrare a link to docnaet document
     """
