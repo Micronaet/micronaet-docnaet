@@ -29,6 +29,13 @@ from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 from openerp import SUPERUSER_ID
 from openerp import tools
+
+import smtplib
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEBase import MIMEBase
+from email.mime.text import MIMEText
+from email import Encoders
+
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
 from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
@@ -72,7 +79,6 @@ class DocnaetDocument(orm.Model):
     def scheduled_raise_pending_offer(self, cr, uid, context=None):
         """ Mail when offer passed limit
         """
-        pdb.set_trace()
         user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         company = user.company_id
         docnaet_mask_link = company.docnaet_mask_link
@@ -88,13 +94,80 @@ class DocnaetDocument(orm.Model):
             user = document.user_id
             if user not in user_mail:
                 user_mail[user] = []
-            user_mail[user].append(document.id)
+            user_mail[user].append(document)
 
+        mailer = self.pool.get('ir.mail_server')
+
+        if not user_mail:
+            _logger.warning('No message for CRM deadline!')
+            return False
+
+        # ---------------------------------------------------------------------
+        #                         SMTP connection:
+        # ---------------------------------------------------------------------
+        pdb.set_trace()
+        # Get mail server option from OpenERP:
+        mailer_ids = mailer.search(cr, uid, [], context=context)
+        if not mailer_ids:
+            _logger.error('No mail server configured in ODOO')
+            return False
+        mailer = mailer.browse(cr, uid, mailer_ids, context=context)[0]
+
+        # Open connection:
+        _logger.info('[INFO] Sending using "%s" connection [%s:%s]' % (
+            mailer.name, mailer.smtp_host, mailer.smtp_port))
+
+        if mailer.smtp_encryption in ('ssl', 'starttls'):
+            smtp_server = smtplib.SMTP_SSL(
+                mailer.smtp_host, mailer.smtp_port)
+        else:
+            _logger.error('Connect only SMTP SSL server!')
+            return False
+
+        smtp_server.login(mailer.smtp_user, mailer.smtp_pass)
         for user in user_mail:
-            html_body = ''
-            for document_id in user_mail[user]:
-                href = docnaet_mask_link % document_id
+            # todo debug:
+            to = 'nicola.riolini@micronaet.com' or user.email
+            # ccn = 'nicola.riolini@micronaet.com'
+            if not to:
+                _logger.error('Cannot send mail, no address on user!')
+                continue
 
+            html_body = '<p>Spett.le %s<br/>in allegato il dettaglio delle ' \
+                        'offerte scadute oggi, il link permette di aprirle ' \
+                        'in OpenERP.<br/>Mail automatida di OpenERP' \
+                        '</p>' % user.name
+            html_body += '<p><table>' \
+                         '<tr>' \
+                         '<th>Comando</td><th>Data</th><th>Cliente</th>' \
+                         '<th>Dettaglio</th><th>Oggetto</th>' \
+                         '<th>Scadenza</th></tr>'
+
+            for document in user_mail[user]:
+                document_id = document.id
+                html_body += \
+                    '<tr><td><a href="%s">APRI</a>' \
+                    '</td><td>%s</td><td>%s</td><td>%s: %s</td>' \
+                    '<td>%s</td><td>%s</td></tr>' % (
+                        docnaet_mask_link % document_id,
+                        document.date or '',
+                        document.partner_id.name,
+                        document.protocol_id.name,
+                        document.number,
+                        document.name or '',
+                        document.deadline or '',
+                        )
+
+            print('Sending mail to: %s ...' % to)
+            msg = MIMEMultipart()
+            msg['Subject'] = 'CRM OpenERP: Dettaglio offerte scadute'
+            msg['From'] = mailer.smtp_user
+            msg['To'] = to
+            msg.attach(MIMEText(html_body, 'html'))
+
+            # Send mail:
+            smtp_server.sendmail(mailer.smtp_user, to, msg.as_string())
+        smtp_server.quit()
         return True
 
     def onchange_no_sale_price(
