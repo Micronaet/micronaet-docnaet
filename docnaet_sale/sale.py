@@ -105,7 +105,6 @@ class DocnaetDocument(orm.Model):
         # ---------------------------------------------------------------------
         #                         SMTP connection:
         # ---------------------------------------------------------------------
-        pdb.set_trace()
         # Get mail server option from OpenERP:
         mailer_ids = mailer.search(cr, uid, [], context=context)
         if not mailer_ids:
