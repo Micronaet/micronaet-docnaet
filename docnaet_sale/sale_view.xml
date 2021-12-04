@@ -72,7 +72,7 @@
                <button name="sale_order_pending" string="Pending" type="object" attrs="{'invisible': [('sale_state','not in',('win', 'lost', 'remake'))]}" colspan="1" icon="STOCK_UNDO"/>
                <button name="sale_order_win" string="Win" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost', 'remake'))]}" colspan="1" icon="STOCK_YES" />
                <button name="sale_order_lost" string="Lost" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost', 'remake'))]}" colspan="1" icon="STOCK_NO"/>
-               <button name="sale_order_remake" string="Rinegoziata" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost', 'remake'))]}" colspan="1" icon="STOCK_NO"/>
+               <button name="sale_order_remake" string="Rinegoziata" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost', 'remake'))]}" colspan="1" icon="gtk-about"/>
 
                <field name="sale_state"/>
                <field name="state" invisible="1"/>
@@ -122,7 +122,7 @@
                             <button name="sale_order_pending" string="Pending" type="object" attrs="{'invisible': [('sale_state','not in',('win', 'lost', 'remake'))]}" colspan="1" icon="STOCK_UNDO"/>
                             <button name="sale_order_win" string="Win" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost', 'remake'))]}" colspan="1" icon="STOCK_YES" />
                             <button name="sale_order_lost" string="Lost" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost', 'remake'))]}" colspan="1" icon="STOCK_NO"/>
-                            <button name="sale_order_remake" string="Rinegoziata" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost', 'remake'))]}" colspan="1" icon="STOCK_NO"/>
+                            <button name="sale_order_remake" string="Rinegoziata" type="object" attrs="{'invisible': [('sale_state','in',('win', 'lost', 'remake'))]}" colspan="1" icon="gtk-about"/>
                             <newline/>
                             <field name="sale_lost_cause_ids" widget="many2many_tags" colspan="4" attrs="{'invisible': [('sale_state','!=','lost')]}"/>
 
