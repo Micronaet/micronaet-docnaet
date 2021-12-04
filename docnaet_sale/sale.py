@@ -132,15 +132,51 @@ class DocnaetDocument(orm.Model):
                 _logger.error('Cannot send mail, no address on user!')
                 continue
 
+            css = '''
+            .styled-table {
+                border-collapse: collapse;
+                margin: 25px 0;
+                font-size: 0.9em;
+                font-family: sans-serif;
+                min-width: 400px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            }
+            .styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+            '''
             html_body = '<html>' \
-                        '<header><title>CRM OpenERP</title>' \
-                        '</header>' \
+                        '<head><title>CRM OpenERP</title>' \
+                        '<style>%s</style>' \
+                        '</head>' \
                         '<body>' \
                         '<p>Spett.le %s<br/>in allegato il dettaglio delle ' \
                         'offerte scadute oggi, il link permette di aprirle ' \
                         'in OpenERP.<br/>Mail automatica di OpenERP' \
-                        '</p>' % user.name
-            html_body += '<p><table>' \
+                        '</p>' % (css, user.name)
+            html_body += '<p><table class="styled-table">' \
                          '<tr><th>Comando</td><th>Data</th><th>Cliente</th>' \
                          '<th>Dettaglio</th><th>Oggetto</th>' \
                          '<th>Scadenza</th></tr>'
