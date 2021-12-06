@@ -37,6 +37,8 @@
     'init_xml': [],
     'demo': [],
     'data': [
+        'security/ir.model.access.csv',
+
         'sale_view.xml',
         'pending_scheduler.xml',
         ],
