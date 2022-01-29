@@ -269,8 +269,7 @@ class ResPartnerAlternativeSearch(orm.Model):
                 ('name', 'ilike', name),
                 ] + args, limit=limit)
         else:
-            ids = []
-        # _logger.error('>>>>> name_search %s' % name)
+            ids = self.search(cr, uid, [] + args, limit=limit)
         return self.name_get(cr, uid, ids, context=context)
 
 
