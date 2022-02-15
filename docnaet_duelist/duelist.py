@@ -30,84 +30,101 @@ from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 
 _logger = logging.getLogger(__name__)
 
+
 class ResPartner(orm.Model):
     """ Model name: ResPartner
     """
-    
+
     _inherit = 'res.partner'
 
-    def _get_partner_duelist_check(self, cr, uid, ids, fields, args, 
+    def _get_partner_duelist_check(
+            self, cr, uid, ids, fields, args,
             context=None):
-        ''' Fields function for calculate 
-        '''
+        """ Fields function for calculate
+        """
         res = {}
         now = datetime.now().strftime(DEFAULT_SERVER_DATE_FORMAT)
-        
+        company_cache = {}
         for partner in self.browse(
-                cr, uid, ids, context=context):                
+                cr, uid, ids, context=context):
+            company = partner.company_id
+            if company not in company_cache:
+                etl_duelist_file = company_cache[company]
+            else:
+                etl_duelist_file = company.etl_duelist_file
+                company_cache[company] = etl_duelist_file
+
             res[partner.id] = {}
             res[partner.id]['deadline_present'] = False
             res[partner.id]['deadline_comment'] = False
-            
+            res[partner.id]['etl_duelist_file'] = etl_duelist_file
+
             # This partner payment deadline:
             total_deadlined = 0
-            for payment in partner.duelist_ids:           
-                if payment.deadline < now: # and payment.total > 0:
+            for payment in partner.duelist_ids:
+                if payment.deadline < now:  # and payment.total > 0:
                     total_deadlined += payment.total
             if total_deadlined > 0:
                 res[partner.id]['deadline_present'] = True
-                res[partner.id]['deadline_comment'] = _('PAGAMENTI SCADUTI!')
+                res[partner.id]['deadline_comment'] = \
+                    _('PAGAMENTI SCADUTI! [Agg. %s]' % etl_duelist_file)
                 break
-                    
+
             # Parent partner payment deadline:
             total_deadlined = 0
             if partner.docnaet_parent_id:
-                for payment in partner.docnaet_parent_id.duelist_ids:               
+                for payment in partner.docnaet_parent_id.duelist_ids:
                     if payment.deadline < now:
                         total_deadlined += payment.total
-            
+
             if total_deadlined > 0:
                 res[partner.id]['deadline_present'] = True
-                res[partner.id]['deadline_comment'] = _('PAGAMENTI SCADUTI!')
+                res[partner.id]['deadline_comment'] = \
+                    _('PAGAMENTI SCADUTI! [Agg. %s]' % etl_duelist_file)
                 break
         return res
 
     _columns = {
         'deadline_present': fields.function(
-            _get_partner_duelist_check, method=True, 
-            type='boolean', string='Deadline present', 
+            _get_partner_duelist_check, method=True,
+            type='boolean', string='Deadline present',
             store=False, multi=True),
         'deadline_comment': fields.function(
-            _get_partner_duelist_check, method=True, 
-            type='char', size=80, string='Deadline comment', 
+            _get_partner_duelist_check, method=True,
+            type='char', size=80, string='Deadline comment',
+            store=False, multi=True),
+        'etl_duelist_file': fields.function(
+            _get_partner_duelist_check, method=True,
+            type='datetime', string='Aggiornato il',
             store=False, multi=True),
         }
-        
+
+
 class DocnaetDocument(orm.Model):
     """ Model name: Docnaet Document
-    """    
+    """
     _inherit = 'docnaet.document'
 
     _columns = {
         'deadline_present': fields.related(
-            'partner_id', 'deadline_present', 
-            type='boolean', string='Deadline present', 
+            'partner_id', 'deadline_present',
+            type='boolean', string='Deadline present',
             store=False),
         'deadline_comment': fields.related(
-            'partner_id', 'deadline_comment', 
-            type='char', string='Deadline comment', 
+            'partner_id', 'deadline_comment',
+            type='char', string='Deadline comment',
             store=False),
         'duelist_ids': fields.related(
-            'partner_id', 'duelist_ids', 
-            type='one2many', relation='sql.payment.duelist', 
-            string='Duelist'),    
+            'partner_id', 'duelist_ids',
+            type='one2many', relation='sql.payment.duelist',
+            string='Duelist'),
         }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
