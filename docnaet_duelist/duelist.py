@@ -56,7 +56,7 @@ class ResPartner(orm.Model):
         for partner in self.browse(
                 cr, uid, ids, context=context):
             company = partner.company_id
-            if company not in company_cache:
+            if company in company_cache:
                 etl_duelist_file = company_cache[company]
             else:
                 etl_duelist_file = company.etl_duelist_file
