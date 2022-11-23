@@ -442,7 +442,8 @@ class SaleOrder(orm.Model):
                 temp_list.append(([
                         '%s [%s]' % (
                             partner.name, partner.sql_customer_code or ''),
-                        partner.country_id.name or '',
+                        partner.country_id.name if partner.country_id else \
+                            'SENZA PAESE',
                         document.user_id.name or '',  # Docnaet user
                         document.date,
                         document.deadline,
@@ -567,7 +568,8 @@ class SaleOrder(orm.Model):
                     temp_list.append(([
                         '%s [%s]' % (
                             partner.name, partner.sql_customer_code or ''),
-                        partner.country_id.name or '',
+                        partner.country_id.name if partner.country_id else \
+                        'SENZA PAESE',
 
                         currency.symbol,
                         (order or '', f_number),
