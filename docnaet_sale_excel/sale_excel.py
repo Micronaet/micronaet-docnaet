@@ -284,7 +284,7 @@ class SaleOrder(orm.Model):
             temp_list.append(([
                     '%s [%s]' % (
                         partner.name, partner.sql_customer_code or ''),
-                    partner.country_id.name if partner.country_id else or \
+                    partner.country_id.name if partner.country_id else \
                         'SENZA PAESE',
                     partner.account_reference1_name or '',
                     # partner.account_reference2_name or '',
