@@ -239,6 +239,7 @@ class SaleOrder(orm.Model):
                 total_payment_done.append((partner, currency))
                 total[currency_payment][1] += \
                     partner.duelist_exposition_amount or 0.0
+                total[currency_payment][2] += \
                     partner.duelist_uncovered_amount or 0.0
 
             # -----------------------------------------------------------------
