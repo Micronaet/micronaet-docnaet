@@ -237,9 +237,9 @@ class SaleOrder(orm.Model):
             total[currency][0] += order.amount_untaxed
             if (partner, currency) not in total_payment_done:  # just once!
                 total_payment_done.append((partner, currency))
-                total[currency_payment][1] += 
+                total[currency_payment][1] += \
                     partner.duelist_exposition_amount or 0.0
-                total[currency_payment][2] += 
+                total[currency_payment][2] += \
                     partner.duelist_uncovered_amount or 0.0
 
             # -----------------------------------------------------------------
@@ -425,9 +425,9 @@ class SaleOrder(orm.Model):
                     total[currency_payment] = [0.0, 0.0, 0.0]
 
                 total[currency][0] += document.sale_order_amount
-                total[currency_payment][1] += 
+                total[currency_payment][1] += \
                     partner.duelist_exposition_amount or 0.0
-                total[currency_payment][2] += 
+                total[currency_payment][2] += \
                     partner.duelist_uncovered_amount or 0.0
 
                 # Setup color:
@@ -547,9 +547,9 @@ class SaleOrder(orm.Model):
                 total[currency][2] += lost
 
                 # Payment:
-                total[currency_payment][3] += 
+                total[currency_payment][3] += \
                     partner.duelist_exposition_amount or 0.0
-                total[currency_payment][4] += 
+                total[currency_payment][4] += \
                     partner.duelist_uncovered_amount or 0.0
 
                 # -------------------------------------------------------------
