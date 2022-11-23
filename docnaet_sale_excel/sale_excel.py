@@ -239,7 +239,6 @@ class SaleOrder(orm.Model):
                 total_payment_done.append((partner, currency))
                 total[currency_payment][1] += \
                     partner.duelist_exposition_amount or 0.0
-                total[currency_payment][2] += \
                     partner.duelist_uncovered_amount or 0.0
 
             # -----------------------------------------------------------------
@@ -284,7 +283,8 @@ class SaleOrder(orm.Model):
             temp_list.append(([
                     '%s [%s]' % (
                         partner.name, partner.sql_customer_code or ''),
-                    partner.country_id.name or '',
+                    partner.country_id.name if partner.country_id else or \
+                        'SENZA PAESE',
                     partner.account_reference1_name or '',
                     # partner.account_reference2_name or '',
 
