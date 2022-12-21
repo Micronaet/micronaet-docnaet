@@ -34,7 +34,10 @@
             </field>
         </record>
 
-        <menuitem id="menu_sql_accounting_all_duelist_sale" name="Pagamenti contabili" parent="docnaet.docnaet_document" sequence="30" action="sql_due_list_mailing.action_payment_duelist_all_form" />
+        <menuitem id="menu_sql_accounting_all_duelist_sale" 
+            groups="sql_due_list_mailing.group_user_duelist,sql_due_list_mailing.group_manager_duelist"
+            name="Pagamenti contabili" parent="docnaet.docnaet_document" sequence="30" 
+            action="sql_due_list_mailing.action_payment_duelist_all_form" />
     
     </data>
 </openerp>
