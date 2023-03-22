@@ -440,28 +440,28 @@ class SaleOrder(orm.Model):
                     f_number_current = f_number
 
                 temp_list.append(([
-                        '%s [%s]' % (
-                            partner.name, partner.sql_customer_code or ''),
-                        partner.country_id.name if partner.country_id else
-                        'SENZA PAESE',
-                        document.user_id.name or '',  # Docnaet user
-                        document.date,
-                        document.deadline,
-                        '%s %s' % (
-                            document.name or '',
-                            document.description or '',
-                            ),
-                        currency.symbol,
-                        (document.sale_order_amount, f_number_current),
+                    '%s [%s]' % (
+                        partner.name, partner.sql_customer_code or ''),
+                    partner.country_id.name if partner.country_id else
+                    'SENZA PAESE',
+                    document.user_id.name or '',  # Docnaet user
+                    document.date,
+                    document.deadline,
+                    '%s %s' % (
+                        document.name or '',
+                        document.description or '',
+                        ),
+                    currency.symbol,
+                    (document.sale_order_amount, f_number_current),
 
-                        currency_payment.symbol,
-                        (partner.duelist_exposition_amount or '',
-                            f_number_current),
-                        (partner.duelist_uncovered_amount or '',
-                            f_number_current),
-                        (partner.duelist_fido or '', f_number_current),
-                        self.get_partner_note(partner),
-                        ], f_text_current))
+                    currency_payment.symbol,
+                    (partner.duelist_exposition_amount or '',
+                        f_number_current),
+                    (partner.duelist_uncovered_amount or '',
+                        f_number_current),
+                    (partner.duelist_fido or '', f_number_current),
+                    self.get_partner_note(partner),
+                    ], f_text_current))
 
             # -----------------------------------------------------------------
             # Total page order:
