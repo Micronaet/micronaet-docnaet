@@ -103,7 +103,7 @@ class ResPartner(orm.Model):
         'account_reference1_name': fields.char('Agent Name', size=40),
         'account_reference2_code': fields.char('Commercial Code', size=9),
         'account_reference2_name': fields.char('Commercial Name', size=40),
-        # TODO add third reference
+        # todo add third reference
         }
 
 
@@ -284,8 +284,8 @@ class SaleOrder(orm.Model):
             temp_list.append(([
                     '%s [%s]' % (
                         partner.name, partner.sql_customer_code or ''),
-                    partner.country_id.name if partner.country_id else \
-                        'SENZA PAESE',
+                    partner.country_id.name if partner.country_id else
+                    'SENZA PAESE',
                     partner.account_reference1_name or '',
                     # partner.account_reference2_name or '',
 
@@ -442,8 +442,8 @@ class SaleOrder(orm.Model):
                 temp_list.append(([
                         '%s [%s]' % (
                             partner.name, partner.sql_customer_code or ''),
-                        partner.country_id.name if partner.country_id else \
-                            'SENZA PAESE',
+                        partner.country_id.name if partner.country_id else
+                        'SENZA PAESE',
                         document.user_id.name or '',  # Docnaet user
                         document.date,
                         document.deadline,
