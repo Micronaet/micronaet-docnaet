@@ -99,11 +99,12 @@ class ResPartner(orm.Model):
         return True
 
     _columns = {
-        'account_reference1_code': fields.char('Agent Code', size=9),
-        'account_reference1_name': fields.char('Agent Name', size=40),
-        'account_reference2_code': fields.char('Commercial Code', size=9),
-        'account_reference2_name': fields.char('Commercial Name', size=40),
-        # todo add third reference
+        'account_reference1_code': fields.char('Codice Agente', size=9),
+        'account_reference1_name': fields.char('Nome Agente', size=40),
+        'account_reference2_code': fields.char('Codice Commerciale', size=9),
+        'account_reference2_name': fields.char('Nome Commerciale', size=40),
+        'account_reference3_code': fields.char('Codice Responsabile', size=9),
+        'account_reference3_name': fields.char('Nome Responsabile', size=40),
         }
 
 

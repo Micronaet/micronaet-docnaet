@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_res_partner_docnaet_field_form">
+            <field name="name">res.partner.docnaet.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="property_account_position" position="after">
+                    <field name="account_reference1_code" />
+                    <field name="account_reference1_name" />
+                    <field name="account_reference2_code" />
+                    <field name="account_reference2_name" />
+                    <field name="account_reference3_code" />
+                    <field name="account_reference3_name" />
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
