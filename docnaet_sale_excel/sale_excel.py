@@ -172,7 +172,10 @@ class SaleOrder(orm.Model):
             ]
 
         sale_ids = sale_pool.search(cr, uid, [
-            ('state', 'in', ('draft', 'sent', 'cancel')),
+            # ('state', 'in', ('draft', 'sent', 'cancel')),  # todo remove?
+            ('accounting_order', '=', True),
+            # todo consider only active order!!!
+            # todo consider only active lines!!!
             ], context=context)
         row = 0
 
