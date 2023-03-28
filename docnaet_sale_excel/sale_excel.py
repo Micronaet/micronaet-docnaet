@@ -54,6 +54,8 @@ class ResPartner(orm.Model):
     def import_account_agent_reference(self, cr, uid, fullname, context=None):
         """ Import Agent reference
         """
+        agent_cache = {}
+
         i = 0
         _logger.info('Start import Agent')
         for line in open(fullname, 'r'):
@@ -88,11 +90,27 @@ class ResPartner(orm.Model):
                 _logger.warning('%s. Jump line: partner not found' % i)
                 continue
 
+            # -----------------------------------------------------------------
+            # SQL mx_agent_id part:
+            # -----------------------------------------------------------------
+            if agent_code in agent_cache:
+                mx_agent_id = agent_cache[agent_code]
+            else:
+                agent_ids = self.search(cr, uid, [
+                    ('sql_supplier_code', '=', agent_code),
+                ], context=context)
+                if agent_ids:
+                    mx_agent_id = agent_ids[0]
+                    agent_cache[agent_code] = mx_agent_id
+
             self.write(cr, uid, partner_ids, {
                 'account_reference1_code': agent_code,
                 'account_reference1_name': agent_name,
                 'account_reference2_code': commercial_code,
                 'account_reference2_name': commercial_name,
+
+                # SQL mx_anget_id part:
+                'mx_agent_id': mx_agent_id,
                 }, context=context)
             _logger.info('%s. Update line: %s' % (i, partner_code))
         _logger.info('Start import Agent')

@@ -35,6 +35,7 @@
         'base',
         'sale',
         'excel_export',
+        #  'mx_agent',  # todo for better reference!
         ],
     'init_xml': [],
     'demo': [],
