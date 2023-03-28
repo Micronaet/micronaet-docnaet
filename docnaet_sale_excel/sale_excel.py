@@ -102,6 +102,8 @@ class ResPartner(orm.Model):
                 if agent_ids:
                     mx_agent_id = agent_ids[0]
                     agent_cache[agent_code] = mx_agent_id
+                else:
+                    mx_agent_id = False
 
             self.write(cr, uid, partner_ids, {
                 'account_reference1_code': agent_code,
