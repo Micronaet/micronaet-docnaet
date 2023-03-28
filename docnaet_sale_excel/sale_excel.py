@@ -91,18 +91,18 @@ class ResPartner(orm.Model):
                 continue
 
             # -----------------------------------------------------------------
-            # SQL mx_agent_id part:
+            # SQL agent_id part:
             # -----------------------------------------------------------------
-            mx_agent_id = False
+            agent_id = False
             if agent_code in agent_cache:
-                mx_agent_id = agent_cache[agent_code]
+                agent_id = agent_cache[agent_code]
             else:
                 agent_ids = self.search(cr, uid, [
                     ('sql_supplier_code', '=', agent_code),
                 ], context=context)
                 if agent_ids:
-                    mx_agent_id = agent_ids[0]
-                    agent_cache[agent_code] = mx_agent_id
+                    agent_id = agent_ids[0]
+                    agent_cache[agent_code] = agent_id
 
             self.write(cr, uid, partner_ids, {
                 'account_reference1_code': agent_code,
@@ -111,7 +111,7 @@ class ResPartner(orm.Model):
                 'account_reference2_name': commercial_name,
 
                 # SQL mx_anget_id part:
-                'mx_agent_id': mx_agent_id,
+                'agent_id': agent_id,
                 }, context=context)
             _logger.info('%s. Update line: %s' % (i, partner_code))
         _logger.info('Start import Agent')
