@@ -203,25 +203,26 @@ class ResPartnerAlternativeSearch(orm.Model):
 
         res = []
         for partner in self.browse(cr, uid, ids, context=context):
-            try:
-                if name_mode == 'docnaet' and partner.alternative_search:
-                    res.append((partner.id, partner.alternative_search))
-                else:
-                    res.append((partner.id, partner.name))
-            except:
-                res.append((partner.id, 'Errore'))
-        # _logger.error('>>>>> name_get %s [%s]' % (name_mode, context))
-        # _logger.error('>>>>> name_get %s [%s]' % (name_mode, res))
+            # try:
+            if name_mode == 'docnaet' and partner.alternative_search:
+                res.append((partner.id, partner.alternative_search))
+            else:
+                res.append((partner.id, partner.name))
+            # except:
+            #    res.append((partner.id, 'Errore'))
         return res
 
-    def search(self, cr, uid, args, offset=0, limit=None, order=None,
+    def search(
+            self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
         """ Return a list of integers based on search domain {args}
             @param cr: cursor to database
             @param uid: id of current user
-            @param args: list of conditions to be applied in search opertion
-            @param offset: default from first record, you can start from n records
-            @param limit: number of records to be comes in answer from search opertion
+            @param args: list of conditions to be applied in search operation
+            @param offset: default from first record, you can start from n
+                records
+            @param limit: number of records to be comes in answer from search
+                opertion
             @param order: ordering on any field(s)
             @param context: context arguments, like lang, time zone
             @param count:
@@ -242,10 +243,11 @@ class ResPartnerAlternativeSearch(orm.Model):
             else:
                 new_args.append(record)
         # _logger.error('>>>>> search %s' % (args, ))
-        return super(ResPartner, self).search(
+        return super(ResPartnerAlternativeSearch, self).search(
             cr, uid, new_args, offset, limit, order, context, count)
 
-    def name_search(self, cr, uid, name, args=None, operator='ilike',
+    def name_search(
+            self, cr, uid, name, args=None, operator='ilike',
             context=None, limit=80):
         """ Return a list of tupples contains id, name, as internally its calls
             {def name_get}
