@@ -203,11 +203,13 @@ class ResPartnerAlternativeSearch(orm.Model):
 
         res = []
         for partner in self.browse(cr, uid, ids, context=context):
-            if name_mode == 'docnaet' and partner.alternative_search:
-                res.append((partner.id, partner.alternative_search))
-            else:
-                res.append((partner.id, partner.name))
-
+            try:
+                if name_mode == 'docnaet' and partner.alternative_search:
+                    res.append((partner.id, partner.alternative_search))
+                else:
+                    res.append((partner.id, partner.name))
+            except:
+                res.append((partner.id, 'Errore'))
         # _logger.error('>>>>> name_get %s [%s]' % (name_mode, context))
         # _logger.error('>>>>> name_get %s [%s]' % (name_mode, res))
         return res

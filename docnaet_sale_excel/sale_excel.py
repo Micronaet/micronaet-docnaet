@@ -110,7 +110,7 @@ class ResPartner(orm.Model):
                 'account_reference2_code': commercial_code,
                 'account_reference2_name': commercial_name,
 
-                # SQL mx_anget_id part:
+                # SQL mx_agent_id part:
                 'agent_id': agent_id,
                 }, context=context)
             _logger.info('%s. Update line: %s' % (i, partner_code))
