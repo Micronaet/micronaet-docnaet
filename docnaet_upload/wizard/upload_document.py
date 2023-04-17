@@ -313,7 +313,13 @@ class UploadDocumentWizard(orm.TransientModel):
                 os.path.join(store_folder, str(item_id)),
                 extension,
                 )
-            os.rename(fullpath, fullstore)
+            try:
+                os.rename(fullpath, fullstore)
+            except:
+                error_text = 'Errore rinominando il file: %s >> %s' % (
+                    fullpath, fullstore)
+                _logger.error(error_text)
+                raise osv.except_osv('Errore', error_text)
 
             try:
                 os.system('chown openerp7:openerp7 %s' % fullstore)
