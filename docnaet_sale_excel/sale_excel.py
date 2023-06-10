@@ -401,6 +401,7 @@ class SaleOrder(orm.Model):
             ]
 
         for ws_name, document_filter in ws_setup:
+            # todo read Quotation from sale.order not confirmed?
             docnaet_ids = docnaet_document.search(
                 cr, uid, document_filter, context=context)
             if not docnaet_ids:
