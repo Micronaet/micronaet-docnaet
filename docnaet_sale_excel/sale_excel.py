@@ -196,6 +196,7 @@ class SaleOrder(orm.Model):
             ('logistic_state', '!=', 'done'),  # Not closed
             # todo consider only active lines!!!
             ], context=context)
+        _logger.warning('Total order found: %s' % len(sale_ids))
         row = 0
 
         # Format:
