@@ -192,8 +192,8 @@ class SaleOrder(orm.Model):
 
         sale_ids = sale_pool.search(cr, uid, [
             # ('state', 'in', ('draft', 'sent', 'cancel')),  # todo remove?
-            ('accounting_order', '=', True),
-            # todo consider only active order!!!
+            ('accounting_order', '=', True),  # Confirmed order
+            ('logistic_state', '!=', 'done'),  # Not closed
             # todo consider only active lines!!!
             ], context=context)
         row = 0
@@ -269,6 +269,9 @@ class SaleOrder(orm.Model):
             # Collect data: Product total
             # -----------------------------------------------------------------
             for line in order.order_line:
+                if line.logistic_state in ('done', 'cancel'):
+                    continue
+
                 product = line.product_id
                 if not product:
                     continue
