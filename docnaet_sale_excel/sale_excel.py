@@ -270,7 +270,7 @@ class SaleOrder(orm.Model):
             # -----------------------------------------------------------------
             for line in order.order_line:
                 if line.logistic_state in ('done', 'cancel'):
-                    continue
+                    continue  # Remove line yet delivered (r cancel - need?)
 
                 product = line.product_id
                 if not product:
