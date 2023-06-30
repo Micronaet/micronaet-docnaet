@@ -191,7 +191,6 @@ class SaleOrder(orm.Model):
             ]
 
         sale_ids = sale_pool.search(cr, uid, [
-            # ('state', 'in', ('draft', 'sent', 'cancel')),  # todo remove?
             ('accounting_order', '=', True),  # Confirmed order
             ('logistic_state', '!=', 'done'),  # Not closed
             # todo consider only active lines!!!
@@ -799,9 +798,16 @@ class SaleOrder(orm.Model):
         start_col = len(header)
 
         sale_ids = sale_pool.search(cr, uid, [
-            ('state', 'in', ('draft', 'sent', 'cancel')),
+            # ('state', 'in', ('draft', 'sent', 'cancel')),  # todo remove?
+            ('accounting_order', '=', True),  # Confirmed order
+            ('logistic_state', '!=', 'done'),  # Not closed
             ('partner_id.sql_customer_code', '=ilike', '201%'),
             ], context=context)
+
+        # sale_ids = sale_pool.search(cr, uid, [
+        #    ('state', 'in', ('draft', 'sent', 'cancel')),
+        #    ('partner_id.sql_customer_code', '=ilike', '201%'),
+        #    ], context=context)
         row = 0
 
         # Format:
@@ -881,6 +887,9 @@ class SaleOrder(orm.Model):
 
             total_product = 0
             for line in order.order_line:
+                if line.logistic_state in ('done', 'cancel'):
+                    continue  # Remove line yet delivered (r cancel - need?)
+
                 product = line.product_id
                 if not product:
                     continue
