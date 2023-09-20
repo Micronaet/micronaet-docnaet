@@ -21,6 +21,7 @@
 ###############################################################################
 
 import os
+import pdb
 import sys
 import logging
 import openerp.netsvc as netsvc
@@ -200,6 +201,8 @@ class ResPartnerAlternativeSearch(orm.Model):
         if context is None:
             context = {}
         name_mode = context.get('name_mode')
+        if type(ids) not in (list, tuple):
+            ids = [ids]
 
         res = []
         for partner in self.browse(cr, uid, ids, context=context):
