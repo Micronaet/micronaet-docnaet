@@ -139,7 +139,6 @@ if close_tab:
             shell.AppActivate(pid)
             # print 'Kill Firefox PID: %s' % pid
             shell.SendKeys('^{F4}')  # CTRL + F4
-
     except:
         log_f.write('No Win 32 com library (so no close TAB)')
 
