@@ -10,6 +10,7 @@ from ConfigParser import ConfigParser
 # -----------------------------------------------------------------------------
 # Read second part of command:
 command_line = sys.argv[1]  # LAN/Local or Labnaet/Docnaet
+command_line = command_line.replace('%7C', '|').replace('%7c', '|')
 command_line = command_line.rstrip('/')  # remove trail /
 
 # -----------------------------------------------------------------------------
@@ -93,10 +94,23 @@ operation, argument = command
 # -------------
 document_pid = False
 if operation.lower() == 'document':
-    filename = os.path.join(store_path, argument)
-    log_f.write('Open doc: %s\n' % filename)
+    filename = argument
+    fullname = os.path.join(store_path, filename)
+    # filename = os.path.basename(fullname)
+
+    # A. Try direct fullname:
+    if not os.path.isfile(fullname):
+        try:
+            number = int(filename.split('.')[0])
+            file_folder = number / 10000
+            # B. Add extra folder:
+            fullname = os.path.join(store_path, file_folder, filename)
+        except:
+            log_f.write('Error convert ID: %s\n' % fullname)
+
+    log_f.write('Open doc: %s\n' % fullname)
     log_f.close()
-    cmd = openfile_command % filename
+    cmd = openfile_command % fullname
     proc = subprocess.Popen(cmd.split(), shell=True)  # XXX no extra space!!
     document_pid = proc.pid
 
