@@ -4,23 +4,23 @@ import os
 import sys
 import subprocess
 from ConfigParser import ConfigParser
-
+    
 # -----------------------------------------------------------------------------
 #                         PARSE COMMAND LAUNCH:
 # -----------------------------------------------------------------------------
 # Read second part of command:
-command_line = sys.argv[1]  # LAN/Local or Labnaet/Docnaet
-command_line = command_line.rstrip('/')  # remove trail /
+command_line = sys.argv[1] # LAN/Local or Labnaet/Docnaet
+command_line = command_line.rstrip('/') # remove trail /
 
 # -----------------------------------------------------------------------------
 # Check OS:
 # -----------------------------------------------------------------------------
-if os.name == 'posix':  # Linux mode
+if os.name == 'posix': # Linux mode
     linux = True
     config_file = 'openerp.cfg'
 else:
     linux = False
-    config_file = 'openerp.cfg'  # XXX now are the same, consider use "win."
+    config_file = 'openerp.cfg' # XXX now are the same, consider use "win."
 
 # -----------------------------------------------------------------------------
 # Manage folder setup:
@@ -31,23 +31,23 @@ if command_line.endswith('[R]'):
     # Check remote mode call:
     remote = True
     config_file = 'remote.%s' % config_file
-    command_line = command_line[:-3]  # Remove [R] part from command
+    command_line = command_line[:-3] # Remove [R] part from command
 elif command_line.endswith('[L]'):
 
     # Check remote mode call:
     config_file = 'labnaet.cfg'
-    command_line = command_line[:-3]  # Remove [R] part from command
-else:  # ends with [D] or nothing >> Docnaet
+    command_line = command_line[:-3] # Remove [R] part from command
+else: # ends with [D] or nothing >> Docnaet 
 
     # Check remote mode call:
-    # config_file = 'docnaet.cfg'
-    pass  # XXX Nothing for now
+    #config_file = 'docnaet.cfg'
+    pass # XXX Nothing for now
 
 # -----------------------------------------------------------------------------
 #                                Parameters
 # -----------------------------------------------------------------------------
 # A. Static:
-close_tab = False  # TODO put in config file
+close_tab = False # TODO put in config file
 current_path = os.path.expanduser(os.path.dirname(__file__))
 
 # Read config file: XXX Manage error for file
@@ -78,15 +78,15 @@ log_f = open(log_file, 'a')
 # -----------------------------------------------------------------------------
 command = command_line[len(protocol):].split(separator)
 if len(command) != 2:
-    log_f.write(u'Not enough parameters: %s\n' % command_line)
+    log_f.write(u'Not enought parameters: %s\n' % command_line)
     log_f.close()
     sys.exit()
 
-# Split 2 part of command:
+# Split 2 part of command:    
 operation, argument = command
 
 # -----------------------------------------------------------------------------
-#                                 Operations:
+#                                 Operations: 
 # -----------------------------------------------------------------------------
 # -------------
 # 1. Open file:
@@ -97,19 +97,19 @@ if operation.lower() == 'document':
     log_f.write('Open doc: %s\n' % filename)
     log_f.close()
     cmd = openfile_command % filename
-    proc = subprocess.Popen(cmd.split(), shell=True)  # XXX no extra space!!
+    proc = subprocess.Popen(cmd.split(), shell=True) # XXX no extra space!!
     document_pid = proc.pid
 
 # ---------------
 # 2. Open folder:
 # ---------------
 elif not remote and operation == 'folder':
-    folder = os.path.join(private_path, argument)
+    folder = os.path.join(private_path, argument)       
     if folder[-1] == '/':
         folder = folder[:-1]
     log_f.write('Open user folder: %s\n' % folder)
     log_f.close()
-    os.system('%s %s' % (folder_command, folder))
+    os.system('%s %s' % (folder_command, folder))    
 
 # -----------------------------
 # E: Error no correct operation
@@ -126,20 +126,20 @@ if close_tab:
     try:
         # Need to be installed
         import psutil
-        import win32com.client
+        import win32com.client    
         from win32gui import GetWindowText, GetForegroundWindow
-        # import wmi
-
+        #import wmi
+        
         # Create scripting shell:
-        shell = win32com.client.Dispatch('WScript.Shell')
+        shell = win32com.client.Dispatch('WScript.Shell')            
         pid_ids = [
             p.pid for p in psutil.process_iter() if 'firefox' in p.name()]
         if pid_ids:
-            pid = pid_ids[-1]  # last
+            pid = pid_ids[-1] # last
             shell.AppActivate(pid)
-            # print 'Kill Firefox PID: %s' % pid
-            shell.SendKeys('^{F4}')  # CTRL + F4
-
+            #print 'Kill Firefox PID: %s' % pid
+            shell.SendKeys('^{F4}') # CTRL + F4
+       
     except:
         log_f.write('No Win 32 com library (so no close TAB)')
 
