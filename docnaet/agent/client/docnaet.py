@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import os
+import pdb
 import sys
 import subprocess
 from ConfigParser import ConfigParser
@@ -89,6 +90,7 @@ operation, argument = command
 # 1. Open file:
 # -----------------------------------------------------------------------------
 document_pid = False
+pdb.set_trace()
 if operation.lower() == 'document':
 
     # A. Try direct fullname:
