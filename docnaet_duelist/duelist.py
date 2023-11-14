@@ -127,4 +127,3 @@ class DocnaetDocument(orm.Model):
             type='one2many', relation='sql.payment.duelist',
             string='Duelist'),
         }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

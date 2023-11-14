@@ -30,32 +30,31 @@ from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 
 _logger = logging.getLogger(__name__)
 
+
 class DocnaetDocument(orm.Model):
     """ Model name: DocnaetDocument
     """
-    
+
     _inherit = 'docnaet.document'
-    
+
     def button_file_download(self, cr, uid, ids, context=None):
-        ''' Return download file:
-        '''
+        """ Return download file:
+        """
         attachment_pool = self.pool.get('ir.attachment')
-        
+
         # Get file fullpath:
-        document = self.browse(cr, uid, ids, context=context)[0]        
+        document = self.browse(cr, uid, ids, context=context)[0]
         filename = self.get_document_filename(
             cr, uid, document, mode='fullname', context=context)
 
-        name = 'docnaet_download_%s' % os.path.basename(filename)    
+        name = 'docnaet_download_%s' % os.path.basename(filename)
         return attachment_pool.return_file_apache_php(
             cr, uid, filename, name=name, context=context)
-            
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -653,11 +653,13 @@ class DocnaetDocument(orm.Model):
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
         filename = self.get_document_filename(
             cr, uid, current_proxy, mode='fullname', context=context)
+
         message = _(
-            'ID: %s\nOrigin ID: %s\nExtension: %s\nOld filename: %s\nDocument: %s') % (
+            'ID: %s\nOrigin ID: %s\nExtension: %s\nOld filename: %s\n'
+            'Document: %s') % (
                 current_proxy.id,
-                current_proxy.original_id.id if \
-                    current_proxy.original_id else '',
+                current_proxy.original_id.id if
+                current_proxy.original_id else '',
                 current_proxy.docnaet_extension or '',
                 current_proxy.filename or '',
                 filename or '',
@@ -701,6 +703,37 @@ class DocnaetDocument(orm.Model):
             document: browse obj
             mode: fullname or filename only
         """
+        # Embedded utility:
+        def get_fullname(store_folder, document_id, filename):
+            """ Manage 2 way of store folder
+                1. Old mode: direct in store
+                2. New mode: store + block folder
+                Check 2 if not present return 1
+            """
+            block = 10000  # 10000 files every folder block
+
+            # A. Block folder mode (new):
+            try:
+                block_folder = os.path.join(
+                    store_folder, str(document_id / block))
+
+                # Always create folder here:
+                os.system('mkdir -p %s' % block_folder)
+                fullname = os.path.join(block_folder, filename)
+                if os.path.isfile(fullname):
+                    return fullname
+            except:  # Old mode
+                pass
+
+            # B. Direct in folder mode (old):
+            return os.path.join(store_folder, filename)
+
+        # ---------------------------------------------------------------------
+        #                             PROCEDURE:
+        # ---------------------------------------------------------------------
+        # Pool used:
+        company_pool = self.pool.get('res.company')
+
         if context is None:
             context = {}
         context['docnaet_mode'] = document.docnaet_mode
@@ -711,29 +744,44 @@ class DocnaetDocument(orm.Model):
         else:  # 'docnaet':
             document_id = document.id
 
-        company_pool = self.pool.get('res.company')
+        store_folder = company_pool.get_docnaet_folder_path(
+            cr, uid, subfolder='store', context=context)
+
+        # =====================================================================
+        #                          Document mode:
+        # =====================================================================
+        # A. Filename forced in record:
+        # ---------------------------------------------------------------------
         if document.filename:
-            store_folder = company_pool.get_docnaet_folder_path(
-                cr, uid, subfolder='store', context=context)
+            forced_document_id = document.filename
             filename = '%s.%s' % (
-                document.filename,
+                forced_document_id,
                 document.docnaet_extension,
                 )
+
+            # Return mode:
             if mode == 'filename':
                 return filename
             else:  # fullname:
-                return os.path.join(store_folder, filename)
+                return get_fullname(store_folder, forced_document_id, filename)
+
+        # ---------------------------------------------------------------------
+        # B. Linked document:
+        # ---------------------------------------------------------------------
         elif document.original_id:
+            # Recall procedure:
             return self.get_document_filename(
                 cr, uid, document.original_id, mode=mode, context=context)
+
+        # ---------------------------------------------------------------------
+        # C. Use record ID for filename
+        # ---------------------------------------------------------------------
         else:  # Duplicate also file:
-            store_folder = company_pool.get_docnaet_folder_path(
-                cr, uid, subfolder='store', context=context)
             filename = '%s.%s' % (document_id, document.docnaet_extension)
             if mode == 'filename':
                 return filename
             else:  # fullname mode:
-                return os.path.join(store_folder, filename)
+                return get_fullname(store_folder, document_id, filename)
 
     def _refresh_partner_country_change(self, cr, uid, ids, context=None):
         """ When change partner in country change in document
