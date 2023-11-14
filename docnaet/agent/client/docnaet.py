@@ -95,33 +95,31 @@ if operation.lower() == 'document':
 
     # A. Try direct fullname:
     filename = argument
-    fullname = os.path.join(store_path, filename)
+    fullname = os.path.join(store_path, filename),  # Old mode
     # filename = os.path.basename(fullname)
+    try:
+        # Extract number for generate folder:
+        number = int(filename.split('.')[0])
+        file_folder = str(number / 10000)
 
-    if not os.path.isfile(fullname):
-        try:
-            # Extract number for generate folder:
-            number = int(filename.split('.')[0])
-            file_folder = str(number / 10000)
+        # B. Add extra folder:
+        new_fullname = os.path.join(store_path, file_folder, filename)
+        if os.path.isfile(new_fullname):
+            fullname = new_fullname
+        else:
+            log_f.write('Error file not present: %s\n' % new_fullname)
+    except:
+        log_f.write('Error convert ID: %s (use old mode)\n' % filename)
 
-            # B. Add extra folder:
-            fullname = os.path.join(store_path, file_folder, filename)
-            if not os.path.isfile(fullname):
-                log_f.write('Error file not present: %s\n' % fullname)
-                sys.exit()  # End program
-        except:
-            log_f.write('Error convert ID: %s\n' % fullname)
-            sys.exit()  # End program
-
-    log_f.write('Open doc: %s\n' % fullname)
+    log_f.write('Opening doc: %s\n' % fullname)
     log_f.close()
     cmd = openfile_command % fullname
     proc = subprocess.Popen(cmd.split(), shell=True)  # XXX no extra space!!
     document_pid = proc.pid
 
-# ---------------
+# -----------------------------------------------------------------------------
 # 2. Open folder:
-# ---------------
+# -----------------------------------------------------------------------------
 elif not remote and operation == 'folder':
     folder = os.path.join(private_path, argument)
     if folder[-1] == '/':
@@ -130,9 +128,9 @@ elif not remote and operation == 'folder':
     log_f.close()
     os.system('%s %s' % (folder_command, folder))
 
-# -----------------------------
+# -----------------------------------------------------------------------------
 # E: Error no correct operation
-# -----------------------------
+# -----------------------------------------------------------------------------
 else:
     log_f.write('Error operation not managed: %s (%s)\n' % (
         operation, 'remote' if remote else 'LAN'))
