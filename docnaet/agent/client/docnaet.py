@@ -91,17 +91,17 @@ operation, argument = command
 # -----------------------------------------------------------------------------
 document_pid = False
 if operation.lower() == 'document':
-
     # A. Try direct fullname:
     filename = argument
     fullname = os.path.join(store_path, filename)  # Old mode
     # filename = os.path.basename(fullname)
+
+    # B. Add extra folder:
     try:
         # Extract number for generate folder:
         number = int(filename.split('.')[0])
         file_folder = str(number / 10000)
 
-        # B. Add extra folder:
         new_fullname = os.path.join(store_path, file_folder, filename)
         if os.path.isfile(new_fullname):
             fullname = new_fullname
