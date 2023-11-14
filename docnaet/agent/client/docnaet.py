@@ -24,31 +24,28 @@ else:
     config_file = 'openerp.cfg'  # XXX now are the same, consider use "win."
 
 # -----------------------------------------------------------------------------
-# Manage folder setup:
+#                            Manage folder setup:
 # -----------------------------------------------------------------------------
 remote = False
 if command_line.endswith('[R]'):
-
     # Check remote mode call:
     remote = True
     config_file = 'remote.%s' % config_file
     command_line = command_line[:-3]  # Remove [R] part from command
 elif command_line.endswith('[L]'):
-
     # Check remote mode call:
     config_file = 'labnaet.cfg'
     command_line = command_line[:-3]  # Remove [R] part from command
 else:  # ends with [D] or nothing >> Docnaet
-
     # Check remote mode call:
     # config_file = 'docnaet.cfg'
     pass  # XXX Nothing for now
 
 # -----------------------------------------------------------------------------
-#                                Parameters
+#                               Parameters
 # -----------------------------------------------------------------------------
 # A. Static:
-close_tab = False  # TODO put in config file
+close_tab = False  # todo put in config file
 current_path = os.path.expanduser(os.path.dirname(__file__))
 
 # Read config file: XXX Manage error for file
@@ -86,27 +83,33 @@ if len(command) != 2:
 # Split 2 part of command:
 operation, argument = command
 
-# -----------------------------------------------------------------------------
+# =============================================================================
 #                                 Operations:
-# -----------------------------------------------------------------------------
-# -------------
+# =============================================================================
 # 1. Open file:
-# -------------
+# -----------------------------------------------------------------------------
 document_pid = False
 if operation.lower() == 'document':
+
+    # A. Try direct fullname:
     filename = argument
     fullname = os.path.join(store_path, filename)
     # filename = os.path.basename(fullname)
 
-    # A. Try direct fullname:
     if not os.path.isfile(fullname):
         try:
+            # Extract number for generate folder:
             number = int(filename.split('.')[0])
-            file_folder = number / 10000
+            file_folder = str(number / 10000)
+
             # B. Add extra folder:
             fullname = os.path.join(store_path, file_folder, filename)
+            if not os.path.isfile(fullname):
+                log_f.write('Error file not present: %s\n' % fullname)
+                sys.exit()  # End program
         except:
             log_f.write('Error convert ID: %s\n' % fullname)
+            sys.exit()  # End program
 
     log_f.write('Open doc: %s\n' % fullname)
     log_f.close()
