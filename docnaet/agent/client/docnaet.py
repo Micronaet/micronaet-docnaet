@@ -95,7 +95,7 @@ if operation.lower() == 'document':
 
     # A. Try direct fullname:
     filename = argument
-    fullname = os.path.join(store_path, filename),  # Old mode
+    fullname = os.path.join(store_path, filename)  # Old mode
     # filename = os.path.basename(fullname)
     try:
         # Extract number for generate folder:
