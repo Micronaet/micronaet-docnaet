@@ -25,7 +25,7 @@ import shutil
 block = 1000
 dry_run = True
 store_folders = [
-   '/home/openerp/filestore/docnaet/1/store',
+   '/home/openerp7/filestore/docnaet/1/store',
    # '/home/openerp/filestore/labaet/1/store',
    ]
 
