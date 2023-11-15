@@ -192,7 +192,14 @@ class UploadDocumentWizard(orm.TransientModel):
         if context is None:
             context = {}
 
-        block_mode = True  # Manage with block mode folder
+        # Pool used:
+        company_pool = self.pool.get('res.company')
+        document_pool = self.pool.get('docnaet.document')
+        protocol_pool = self.pool.get('docnaet.protocol')
+        program_pool = self.pool.get('docnaet.protocol.template.program')
+
+        block = document_pool._block_size
+        block_mode_on = block > 0  # Manage with block mode folder
 
         # todo complete the load from folder:
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
@@ -205,12 +212,6 @@ class UploadDocumentWizard(orm.TransientModel):
         if file_mode == 'partial':
             file_selected = [
                 item.name for item in wiz_proxy.document_ids if item.to_import]
-
-        company_pool = self.pool.get('res.company')
-        document_pool = self.pool.get('docnaet.document')
-        protocol_pool = self.pool.get('docnaet.protocol')
-        program_pool = self.pool.get('docnaet.protocol.template.program')
-
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
         # Difference between Docnaet and Labnaet:
@@ -312,17 +313,25 @@ class UploadDocumentWizard(orm.TransientModel):
             # -----------------------------------------------------------------
             # Import file in store:
             # -----------------------------------------------------------------
-            if document_pool:
-                block_ref = str(item_id % document_pool._block_size)
+            # A. Block extra folder (new mode):
+            if block_mode_on:
+                block_ref = str(item_id % block)
+
+                block_folder = os.path.join(store_folder, block_ref)
+                os.system('mkdir -p %s' % block_folder)
                 fullstore = '%s.%s' % (
-                    os.path.join(store_folder, block_ref, str(item_id)),
+                    os.path.join(block_folder, str(item_id)),
                     extension,
                 )
+
+            # B. Direct in store folder (old mode):
             else:
                 fullstore = '%s.%s' % (
                     os.path.join(store_folder, str(item_id)),
                     extension,
                     )
+
+            # Upload file with rename:
             try:
                 os.rename(fullpath, fullstore)
             except:
