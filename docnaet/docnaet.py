@@ -713,9 +713,7 @@ class DocnaetDocument(orm.Model):
                 Check 2 if not present return 1
             """
             block = self._block_size  # 1000 files every folder block
-            block_mode_on = block > 0  # Manage with block mode folder
-
-            # todo in block = 0 no block management?
+            block_mode_on = block > 0  # Manage with block mode folder ON
 
             # A. Block folder mode (new):
             if block_mode_on:

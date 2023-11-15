@@ -30,6 +30,7 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
     DEFAULT_SERVER_DATETIME_FORMAT,
     DATETIME_FORMATS_MAP,
     float_compare)
+from openerp.tools.translate import _
 
 
 _logger = logging.getLogger(__name__)
@@ -107,10 +108,10 @@ class document_duplication(orm.TransientModel):
         # ---------------------------------------------------------------------
         # Manage protocol number (3 cases):
         # ---------------------------------------------------------------------
-        if reassign_protocol or not linked_document: # always if reassigned
+        if reassign_protocol or not linked_document:  # always if reassigned
             data['number'] = protocol_pool.assign_protocol_number(
                 cr, uid, protocol_id, context=context)
-        elif linked_document: # linked not reassigned keep the number
+        elif linked_document:  # linked not reassigned keep the number
             data['number'] = original_proxy.number or False
         else:
             data['number'] = False
@@ -159,7 +160,7 @@ class document_duplication(orm.TransientModel):
         if context is None:
             context = {}
 
-        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        # current_proxy = self.browse(cr, uid, ids, context=context)[0]
         # context['with_number'] = current_proxy.with_number
         return self.duplicate_operation(
             cr, uid, ids, mode='document', context=context)
