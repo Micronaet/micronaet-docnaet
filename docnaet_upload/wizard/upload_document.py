@@ -315,7 +315,7 @@ class UploadDocumentWizard(orm.TransientModel):
             # -----------------------------------------------------------------
             # A. Block extra folder (new mode):
             if block_mode_on:
-                block_ref = str(item_id % block)
+                block_ref = str(item_id / block)
 
                 block_folder = os.path.join(store_folder, block_ref)
                 os.system('mkdir -p %s' % block_folder)
