@@ -25,18 +25,22 @@ import shutil
 block = 1000
 dry_run = True
 store_folders = [
-   '/home/openerp7/filestore/docnaet/1/store',
-   # '/home/openerp/filestore/labaet/1/store',
-   ]
+    '/home/openerp7/filestore/docnaet/1/store',
+    # '/home/openerp/filestore/labaet/1/store',
+    ]
 
 pdb.set_trace()
 for store_folder in store_folders:
     print('Moving block files in %s' % store_folder)
     for root, folders, files in os.walk(store_folder):
         for filename in files:
-            document_part = filename.split('.')
-            if len(document_part) != 2:
-                print('[ERROR] No document ID: %s' % filename)
+            try:
+                document_part = filename.split('.')
+                if len(document_part) != 2:
+                    print('[ERROR] No document ID: %s' % filename)
+                    continue
+            except:
+                print('[ERROR] Error parsing: %s' % filename)
                 continue
 
             document_id = int(document_part[0])
