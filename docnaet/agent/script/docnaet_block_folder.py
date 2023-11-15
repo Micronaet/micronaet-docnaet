@@ -41,10 +41,11 @@ for store_folder in store_folders:
                     continue
 
                 document_id = int(document_part[0])
+                folder_ref = str(document_id / block)
             except:
-                print('[ERROR] Error parsing: %s' % filename)
-                continue
-            folder_ref = str(document_id / block)
+                print('[ERROR] Error parsing, move in error: %s' % filename)
+                folder_ref = 'error'  # Use error folder for no INT files
+
             block_folder = os.path.join(store_folder, folder_ref)
             os.system('mkdir -p %s' % block_folder)
             # todo setup rights, owner?
