@@ -39,11 +39,11 @@ for store_folder in store_folders:
                 if len(document_part) != 2:
                     print('[ERROR] No document ID: %s' % filename)
                     continue
+
+                document_id = int(document_part[0])
             except:
                 print('[ERROR] Error parsing: %s' % filename)
                 continue
-
-            document_id = int(document_part[0])
             folder_ref = str(document_id / block)
             block_folder = os.path.join(store_folder, folder_ref)
             os.system('mkdir -p %s' % block_folder)
