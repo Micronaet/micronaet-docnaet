@@ -475,6 +475,8 @@ class DocnaetDocument(orm.Model):
     _description = 'Docnaet document'
     _order = 'date desc,number desc'
 
+    _block_size = 1000  # Block size (document in folder max)
+
     # -------------------------------------------------------------------------
     # Onchange event:
     # -------------------------------------------------------------------------
@@ -710,7 +712,8 @@ class DocnaetDocument(orm.Model):
                 2. New mode: store + block folder
                 Check 2 if not present return 1
             """
-            block = 10000  # 10000 files every folder block
+            block = self._block_size  # 1000 files every folder block
+            # todo in block = 0 no block management?
 
             # A. Block folder mode (new):
             try:
@@ -719,6 +722,7 @@ class DocnaetDocument(orm.Model):
 
                 # Always create folder here:
                 os.system('mkdir -p %s' % block_folder)
+                # todo update permission here?
                 fullname = os.path.join(block_folder, filename)
                 if os.path.isfile(fullname):
                     return fullname

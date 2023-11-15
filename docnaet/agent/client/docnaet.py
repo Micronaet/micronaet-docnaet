@@ -9,6 +9,8 @@ from ConfigParser import ConfigParser
 # -----------------------------------------------------------------------------
 #                         PARSE COMMAND LAUNCH:
 # -----------------------------------------------------------------------------
+block = 1000  # Variabile in docnaet.document: _block_size
+
 # Read second part of command:
 command_line = sys.argv[1]  # LAN/Local or Labnaet/Docnaet
 command_line = command_line.replace('%7C', '|').replace('%7c', '|')
@@ -100,7 +102,7 @@ if operation.lower() == 'document':
     try:
         # Extract number for generate folder:
         number = int(filename.split('.')[0])
-        file_folder = str(number / 10000)
+        file_folder = str(number / block)
 
         new_fullname = os.path.join(store_path, file_folder, filename)
         if os.path.isfile(new_fullname):

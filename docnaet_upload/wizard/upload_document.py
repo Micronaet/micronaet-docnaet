@@ -20,6 +20,7 @@
 #
 ###############################################################################
 import os
+import pdb
 import sys
 import logging
 import openerp
@@ -191,7 +192,9 @@ class UploadDocumentWizard(orm.TransientModel):
         if context is None:
             context = {}
 
-        # TODO complete the load from folder:
+        block_mode = True  # Manage with block mode folder
+
+        # todo complete the load from folder:
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
         file_mode = wiz_proxy.file_mode
 
@@ -228,10 +231,10 @@ class UploadDocumentWizard(orm.TransientModel):
 
         # Private (input):
         private_folder = self.private_listdir(cr, uid, context=context)
-
+        pdb.set_trace()
         for fullpath, f in private_folder:
             if file_mode == 'partial' and f not in file_selected:
-                continue # jumped
+                continue  # jumped
 
             # -----------------------------------------------------------------
             # Create record for document:
@@ -309,10 +312,17 @@ class UploadDocumentWizard(orm.TransientModel):
             # -----------------------------------------------------------------
             # Import file in store:
             # -----------------------------------------------------------------
-            fullstore = '%s.%s' % (
-                os.path.join(store_folder, str(item_id)),
-                extension,
+            if document_pool:
+                block_ref = str(item_id % document_pool._block_size)
+                fullstore = '%s.%s' % (
+                    os.path.join(store_folder, block_ref, str(item_id)),
+                    extension,
                 )
+            else:
+                fullstore = '%s.%s' % (
+                    os.path.join(store_folder, str(item_id)),
+                    extension,
+                    )
             try:
                 os.rename(fullpath, fullstore)
             except:
