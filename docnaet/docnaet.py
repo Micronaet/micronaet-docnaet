@@ -713,22 +713,29 @@ class DocnaetDocument(orm.Model):
                 Check 2 if not present return 1
             """
             block = self._block_size  # 1000 files every folder block
+            block_mode_on = block > 0  # Manage with block mode folder
+
             # todo in block = 0 no block management?
 
             # A. Block folder mode (new):
-            try:
-                block_folder = os.path.join(
-                    store_folder, str(document_id / block))
+            if block_mode_on:
+                try:
+                    block_folder = os.path.join(
+                        store_folder, str(document_id / block))
 
-                # Always create folder here:
-                os.system('mkdir -p %s' % block_folder)
-                # todo update permission here?
-                fullname = os.path.join(block_folder, filename)
-                if os.path.isfile(fullname):
+                    # Always create folder here:
+                    os.system('mkdir -p %s' % block_folder)
+                    # todo update permission here?
+                    fullname = os.path.join(block_folder, filename)
+                    # Remove check exist file with block mode on:
+                    # if os.path.isfile(fullname):
+                    #    return fullname
                     return fullname
-            except:  # Old mode
-                pass
+                except:
+                    # Error means no INT filename so use "Old mode"
+                    pass
 
+            # Default reply always:
             # B. Direct in folder mode (old):
             return os.path.join(store_folder, filename)
 
