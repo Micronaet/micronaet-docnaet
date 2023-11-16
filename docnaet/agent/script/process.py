@@ -30,9 +30,9 @@ shell = win32com.client.Dispatch('WScript.Shell')
 current_pid = GetForegroundWindow()
 pid_ids = [p.pid for p in psutil.process_iter() if 'firefox' in p.name()]
 if pid_ids:
-   pid = pid_ids[-1] # last
+   pid = pid_ids[-1]  # last
    shell.AppActivate(pid)
-   shell.SendKeys('^{F4}') # CTRL + F4
+   shell.SendKeys('^{F4}')  # CTRL + F4
    print('Close Firefox tab ID: %s' % pid)
 else:
    print('No Firefox')

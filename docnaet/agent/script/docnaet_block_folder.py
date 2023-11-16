@@ -23,14 +23,13 @@ import sys
 import shutil
 
 block = 1000
-dry_run = True
+dry_run = False
 store_folders = [
     '/home/openerp7/filestore/docnaet/1/store',
     # '/home/openerp/filestore/labaet/1/store',
     ]
 
 pdb.set_trace()
-
 for store_folder in store_folders:
     print('Moving block files in %s' % store_folder)
     for root, folders, files in os.walk(store_folder):
