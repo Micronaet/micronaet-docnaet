@@ -43,10 +43,10 @@ for mode, store_folder in store_folders:
                     log_f.write(
                         '[ERROR] No document ID: %s\n' % filename)
                     log_f.flush()
-                    continue
-
-                document_id = int(document_part[0])
-                folder_ref = str(document_id / block)
+                    folder_ref = 'error'
+                else:
+                    document_id = int(document_part[0])
+                    folder_ref = str(document_id / block)
             except:
                 print('[ERROR] Error parsing, move in error: %s' % filename)
                 log_f.write(
