@@ -40,7 +40,7 @@ for mode, store_folder in store_folders:
                 document_part = filename.split('.')
                 if len(document_part) != 2:
                     print('[ERROR] No document ID: %s' % filename)
-                    log_f = log_f.write(
+                    log_f.write(
                         '[ERROR] No document ID: %s\n' % filename)
                     log_f.flush()
                     continue
@@ -49,7 +49,7 @@ for mode, store_folder in store_folders:
                 folder_ref = str(document_id / block)
             except:
                 print('[ERROR] Error parsing, move in error: %s' % filename)
-                log_f = log_f.write(
+                log_f.write(
                     '[ERROR] Error parsing, move in error: %s\n' % filename)
                 log_f.flush()
                 folder_ref = 'error'  # Use error folder for no INT files
@@ -65,7 +65,7 @@ for mode, store_folder in store_folders:
                 block_fullname,
             )
             print(message)
-            log_f = log_f.write('%s\n' % message)
+            log_f.write('%s\n' % message)
             log_f.flush()
 
             if not dry_run:
