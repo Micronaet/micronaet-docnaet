@@ -9,7 +9,7 @@ from ConfigParser import ConfigParser
 # -----------------------------------------------------------------------------
 #                         PARSE COMMAND LAUNCH:
 # -----------------------------------------------------------------------------
-block = 1000  # Variabile in docnaet.document: _block_size
+block = 1000  # Variable in docnaet.document: _block_size
 
 # Read second part of command:
 command_line = sys.argv[1]  # LAN/Local or Labnaet/Docnaet
