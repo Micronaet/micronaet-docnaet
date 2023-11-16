@@ -21,29 +21,37 @@ import os
 import pdb
 import sys
 import shutil
+import codecs
 
 block = 1000
-dry_run = False
+dry_run = True
 store_folders = [
-    '/home/openerp7/filestore/docnaet/1/store',
+    'docnaet', '/home/openerp7/filestore/docnaet/1/store',
     # '/home/openerp/filestore/labaet/1/store',
     ]
 
 pdb.set_trace()
-for store_folder in store_folders:
+for mode, store_folder in store_folders:
     print('Moving block files in %s' % store_folder)
+    log_f = codecs.open('/tmp/%s.log' % mode)
     for root, folders, files in os.walk(store_folder):
         for filename in files:
             try:
                 document_part = filename.split('.')
                 if len(document_part) != 2:
                     print('[ERROR] No document ID: %s' % filename)
+                    log_f = log_f.write(
+                        '[ERROR] No document ID: %s\n' % filename)
+                    log_f.flush()
                     continue
 
                 document_id = int(document_part[0])
                 folder_ref = str(document_id / block)
             except:
                 print('[ERROR] Error parsing, move in error: %s' % filename)
+                log_f = log_f.write(
+                    '[ERROR] Error parsing, move in error: %s\n' % filename)
+                log_f.flush()
                 folder_ref = 'error'  # Use error folder for no INT files
 
             block_folder = os.path.join(store_folder, folder_ref)
@@ -52,10 +60,14 @@ for store_folder in store_folders:
 
             store_fullname = os.path.join(root, filename)
             block_fullname = os.path.join(block_folder, filename)
-            print('[INFO] Move %s in %s' % (
+            message = '[INFO] Move %s in %s' % (
                 store_fullname,
                 block_fullname,
-            ))
+            )
+            print(message)
+            log_f = log_f.write('%s\n' % message)
+            log_f.flush()
+
             if not dry_run:
                 shutil.move(store_fullname, block_fullname)
         break  # Walk only root folder
