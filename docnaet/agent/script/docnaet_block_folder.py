@@ -33,7 +33,7 @@ store_folders = [
 pdb.set_trace()
 for mode, store_folder in store_folders:
     print('Moving block files in %s' % store_folder)
-    log_f = codecs.open('/tmp/%s.log' % mode)
+    log_f = codecs.open('/tmp/%s.log' % mode, 'w')
     for root, folders, files in os.walk(store_folder):
         for filename in files:
             try:
