@@ -27,7 +27,7 @@ block = 1000
 dry_run = False
 store_folders = [
     # ('docnaet', '/home/openerp7/filestore/docnaet/1/store'),
-    ('labnaet', '/home/openerp/filestore/labaet/1/store'),
+    ('labnaet', '/home/openerp/filestore/labnaet/1/store'),
     ]
 
 pdb.set_trace()
