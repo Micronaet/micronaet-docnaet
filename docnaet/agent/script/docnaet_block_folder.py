@@ -24,7 +24,7 @@ import shutil
 import codecs
 
 block = 1000
-dry_run = True
+dry_run = False
 store_folders = [
     ('docnaet', '/home/openerp7/filestore/docnaet/1/store'),
     # '/home/openerp/filestore/labaet/1/store',
