@@ -232,7 +232,6 @@ class UploadDocumentWizard(orm.TransientModel):
 
         # Private (input):
         private_folder = self.private_listdir(cr, uid, context=context)
-        pdb.set_trace()
         for fullpath, f in private_folder:
             if file_mode == 'partial' and f not in file_selected:
                 continue  # jumped
