@@ -30,6 +30,7 @@ store_folders = [
     ]
 
 pdb.set_trace()
+
 for store_folder in store_folders:
     print('Moving block files in %s' % store_folder)
     for root, folders, files in os.walk(store_folder):
