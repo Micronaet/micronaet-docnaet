@@ -750,8 +750,8 @@ class DocnaetDocument(orm.Model):
         # 2 different ID:
         if uid == 1:
             pdb.set_trace()
-        if document.filename:            
-            document_id = document.filename
+        if document.filename:
+            document_id = int(document.filename)
         elif document.docnaet_mode == 'labnaet':
             document_id = document.labnaet_id
         else:  # 'docnaet':
