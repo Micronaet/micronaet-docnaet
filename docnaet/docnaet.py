@@ -748,7 +748,9 @@ class DocnaetDocument(orm.Model):
         context['docnaet_mode'] = document.docnaet_mode
 
         # 2 different ID:
-        if document.docnaet_mode == 'labnaet':
+        if document.filename:
+            document_id = document.filename
+        elif document.docnaet_mode == 'labnaet':
             document_id = document.labnaet_id
         else:  # 'docnaet':
             document_id = document.id
@@ -761,29 +763,28 @@ class DocnaetDocument(orm.Model):
         # =====================================================================
         # A. Filename forced in record:
         # ---------------------------------------------------------------------
-        if document.filename:
-            forced_document_id = document.filename
-            filename = '%s.%s' % (
-                forced_document_id,
-                document.docnaet_extension,
-                )
+            #forced_document_id = document.filename
+            #filename = '%s.%s' % (
+            #    forced_document_id,
+            #    document.docnaet_extension,
+            #    )
 
             # Return mode:
-            if mode == 'filename':
-                return filename
-            else:  # fullname:
-                return get_fullname(store_folder, forced_document_id, filename)
+            #if mode == 'filename':
+            #    return filename
+            #else:  # fullname:
+            #    return get_fullname(store_folder, forced_document_id, filename)
 
         # ---------------------------------------------------------------------
-        # B. Linked document:
+        # A. Linked document:
         # ---------------------------------------------------------------------
-        elif document.original_id:
+        if document.original_id:
             # Recall procedure:
             return self.get_document_filename(
                 cr, uid, document.original_id, mode=mode, context=context)
 
         # ---------------------------------------------------------------------
-        # C. Use record ID for filename
+        # B. Use record ID for filename
         # ---------------------------------------------------------------------
         else:  # Duplicate also file:
             filename = '%s.%s' % (document_id, document.docnaet_extension)
