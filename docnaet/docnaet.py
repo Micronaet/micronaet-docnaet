@@ -747,14 +747,13 @@ class DocnaetDocument(orm.Model):
             context = {}
         context['docnaet_mode'] = document.docnaet_mode
 
-        # 2 different ID:
-        if uid == 1:
-            pdb.set_trace()
+        # 3 different ID:
         if document.filename:
+            # Filename forced in record:
             try:
                 document_id = int(document.filename)
             except:
-                document_d = document.filename  # todo error?
+                document_id = document.filename  # todo error?
         elif document.docnaet_mode == 'labnaet':
             document_id = document.labnaet_id
         else:  # 'docnaet':
@@ -766,21 +765,6 @@ class DocnaetDocument(orm.Model):
         # =====================================================================
         #                          Document mode:
         # =====================================================================
-        # A. Filename forced in record:
-        # ---------------------------------------------------------------------
-            #forced_document_id = document.filename
-            #filename = '%s.%s' % (
-            #    forced_document_id,
-            #    document.docnaet_extension,
-            #    )
-
-            # Return mode:
-            #if mode == 'filename':
-            #    return filename
-            #else:  # fullname:
-            #    return get_fullname(store_folder, forced_document_id, filename)
-
-        # ---------------------------------------------------------------------
         # A. Linked document:
         # ---------------------------------------------------------------------
         if document.original_id:
