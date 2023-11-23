@@ -751,7 +751,10 @@ class DocnaetDocument(orm.Model):
         if uid == 1:
             pdb.set_trace()
         if document.filename:
-            document_id = int(document.filename)
+            try:
+                document_id = int(document.filename)
+            except:
+                document_d = document.filename  # todo error?
         elif document.docnaet_mode == 'labnaet':
             document_id = document.labnaet_id
         else:  # 'docnaet':
