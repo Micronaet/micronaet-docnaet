@@ -748,7 +748,9 @@ class DocnaetDocument(orm.Model):
         context['docnaet_mode'] = document.docnaet_mode
 
         # 2 different ID:
-        if document.filename:
+        if uid == 1:
+            pdb.set_trace()
+        if document.filename:            
             document_id = document.filename
         elif document.docnaet_mode == 'labnaet':
             document_id = document.labnaet_id
