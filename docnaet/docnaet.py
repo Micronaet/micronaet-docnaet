@@ -747,16 +747,20 @@ class DocnaetDocument(orm.Model):
             context = {}
         context['docnaet_mode'] = document.docnaet_mode
 
-        # 3 different ID:
+        # =====================================================================
+        #                        3 different ID:
+        # =====================================================================
+        # 1. Forced: Old MS Access record ID
         if document.filename:
-            # Filename forced in record:
             try:
                 document_id = int(document.filename)
             except:
                 document_id = document.filename  # todo error?
+        # 2. Labnaet mode: Field with ID
         elif document.docnaet_mode == 'labnaet':
             document_id = document.labnaet_id
-        else:  # 'docnaet':
+        # 3. Docnaet mode: Standard record ID
+        else:
             document_id = document.id
 
         store_folder = company_pool.get_docnaet_folder_path(
