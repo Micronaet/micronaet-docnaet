@@ -32,9 +32,9 @@ from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 
@@ -47,18 +47,18 @@ class DocnaetProtocolEmail(orm.Model):
     _description = 'Protocol email'
     _rec_name = 'name'
     _order = 'name'
-    
+
     # -------------------------------------------------------------------------
     # Schedule procedure:
     # -------------------------------------------------------------------------
     def force_import_email_document(self, cr, uid, ids, context=None):
-        ''' Force current protocol import used for button or list
-        '''
+        """ Force current protocol import used for button or list
+        """
         ''' Read all mail activated
-        '''        
+        '''
         if context is None:
             context = {}
-            
+
         # Pool used:
         doc_pool = self.pool.get('docnaet.document')
         protocol_pool = self.pool.get('docnaet.protocol')
@@ -68,26 +68,30 @@ class DocnaetProtocolEmail(orm.Model):
         partner_pool = self.pool.get('res.partner')
 
         protocol_proxy = protocol_pool.browse(cr, uid, ids, context=context)[0]
-        
+
+        # Block setup
+        block = doc_pool._block_size  # 1000 files every folder block
+        block_mode_on = block > 0  # Manage with block mode folder ON
+
         # Keep docnaet mode as in protocol setup:
         docnaet_mode = protocol_proxy.docnaet_mode
-        context['docnaet_mode'] = docnaet_mode                
-        
+        context['docnaet_mode'] = docnaet_mode
+
         # Get store folder depend on docnaet mode:
         store_folder = company_pool.get_docnaet_folder_path(
             cr, uid, subfolder='store', context=context)
         _logger.info('Start read # %s IMAP server [stored in %s: %s]' % (
-            len(ids), 
+            len(ids),
             docnaet_mode,
             store_folder,
             ))
-        
+
         now = datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         eml_program_id = program_pool.get_program_from_extension(
             cr, uid, 'eml', context=context)
         for address in self.browse(cr, uid, ids, context=context):
             protocol_id = address.protocol_id.id or False
-            server = address.host #'%s:%s' % (address.host, address.port)
+            server = address.host  # '%s:%s' % (address.host, address.port)
 
             # -----------------------------------------------------------------
             # Read all email:
@@ -95,21 +99,21 @@ class DocnaetProtocolEmail(orm.Model):
             try:
                 if_error = _('Error find imap server: %s' % server)
                 if address.SSL:
-                    mail = imaplib.IMAP4_SSL(server) # TODO SSL
+                    mail = imaplib.IMAP4_SSL(server)  # TODO SSL
                 else:
-                    mail = imaplib.IMAP4(server) # TODO SSL
-                
+                    mail = imaplib.IMAP4(server)  # TODO SSL
+
                 if_error = _('Error login access user: %s' % address.user)
                 mail.login(address.user, address.password)
-                
+
                 if_error = _('Error access start folder: %s' % address.folder)
                 mail.select(address.folder)
             except:
                 raise osv.except_osv(
-                    _('IMAP server error:'), 
+                    _('IMAP server error:'),
                     if_error,
-                    )        
-                    
+                    )
+
             esit, result = mail.search(None, 'ALL')
             tot = 0
             for msg_id in result[0].split():
@@ -124,21 +128,21 @@ class DocnaetProtocolEmail(orm.Model):
                     'Date': False,
                     'Received': False,
                     'Message-ID': False,
-                    'Subject': False,        
+                    'Subject': False,
                     }
-                    
+
                 # Populate parameters:
                 for (param, value) in message.items():
                     if param in record:
                         record[param] = value
-                
+
                 # -------------------------------------------------------------
                 # Add new document Docnaet:
                 # -------------------------------------------------------------
                 # Auto type:
                 # Use if set up in address:
                 type_id = address.type_id.id or False
-                
+
                 # Auto user:
                 # Try to search user from 'from address':
                 email_address = (
@@ -151,13 +155,13 @@ class DocnaetProtocolEmail(orm.Model):
                         ], context=context)
                     if user_ids:
                         user_id = user_ids[0]
-                        
-                # Auto partner:        
+
+                # Auto partner:
                 # Try to search partner from 'to address':
                 partner_id = False
                 if address.auto_partner:
                     to_address = (record.get('To') or '').split(', ')
-                    if to_address: # Take only the first                   
+                    if to_address: # Take only the first
                         email_address = \
                             to_address[0].split('<')[-1].split('>')[0]
                         if email_address:
@@ -179,11 +183,11 @@ class DocnaetProtocolEmail(orm.Model):
                 # Labnaet setup:
                 # -------------------------------------------------------------
                 if docnaet_mode == 'labnaet':
-                    labnaet_id = document_pool.get_counter_labnaet_id(
+                    labnaet_id = doc_pool.get_counter_labnaet_id(
                         cr, uid, context=context)
                 else:
                     labnaet_id = False
-                    
+
                 data = {
                     'docnaet_mode': docnaet_mode,
                     'labnaet_id': labnaet_id,
@@ -192,8 +196,8 @@ class DocnaetProtocolEmail(orm.Model):
                     'name': record['Subject'] or '...',
                     'partner_id': partner_id,
                     'type_id': type_id,
-                    #'language_id': 
-                    #'date': 
+                    # 'language_id':
+                    # 'date':
                     'import_date': now,
                     'uploaded': True,
                     'docnaet_extension': 'eml',
@@ -201,8 +205,8 @@ class DocnaetProtocolEmail(orm.Model):
                     }
                 if protocol_id and address.auto_number:
                     data['number'] = protocol_pool.assign_protocol_number(
-                        cr, uid, data['protocol_id'], context=context)                
-                    
+                        cr, uid, data['protocol_id'], context=context)
+
                 # -------------------------------------------------------------
                 # Create ID for Docnaet / Labnaet:
                 # -------------------------------------------------------------
@@ -219,42 +223,56 @@ class DocnaetProtocolEmail(orm.Model):
                 # -------------------------------------------------------------
                 # Write on file:
                 # -------------------------------------------------------------
+                block_folder = store_folder  # Save temporary in store
+
+                # A. Block folder mode (new):
+                if block_mode_on:
+                    try:
+                        block_folder = os.path.join(
+                            store_folder, str(doc_id / block))
+                        os.system('mkdir -p %s' % block_folder)
+                    except:
+                        _logger.error(
+                            'Error checking document block folder!'
+                            'Saved in store for now')
+
                 eml_file = '%s.eml' % (os.path.join(
-                    store_folder, 
+                    # store_folder,
+                    block_folder,
                     str(doc_id),
-                    ))                
+                    ))
                 f_eml = open(eml_file, 'w')
                 f_eml.write(eml_string)
-                # TODO remove file after confirm
+                # todo remove file after confirm
                 f_eml.close()
 
-                # Mark as deleted:    
-                mail.store(msg_id, '+FLAGS', '\\Deleted')    
+                # Mark as deleted:
+                mail.store(msg_id, '+FLAGS', '\\Deleted')
             _logger.info('End read IMAP %s [tot msg: %s]' % (
                 address.name,
                 tot,
                 ))
 
         # -----------------------------------------------------------------
-        # Close operations:    
+        # Close operations:
         # -----------------------------------------------------------------
         #mail.expunge() # TODO clean trash bin
         mail.close()
         mail.logout()
         _logger.info('End read IMAP server')
         return True
-    
+
     def schedule_import_email_document(self, cr, uid, context=None):
-        ''' Search schedule address and launch importation:
-        '''
+        """ Search schedule address and launch importation:
+        """
         address_ids = self.search(cr, uid, [
              ('is_active', '=', True),
              ], context=context)
-        
+
         return self.force_import_email_document(
             cr, uid, address_ids, context=context)
-    
-    _columns = {  
+
+    _columns = {
         'is_active': fields.boolean('Is active'),
         'name': fields.char('Email', size=64, required=True),
         'host': fields.char(
@@ -267,23 +285,23 @@ class DocnaetProtocolEmail(orm.Model):
         'folder': fields.char(
             'Folder', size=64, help='Email IMAP folder'),
         'SSL': fields.boolean('SSL'),
-        'auto_number': fields.boolean('Auto protocol number', 
+        'auto_number': fields.boolean('Auto protocol number',
             help='Assign next number of protocol after import'),
         'auto_partner': fields.boolean('Auto partner',
-            help='Try to assign partner from email address'),        
+            help='Try to assign partner from email address'),
         'remove': fields.boolean('Remove after import'),
         'protocol_id': fields.many2one(
             'docnaet.protocol', 'Protocol', required=True),
         'type_id': fields.many2one(
-            'docnaet.type', 'Type', 
-            help='Assign auto type of docnaet document'),    
+            'docnaet.type', 'Type',
+            help='Assign auto type of docnaet document'),
         'docnaet_mode': fields.related(
-            'protocol_id', 'docnaet_mode', 
-            type='selection', string='Docnaet mode', 
+            'protocol_id', 'docnaet_mode',
+            type='selection', string='Docnaet mode',
             selection=[('docnaet', 'Docnaet'),('labnaet', 'Labnaet'),],
-            )            
+            )
         }
-    
+
     _defaults = {
        'port': lambda *a: 993,
        'SSL': lambda *a: True,
@@ -294,7 +312,7 @@ class DocnaetProtocol(orm.Model):
     """ Model name: DocnaetProtocol
     """
     _inherit = 'docnaet.protocol'
-    
+
     _columns = {
         'auto_email': fields.boolean('Auto email'),
         'account_ids': fields.one2many(
