@@ -149,7 +149,6 @@
             </field>
         </record>
 
-
         <!-- INHERITED sale.order-->
         <record model="ir.ui.view" id="docnaet_normal_link_sale_form_view">
             <field name="name">Docnaet link</field>
