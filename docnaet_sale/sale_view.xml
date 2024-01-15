@@ -140,7 +140,7 @@
                         <button name="show_linked_sale_ids" type="object" colspan="2" string="Offerte / Ordini" /><!--class="oe_link"-->
                         <field name="linked_sale_ids" attrs="{'invisible': [('link_sale','=',False)]}"
                                nolabel="1" colspan="4"
-                               context="{'tree_view_ref': 'sapnaet.sale_order_for_docnaet_view_tree', 'for_view_ref': 'sapnaet.view_sale_order_matrix_form', 'search_default_partner_id': partner_id}"
+                               context="{'tree_view_ref': 'sapnaet.sale_order_for_docnaet_view_tree', 'form_view_ref': 'sapnaet.view_sale_order_matrix_form', 'search_default_partner_id': partner_id}"
                         /><!--widget="many2many_tags"-->
 
                         <field name="link_sale" colspan="2" string="Attiva" invisible="1"/>
