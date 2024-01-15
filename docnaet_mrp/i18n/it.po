@@ -65,7 +65,7 @@ msgstr "Totale offerta"
 #. module: docnaet_sale
 #: model:ir.actions.act_window,name:docnaet_sale.action_docnaet_sale_order_tree
 msgid "Offer"
-msgstr "Offer"
+msgstr "Offerte"
 
 #. module: docnaet_sale
 #: view:sale.order:0
