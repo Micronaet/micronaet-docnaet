@@ -33,6 +33,7 @@
         'base',
         'docnaet',
         'sale',
+        'sapnaet',
         ],
     'init_xml': [],
     'demo': [],
