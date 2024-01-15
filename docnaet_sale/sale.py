@@ -93,6 +93,11 @@ class DocnaetDocument(orm.Model):
     """
     _inherit = 'docnaet.document'
 
+    def show_linked_sale_ids(self, cr, uid, context=None):
+        """ Open Sale order document (overerride?)
+        """
+        return True
+
     def scheduled_raise_pending_offer(self, cr, uid, context=None):
         """ Mail when offer passed limit
         """
