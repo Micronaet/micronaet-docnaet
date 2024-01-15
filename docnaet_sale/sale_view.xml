@@ -135,11 +135,11 @@
                     <group colspan="4" col="4">
                         <separator string="Sale" colspan="2"/>
                         <button name="show_linked_sale_ids" type="object" colspan="2" string="Offerte / Ordini" /><!--class="oe_link"-->
-                        <field name="link_sale" colspan="2" string="Attiva" invisible="1"/>
                         <field name="linked_sale_ids" attrs="{'invisible': [('link_sale','=',False)]}"
                                nolabel="1" colspan="4"
                                context="{'tree_view_ref': 'sapnaet.sale_order_for_delivery_operation_deadline_view_tree', 'search_default_partner_id': partner_id}"
                         /><!--widget="many2many_tags"-->
+                        <field name="link_sale" colspan="2" string="Attiva" invisible="1"/>
                     </group>
                 </xpath>
             </field>
