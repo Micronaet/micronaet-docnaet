@@ -44,6 +44,9 @@
                <button type="object" name="button_call_url_docnaet" string="Document linked!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"  invisible="context.get('remote_document', False)"/>
                <button type="object" name="button_call_url_remote_docnaet" string="Open document [R]" icon="gtk-file" attrs="{'invisible': [('original_id','!=',False)]}" invisible="not context.get('remote_document', False)"/>
                <button type="object" name="button_call_url_remote_docnaet" string="Document linked [R]!" icon="gtk-revert-to-saved" attrs="{'invisible': [('original_id','=',False)]}"  invisible="not context.get('remote_document', False)"/>
+
+               <button name="button_file_download" string="Download document" type="object" icon="STOCK_SAVE" groups="docnaet_download.group_docnaet_download_users"/>
+
                <field name="protocol_id" required="1" />
                <field name="number" />
                <field name="date" />
@@ -168,6 +171,7 @@
                                    <field name="language_id" readonly="context.get('embedded',False)"/>
                                    <field name="state" />
                                    <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
+                                   <button name="button_file_download" string="Download document" type="object" icon="STOCK_SAVE" groups="docnaet_download.group_docnaet_download_users"/>
                                 </tree>
                             </field>
                         </group>

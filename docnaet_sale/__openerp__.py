@@ -34,6 +34,7 @@
         'docnaet',
         'sale',
         'sapnaet',
+        'docnaet_download',
         ],
     'init_xml': [],
     'demo': [],
