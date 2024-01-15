@@ -256,7 +256,7 @@ class DocnaetProtocolEmail(orm.Model):
         # -----------------------------------------------------------------
         # Close operations:
         # -----------------------------------------------------------------
-        #mail.expunge() # TODO clean trash bin
+        # mail.expunge() # TODO clean trash bin
         mail.close()
         mail.logout()
         _logger.info('End read IMAP server')
