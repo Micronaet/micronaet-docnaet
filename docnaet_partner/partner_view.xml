@@ -10,7 +10,7 @@
                 <xpath expr="/form//notebook/page[@string='Linked objects']/group[@name='master']/separator" position="after">
                     <group colspan="4" col="4">
                         <separator string="Partner" colspan="4"/>
-                        <field name="link_partner" invisibe="1"/>
+                        <field name="link_partner" invisible="1"/>
                         <field name="linked_partner_id" attrs="{'invisible': [('link_partner','=',False)]}" colspan="4"/>
                     </group>
                 </xpath>
