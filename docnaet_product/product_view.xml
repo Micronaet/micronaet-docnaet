@@ -10,7 +10,8 @@
                 <xpath expr="/form/sheet/group/notebook/page[@string='Linked objects']/group[@name='master']/separator" position="after">
                     <group colspan="4" col="4">
                         <separator string="Product" colspan="4"/>
-                        <field name="linked_product_id" attrs="{'invisible': [('link_product','=',False)]}" colspan="4"/>
+                        <field name="linked_product_id" attrs="{'invisible': [('link_product','=',False)]}" colspan="2"/>
+                        <newline/>
                         <field name="link_product" invisible="1" />
                     </group>
                 </xpath>
