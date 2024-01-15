@@ -338,11 +338,17 @@ class DocnaetDocument(orm.Model):
                 )
 
     _columns = {
-        'linked_sale_id': fields.many2one(
-            'sale.order', 'Linked sale'),
+        # Link to sale.order
         'link_sale': fields.boolean(
             'Link',
             help='Link document in sale form'),
+        'linked_sale_ids': fields.many2many(
+            'sale.order', 'docnaet_linked_sale_rel',
+            'docnaet_id', 'sale_id',
+            'Offerte/Ordini collegati'),
+        # todo remove:
+        'linked_sale_id': fields.many2one(
+            'sale.order', 'Linked sale'),
 
         # CRM management:
         'sale_management': fields.related(
@@ -375,12 +381,17 @@ class DocnaetDocument(orm.Model):
 
 
 class SaleOrder(orm.Model):
-    """ Add extra fields for integrare docnaet document
+    """ Add extra fields for integrate docnaet document
     """
     _inherit = 'sale.order'
 
     _columns = {
-        'docnaet_ids': fields.one2many(
-            'docnaet.document', 'linked_sale_id',
-            'Docnaet document'),
+        'docnaet_ids': fields.many2many(
+            'docnaet.document', 'docnaet_linked_sale_rel',
+            'sale_id', 'docnaet_id',
+            'Documenti Docnaet'),
+
+        # 'docnaet_ids': fields.one2many(
+        #    'docnaet.document', 'linked_sale_id',
+        #    'Docnaet document'),
         }

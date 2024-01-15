@@ -135,7 +135,7 @@
                     <group colspan="4" col="4">
                         <separator string="Sale" colspan="4"/>
                         <field name="link_sale" />
-                        <field name="linked_sale_id" attrs="{'invisible': [('link_sale','=',False)]}" />
+                        <field name="linked_sale_ids" attrs="{'invisible': [('link_sale','=',False)]}" widget="many2many_tags"/>
                     </group>
                 </xpath>
             </field>
