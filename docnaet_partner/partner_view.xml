@@ -4,29 +4,29 @@
         <!-- INHERITED docnaet.document -->
         <record model="ir.ui.view" id="docnaet_document_link_partner_form_view">
             <field name="name">Docnaet document partner linked</field>
-            <field name="model">docnaet.document</field>        
+            <field name="model">docnaet.document</field>
             <field name="inherit_id" ref="docnaet.docnaet_document_form_view" />
             <field name="arch" type="xml">
                 <xpath expr="/form//notebook/page[@string='Linked objects']/group[@name='master']/separator" position="after">
                     <group colspan="4" col="4">
                         <separator string="Partner" colspan="4"/>
-                        <field name="link_partner" />
-                        <field name="linked_partner_id" attrs="{'invisible': [('link_partner','=',False)]}" />
+                        <field name="link_partner" invisibe="1"/>
+                        <field name="linked_partner_id" attrs="{'invisible': [('link_partner','=',False)]}" colspan="4"/>
                     </group>
                 </xpath>
-            </field>    
-        </record>        
+            </field>
+        </record>
 
         <!-- INHERITED res.partner-->
         <record model="ir.ui.view" id="docnaet_normal_link_partner_form_view">
             <field name="name">Docnaet link</field>
-            <field name="model">res.partner</field>        
+            <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form" />
             <field name="arch" type="xml">
-                <xpath expr="/form/sheet/notebook/page[@string='Contacts']" position="after">                 
+                <xpath expr="/form/sheet/notebook/page[@string='Contacts']" position="after">
                     <page string="Docnaet">
                         <group colspan="4" col="4">
-                            <separator string="Documents linked" colspan="4"/>                            
+                            <separator string="Documents linked" colspan="4"/>
                             <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4">
                                 <!--TODO parametrize in docnaet as a form priority 20-->
                                 <tree string="Docnaet document" colors="grey:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
@@ -36,15 +36,15 @@
                                    <field name="name" />
                                    <field name="partner_id" />
                                    <field name="language_id" readonly="context.get('embedded',False)"/>
-                                   <field name="state" />                                   
+                                   <field name="state" />
                                    <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
-                                </tree>                            
+                                </tree>
                             </field>
-                        </group>                        
+                        </group>
                     </page>
                 </xpath>
-            </field>    
-        </record>                
+            </field>
+        </record>
     </data>
-</openerp>    
-    
+</openerp>
+

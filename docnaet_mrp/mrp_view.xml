@@ -1,31 +1,31 @@
 <?xml version="1.0"?>
 <openerp>
-    <data>    
+    <data>
         <record model="ir.ui.view" id="docnaet_document_link_mrp_form_view">
             <field name="name">Docnaet document MRP linked</field>
-            <field name="model">docnaet.document</field>        
+            <field name="model">docnaet.document</field>
             <field name="inherit_id" ref="docnaet.docnaet_document_form_view" />
             <field name="arch" type="xml">
                 <xpath expr="/form//notebook/page[@string='Linked objects']/group[@name='master']/separator" position="after">
                     <group colspan="4" col="4">
                         <separator string="MRP" colspan="4"/>
-                        <field name="link_mrp" />
-                        <field name="linked_mrp_id" attrs="{'invisible': [('link_mrp','=',False)]}" />
+                        <field name="link_mrp" invisible="1"/>
+                        <field name="linked_mrp_id" attrs="{'invisible': [('link_mrp','=',False)]}" colspan="4"/>
                     </group>
-                </xpath>                
-            </field>    
+                </xpath>
+            </field>
         </record>
 
         <!-- INHERITED mrp.production -->
         <record model="ir.ui.view" id="docnaet_normal_link_mrp_form_view">
             <field name="name">Docnaet link</field>
-            <field name="model">mrp.production</field>        
+            <field name="model">mrp.production</field>
             <field name="inherit_id" ref="production_line.default_mrp_production_form_view" />
             <field name="arch" type="xml">
                 <page string="Righe ordine evase" position="after">
                     <page string="Docnaet">
                         <group colspan="4" col="4">
-                            <separator string="Documents linked" colspan="4"/>                            
+                            <separator string="Documents linked" colspan="4"/>
                             <field name="docnaet_ids" readonly="1" nolabel="1" colspan="4">
                                 <tree string="Docnaet document" colors="grey:state=='draft';orange:state=='timed';blue:state=='suspended';green:state=='confirmed';red:state=='cancel'">
                                    <field name="protocol_id" />
@@ -34,16 +34,16 @@
                                    <field name="name" />
                                    <field name="partner_id" />
                                    <field name="language_id" readonly="context.get('embedded',False)"/>
-                                   <field name="state" />                                   
+                                   <field name="state" />
                                    <button type="object" name="button_call_url_docnaet" string="Open document" icon="gtk-file"/>
                                    <button name="button_file_download" string="Download document" type="object" icon="STOCK_SAVE" groups="docnaet_download.group_docnaet_download_users"/>
-                                </tree>                            
+                                </tree>
                             </field>
-                        </group>                        
+                        </group>
                     </page>
                 </page>
-            </field>    
+            </field>
         </record>
     </data>
-</openerp>    
-    
+</openerp>
+

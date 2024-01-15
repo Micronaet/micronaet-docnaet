@@ -35,6 +35,7 @@
         'docnaet_download',
         'mrp',
         'production_line',
+        'sapnaet',
         ],
     'init_xml': [],
     'demo': [],

@@ -32,6 +32,7 @@
     'depends': [
         'docnaet',
         'product',
+        'sapnaet',
         ],
     'init_xml': [],
     'demo': [],
