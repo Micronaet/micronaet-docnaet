@@ -63,6 +63,6 @@ class DocnaetGdocDocument(orm.Model):
                 cr, uid, ids, mode, remote=remote, context=context)    
         
     _columns = {
-        'gdoc_link': fields.char('Cloud Link', size=280),
+        'gdoc_link': fields.char('Cloud Link', size=480),
         }
     
