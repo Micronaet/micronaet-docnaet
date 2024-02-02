@@ -782,7 +782,8 @@
                <field name="sector_id" groups="docnaet.group_docnaet_sector_admin"/>
                <field name="partner_id" />
                <field name="country_id" />
-               <field name="product_id" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin" attrs="{'invisible':[('docnaet_mode','!=','labnaet')]}"/>
+               <field name="product_id" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"
+                      invisible="context.get('docnaet_mode') == 'labnaet'"/>
                <field name="user_id" invisible="1"/>
                <field name="type_id" />
                <field name="language_id" />
@@ -861,7 +862,9 @@
                        <field name="user_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
                        <newline/>
 
-                       <field name="product_id"  groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin" options="{'limit': 10, 'create': false, 'create_edit': false}" attrs="{'invisible':[('docnaet_mode','!=','labnaet')]}"/>
+                       <field name="product_id"  groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"
+                              options="{'limit': 10, 'create': false, 'create_edit': false}"
+                              attrs="{'invisible':[('docnaet_mode','!=','labnaet')]}"/>
                        <field name="docnaet_product_category_id" readonly="1" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin" attrs="{'invisible':[('docnaet_mode','!=','labnaet')]}"/>
                        <newline/>
 

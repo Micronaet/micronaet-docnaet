@@ -180,7 +180,7 @@ class document_duplication(orm.TransientModel):
         # 'with_number': fields.boolean('With number'),
         'protocol_id': fields.many2one('docnaet.protocol', 'Protocol'),
         'docnaet_mode': fields.selection([
-            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('docnaet', 'Docnaet'),  # Only for docnaet
             ('labnaet', 'Labnaet'),
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'

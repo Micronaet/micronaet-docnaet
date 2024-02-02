@@ -346,7 +346,7 @@ class DocnaetType(orm.Model):
             ('all', 'All'),
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'
-                ' for manage other docs'),
+                 ' for manage other docs'),
         }
 
     _defaults = {
@@ -397,12 +397,12 @@ class DocnaetProtocol(orm.Model):
         # TODO default_application_id
         'invisible': fields.boolean('Not used'),
         'docnaet_mode': fields.selection([
-            ('docnaet', 'Docnaet'), # Only for docnaet
+            ('docnaet', 'Docnaet'),  # Only for docnaet
             ('labnaet', 'Labnaet'),
             # ('all', 'All'), # TODO remove?!?
             ], 'Docnaet mode', required=True,
             help='Usually document management, but for future improvement also'
-                ' for manage other docs'),
+                 ' for manage other docs'),
         }
 
     _defaults = {
@@ -602,7 +602,7 @@ class DocnaetDocument(orm.Model):
             app = '[L]'
             docnaet_mode = 'labnaet'
         else:
-            app = '' # TODO '[D]'
+            app = ''  # TODO '[D]'
             docnaet_mode = 'docnaet'
 
         # ---------------------------------------------------------------------
