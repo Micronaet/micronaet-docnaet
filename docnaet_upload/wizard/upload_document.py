@@ -348,6 +348,7 @@ class UploadDocumentWizard(orm.TransientModel):
                 _logger.error('Cannot set property of file')
 
         context['default_docnaet_mode'] = docnaet_mode
+        context['upload_origin'] = True
         return {
             'view_type': 'form',
             'view_mode': 'tree,form,calendar',

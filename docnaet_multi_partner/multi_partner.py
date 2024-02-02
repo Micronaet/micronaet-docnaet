@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-# ODOO (ex OpenERP) 
+# ODOO (ex OpenERP)
 # Open Source Management Solution
 # Copyright (C) 2001-2015 Micronaet S.r.l. (<https://micronaet.com>)
 # Developer: Nicola Riolini @thebrush (<https://it.linkedin.com/in/thebrush>)
@@ -13,7 +13,7 @@
 #
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 # See the GNU Affero General Public License for more details.
 #
 # You should have received a copy of the GNU Affero General Public License
@@ -34,9 +34,9 @@ from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 
@@ -45,58 +45,58 @@ _logger = logging.getLogger(__name__)
 class DocnaetDocument(orm.Model):
     """ Model name: DocnaetDocument
     """
-    
+
     _inherit = 'docnaet.document'
 
     # Override action partner_id hided
     def document_confirmed(self, cr, uid, ids, context=None):
-        ''' WF confirmed state (override with new check on partners)
-        '''
+        """ WF confirmed state (override with new check on partners)
+        """
         document = self.browse(cr, uid, ids, context=context)[0]
         if not document.docnaet_partner_ids:
             raise osv.except_osv(
-                _('Partner'), 
+                _('Partner'),
                 _('No partners assigned, choose one before and confirm!'),
                 )
 
         if not document.partner_id:
             self.write(cr, uid, ids, {
                 # First partner (not used):
-                'partner_id': document.docnaet_partner_ids[0].id, 
-                }, context=context)      
-  
+                'partner_id': document.docnaet_partner_ids[0].id,
+                }, context=context)
+
         return super(DocnaetDocument,self).document_confirmed(
             cr, uid, ids, context=context)
 
     _columns = {
         'docnaet_partner_ids': fields.many2many(
-            'res.partner', 'docnaet_multi_partner_rel', 
-            'docnaet_id', 'partner_id', 
+            'res.partner', 'docnaet_multi_partner_rel',
+            'docnaet_id', 'partner_id',
             'Partner', domain="[('docnaet_enable', '=', True)]"),
         }
 
 class ResPartner(orm.Model):
     """ Model name: DocnaetDocument
     """
-    
+
     _inherit = 'res.partner'
-    
+
     _columns = {
         'partner_docnaet_ids': fields.many2many(
-            'docnaet.document', 'docnaet_multi_partner_rel', 
-            'partner_id', 'docnaet_id', 
+            'docnaet.document', 'docnaet_multi_partner_rel',
+            'partner_id', 'docnaet_id',
             'Document'),
         }
 
 
 class DocnaetDocumentAdvancedSearchWizard(orm.TransientModel):
-    ''' Wizard for duplicate model
-    '''
+    """ Wizard for duplicate model
+    """
     _inherit = 'docnaet.document.advanced.search.wizard'
 
     def advanced_search(self, cr, uid, ids, context=None):
-        ''' Override search function add product:
-        '''
+        """ Override search function add product:
+        """
         res = super(DocnaetDocumentAdvancedSearchWizard, self).advanced_search(
             cr, uid, ids, context=context)
 
@@ -106,58 +106,60 @@ class DocnaetDocumentAdvancedSearchWizard(orm.TransientModel):
         if partner_id:
             domain.append(('docnaet_partner_ids.id', '=', partner_id))
         return res
-    
+
     _columns = {
         'docnaet_partner_id': fields.many2one('res.partner', 'Partner'),
-        }       
+        }
+
 
 class UploadDocumentWizard(orm.TransientModel):
-    ''' Wizard to upload document
-    '''
+    """ Wizard to upload document
+    """
     _inherit = 'docnaet.document.upload.wizard'
-    
+
     def button_upload(self, cr, uid, ids, context=None):
-        ''' Button event for upload
-        '''
+        """ Button event for upload
+        """
         res = super(UploadDocumentWizard, self).button_upload(
             cr, uid, ids, context=context)
-        
+
         wiz_proxy = self.browse(cr, uid, ids, context=context)[0]
         if not wiz_proxy.docnaet_partner_ids:
             return res
 
         # ---------------------------------------------------------------------
-        # Extra update when partner is choosen:    
+        # Extra update when partner is choosen:
         # ---------------------------------------------------------------------
         docnaet_partner_ids = [
             item.id for item in wiz_proxy.docnaet_partner_ids]
-        
+
         # Select current imported:
         document_pool = self.pool.get('docnaet.document')
         domain = res.get('domain')
         document_ids = document_pool.search(cr, uid, domain, context=context)
-        
+
         # Update with partner list data:
         document_pool.write(cr, uid, document_ids, {
             'docnaet_partner_ids': [(6, 0, docnaet_partner_ids)],
             }, context=context)
-        return res    
+        return res
 
     _columns = {
         'docnaet_partner_ids': fields.many2many(
-            'res.partner', 'docnaet_multi_partner_wiz_rel', 
-            'wiz_id', 'partner_id', 
+            'res.partner', 'docnaet_multi_partner_wiz_rel',
+            'wiz_id', 'partner_id',
             'Partner', domain="[('docnaet_enable', '=', True)]"),
-        }     
+        }
+
 
 class DocumentDuplication(orm.TransientModel):
-    ''' Wizard for duplicate model
-    '''
+    """ Wizard for duplicate model
+    """
     _inherit = 'docnaet.document.duplication.wizard'
 
     def duplicate_operation(self, cr, uid, ids, mode='link', context=None):
-        ''' Override for write partner in new
-        '''
+        """ Override for write partner in new
+        """
         res = super(DocumentDuplication, self).duplicate_operation(
             cr, uid, ids, mode=mode, context=context)
 
@@ -174,11 +176,11 @@ class DocumentDuplication(orm.TransientModel):
         domain = res.get('domain')
         destination_ids = document_pool.search(
             cr, uid, domain, context=context)
-        
+
         # Update with partner list data:
         document_pool.write(cr, uid, destination_ids, {
             'docnaet_partner_ids': [(6, 0, docnaet_partner_ids)],
             }, context=context)
-        return res    
-                                    
+        return res
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

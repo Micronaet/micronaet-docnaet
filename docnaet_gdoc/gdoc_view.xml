@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <openerp>
-    <data>   
+    <data>
         <!--docnaet.document-->
         <record model="ir.ui.view" id="docnaet_document_form_gdoc_view">
             <field name="name">Docnaet document</field>
             <field name="model">docnaet.document</field>
-            <field name="inherit_id" ref="docnaet.docnaet_document_form_view"/>        
+            <field name="inherit_id" ref="docnaet.docnaet_document_form_view"/>
             <field name="arch" type="xml">
                  <field name="name" position="after">
-                      <field name="gdoc_link" colspan="5" attrs="{'invisible': [('gdoc_link','=',False), ('state', '!=', 'draft') ]}"/>
+                      <field name="gdoc_link" colspan="5" attrs="{'invisible': [('gdoc_link','=',False), ('state', '!=', 'draft') ]}" invisible="context.get('upload_origin')"/>
                  </field>
 
                  <!--Hide unused button-->
@@ -17,13 +17,13 @@
                  </button>
                  <button string="Duplicate" position="attributes">
                       <attribute name="attrs">{'invisible': [('gdoc_link', '!=', False)]}</attribute>
-                 </button> 
+                 </button>
             </field>
-        </record>        
+        </record>
         <record model="ir.ui.view" id="docnaet_document_tree_gdoc_view">
             <field name="name">Docnaet document</field>
             <field name="model">docnaet.document</field>
-            <field name="inherit_id" ref="docnaet.docnaet_document_tree_view"/>        
+            <field name="inherit_id" ref="docnaet.docnaet_document_tree_view"/>
             <field name="arch" type="xml">
                  <field name="number" position="after">
                       <field name="gdoc_link" invisible="1"/>
@@ -31,9 +31,9 @@
                  <!--Hide unused button-->
                  <button string="Duplicate"  position="attributes">
                       <attribute name="attrs">{'invisible': [('gdoc_link', '!=', False)]}</attribute>
-                 </button> 
+                 </button>
             </field>
-        </record>        
+        </record>
 
         <record model="ir.ui.view" id="docnaet_document_download_gdoc_tree_view">
             <field name="name">Docnaet document</field>
@@ -42,9 +42,9 @@
             <field name="arch" type="xml">
                 <button name="button_file_download" position="attributes">
                       <attribute name="attrs">{'invisible': [('gdoc_link', '!=', False)]}</attribute>
-                </button>   
+                </button>
             </field>
-        </record>    
-    </data>    
-</openerp>    
-    
+        </record>
+    </data>
+</openerp>
+
