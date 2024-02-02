@@ -18,7 +18,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar</field>
             <field name="view_id" ref="docnaet.docnaet_document_tree_view"/>
-            <field name="context">{'default_docnaet_mode': 'docnaet', 'name_mode': 'docnaet'}</field>
+            <field name="context">{'default_docnaet_mode': 'docnaet', 'name_mode': 'docnaet', 'docnaet_mode': 'docnaet'}</field>
             <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid),('state', '=', 'draft'),('uploaded','=',True)]</field>
         </record>
         <record model="ir.actions.act_window" id="action_docnaet_my_document_to protocol_labnaet_tree">
@@ -27,7 +27,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar</field>
             <field name="view_id" ref="docnaet.docnaet_document_tree_view"/>
-            <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
+            <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet', 'docnaet_mode': 'labnaet'}</field>
             <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('user_id','=',uid),('state', '=', 'draft'),('uploaded','=',True)]</field>
         </record>
         <menuitem

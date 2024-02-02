@@ -76,7 +76,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_advanced_search_form"/>
-            <field name="context">{'default_docnaet_mode': 'docnaet', 'name_mode': 'docnaet'}</field>
+            <field name="context">{'default_docnaet_mode': 'docnaet', 'name_mode': 'docnaet', 'docnaet_mode': 'docnaet'}</field>
             <field name="target">new</field>
     </record>
     <!--LABNAET-->
@@ -86,7 +86,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="document_advanced_search_form"/>
-            <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
+            <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet', 'docnaet_mode': 'labnaet'}</field>
             <field name="target">new</field>
     </record>
 

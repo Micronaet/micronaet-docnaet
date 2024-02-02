@@ -197,7 +197,7 @@
             <field name="view_mode">tree,form,calendar</field>
             <field name="view_id" ref="docnaet_document_sale_tree_view"/>
             <field name="search_view_id" ref="docnaet.view_docnaet_document_docnaet_search"/>
-            <field name="context">{'search_default_state_sale_pending': True, 'name_mode': 'docnaet'}</field>
+            <field name="context">{'search_default_state_sale_pending': True, 'name_mode': 'docnaet', 'docnaet_mode': 'docnaet'}</field>
             <field name="domain">[('sale_order_amount', '>', 0),('user_id','=',uid)]</field>
         </record>
         <record model="ir.actions.act_window" id="action_docnaet_sale_order_tree">
@@ -207,7 +207,7 @@
             <field name="view_mode">tree,form,calendar</field>
             <field name="view_id" ref="docnaet_document_sale_tree_view"/>
             <field name="search_view_id" ref="docnaet.view_docnaet_document_docnaet_search"/>
-            <field name="context">{'search_default_state_sale_pending': True, 'name_mode': 'docnaet'}</field>
+            <field name="context">{'search_default_state_sale_pending': True, 'name_mode': 'docnaet', 'docnaet_mode': 'docnaet'}</field>
             <field name="domain">[('sale_order_amount', '>', 0)]</field>
         </record>
 

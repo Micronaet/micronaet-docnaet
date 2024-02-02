@@ -783,7 +783,7 @@
                <field name="partner_id" />
                <field name="country_id" />
                <field name="product_id" groups="docnaet.group_labnaet_user,docnaet.group_labnaet_admin"
-                      invisible="context.get('docnaet_mode') == 'labnaet'"/>
+                      invisible="context.get('docnaet_mode') != 'labnaet'"/>
                <field name="user_id" invisible="1"/>
                <field name="type_id" />
                <field name="language_id" />
@@ -933,7 +933,7 @@
         <field name="arch" type="xml">
             <calendar color="protocol_id" date_start="deadline" string="Document deadline">
                 <field name="name"/>
-                <field name="partner_id" context="{'name_mode': 'docnaet'}"/><!--domain="[('is_address','=',False)]"-->
+                <field name="partner_id" context="{'name_mode': 'docnaet', 'docnaet_mode': 'docnaet'}"/><!--domain="[('is_address','=',False)]"-->
                 <field name="priority"/>
                 <field name="docnaet_mode" invisible="1"/>
             </calendar>
@@ -948,7 +948,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_calendar_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
-        <field name="context">{'search_default_state_timed': True, 'name_mode': 'docnaet'}</field>
+        <field name="context">{'search_default_state_timed': True, 'name_mode': 'docnaet', 'docnaet_mode': 'docnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid)]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_my_document_tree">
@@ -958,7 +958,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
-        <field name="context">{'name_mode': 'docnaet'}</field>
+        <field name="context">{'name_mode': 'docnaet', 'docnaet_mode': 'docnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('user_id','=',uid)]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_document_tree">
@@ -968,7 +968,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
-        <field name="context">{'name_mode': 'docnaet'}</field>
+        <field name="context">{'name_mode': 'docnaet', 'docnaet_mode': 'docnaet'}</field>
         <field name="domain">['&amp;',('docnaet_mode','in',('all', 'docnaet')), '|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_document_draft_tree">
@@ -978,7 +978,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="view_id" ref="view_docnaet_document_docnaet_search"/>
-        <field name="context">{'name_mode': 'docnaet'}</field>
+        <field name="context">{'name_mode': 'docnaet', 'docnaet_mode': 'docnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'docnaet')),('state','=','draft')]</field>
     </record>
     <record model="ir.actions.act_window" id="action_docnaet_remote_document_tree">
@@ -1000,7 +1000,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_calendar_view"/>
         <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
-        <field name="context">{'search_default_state_timed': True,'default_docnaet_mode': 'labnaet'}</field>
+        <field name="context">{'search_default_state_timed': True,'default_docnaet_mode': 'labnaet', 'docnaet_mode': 'labnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('user_id','=',uid)]</field>
     </record>
     <record model="ir.actions.act_window" id="action_labnaet_my_document_tree">
@@ -1010,7 +1010,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
-        <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
+        <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet', 'docnaet_mode': 'labnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('user_id','=',uid)]</field>
     </record>
     <record model="ir.actions.act_window" id="action_labnaet_document_tree">
@@ -1020,7 +1020,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
-        <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
+        <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet', 'docnaet_mode': 'labnaet'}</field>
         <field name="domain">['&amp;',('docnaet_mode','in',('all', 'labnaet')),'|',('state','!=','draft'),'&amp;',('user_id','=',uid),('state','=','draft')]</field>
     </record>
     <record model="ir.actions.act_window" id="action_labnaet_document_draft_tree">
@@ -1030,7 +1030,7 @@
         <field name="view_mode">tree,form,calendar</field>
         <field name="view_id" ref="docnaet_document_tree_view"/>
         <field name="search_view_id" ref="view_docnaet_document_labnaet_search"/>
-        <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet'}</field>
+        <field name="context">{'default_docnaet_mode': 'labnaet', 'name_mode': 'docnaet', 'docnaet_mode': 'labnaet'}</field>
         <field name="domain">[('docnaet_mode','in',('all', 'labnaet')),('state','=','draft')]</field>
     </record>
 
