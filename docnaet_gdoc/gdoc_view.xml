@@ -7,9 +7,10 @@
             <field name="model">docnaet.document</field>
             <field name="inherit_id" ref="docnaet.docnaet_document_form_view"/>
             <field name="arch" type="xml">
-                 <field name="name" position="after">
-                      <field name="gdoc_link" colspan="5" attrs="{'invisible': [('gdoc_link','=',False), ('state', '!=', 'draft') ]}" invisible="context.get('upload_origin')"/>
-                 </field>
+                 <notebook position="before">
+                     <newline/>
+                     <field name="gdoc_link" colspan="5" attrs="{'invisible': [('gdoc_link','=',False), ('state', '!=', 'draft') ]}" invisible="context.get('upload_origin')"/>
+                 </notebook>
 
                  <!--Hide unused button-->
                  <button name="button_doc_info_docnaet" position="attributes">
