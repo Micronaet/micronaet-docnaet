@@ -93,10 +93,52 @@ class DocnaetDocument(orm.Model):
     """
     _inherit = 'docnaet.document'
 
-    def show_linked_sale_ids(self, cr, uid, context=None):
-        """ Open Sale order document (overerride?)
+    def show_linked_sale_ids(self, cr, uid, ids, context=None):
+        """ Open Sale order document (overriden?)
         """
-        return True
+        current = self.browse(cr, uid, ids, context=context)[0]
+        order_ids = [o.id for o in current.linked_sale_ids]
+
+        model_pool = self.pool.get('ir.model.data')
+        form_view_id = model_pool.get_object_reference(
+            cr, uid,
+            'sapnaet', 'view_sale_order_matrix_form')[1]
+        tree_view_id = model_pool.get_object_reference(
+            cr, uid,
+            'sapnaet',
+            'sale_order_for_delivery_operation_deadline_view_tree')[1]
+        if not order_ids:  # No order
+            raise
+        elif len(order_ids) == 1:  # Single order
+            return {
+                'type': 'ir.actions.act_window',
+                'name': _('Ordine collegato al documento Docnaet'),
+                'view_type': 'form',
+                'view_mode': 'form',
+                'res_id': order_ids[0],
+                'res_model': 'sale.order',
+                'view_id': form_view_id,
+                'views': [(form_view_id, 'form')],
+                'domain': [],
+                'context': context,
+                'target': 'current',
+                'nodestroy': False,
+            }
+        else:  # Many orders
+            return {
+                'type': 'ir.actions.act_window',
+                'name': _('Ordini collegati al documento Docnaet'),
+                'view_type': 'form',
+                'view_mode': 'form,tree',
+                'res_id': False,
+                'res_model': 'sale.order',
+                'view_id': tree_view_id,
+                'views': [(tree_view_id, 'tree'), (form_view_id, 'form')],
+                'domain': [('id', 'in', order_ids)],
+                'context': context,
+                'target': 'current',
+                'nodestroy': False,
+            }
 
     def scheduled_raise_pending_offer(self, cr, uid, context=None):
         """ Mail when offer passed limit

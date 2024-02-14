@@ -823,19 +823,19 @@
             <form string="Docnaet document" version="7.0">
                <header>
                    <!--draft-->
-                   <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply"/>
-                   <button name="document_draft_timed" string="Timed" type="workflow" states="draft" icon="terp-go-today"/>
+                   <button name="document_draft_confirmed" string="Confirmed" type="workflow" states="draft" icon="gtk-apply" />
+                   <button name="document_draft_timed" string="Timed" type="workflow" states="draft" icon="terp-go-today" />
                    <!--<button name="document_draft_cancel" string="Cancel" type="workflow" states="draft" icon="gtk-cancel"/>-->
 
                    <!--confirmed-->
-                   <button name="document_confirmed_timed" string="Timed" type="workflow" states="confirmed" icon="terp-go-today"/>
-                   <button name="document_confirmed_cancel" string="Cancel" type="workflow" states="confirmed" icon="gtk-cancel"/>
+                   <button name="document_confirmed_timed" string="Timed" type="workflow" states="confirmed" icon="terp-go-today" />
+                   <button name="document_confirmed_cancel" string="Cancel" type="workflow" states="confirmed" icon="gtk-cancel" />
 
                    <!--timed-->
-                   <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply"/>
-                   <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel"/>
+                   <button name="document_timed_confirmed" string="Confirmed" type="workflow" states="timed" icon="gtk-apply" />
+                   <button name="document_timed_cancel" string="Cancel" type="workflow" states="timed" icon="gtk-cancel" />
 
-                   <button name="document_cancel_draft" string="Reactivate" type="workflow" states="cancel" icon="gtk-redo"/>
+                   <button name="document_cancel_draft" string="Reactivate" type="workflow" states="cancel" icon="gtk-redo" />
 
                    <field name="state" widget="statusbar" readonly="1" />
                </header>
@@ -906,8 +906,11 @@
                            </page>-->
 
                            <page string="Linked objects">
-                               <group colspan="5" col="5" name="master">
-                                   <separator string="Link OpenERP document" colspan="4"/>
+                               <group colspan="5" col="5" name="top">  <!--Top elements-->
+                                   <separator string="Link OpenERP document" colspan="4" invisible="1"/>
+                               </group>
+                               <group colspan="5" col="5" name="master">   <!--Secondary elements-->
+                                   <separator string="Link OpenERP document" colspan="4" invisible="1"/>
                                </group>
                            </page>
 
