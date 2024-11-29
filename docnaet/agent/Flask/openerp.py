@@ -102,7 +102,7 @@ class FlaskDocnaet:
         fullname = r'C:\Micronaet\prova.txt'
         cmd = 'START {}'.format(fullname)
         proc = subprocess.Popen(cmd.split(), shell=True)  # no extra space!!
-        print('Process ID launched: {}'.format(proc.id))
+        # print('Process ID launched: {}'.format(proc.id))
         return ''
 
 
