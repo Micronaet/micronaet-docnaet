@@ -53,12 +53,12 @@ class FlaskDocnaet:
                 # Generate a default file:
                 config_file = open(config_fullname, 'w')
                 config_file.write(
-                    '[docnaet]'
-                    'public: \\\\server\\docnaet\\public'
-                    'private: \\\\server\\docnaet\\private'
-                    '[labnaet]'
-                    'public: \\\\server\\docnaet\\public'
-                    'private: \\\\server\\docnaet\\private'
+                    '[docnaet]\r\n'
+                    'public: \\\\server\\docnaet\\public\r\n'
+                    'private: \\\\server\\docnaet\\private\r\n'
+                    '[labnaet]\r\n'
+                    'public: \\\\server\\docnaet\\public\r\n'
+                    'private: \\\\server\\docnaet\\private\r\n'
                 )
                 config_file.close()
 
