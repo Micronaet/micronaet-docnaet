@@ -54,11 +54,11 @@ class FlaskDocnaet:
                 config_file = open(config_fullname, 'w')
                 config_file.write(
                     '[docnaet]\r\n'
-                    'public: \\\\server\\docnaet\\public\r\n'
-                    'private: \\\\server\\docnaet\\private\r\n'
+                    '    public: \\\\server\\docnaet\\public\r\n'
+                    '    private: \\\\server\\docnaet\\private\r\n'
                     '[labnaet]\r\n'
-                    'public: \\\\server\\docnaet\\public\r\n'
-                    'private: \\\\server\\docnaet\\private\r\n'
+                    '    public: \\\\server\\docnaet\\public\r\n'
+                    '    private: \\\\server\\docnaet\\private\r\n'
                 )
                 config_file.close()
 
