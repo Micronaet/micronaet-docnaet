@@ -11,13 +11,13 @@ SET pip_command=%python_folder%\Scripts\pip.exe
 
 SET project=MicroERP
 
-rem nssm.exe install %project% %python_command% -m %app_folder%\openerp.py
-rem nssm.exe set MicroERP AppDirectory %app_folder%
-
 nssm.exe stop %project%
 nssm.exe remove %project% confirm
 
-nssm.exe install %project%
-nssm.exe set %project% Application %python_command%
-nssm.exe set ProjectService AppParameters %app_folder%\openerp.py
+nssm.exe install %project% %python_command% %app_folder%\openerp.py
+nssm.exe set %project% AppDirectory %app_folder%
+
+rem nssm.exe install %project%
+rem nssm.exe set %project% Application %python_command%
+rem nssm.exe set ProjectService AppParameters %app_folder%\openerp.py
 pause
