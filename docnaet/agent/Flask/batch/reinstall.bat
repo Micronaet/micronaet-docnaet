@@ -15,6 +15,9 @@ rem Update from git:
 cd %git_folder%
 git pull
 
+rem Install
+%pip_command% install --no-cache-dir --upgrade -r %requirements%
+
 rem Create Docker environment
 xcopy %git_folder%\docnaet\agent\Flask\* %app_folder%\* /e/d/y
 mkdir %data_folder%
