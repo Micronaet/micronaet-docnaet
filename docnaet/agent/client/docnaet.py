@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 import os
 import pdb
 import sys
@@ -53,7 +54,7 @@ current_path = os.path.expanduser(os.path.dirname(__file__))
 
 # Read config file: XXX Manage error for file
 cfg_file = os.path.join(current_path, config_file)
-config = ConfigParser()
+config = ConfigParser.ConfigParser()
 config.read([cfg_file])
 
 # B. File cfg selected:
