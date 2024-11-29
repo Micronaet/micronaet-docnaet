@@ -118,9 +118,12 @@ class FlaskDocnaet:
         if not os.path.isfile(fullname):
             print('File not found: {}'.format(filename))
 
-        cmd = 'START {}'.format(fullname)
-        proc = subprocess.Popen(cmd.split(), shell=True)  # no extra space!!
-        # document_pid = proc.pid
+        try:
+            cmd = 'START {}'.format(fullname)
+            proc = subprocess.Popen(cmd.split(), shell=True)  # no extra space!!
+            # document_pid = proc.pid
+        except:
+            print('Error opening {}'.format(fullname))
         return ''
 
 
