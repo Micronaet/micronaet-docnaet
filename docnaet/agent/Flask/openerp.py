@@ -102,7 +102,7 @@ class FlaskDocnaet:
         fullname = r'C:\Micronaet\prova.txt'
         cmd = 'START {}'.format(fullname)
         proc = subprocess.Popen(cmd.split(), shell=True)  # no extra space!!
-        # document_pid = proc.pid
+        print('Process ID launched: {}'.format(proc.id))
         return ''
 
 
@@ -127,16 +127,14 @@ def home():
 def docnaet():
     """ Open FS Docnaet
     """
-    MyFlaskDocnaet.open_document(mode='docnaet')
-    return True
+    return MyFlaskDocnaet.open_document(mode='docnaet')
 
 
 @app.route('/labaet', methods=['GET'])
 def labnaet():
     """ Open FS Labanet
     """
-    MyFlaskDocnaet.open_document(mode='labnaet')
-    return True
+    return MyFlaskDocnaet.open_document(mode='labnaet')
 
 
 if __name__ == '__main__':
