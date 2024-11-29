@@ -16,9 +16,9 @@ mkdir %data_folder%
 cd %root_folder%
 
 rem Stop, delete container, remove image:
-docker stop docnaet-agent-flask
-docker rm docnaet-agent-flask
-docker rmi docnaet-agent-flask
+docker stop docnaet-agent
+docker rm docnaet-agent
+docker rmi docnaet-agent
 
 rem Create new image from Dockerfile:
 docker build --tag docnaet-agent-flask .
