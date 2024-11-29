@@ -404,6 +404,7 @@
                         <field name="name" readonly="1" />
                         <field name="flask_agent" />
                         <field name="hide_generic" groups="docnaet.group_docnaet_sector_admin"/>
+                        <newline/>
                         <field name="sector_ids" colspan="4" widget="many2many_tags" groups="docnaet.group_docnaet_sector_admin"/>
                     </group>
                 </sheet>

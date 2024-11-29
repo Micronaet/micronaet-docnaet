@@ -124,7 +124,18 @@ class FlaskDocnaet:
             # document_pid = proc.pid
         except:
             print('Error opening {}'.format(fullname))
-        return ''
+        return '''
+            <html>
+                <header>    
+                    <script>
+                        window.open('', '_self').close();
+                    </script>
+                    <title>Empty</title> 
+                </header>
+                <body>
+                </body>
+            </html>   
+            '''
 
 
 # -----------------------------------------------------------------------------
