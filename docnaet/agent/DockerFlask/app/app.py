@@ -87,7 +87,7 @@ class FlaskDocnaet:
         """
         self.app.run(debug=debug)
 
-    def open_document(self, mode, filename):
+    def open_document(self, mode):
         """ Open File system document
         """
         folder_public = self.parameters.get('{}_public'.format(mode))
