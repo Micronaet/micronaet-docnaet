@@ -11,7 +11,7 @@ mkdir "%git_folder%"
 git pull
 
 rem Create Docker environment
-copy /s/d "%git_folder%\docnaet\client\DockerFlask" "%root_folder%"
+xcopy "%git_folder%\docnaet\client\DockerFlask" "%root_folder%" /e/d/y
 mkdir %data_folder%
 cd %root_folder%
 
