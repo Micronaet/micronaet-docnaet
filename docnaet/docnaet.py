@@ -592,6 +592,11 @@ class DocnaetDocument(orm.Model):
 
             NOTE: maybe expand the services
         """
+        user_pool = self.pool.get('res.users')
+        user = user_pool.browse(cr, uid, uid, context=context)
+
+        flask_agent = user.flask_agent
+
         handle = 'openerp'  # TODO put in company as parameter
         doc_proxy = self.browse(cr, uid, ids, context=context)[0]
 
@@ -612,8 +617,17 @@ class DocnaetDocument(orm.Model):
         if mode == 'open':
             filename = self.get_document_filename(
                 cr, uid, doc_proxy, mode='filename', context=context)
-            final_url = r'%s://document|%s%s' % (
-                handle, filename, app)
+            if flask_agent:
+                _logger.info('Flask agent Docnaet mode')
+                final_url = \
+                    r'http://localhost:5000/{mode}?filename={filename}'.format(
+                        mode=docnaet_mode,
+                        filename=filename,
+                    )
+            else:
+                _logger.info('Python script agent Docnaet mode')
+                final_url = r'%s://document|%s%s' % (
+                    handle, filename, app)
 
         # B. Open private folder:
         elif mode == 'home':
@@ -1010,6 +1024,7 @@ class ResUsers(orm.Model):
     _inherit = 'res.users'
 
     _columns = {
+        'flask_agent': fields.boolean('Docnaet Flask Agent'),
         'sector_ids': fields.many2many(
             'docnaet.sector', 'docnaet_document_sector_rel',
             'user_id', 'sector_id', 'Settori'),

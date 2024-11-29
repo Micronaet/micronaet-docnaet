@@ -291,12 +291,17 @@ class crm_calendar(osv.osv):
             return True # raise error
 
     _columns = {
-        'docnaet_document_id': fields.many2one('docnaet.document', 'Docnaet document', required=False, readonly=False, help="Document linked to calendar, for deadline events"),
-        #'docnaet_deadline': fields.related('docnaet_document_id', 'deadline', store=True, help="Docnaet document deadlined (used for reset date of calendar event)"),
-        'docnaet_alert': fields.boolean('Docnaet alert', help='This meeting is geneated from Docnaet and require an alert',),
+        'docnaet_document_id': fields.many2one(
+            'docnaet.document', 'Docnaet document', required=False,
+            readonly=False,
+            help="Document linked to calendar, for deadline events"),
+        # 'docnaet_deadline': fields.related('docnaet_document_id',
+        # 'deadline', store=True, help="Docnaet document deadlined
+        # (used for reset date of calendar event)"),
+        'docnaet_alert': fields.boolean(
+            'Docnaet alert',
+            help='This meeting is geneated from Docnaet and require an alert',),
     }
     _defaults = {
         'docnaet_alert': lambda *x: False,
     }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
