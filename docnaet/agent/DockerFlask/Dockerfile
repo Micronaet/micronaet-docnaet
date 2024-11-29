@@ -5,8 +5,8 @@ LABEL version="0.1"
 LABEL maintaner="Micronaet - Nicola Riolini"
 LABEL release-date="2024-11-29"
 
-WORKDIR /docnaet/data
-WORKDIR /docnaet
+WORKDIR /app/data
+WORKDIR /app
 
 ENV data_folder=/docnaet/data
 ENV PIP_ROOT_USER_ACTION=ignore
