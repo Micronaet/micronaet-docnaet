@@ -87,14 +87,11 @@ class FlaskDocnaet:
         """
         self.app.run(debug=debug)
 
-    def open_document(self, mode):
+    def open_document(self, mode, filename):
         """ Open File system document
         """
         if mode == 'docnaet':
             folder_public = self.parameters.get('{}_public'.format(mode))
-
-        filename = request.get('filename')
-        fullname = request.get('fullname')
 
         cmd = 'start {}'.format(fullname)
         proc = subprocess.Popen(cmd.split(), shell=True)  # no extra space!!
@@ -120,18 +117,18 @@ def home():
 
 
 @app.route('/docnaet', methods=['GET'])
-def docnaet():
+def docnaet(filename):
     """ Open FS Docnaet
     """
-    MyFlaskDocnaet.open_document(mode='docnaet')
+    MyFlaskDocnaet.open_document(mode='docnaet', filename=filename)
     return True
 
 
 @app.route('/labaet', methods=['GET'])
-def labnaet():
+def labnaet(filename):
     """ Open FS Labanet
     """
-    MyFlaskDocnaet.open_document(mode='labnaet')
+    MyFlaskDocnaet.open_document(mode='labnaet', filename=filename)
     return True
 
 
