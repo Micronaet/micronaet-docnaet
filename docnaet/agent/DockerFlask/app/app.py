@@ -42,7 +42,7 @@ class FlaskDocnaet:
             config_filename = 'openerp.cfg'  # now are the same, consider WIN
 
         try:
-            data_path = os.environ.get('data_folder')
+            data_path = './data'  # os.environ.get('data_folder')
             config_fullname = os.path.join(data_path, config_filename)
 
             if not os.path.isfile(config_fullname):
