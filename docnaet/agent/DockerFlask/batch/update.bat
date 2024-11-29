@@ -1,17 +1,17 @@
 rem Run this batch in folder where Dockerfile is!
 
 rem Parameters:
-SET docker_folder="c:\Micronaet\Docker"
-SET root_folder="%docker_folder%\DockerFlask"
-SET git_folder="%docker_folder%\git\micronaet-docnaet"
-SET data_folder="%root_folder%\data"
+SET docker_folder=c:\Micronaet\Docker
+SET root_folder=%docker_folder%\DockerFlask
+SET git_folder=%docker_folder%\git\micronaet-docnaet
+SET data_folder=%root_folder%\data
 
 rem Update from git:
 mkdir "%git_folder%"
 git pull
 
 rem Create Docker environment
-xcopy "%git_folder%\docnaet\agent\DockerFlask\*" "%root_folder%\*" /e/d/y
+xcopy %git_folder%\docnaet\agent\DockerFlask\* %root_folder%\* /e/d/y
 mkdir %data_folder%
 cd %root_folder%
 
