@@ -101,7 +101,7 @@ class FlaskDocnaet:
         cmd = 'START {}'.format(fullname)
         proc = subprocess.Popen(cmd.split(), shell=True)  # no extra space!!
         # document_pid = proc.pid
-        return
+        return ''
 
 
 # -----------------------------------------------------------------------------
