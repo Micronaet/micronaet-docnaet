@@ -89,20 +89,43 @@ class FlaskDocnaet:
         """
         self.app.run(debug=debug)
 
+    def get_block_fullname(self, store_folder, filename):
+        """ Utility:
+            Extract from 12300.pdf block folder 12\12300.pdf
+            @return fullname with block folder
+        """
+        block = 1000
+        try:
+            document_id = int(filename.split('.')[0])
+
+            block_folder = os.path.join(
+                store_folder, str(document_id / block))
+
+            fullname = os.path.join(block_folder, filename)
+            return fullname
+        except:
+            pass
+
+        # Default reply always (old mode):
+        return os.path.join(store_folder, filename)
+
     def open_document(self, mode):
         """ Open File system document
         """
         folder_public = self.parameters.get('{}_public'.format(mode))
 
         filename = request.args.get('filename')
-        fullname = os.path.join(folder_public, filename)
+        fullname = self.get_block_fullname(folder_public, filename)
+
         if not os.path.isfile(fullname):
             print('File not found: {}'.format(filename))
 
-        # fullname = r'C:\Micronaet\prova.txt'
-        cmd = 'START {}'.format(fullname)
-        proc = subprocess.Popen(cmd.split(), shell=True)  # no extra space!!
-        # print('Process ID launched: {}'.format(proc.id))
+        try:
+            cmd = 'START {}'.format(fullname)
+            proc = subprocess.Popen(cmd.split(), shell=True)
+            # document_pid = proc.pid
+        except:
+            print('Error opening {}'.format(fullname))
         return ''
 
 
