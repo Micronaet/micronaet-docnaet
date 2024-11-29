@@ -112,19 +112,19 @@ class FlaskDocnaet:
     def open_document(self, mode):
         """ Open File system document
         """
-        folder_public = self.parameters.get('{}_public'.format(mode))
-
-        pdb.set_trace()
-        filename = request.args.get('filename')
-        fullname = self.get_block_fullname(folder_public, filename)
-
-        if not os.path.isfile(fullname):
-            print('File not found: {}'.format(filename))
-
+        fullname = 'NON ANCORA IMPOSTATO'
         try:
-            cmd = 'START {}'.format(fullname)
-            proc = subprocess.Popen(cmd.split(), shell=True)
-            # document_pid = proc.pid
+            folder_public = self.parameters.get('{}_public'.format(mode))
+
+            pdb.set_trace()
+            filename = request.args.get('filename')
+            fullname = self.get_block_fullname(folder_public, filename)
+
+            if not os.path.isfile(fullname):
+                print('File not found: {}'.format(fullname))
+            else:
+                cmd = 'START {}'.format(fullname)
+                proc = subprocess.Popen(cmd.split(), shell=True)
         except:
             print('Error opening {}'.format(fullname))
         return ''
