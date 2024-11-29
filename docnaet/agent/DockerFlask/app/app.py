@@ -43,12 +43,15 @@ class FlaskDocnaet:
 
         pdb.set_trace()
         try:
-            data_path = './data'  # os.environ.get('data_folder')
+            data_path = '/app/data'  # os.environ.get('data_folder')
             config_fullname = os.path.join(data_path, config_filename)
 
             if not os.path.isfile(config_fullname):
+                print('Config file not found: generate {}'.format(
+                    config_fullname,
+                ))
                 # Generate a default file:
-                config_file = open(config_filename, 'w')
+                config_file = open(config_fullname, 'w')
                 config_file.write(
                     '[docnaet]'
                     'public: \\\\server\\docnaet\\public'
@@ -59,17 +62,18 @@ class FlaskDocnaet:
                 )
                 config_file.close()
 
-                # Config file exist here:
-                config = configparser.ConfigParser()
-                config.read([config_fullname])
+            # Config file exist here:
+            print('Reading config file: {}'.format(config_fullname))
+            config = configparser.ConfigParser()
+            config.read([config_fullname])
 
-                self.parameters = {
-                    'docnaet_public': config.get('docnaet', 'public'),
-                    'docnaet_private': config.get('docnaet', 'private'),
-                    'labnaet_public': config.get('labnaet', 'public'),
-                    'labnaet_private': config.get('labnaet', 'private'),
-                    'running': True,
-                }
+            self.parameters = {
+                'docnaet_public': config.get('docnaet', 'public'),
+                'docnaet_private': config.get('docnaet', 'private'),
+                'labnaet_public': config.get('labnaet', 'public'),
+                'labnaet_private': config.get('labnaet', 'private'),
+                'running': True,
+            }
         except:
             self.parameters = {
                 'running': False,
