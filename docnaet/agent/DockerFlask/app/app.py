@@ -12,7 +12,7 @@ import sys
 import subprocess
 import configparser
 import traceback
-from flask import Flask, request  # send_from_directory render_template
+from flask import Flask, request, render_template  # send_from_directory
 
 
 # -----------------------------------------------------------------------------
@@ -124,6 +124,7 @@ class FlaskDocnaet:
             # document_pid = proc.pid
         except:
             print('Error opening {}'.format(fullname))
+        return render_template('back.html')
         return '''
             <html>
                 <header>    
@@ -142,7 +143,7 @@ class FlaskDocnaet:
 #                             Webserver URI:
 # -----------------------------------------------------------------------------
 app = Flask(__name__)
-MyFlaskDocnaet = FlaskDocnaet(app=app)
+MyFlaskDocnaet = FlaskDocnaet(app=app, template_folder='templates')
 
 
 @app.route('/')
