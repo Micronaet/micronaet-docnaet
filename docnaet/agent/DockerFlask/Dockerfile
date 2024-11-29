@@ -8,7 +8,7 @@ LABEL release-date="2024-11-29"
 WORKDIR /app/data
 WORKDIR /app
 
-ENV data_folder=/docnaet/data
+# ENV data_folder=/app/data
 ENV PIP_ROOT_USER_ACTION=ignore
 COPY ./app/requirements.txt requirements.txt
 
