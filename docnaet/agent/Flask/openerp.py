@@ -115,6 +115,7 @@ class FlaskDocnaet:
         """ Open File system document
         """
         fullname = 'NON ANCORA IMPOSTATO'
+        error = ''
         try:
             folder_public = self.parameters.get('{}_public'.format(mode))
 
@@ -122,25 +123,28 @@ class FlaskDocnaet:
             fullname = self.get_block_fullname(folder_public, filename)
 
             if not os.path.isfile(fullname):
-                print('File not found: {}'.format(fullname))
+                error = 'File not found: {}'.format(fullname)
+                print(error)
             else:
                 cmd = 'START {}'.format(fullname)
                 proc = subprocess.Popen(cmd.split(), shell=True)
         except:
             print('Error opening {}'.format(fullname))
             error = str(sys.exc_info())
+
+        if error:
             return '''
-                <html>
-                    <header>    
-                        <script>
-                        </script>
-                        <title>Empty</title> 
-                    </header>
-                    <body>
-                    Errore: {}
-                    </body>
-                </html>
-                '''.format(error)
+            <html>
+                <header>    
+                    <script>
+                    </script>
+                    <title>Empty</title> 
+                </header>
+                <body>
+                Errore: {}
+                </body>
+            </html>
+            '''.format(error)
 
         return '''
             <html>
