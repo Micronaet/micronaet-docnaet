@@ -7,7 +7,7 @@ SET git_folder=%micronaet_folder%\git\micronaet-docnaet
 SET data_folder=%app_folder%\Data
 SET requirements=%app_folder%\requirements.txt
 
-SET python_folder=C:\Python34
+SET python_folder=C:\Python313
 SET python_command=%python_folder%\python.exe
 SET pip_command=%python_folder%\Scripts\pip.exe
 
