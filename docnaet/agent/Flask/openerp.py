@@ -116,7 +116,6 @@ class FlaskDocnaet:
         try:
             folder_public = self.parameters.get('{}_public'.format(mode))
 
-            pdb.set_trace()
             filename = request.args.get('filename')
             fullname = self.get_block_fullname(folder_public, filename)
 
