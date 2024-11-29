@@ -99,7 +99,7 @@ class FlaskDocnaet:
             document_id = int(filename.split('.')[0])
 
             block_folder = os.path.join(
-                store_folder, str(document_id / block))
+                store_folder, str(document_id // block))
 
             fullname = os.path.join(block_folder, filename)
             return fullname
