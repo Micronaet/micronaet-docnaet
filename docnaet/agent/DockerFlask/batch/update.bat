@@ -24,8 +24,8 @@ rem Create new image from Dockerfile:
 docker build --tag docnaet-agent-flask .
 
 rem Restart new container:
-docker run -it -p 5000:5000 --name=docnaet-agent --hostname=docnaet -v %data_folder%:/app/data --restart=always docnaet-agent-flask
-rem docker run -d -p 5000:5000 --name=docnaet-agent --hostname=docnaet -v %data_folder%:/app/data --restart=always docnaet-agent-flask
+rem docker run -it -p 5000:5000 --name=docnaet-agent --hostname=docnaet -v %data_folder%:/app/data --restart=always docnaet-agent-flask
+docker run -d -p 5000:5000 --name=docnaet-agent --hostname=docnaet -v %data_folder%:/app/data --restart=always docnaet-agent-flask
 
 rem Show started container:
 docker ps -a

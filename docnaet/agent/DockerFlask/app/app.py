@@ -41,7 +41,6 @@ class FlaskDocnaet:
             self.linux = False
             config_filename = 'openerp.cfg'  # now are the same, consider WIN
 
-        pdb.set_trace()
         try:
             data_path = '/app/data'  # os.environ.get('data_folder')
             config_fullname = os.path.join(data_path, config_filename)
