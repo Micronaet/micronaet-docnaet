@@ -3,7 +3,7 @@ rem Run this batch in folder where Dockerfile is!
 rem Parameters:
 SET micronaet_folder=C:\Micronaet
 SET app_folder=%micronaet_folder%\Docnaet\Flask
-SET git_folder=%root_folder%\git\micronaet-docnaet
+SET git_folder=%micronaet_folder%\git\micronaet-docnaet
 SET data_folder=%app_folder%\Data
 
 SET python_folder=C:\Python313
