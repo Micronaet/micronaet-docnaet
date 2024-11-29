@@ -126,7 +126,17 @@ class FlaskDocnaet:
                 proc = subprocess.Popen(cmd.split(), shell=True)
         except:
             print('Error opening {}'.format(fullname))
-        return ''
+        return '''
+            <html>
+                <header>    
+                    <script>
+                    </script>
+                    <title>Empty</title> 
+                </header>
+                <body onload="window.location.assign(window.history.back());">
+                </body>
+            </html>
+            '''
 
 
 # -----------------------------------------------------------------------------
