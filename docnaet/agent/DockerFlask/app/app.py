@@ -90,12 +90,16 @@ class FlaskDocnaet:
     def open_document(self, mode, filename):
         """ Open File system document
         """
-        if mode == 'docnaet':
-            folder_public = self.parameters.get('{}_public'.format(mode))
+        folder_public = self.parameters.get('{}_public'.format(mode))
 
-        cmd = 'start {}'.format(fullname)
+        filename = request.args.get('filename')
+        fullname = os.path.join(folder_public, filename)
+        if not os.path.isfile(fullname):
+            print('File not found: {}'.format(filename))
+
+        cmd = 'START {}'.format(fullname)
         proc = subprocess.Popen(cmd.split(), shell=True)  # no extra space!!
-        document_pid = proc.pid
+        # document_pid = proc.pid
         return
 
 
@@ -117,18 +121,18 @@ def home():
 
 
 @app.route('/docnaet', methods=['GET'])
-def docnaet(filename):
+def docnaet():
     """ Open FS Docnaet
     """
-    MyFlaskDocnaet.open_document(mode='docnaet', filename=filename)
+    MyFlaskDocnaet.open_document(mode='docnaet')
     return True
 
 
 @app.route('/labaet', methods=['GET'])
-def labnaet(filename):
+def labnaet():
     """ Open FS Labanet
     """
-    MyFlaskDocnaet.open_document(mode='labnaet', filename=filename)
+    MyFlaskDocnaet.open_document(mode='labnaet')
     return True
 
 
