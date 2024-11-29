@@ -17,7 +17,6 @@ nssm.exe remove %project% confirm
 nssm.exe install %project% %python_command% %app_folder%\openerp.py
 nssm.exe set %project% AppDirectory %app_folder%
 
-rem nssm.exe install %project%
-rem nssm.exe set %project% Application %python_command%
-rem nssm.exe set ProjectService AppParameters %app_folder%\openerp.py
+nssm.exe start %project%
+
 pause
