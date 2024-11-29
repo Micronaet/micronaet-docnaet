@@ -11,6 +11,8 @@ import os
 import subprocess
 import configparser
 import pdb
+import sys
+
 from flask import Flask, request  # send_from_directory render_template
 
 # import sys
@@ -126,6 +128,20 @@ class FlaskDocnaet:
                 proc = subprocess.Popen(cmd.split(), shell=True)
         except:
             print('Error opening {}'.format(fullname))
+            error = str(sys.exc_info())
+            return '''
+                <html>
+                    <header>    
+                        <script>
+                        </script>
+                        <title>Empty</title> 
+                    </header>
+                    <body>
+                    Errore: {}
+                    </body>
+                </html>
+                '''.format(error)
+
         return '''
             <html>
                 <header>    
