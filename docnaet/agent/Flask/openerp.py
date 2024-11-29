@@ -99,7 +99,7 @@ class FlaskDocnaet:
         if not os.path.isfile(fullname):
             print('File not found: {}'.format(filename))
 
-        fullname = r'C:\Micronaet\prova.txt'
+        # fullname = r'C:\Micronaet\prova.txt'
         cmd = 'START {}'.format(fullname)
         proc = subprocess.Popen(cmd.split(), shell=True)  # no extra space!!
         # print('Process ID launched: {}'.format(proc.id))
