@@ -120,7 +120,7 @@ class FlaskDocnaet:
 
         try:
             cmd = 'START {}'.format(fullname)
-            proc = subprocess.Popen(cmd.split(), shell=True)  # no extra space!!
+            proc = subprocess.Popen(cmd.split(), shell=True)
             # document_pid = proc.pid
         except:
             print('Error opening {}'.format(fullname))
