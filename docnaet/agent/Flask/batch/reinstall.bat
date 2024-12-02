@@ -20,6 +20,7 @@ rem Install
 
 rem Create Docker environment
 xcopy %git_folder%\docnaet\agent\Flask\* %app_folder%\* /e/d/y
+xcopy %git_folder%\docnaet\agent\Flask\openerp.py %app_folder%\openerp.pyw /e/d/y
 mkdir %data_folder%
 
 cd %app_folder%
