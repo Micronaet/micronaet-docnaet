@@ -1,3 +1,4 @@
+@echo off
 rem Run this batch in folder where Dockerfile is!
 
 rem Parameters:
@@ -13,10 +14,10 @@ rem Update from git:
 cd %git_folder%
 git pull
 
-rem Create Docker environment
+rem Update run folder:
 xcopy %git_folder%\docnaet\agent\Flask\* %app_folder%\* /e/d/y
 xcopy %git_folder%\docnaet\agent\Flask\openerp.py %app_folder%\openerp.pyw /e/d/y
-mkdir %data_folder%
-cd %app_folder%
 
+mkdir %data_folder%
+rem Config file will be generated when launch
 pause

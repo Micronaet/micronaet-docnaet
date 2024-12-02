@@ -1,3 +1,4 @@
+@echo off
 rem Run this batch in folder where Dockerfile is!
 
 rem Parameters:
@@ -15,7 +16,7 @@ rem Update from git:
 cd %git_folder%
 git pull
 
-rem Install
+rem Install requirements:
 %pip_command% install --no-cache-dir --upgrade -r %requirements%
 
 rem Create Docker environment
@@ -23,6 +24,16 @@ xcopy %git_folder%\docnaet\agent\Flask\* %app_folder%\* /e/d/y
 xcopy %git_folder%\docnaet\agent\Flask\openerp.py %app_folder%\openerp.pyw /e/d/y
 mkdir %data_folder%
 
+rem Open app folder:
+explorer %git_folder%\docnaet\agent\Flask\openerp.py %app_folder%
+
+rem Open Esecuzione automatica folder
+explorer "%appdata%\microsoft\windows\start menu\programmi\esecuzione automatica"
+
+rem Open Data folder for config file
+explorer %data_folder%
+
+rem Launch application for test (after run as pyw)
 cd %app_folder%
 %python_command% %app_folder%\openerp.py
 

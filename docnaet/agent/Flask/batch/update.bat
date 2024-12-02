@@ -1,3 +1,4 @@
+@echo off
 rem Run this batch in folder where Dockerfile is!
 
 rem Parameters:
@@ -15,11 +16,12 @@ rem Update from git:
 cd %git_folder%
 git pull
 
-rem Create Docker environment
+rem Create App folder:
 xcopy %git_folder%\docnaet\agent\Flask\* %app_folder%\* /e/d/y
 xcopy %git_folder%\docnaet\agent\Flask\openerp.py %app_folder%\openerp.pyw /e/d/y
 mkdir %data_folder%
 
-cd %app_folder%
-%python_command% %app_folder%\openerp.py
+rem No need to launch (service will be rebooted if yer running)
+rem cd %app_folder%
+rem %python_command% %app_folder%\openerp.py
 
