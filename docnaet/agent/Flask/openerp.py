@@ -183,7 +183,7 @@ def docnaet():
     return MyFlaskDocnaet.open_document(mode='docnaet')
 
 
-@app.route('/labaet', methods=['GET'])
+@app.route('/labnaet', methods=['GET'])
 def labnaet():
     """ Open FS Labanet
     """
