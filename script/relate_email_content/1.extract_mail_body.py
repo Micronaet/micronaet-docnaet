@@ -1,4 +1,6 @@
 # MSG
+# pip install extract-msg
+
 import extract_msg
 import pdb
 

@@ -24,6 +24,7 @@ import os
 import pdb
 import sys
 import logging
+import base64
 import openerp.netsvc as netsvc
 from openerp.osv import osv, orm, fields
 from datetime import datetime, timedelta
@@ -685,6 +686,17 @@ class DocnaetDocument(orm.Model):
             _('Document info'),
             message,
             )
+
+    def get_docnaet_file_as_base64(self, cr, uid, ids, context=None):
+        """ Document get file as Base64 string
+        """
+        assert len(ids) == 1, 'Works only with one record a time'
+        current_proxy = self.browse(cr, uid, ids, context=context)[0]
+        filename = self.get_document_filename(
+            cr, uid, current_proxy, mode='fullname', context=context)
+        docnaet_file = open(filename, 'rb')
+        docnaet_string = base64.encodestring(docnaet_file)
+        return docnaet_string
 
     def button_assign_fax_number(self, cr, uid, ids, context=None):
         """ Assign fax number to document (next counter)
