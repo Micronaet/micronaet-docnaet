@@ -36,4 +36,3 @@ explorer %data_folder%
 rem Launch application for test (after run as pyw)
 cd %app_folder%
 %python_command% %app_folder%\openerp.py
-

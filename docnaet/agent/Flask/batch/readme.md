@@ -1,10 +1,16 @@
 Installazione:
-- Scarica Git: https://git-scm.com/download/win
+- Scarica Git: 
+  https://git-scm.com/download/win
+  https://github.com/git-for-windows/git/releases/download/v2.47.1.windows.1/Git-2.47.1-64-bit.exe
 
 - Installarlo e poi scaricare nella cartella:
   C:\Micronaet\git\
 
-- Lanciare git clone https://github.com/Micronaet/micronaet-docnaet
+- Lanciare:
+  git clone https://github.com/Micronaet/micronaet-docnaet
+ 
+- Installare Python nella cartella 
+  c:\Python313
 
 - Lanciare dal repo: 
   C:\Micronaet\git\micronaet-docnaet\docnaet\agent\Flask\batch\install.bat 
@@ -18,7 +24,7 @@ Installazione:
 - Impostare l'avvio automatico dal file: 
   c:\Micronaet\git\Docnaet\Flask\openerp.pyw
   in
-  "%appdata%\microsoft\windows\start menu\programmi\esecuzione automatica"
+  "%appdata%\microsoft\windows\menu start\programmi\esecuzione automatica"
   
 - Attivare nella gestione utenti di OpenERP / Docnaet la spunta Flask
   
