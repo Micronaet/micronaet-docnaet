@@ -123,7 +123,10 @@ class DocnaetProtocolEmail(orm.Model):
                 esit, result = mail.fetch(msg_id, '(RFC822)')
                 eml_string = result[0][1]
                 message = email.message_from_string(eml_string)
+                mail_text = '\n'.join(
+                    [str(p.get_payload(decode=True)) for p in message.walk()])
                 pdb.set_trace()
+
                 record = {
                     'To': False,
                     'From': False,
