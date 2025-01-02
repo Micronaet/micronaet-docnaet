@@ -20,8 +20,8 @@ rem Install requirements:
 %pip_command% install --no-cache-dir --upgrade -r %requirements%
 
 rem Create Docker environment
-xcopy %git_folder%\docnaet\agent\Flask\* %app_folder%\* /e/d/y
-xcopy %git_folder%\docnaet\agent\Flask\openerp.py %app_folder%\openerp.pyw /e/d/y
+xcopy %git_folder%\docnaet\agent\Flask\* %app_folder%\* /e /d /y
+xcopy %git_folder%\docnaet\agent\Flask\openerp.py %app_folder%\openerp.pyw /e /d /y
 mkdir %data_folder%
 
 rem Open app folder:

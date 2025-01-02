@@ -18,6 +18,7 @@
 #
 ###############################################################################
 import os
+import pdb
 import sys
 import logging
 import openerp
@@ -122,6 +123,7 @@ class DocnaetProtocolEmail(orm.Model):
                 esit, result = mail.fetch(msg_id, '(RFC822)')
                 eml_string = result[0][1]
                 message = email.message_from_string(eml_string)
+                pdb.set_trace()
                 record = {
                     'To': False,
                     'From': False,
