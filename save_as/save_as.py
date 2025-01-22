@@ -32,32 +32,33 @@ from openerp import SUPERUSER_ID
 from openerp import tools
 from openerp.tools.translate import _
 from openerp.tools.float_utils import float_round as round
-from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT, 
-    DEFAULT_SERVER_DATETIME_FORMAT, 
-    DATETIME_FORMATS_MAP, 
+from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
+    DEFAULT_SERVER_DATETIME_FORMAT,
+    DATETIME_FORMATS_MAP,
     float_compare)
 
 
 _logger = logging.getLogger(__name__)
 
+
 class IrAttachment(orm.Model):
     """ Model name: IrAttachment
-    """    
+    """
     _inherit = 'ir.attachment'
-    
+
     # -------------------------------------------------------------------------
     # Utility:
     # -------------------------------------------------------------------------
     def _get_php_return_page(self, cr, uid, fullname, name, context=None):
-        ''' Generate return object for pased files
-        '''
+        """ Generate return object for pased files
+        """
         config_pool = self.pool.get('ir.config_parameter')
         key = 'web.base.url.docnaet'
         config_ids = config_pool.search(cr, uid, [
             ('key', '=', key)], context=context)
         if not config_ids:
             raise osv.except_osv(
-                _('Errore'), 
+                _('Errore'),
                 _('Avvisare amministratore: configurare parametro: %s' % key),
                 )
         config_proxy = config_pool.browse(
@@ -69,46 +70,43 @@ class IrAttachment(orm.Model):
             'type': 'ir.actions.act_url',
             'url': '%s/save_as.php?filename=%s&name=%s' % (
                 base_address,
-                fullname, 
+                fullname,
                 name
                 ),
-            #'target': 'new',
+            # 'target': 'new',
             }
-        
+
     def return_attachment_apache_php(self, cr, uid, ids, context=None):
-        ''' Return attachment passed
-        '''
+        """ Return attachment passed
+        """
         # TODO save attachment in temp folder and return
         return True
 
-    def return_file_apache_php(self, cr, uid, origin, name=False, 
-            context=None):
-        ''' Return file passed as fullpath name, also passed name of file
+    def return_file_apache_php(
+            self, cr, uid, origin, name=False, context=None):
+        """ Return file passed as fullpath name, also passed name of file
             for client
-        '''
-        # Generate a temp filename:        
+        """
+        # Generate a temp filename:
         tmp = tempfile.NamedTemporaryFile()
         extension = origin.split('.')[-1]
-        if len(extension) > 6: # XXX max estension length
-            estension = ''
+        if len(extension) > 6:  # XXX max estension length
+            extension = ''
         destination = '%s.%s' % (tmp.name, extension)
         tmp.close()
-        
+
         # Copy current file in temp destination
         try:
             shutil.copyfile(origin, destination)
         except:
             raise osv.except_osv(
-                _('File non trovato'), 
+                _('File non trovato'),
                 _(u'File non trovato nella gest. documentale!\n%s' % origin),
-                )    
-        
+                )
+
         if not name:
             name = 'docnaet_download.%s' % extension
 
         # Return link for open temp file:
         return self._get_php_return_page(
             cr, uid, destination, name, context=context)
- 
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
