@@ -9,7 +9,8 @@ Installazione:
 - Lanciare:
   git clone https://github.com/Micronaet/micronaet-docnaet
  
-- Installare Python nella cartella 
+- Installare Python nella cartella
+  Da: C:\Micronaet\git\micronaet-docnaet\docnaet\agent\Flask\batch
   c:\Python313
 
 - Lanciare dal repo: 
