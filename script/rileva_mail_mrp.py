@@ -162,3 +162,8 @@ for to in mail_recipients.replace(' ', '').split(','):
     Encoders.encode_base64(part)
     part.add_header(
         'Content-Disposition', 'attachment; filename="%s"' % file_out)
+    msg.attach(part)
+
+    # Send mail:
+    smtp_server.sendmail(odoo_mailer.smtp_user, to, msg.as_string())
+smtp_server.quit()
