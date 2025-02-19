@@ -161,4 +161,4 @@ for to in mail_recipients.replace(' ', '').split(','):
     part.set_payload(open(file_out, 'rb').read())
     Encoders.encode_base64(part)
     part.add_header(
-        'Content-Disposition', 'attachment; filename="%s"' % filename)
+        'Content-Disposition', 'attachment; filename="%s"' % file_out)
