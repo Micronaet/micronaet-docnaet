@@ -37,6 +37,7 @@ from email import Encoders
 # -----------------------------------------------------------------------------
 # Excel file: 
 file_out = './carichi_di_produzione.xlsx'
+
 now = ('%s' % datetime.now())[:19]
 
 # From config file:
@@ -51,8 +52,8 @@ server = config.get('dbaccess', 'server')
 port = config.get('dbaccess', 'port')   # verify if it's necessary: getint
 
 mail_recipients = config.get('smtp', 'to')
-mail_text = ''
-mail_subject = ''
+mail_text = 'Dettaglio carichi di produzione: Generato il {}'.format(now)
+mail_subject = 'Dettaglio carico con sviluppo costi da MP, Imballi e costo linea.'
 
 
 # -----------------------------------------------------------------------------
