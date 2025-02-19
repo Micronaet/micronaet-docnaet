@@ -36,7 +36,7 @@ from email import Encoders
 # Read configuration parameter:
 # -----------------------------------------------------------------------------
 # Excel file: 
-file_out = './carichi_di_produzione.xlsx'
+file_out = 'carichi_di_produzione.xlsx'
 
 now = ('%s' % datetime.now())[:19]
 
