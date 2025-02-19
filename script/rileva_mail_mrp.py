@@ -94,7 +94,7 @@ loads = sorted(
     key=lambda x: x.date_start,
     reverse=True
 )
-    
+WS.set_default_row(20)
 for load in loads:
     row += 1
     if not row % 10:
