@@ -124,7 +124,9 @@ except:
 #                                  SMTP Sent:
 # -----------------------------------------------------------------------------
 # Get mailserver option:
-mailer_ids = mailer.search([])
+mailer_ids = mailer.search([
+    ('name', '=', 'PCA'),
+    ])
 if not mailer_ids:
     print('[ERR] No mail server configured in ODOO')
     sys.exit()
