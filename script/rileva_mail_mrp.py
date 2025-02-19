@@ -114,7 +114,7 @@ for load in loads:
         '<br/>', '\n').replace(
             '<b>', '').replace(
                 '</b>', ''))
-    
+WS.autofit()
 try:
     WB.close()
 except:
