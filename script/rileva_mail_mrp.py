@@ -52,7 +52,7 @@ server = config.get('dbaccess', 'server')
 port = config.get('dbaccess', 'port')   # verify if it's necessary: getint
 
 mail_recipients = config.get('smtp', 'to')
-mail_subject = 'Dettaglio carichi di produzione: Generato il {}'.format(now)
+mail_subject = 'Dettaglio costo prodotto terminato: Generato il {}'.format(now)
 mail_text = 'Dettaglio carico con sviluppo costi da MP, Imballi e costo linea.'
 
 
