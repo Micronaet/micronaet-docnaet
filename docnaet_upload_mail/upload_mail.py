@@ -291,8 +291,7 @@ class DocnaetProtocolEmail(orm.Model):
     _columns = {
         'ai_on': fields.boolean('AI', help='Attiva la descrizione automatica leggendo la mail'),
         'ai_words': fields.integer('AI parole max',  help='Massimo numero di parole da usare nel riassunto'),
-        'ai_url_mask': fields.char(
-            'AI ODOO URL', size=180, help='Indirizzo usato per la chiamata asincrona di ODOO'),
+        'ai_url_mask': fields.char('AI ODOO URL', size=180, help='Indirizzo usato per la chiamata asincrona di ODOO'),
 
         'is_active': fields.boolean('Is active'),
         'name': fields.char('Email', size=64, required=True),
