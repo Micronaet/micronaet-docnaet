@@ -50,7 +50,7 @@
                                             <field name="host" />
                                             <field name="port" />
                                             <field name="user" />
-                                            <field name="password" widget="password" />
+                                            <field name="password" password="1" />
                                             <field name="SSL" />
                                             <field name="folder" />
                                             <field name="auto_number" />
@@ -112,7 +112,7 @@
                             <field name="host" />
                             <field name="port" />
                             <field name="user" />
-                            <field name="password" widget="password"/>
+                            <field name="password" password="1"/>
                             <field name="SSL" />
                             <field name="folder" />
                             <field name="auto_number" />
