@@ -102,6 +102,7 @@
                             <separator string="AI autocompletamento:" colspan="4"/>
                             <field name="ai_on" />
                             <field name="ai_words" />
+                            <field name="ai_url_mask" colspan="4"/>
 
                             <separator string="Dettaglio accesso Mail:" colspan="4"/>
 
