@@ -253,8 +253,7 @@ class DocnaetProtocolEmail(orm.Model):
                 # ------------------------------------------------------------------------------------------------------
                 if ai_on:
                     # todo pass email file: eml_file?
-                    url = ai_url_mask.format(
-                        mode=docnaet_mode, doc_id=doc_id, words=ai_words)
+                    url = ai_url_mask.format(mode=docnaet_mode, doc_id=doc_id, words=ai_words)
                     try:
                         _logger.info('Calling ODOO AI url: {}...'.format(url))
                         response = urllib2.urlopen(url)
