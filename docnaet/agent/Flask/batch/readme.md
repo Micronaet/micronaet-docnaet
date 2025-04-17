@@ -23,7 +23,7 @@ Installazione:
   Mettere labnaet path: \\10.0.0.200\labnaet$\docnaet\1\store
   
 - Impostare l'avvio automatico dal file: 
-  c:\Micronaet\git\Docnaet\Flask\openerp.pyw
+  c:\Micronaet\Docnaet\Flask\openerp.pyw
   in
   "%appdata%\microsoft\windows\menu start\programmi\esecuzione automatica"
   
