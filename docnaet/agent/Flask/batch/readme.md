@@ -19,8 +19,10 @@ Installazione:
 
 - Il programma viene lanciato per creare il file di configurazione, modificarlo:
   c:\Micronaet\git\Docnaet\Flask\Dati\openerp.cfg
-  Mettere docnaet path: \\10.0.0.200\docnaet$\docnaet\1\store
-  Mettere labnaet path: \\10.0.0.200\labnaet$\docnaet\1\store
+
+- Mettere docnaet path: \\10.0.0.200\docnaet$\docnaet\1\store
+  
+- Mettere labnaet path: \\10.0.0.200\labnaet$\docnaet\1\store
   
 - Impostare l'avvio automatico dal file: 
   c:\Micronaet\Docnaet\Flask\openerp.pyw

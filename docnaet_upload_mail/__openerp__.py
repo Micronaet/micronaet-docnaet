@@ -22,7 +22,7 @@
     'version': '0.1',
     'category': 'Docnaet',
     'description': '''  
-        Add email to protocol for auto upload documents in upload list      
+        Add email to protocol for auto upload documents in upload list
         ''',
     'author': 'Micronaet S.r.l. - Nicola Riolini',
     'website': 'http://www.micronaet.it',
@@ -35,7 +35,7 @@
     'init_xml': [],
     'demo': [],
     'data': [
-        'security/ir.model.access.csv',    
+        'security/ir.model.access.csv',
         'mail_view.xml',
         'scheduler.xml',
         ],

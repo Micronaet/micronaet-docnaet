@@ -24,6 +24,7 @@ import logging
 import openerp
 import imaplib
 import email
+import urllib2
 import openerp.netsvc as netsvc
 import openerp.addons.decimal_precision as dp
 from openerp.osv import fields, osv, expression, orm
@@ -49,9 +50,9 @@ class DocnaetProtocolEmail(orm.Model):
     _rec_name = 'name'
     _order = 'name'
 
-    # -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------
     # Schedule procedure:
-    # -------------------------------------------------------------------------
+    # ------------------------------------------------------------------------------------------------------------------
     def force_import_email_document(self, cr, uid, ids, context=None):
         """ Force current protocol import used for button or list
         """
@@ -79,8 +80,7 @@ class DocnaetProtocolEmail(orm.Model):
         context['docnaet_mode'] = docnaet_mode
 
         # Get store folder depend on docnaet mode:
-        store_folder = company_pool.get_docnaet_folder_path(
-            cr, uid, subfolder='store', context=context)
+        store_folder = company_pool.get_docnaet_folder_path(cr, uid, subfolder='store', context=context)
         _logger.info('Start read # %s IMAP server [stored in %s: %s]' % (
             len(ids),
             docnaet_mode,
@@ -88,15 +88,19 @@ class DocnaetProtocolEmail(orm.Model):
             ))
 
         now = datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
-        eml_program_id = program_pool.get_program_from_extension(
-            cr, uid, 'eml', context=context)
+        eml_program_id = program_pool.get_program_from_extension(cr, uid, 'eml', context=context)
+        if_error = ''
         for address in self.browse(cr, uid, ids, context=context):
+            ai_on = address.ai_on
+            ai_words = address.ai_words or 50
+            ai_url_mask = address.ai_url_mask  # 'http://10.0.0.2:8069/gemini/queue?mode={}&id={}&words={}'
+
             protocol_id = address.protocol_id.id or False
             server = address.host  # '%s:%s' % (address.host, address.port)
 
-            # -----------------------------------------------------------------
+            # ----------------------------------------------------------------------------------------------------------
             # Read all email:
-            # -----------------------------------------------------------------
+            # ----------------------------------------------------------------------------------------------------------
             try:
                 if_error = _('Error find imap server: %s' % server)
                 if address.SSL:
@@ -138,9 +142,9 @@ class DocnaetProtocolEmail(orm.Model):
                     if param in record:
                         record[param] = value
 
-                # -------------------------------------------------------------
+                # ------------------------------------------------------------------------------------------------------
                 # Add new document Docnaet:
-                # -------------------------------------------------------------
+                # ------------------------------------------------------------------------------------------------------
                 # Auto type:
                 # Use if set up in address:
                 type_id = address.type_id.id or False
@@ -181,12 +185,11 @@ class DocnaetProtocolEmail(orm.Model):
                                             email_address,
                                             ))
 
-                # -------------------------------------------------------------
+                # ------------------------------------------------------------------------------------------------------
                 # Labnaet setup:
-                # -------------------------------------------------------------
+                # ------------------------------------------------------------------------------------------------------
                 if docnaet_mode == 'labnaet':
-                    labnaet_id = doc_pool.get_counter_labnaet_id(
-                        cr, uid, context=context)
+                    labnaet_id = doc_pool.get_counter_labnaet_id(cr, uid, context=context)
                 else:
                     labnaet_id = False
 
@@ -198,12 +201,12 @@ class DocnaetProtocolEmail(orm.Model):
                     'name': record['Subject'] or '...',
                     'partner_id': partner_id,
                     'type_id': type_id,
-                    # 'language_id':
-                    # 'date':
                     'import_date': now,
                     'uploaded': True,
                     'docnaet_extension': 'eml',
                     'program_id': eml_program_id,
+                    # 'language_id':
+                    # 'date':
                     }
                 if protocol_id and address.auto_number:
                     data['number'] = protocol_pool.assign_protocol_number(
@@ -230,19 +233,13 @@ class DocnaetProtocolEmail(orm.Model):
                 # A. Block folder mode (new):
                 if block_mode_on:
                     try:
-                        block_folder = os.path.join(
-                            store_folder, str(doc_id / block))
+                        block_folder = os.path.join(store_folder, str(doc_id / block))
                         os.system('mkdir -p %s' % block_folder)
                     except:
-                        _logger.error(
-                            'Error checking document block folder!'
-                            'Saved in store for now')
+                        _logger.error('Error checking document block folder! Saved in store for now')
 
-                eml_file = '%s.eml' % (os.path.join(
-                    # store_folder,
-                    block_folder,
-                    str(doc_id),
-                    ))
+                # store_folder file:
+                eml_file = '%s.eml' % (os.path.join(block_folder, str(doc_id)))
                 f_eml = open(eml_file, 'w')
                 f_eml.write(eml_string)
                 # todo remove file after confirm
@@ -250,10 +247,27 @@ class DocnaetProtocolEmail(orm.Model):
 
                 # Mark as deleted:
                 mail.store(msg_id, '+FLAGS', '\\Deleted')
-            _logger.info('End read IMAP %s [tot msg: %s]' % (
-                address.name,
-                tot,
-                ))
+
+                # ------------------------------------------------------------------------------------------------------
+                # Gemini AI: Call ODOO for Gemini auto content for description
+                # ------------------------------------------------------------------------------------------------------
+                if ai_on:
+                    # todo pass email file: eml_file?
+                    url = ai_url_mask.format(docnaet_mode, doc_id, ai_words)
+                    try:
+                        _logger.info('Calling ODOO AI url: {}...'.format(url))
+                        response = urllib2.urlopen(url)
+                        # html = response.read()
+                        # _logger.info(response.info())
+                        response.close()
+                    except urllib2.URLError as e:
+                        _logger.error('Error opening URL: {}\n{}'.format(url, e))
+                    except urllib2.HTTPError as e:
+                        _logger.error('HTTP Error: {}\n{}'.format(e.code, e.msg))
+                    except Exception as e:
+                        _logger.error('An unexpected error occurred: {}'.format(e))
+
+            _logger.info('End read IMAP %s [tot msg: %s]' % (address.name, tot))
 
         # -----------------------------------------------------------------
         # Close operations:
@@ -275,6 +289,11 @@ class DocnaetProtocolEmail(orm.Model):
             cr, uid, address_ids, context=context)
 
     _columns = {
+        'ai_on': fields.boolean('AI', help='Attiva la descrizione automatica leggendo la mail'),
+        'ai_words': fields.integer('AI parole max',  help='Massimo numero di parole da usare nel riassunto'),
+        'ai_url_mask': fields.char(
+            'AI ODOO URL', size=180, help='Indirizzo usato per la chiamata asincrona di ODOO'),
+
         'is_active': fields.boolean('Is active'),
         'name': fields.char('Email', size=64, required=True),
         'host': fields.char(
@@ -305,6 +324,9 @@ class DocnaetProtocolEmail(orm.Model):
         }
 
     _defaults = {
+       'ai_words': lambda *w: 50,
+       'ai_url_mask': lambda *u: 'http://10.0.0.2:8069/gemini/queue?mode={}&id={}&words={}',
+
        'port': lambda *a: 993,
        'SSL': lambda *a: True,
        'folder': lambda *a: 'INBOX',
