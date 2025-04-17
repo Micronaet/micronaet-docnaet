@@ -253,7 +253,8 @@ class DocnaetProtocolEmail(orm.Model):
                 # ------------------------------------------------------------------------------------------------------
                 if ai_on:
                     # todo pass email file: eml_file?
-                    url = ai_url_mask.format(docnaet_mode, doc_id, ai_words)
+                    url = ai_url_mask.format(
+                        mode=docnaet_mode, doc_id=doc_id, words=ai_words)
                     try:
                         _logger.info('Calling ODOO AI url: {}...'.format(url))
                         response = urllib2.urlopen(url)
@@ -325,7 +326,7 @@ class DocnaetProtocolEmail(orm.Model):
 
     _defaults = {
        'ai_words': lambda *w: 50,
-       'ai_url_mask': lambda *u: 'http://10.0.0.2:8069/gemini/queue?mode={}&id={}&words={}',
+       'ai_url_mask': lambda *u: 'http://10.0.0.2:8069/gemini/queue?mode={mode}&id={doc_id}&words={words}',
 
        'port': lambda *a: 993,
        'SSL': lambda *a: True,
