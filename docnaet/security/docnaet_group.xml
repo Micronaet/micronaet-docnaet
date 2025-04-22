@@ -56,7 +56,6 @@
         <field name="name">Docnaet AI user</field>
         <field name="category_id" ref="module_docnaet" />
         <field name="comment">User that access AI.</field>
-        />
     </record>
 
     <!--LABNAET:-->
