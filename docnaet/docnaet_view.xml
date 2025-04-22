@@ -782,7 +782,7 @@
                <field name="name" />
                <field name="description" />
                <button type="object" name="call_ai_for_description" string="AI" class="oe_highlight" groups="docnaet.group_docnaet_AI_user" attrs="{'invisible': [('description', '!=', False)]}" />
-               <button type="object" name="clean_description" string="Pulisci" class="oe_highlight" groups="docnaet.group_docnaet_AI_user" attrs="{'invisible': [('description', '!=', False)]}" icon="gtk-clear"/>
+               <button type="object" name="clean_description" string="Cancella la descrizione (usare quando è sbagliata quella di AI)" class="oe_highlight" groups="docnaet.group_docnaet_AI_user" attrs="{'invisible': [('description', '=', False)]}" icon="gtk-clear"/>
 
                <field name="sector_id" groups="docnaet.group_docnaet_sector_admin"/>
                <field name="partner_id" />
