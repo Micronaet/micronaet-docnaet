@@ -781,10 +781,10 @@
                <field name="docnaet_mode" invisible="1" />
 
                <field name="name" />
-               <button name="call_ai_for_name" string="<< AI" type="object" help="Cliccando viene richiesto ad AI di generare un oggetto dal contenuto del file" />
+               <button name="call_ai_for_name" string="&lt;&lt; AI" type="object" help="Cliccando viene richiesto ad AI di generare un oggetto dal contenuto del file" />
 
                <field name="description" />
-               <button type="object" name="call_ai_for_description" string="<< AI" class="oe_highlight" groups="docnaet.group_docnaet_AI_user" attrs="{'invisible': [('description', '!=', False)]}" />
+               <button type="object" name="call_ai_for_description" string="&lt;&lt; AI" class="oe_highlight" groups="docnaet.group_docnaet_AI_user" attrs="{'invisible': [('description', '!=', False)]}" />
                <button type="object" name="clean_description" string="Cancella la descrizione (usare quando è sbagliata quella di AI)" class="oe_highlight" groups="docnaet.group_docnaet_AI_user" attrs="{'invisible': [('description', '=', False)]}" icon="gtk-clear"/>
 
                <field name="sector_id" groups="docnaet.group_docnaet_sector_admin"/>
