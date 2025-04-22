@@ -897,7 +897,10 @@
 
                        <notebook colspan="5">
                            <page string="Extra info">
-                               <separator string="Description" colspan="5"/>
+                               <separator string="Description" colspan="3"/>
+                               <button type="object" name="call_ai_for_description" string="AI" class="oe_highlight" colspan="1" groups="docnaet.group_docnaet_AI_user" />
+                               <button type="object" name="dummy" string="Refresh" class="oe_highlight" colspan="1" groups="docnaet.group_docnaet_AI_user" />
+
                                <field name="description" colspan="5" nolabel="1"/>
 
                                <separator string="Note" colspan="5"/>

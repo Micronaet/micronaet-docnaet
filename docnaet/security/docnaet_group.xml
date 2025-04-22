@@ -52,6 +52,13 @@
         <field name="comment">User that access to documents remotely (with local database readonly).</field>
     </record>
 
+    <record id="group_docnaet_AI_user" model="res.groups">
+        <field name="name">Docnaet AI user</field>
+        <field name="category_id" ref="module_docnaet" />
+        <field name="comment">User that access AI.</field>
+        />
+    </record>
+
     <!--LABNAET:-->
     <record id="group_labnaet_user" model="res.groups">
         <field name="name">Labnaet user</field>
