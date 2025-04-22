@@ -593,7 +593,7 @@ class DocnaetDocument(orm.Model):
             return False
 
         return self.write(cr, uid, ids, {
-            'desccription': False,
+            'description': False,
         }, context=context)
 
     def call_ai_for_description(self, cr, uid, ids, context=None):
