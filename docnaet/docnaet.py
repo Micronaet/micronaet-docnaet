@@ -586,6 +586,16 @@ class DocnaetDocument(orm.Model):
     def dummy(self, cr, uid, ids, context=None):
         return True
 
+    def clean_description(self, cr, uid, ids, context=None):
+        """ Clean wrong description
+        """
+        if len(ids) != 1:
+            return False
+
+        return self.write(cr, uid, ids, {
+            'desccription': False,
+        }, context=context)
+
     def call_ai_for_description(self, cr, uid, ids, context=None):
         """ Call AI url to get Docnaet Description
         """
