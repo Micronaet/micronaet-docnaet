@@ -781,6 +781,8 @@
                <field name="docnaet_mode" invisible="1" />
                <field name="name" />
                <field name="description" />
+               <button type="object" name="call_ai_for_description" string="AI" class="oe_highlight" colspan="1" groups="docnaet.group_docnaet_AI_user" attrs="{'invisible': [('description', '!=', False)]}"/>
+
                <field name="sector_id" groups="docnaet.group_docnaet_sector_admin"/>
                <field name="partner_id" />
                <field name="country_id" />
