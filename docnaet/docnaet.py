@@ -607,6 +607,8 @@ class DocnaetDocument(orm.Model):
 
     def call_ai_for_description(self, cr, uid, ids, context=None):
         """ Call AI url to get Docnaet Description
+            field_name: name, description, all
+
         """
         if context is None:
             context = {}
@@ -615,9 +617,8 @@ class DocnaetDocument(orm.Model):
 
         call_url = 'http://10.0.0.202:18069/gemini/docnaet/?doc_id={doc_id}&field={field_name}'.format(
             doc_id=doc_id, field_name=field_name)
-        # todo &field=name  or  description  or  all
         command = 'wget -a /tmp/wget.log -O /tmp/link_{doc_id}.tmp {url}'.format(doc_id=doc_id, url=call_url)
-        _logger.warning(u'Calling {}'.format(command))
+        _logger.warning(u'... Calling {}'.format(command))
         os.system(command)
         return True
 
