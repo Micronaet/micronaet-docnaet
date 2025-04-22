@@ -608,7 +608,6 @@ class DocnaetDocument(orm.Model):
     def call_ai_for_description(self, cr, uid, ids, context=None):
         """ Call AI url to get Docnaet Description
             field_name: name, description, all
-
         """
         if context is None:
             context = {}
