@@ -592,8 +592,9 @@ class DocnaetDocument(orm.Model):
         wait = 2
         doc_id = ids[0]
         call_url = 'http://10.0.0.202:18069/gemini/docnaet/?doc_id={doc_id}'.format(doc_id=doc_id)
-        os.system('wget -a /tmp/wget.log -O /tmp/link_{doc_id}.tmp {url}'.format(doc_id=doc_id, url=call_url))
-        time.sleep(wait)
+        command = 'wget -a /tmp/wget.log -O /tmp/link_{doc_id}.tmp {url}'.format(doc_id=doc_id, url=call_url)
+        _logger.warning(u'Calling {}'.format(command))
+        os.system(command)
         return True
 
     def call_docnaet_url(self, cr, uid, ids, mode, remote=False, context=None):
