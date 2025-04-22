@@ -723,11 +723,11 @@ class DocnaetDocument(orm.Model):
         return self.call_docnaet_url(
             cr, uid, ids, 'open', remote=True, context=context)
 
-    def erppeek_get_document_filename(self, cr, uid, doc_id, mode='fullname', context=None):
+    def erppeek_get_document_filename(self, cr, uid, doc_id, context=None):
         """ Call from ERPpeek
         """
         document = self.browse(cr, uid, doc_id, context=context)
-        return self.get_document_filename(cr, uid, document, mode=mode, context=context)
+        return self.get_document_filename(cr, uid, document, mode='fullname', context=context)
 
     def get_document_filename(
             self, cr, uid, document, mode='fullname', context=None):
