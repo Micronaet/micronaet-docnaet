@@ -668,12 +668,10 @@ class DocnaetDocument(orm.Model):
         """
         assert len(ids) == 1, 'Works only with one record a time'
         current_proxy = self.browse(cr, uid, ids, context=context)[0]
-        filename = self.get_document_filename(
-            cr, uid, current_proxy, mode='fullname', context=context)
+        filename = self.get_document_filename(cr, uid, current_proxy, mode='fullname', context=context)
 
         message = _(
-            'ID: %s\nOrigin ID: %s\nExtension: %s\nOld filename: %s\n'
-            'Document: %s') % (
+            'ID: %s\nOrigin ID: %s\nExtension: %s\nOld filename: %s\nDocument: %s') % (
                 current_proxy.id,
                 current_proxy.original_id.id if
                 current_proxy.original_id else '',
@@ -714,16 +712,22 @@ class DocnaetDocument(orm.Model):
             }, context=context)
 
     def button_call_url_docnaet(self, cr, uid, ids, context=None):
-        """ Call url function for prepare address and return for open doc:
+        """ Call url function to prepare address and return for open doc:
         """
         return self.call_docnaet_url(cr, uid, ids, 'open', context=context)
 
     def button_call_url_remote_docnaet(self, cr, uid, ids, context=None):
-        """ Call url function for prepare address and return for open doc:
+        """ Call url function to prepare address and return for open doc:
             (in remote mode)
         """
         return self.call_docnaet_url(
             cr, uid, ids, 'open', remote=True, context=context)
+
+    def erppeek_get_document_filename(self, cr, uid, doc_id, mode='fullname', context=None):
+        """ Call from ERPpeek
+        """
+        document = self.browse(cr, uid, doc_id, context=context)
+        return self.get_document_filename(cr, uid, document, mode=mode, context=context)
 
     def get_document_filename(
             self, cr, uid, document, mode='fullname', context=None):

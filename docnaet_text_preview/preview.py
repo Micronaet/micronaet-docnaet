@@ -73,16 +73,16 @@ class ResCompany(orm.Model):
     # Utility function for parse text:
     # -------------------------------------------------------------------------
     def get_file_extension(self, filename):
-        ''' Return file extension
-        '''
+        """ Return file extension
+        """
         file_list = filename.split('.')
         if len(file_list) <= 1:
             return ''
         return file_list[-1].lower()
         
     def document_parse_doc_to_text(self, filename, fullname):
-        ''' Convert utility for docx, doc, pdf, odt document
-        '''
+        """ Convert utility for docx, doc, pdf, odt document
+        """
         # ---------------------------------------------------------------------
         # Utility for PDF:
         # ---------------------------------------------------------------------
@@ -258,8 +258,8 @@ class DocnaetDocument(orm.Model):
     _inherit = 'docnaet.document'
     
     def document_text_preview(self, cr, uid, ids, context=None):
-        ''' Return document preview
-        '''
+        """ Return document preview
+        """
         model_pool = self.pool.get('ir.model.data')
         view_id = model_pool.get_object_reference(
             cr, uid, 
@@ -284,8 +284,8 @@ class DocnaetDocument(orm.Model):
             
     def _get_text_preview_of_document(
             self, cr, uid, ids, fields, args, context=None):
-        ''' Fields function for calculate 
-        '''
+        """ Fields function for calculate
+        """
         company_pool = self.pool.get('res.company')
         res = {}
         for document in self.browse(cr, uid, ids, context=context):
@@ -304,5 +304,3 @@ class DocnaetDocument(orm.Model):
             type='text', string='Text preview', 
             store=False),                         
         }
-    
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

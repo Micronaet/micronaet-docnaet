@@ -48,8 +48,8 @@ class FileDocument(orm.Model):
     
     def schedule_load_file_list(
             self, cr, uid, path, doc_filter, unlink=True, period=False, context=None):
-        ''' Load path passed and create file as record
-        '''
+        """ Load path passed and create file as record
+        """
         # Pool used:
         company_pool = self.pool.get('res.company')
         _logger.info('Start import file: folder [%s] extension [%s]' % (
@@ -106,8 +106,7 @@ class FileDocument(orm.Model):
                     os.path.getmtime(fullname)).strftime(
                         DEFAULT_SERVER_DATETIME_FORMAT)
                 if period and file_modify < period_date:
-                    _logger.info('Jump file (date file %s < %s): %s' % (
-                         file_modify, period_date, filename))
+                    _logger.info('Jump file (date file %s < %s): %s' % (file_modify, period_date, filename))
                     continue    
                 data = { 
                     'name': filename,
@@ -154,4 +153,3 @@ class FileDocument(orm.Model):
     _defaults = {
         'active': lambda *x: True,
         }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

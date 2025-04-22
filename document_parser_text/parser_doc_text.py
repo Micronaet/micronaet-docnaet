@@ -57,8 +57,8 @@ class ResCompany(orm.Model):
     # Utility function for parse text:
     # -------------------------------------------------------------------------
     def get_file_extension(self, filename):
-        ''' Return file extension
-        '''
+        """ Return file extension
+        """
         file_list = filename.split('.')
         if len(file_list) <= 1:
             return ''
