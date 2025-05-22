@@ -36,7 +36,7 @@ except:
 # Read configuration parameter:
 # ======================================================================================================================
 cfg_file = os.path.expanduser('../openerp.cfg')
-pdb.set_trace()
+
 # ERP parameter:
 config = ConfigParser.ConfigParser()
 config.read([cfg_file])
@@ -78,6 +78,7 @@ default_data = {
 if not os.path.isfile(file_account):
     print('File contabile non presente {} (o server non collegato), non viene importato nulla!'.format(file_account))
     sys.exit()
+pdb.set_trace()
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Connect to ODOO:
