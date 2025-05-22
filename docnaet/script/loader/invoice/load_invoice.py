@@ -124,7 +124,7 @@ except Exception as e:
 years = [from_year]  # todo from to this
 pdb.set_trace()
 for this_year in years:
-    this_path = path_database.format(year=this_year)
+    this_path = folder_mask.format(year=this_year)
     if this_path not in file_db:
         file_db[this_path] = {}
 
