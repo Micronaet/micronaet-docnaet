@@ -22,24 +22,20 @@
 import os
 import erppeek
 import shutil
-
-from docnaet.agent.xmlrpc.lauch_operation import doc_pool
-from docnaet.agent.xmlrpc.move.move_document import protocol_id
+import pickle
+import pdb
 
 try:
     import ConfigParser
 except:
     import configparser as ConfigParser
 
-import pickle
-
-from docnaet_remote_odbc_mdb.agent.odbc_creation import path_database
 
 # ======================================================================================================================
 # Read configuration parameter:
 # ======================================================================================================================
 cfg_file = os.path.expanduser('../openerp.cfg')
-
+pdb.set_trace()
 # ERP parameter:
 config = ConfigParser.ConfigParser()
 config.read([cfg_file])
