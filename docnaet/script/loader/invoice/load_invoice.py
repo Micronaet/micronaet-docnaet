@@ -136,11 +136,11 @@ for this_year in years:
         for filename in files:
             fullname = os.path.join(root, filename)
             invoice_ref = filename.split('_')[0]  # todo check
-            if invoice_ref not in account_db:
+            if invoice_ref not in account_db.get(year, {}):
                 print('File non identificabile da gestionale {}, saltato'.format(filename))
                 continue
 
-            invoice_detail = account_db.get(year, {}).get(invoice_ref, False)
+            invoice_detail = account_db[year][invoice_ref]
             if not invoice_detail:
                 print('Fattura rif. {} non trovato nel file CSV da gestionale {}'.format(invoice_ref, file_account))
                 continue
@@ -204,6 +204,7 @@ for this_year in years:
 
                 if update_file:
                     shutil.copy(fullname, this_filename)
+        break   # Only base subfolder
 
 
 # -----------------------------------------------------------------------------
