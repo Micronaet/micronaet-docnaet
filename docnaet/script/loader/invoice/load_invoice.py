@@ -20,6 +20,7 @@
 #
 ###############################################################################
 import os
+import sys
 import erppeek
 import shutil
 import pickle
@@ -51,12 +52,12 @@ from_year = config.get('input', 'year')
 file_pickle = config.get('input', 'pickle')
 file_account = config.get('input', 'account')  # File used as whoami check file!
 
-protocol_id = config.get('default', 'protocol_id')
-program_id = config.get('default', 'program_id')
-user_id = config.get('default', 'user_id')
-docnaet_category_id = config.get('default', 'docnaet_category_id')
-company_id = config.get('default', 'company_id')
-language_id = config.get('default', 'language_id')
+protocol_id = int(config.get('default', 'protocol_id'))
+program_id = int(config.get('default', 'program_id'))
+user_id = int(config.get('default', 'user_id'))
+docnaet_category_id = int(config.get('default', 'docnaet_category_id'))
+company_id = int(config.get('default', 'company_id'))
+language_id = int(config.get('default', 'language_id'))
 
 default_data = {
     'docnaet_category_id': docnaet_category_id,
