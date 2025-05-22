@@ -1018,6 +1018,7 @@ class DocnaetDocument(orm.Model):
         'original_id': fields.many2one(
             'docnaet.document', 'Original',
             help='Parent orignal document after this duplication'),
+        'auto_import_key': fields.char('Auto import key', size=25, help='Chiave utilizzata per importare i documenti'),
         'imported': fields.boolean('Imported'),
         'private': fields.boolean('Private'),
         # Workflow date event:

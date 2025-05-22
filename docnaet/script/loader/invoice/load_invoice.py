@@ -21,7 +21,16 @@
 ###############################################################################
 import os
 import erppeek
-import ConfigParser
+import shutil
+
+from docnaet.agent.xmlrpc.lauch_operation import doc_pool
+from docnaet.agent.xmlrpc.move.move_document import protocol_id
+
+try:
+    import ConfigParser
+except:
+    import configparser as ConfigParser
+
 import pickle
 
 from docnaet_remote_odbc_mdb.agent.odbc_creation import path_database
@@ -44,7 +53,34 @@ port = config.get('dbaccess', 'port')   # verify if it's necessary: getint
 folder_mask = config.get('input', 'folder')
 from_year = config.get('input', 'year')
 file_pickle = config.get('input', 'pickle')
-file_account = config.get('input', 'account')
+file_account = config.get('input', 'account')  # File used as whoami check file!
+
+protocol_id = config.get('default', 'protocol_id')
+program_id = config.get('default', 'program_id')
+user_id = config.get('default', 'user_id')
+docnaet_category_id = config.get('default', 'docnaet_category_id')
+company_id = config.get('default', 'company_id')
+language_id = config.get('default', 'language_id')
+
+default_data = {
+    'docnaet_category_id': docnaet_category_id,
+    'company_id': company_id,
+    'protocol_id': protocol_id,
+    'language_id': language_id,
+    'user_id': user_id,
+    'program_id': program_id,
+    'docnaet_extension': 'pdf',
+    'docnaet_mode': 'docnaet',
+    'priority': 'normal',
+}
+
+# ----------------------------------------------------------------------------------------------------------------------
+# Mount check:
+# ----------------------------------------------------------------------------------------------------------------------
+# Account File used for this check:
+if not os.path.isfile(file_account):
+    print('File contabile non presente {} (o server non collegato), non viene importato nulla!'.format(file_account))
+    sys.exit()
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Connect to ODOO:
@@ -61,11 +97,6 @@ partner_pool = odoo.model('res.partner')
 # ======================================================================================================================
 # Load files from Path:
 # ======================================================================================================================
-# Account File:
-if not os.path.isfile(file_account):
-    print('File contabile non presente {}, non importo!'.format(file_account))
-    sys.exit()
-
 print('Lettura file contabile {}'.format(file_account))
 account_db = {}
 with open(file_account, 'r') as file_csv:
@@ -73,10 +104,10 @@ with open(file_account, 'r') as file_csv:
     for line in file_csv:
         counter += 1
         try:
-            year, invoice, date, customer_code = line.split('|')
+            year, invoice_ref, date, customer_code = line.split('|')
             if year not in account_db:
                 account_db[year] = {}
-            account_db[year] = [invoice, date, customer_code]
+            account_db[year][invoice_ref] = [date, customer_code]
         except:
             print('{}. Riga saltata'.format(file_account))
             continue
@@ -91,35 +122,96 @@ except Exception as e:
     file_db = {}
 
 # Read folders:
+# Note: both path need to be on ODOO Server where Docnaet is installed!
+
 years = [year]  # todo from to this
 for this_year in years:
     this_path = path_database.format(year=this_year)
     if this_path not in file_db:
-        file_db[this_path] = []
+        file_db[this_path] = {}
+
     for root, folders, files in os.path.walk(this_path):
+        # --------------------------------------------------------------------------------------------------------------
+        #                                                Invoice file:
+        # --------------------------------------------------------------------------------------------------------------
+
         for filename in files:
             fullname = os.path(root, filename)
             invoice_ref = filename.split('_')[0]  # todo check
             if invoice_ref not in account_db:
                 print('File non identificabile da gestionale {}, saltato'.format(filename))
                 continue
-            invoice_detail = account_db[invoice_ref]
 
+            invoice_detail = account_db.get(year, {}).get(invoice_ref, False)
+            if not invoice_detail:
+                print('Fattura rif. {} non trovato nel file CSV da gestionale {}'.format(invoice_ref, file_account))
+                continue
+
+            # ----------------------------------------------------------------------------------------------------------
+            #                                         ODOO Docnaet record:
+            # ----------------------------------------------------------------------------------------------------------
+            date, customer_code = invoice_detail
+            auto_import_key = 'FT-{}.{}'.format(year, invoice_ref)  # Key
             # Read ODOO record:
+            doc_ids = doc_pool.search([
+                ('auto_import_key', '=', auto_import_key),
+            ])
+            if not doc_ids:
+                # Search partner:
+                partner_ids = partner_pool.search([
+                    ('sql_customer_code', '=', customer_code),
+                ])
+                if not partner_ids:
+                    print('Codice partner {} non trovato, non importato {}'.format(customer_code, invoice_ref))
+                    continue
+                partner_id = partner_ids[0]
+                partner = partner_pool.browse(partner_id)
 
-            # Create if not present (create record with default values)
+                # Invoice not present in ODOO create:
+                record = default_data.copy()
+                # todo format date?
 
-            # Check if need to be updated the file
+                # Create if not present (create record with default values)
+                record.update({
+                    'name': '{} del {}'.format(invoice_ref, date),
+                    # 'number': '',
+                    'date': date,
+                    'partner_id': partner_id,
+                    'country_id': partner.country_id.id,
 
-            # Get filename in ERP
+                    'auto_import_key': auto_import_key,
+                })
 
-            # Save filename timestamp in picked db
+                # Confirm document (assign number protocol)
+                odoo.exec_workflow(
+                    'docnaet.document',
+                    'document_draft_confirmed',
+                    item_id)
+
+                # ------------------------------------------------------------------------------------------------------
+                # Check if need to be updated the file:
+                # ------------------------------------------------------------------------------------------------------
+                # Get filename in ERP
+                this_filename = doc_pool.erppeek_get_document_filename(doc_id)
+                update_file = False
+                if os.path.isfile(this_filename):
+                    update_file = True
+
+                modify_ts = os.path.getmtime(fullname)
+                stored_modify_ts = file_db[this_path].get(fullname)
+                if modify_ts != stored_modify_ts:
+                    # Save filename timestamp in picked db
+                    file_db[this_path][fullname] = modify_ts
+                    update_file = True
+
+                if update_file:
+                    shutil.copy(fullname, this_filename)
 
 
 # -----------------------------------------------------------------------------
 doc_ids = doc_pool.search([
     ('date_month', '=', False),
-])
+    ])
 
 # Save Pickle:
 try:
