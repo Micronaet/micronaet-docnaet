@@ -128,7 +128,7 @@ for this_year in years:
     if this_path not in file_db:
         file_db[this_path] = {}
 
-    for root, folders, files in os.path.walk(this_path):
+    for root, folders, files in os.walk(this_path):
         # --------------------------------------------------------------------------------------------------------------
         #                                                Invoice file:
         # --------------------------------------------------------------------------------------------------------------
