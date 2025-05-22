@@ -134,7 +134,7 @@ for this_year in years:
         # --------------------------------------------------------------------------------------------------------------
 
         for filename in files:
-            fullname = os.path(root, filename)
+            fullname = os.path.join(root, filename)
             invoice_ref = filename.split('_')[0]  # todo check
             if invoice_ref not in account_db:
                 print('File non identificabile da gestionale {}, saltato'.format(filename))
