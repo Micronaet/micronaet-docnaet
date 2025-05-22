@@ -78,7 +78,6 @@ default_data = {
 if not os.path.isfile(file_account):
     print('File contabile non presente {} (o server non collegato), non viene importato nulla!'.format(file_account))
     sys.exit()
-pdb.set_trace()
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Connect to ODOO:
@@ -122,7 +121,8 @@ except Exception as e:
 # Read folders:
 # Note: both path need to be on ODOO Server where Docnaet is installed!
 
-years = [year]  # todo from to this
+years = [from_year]  # todo from to this
+pdb.set_trace()
 for this_year in years:
     this_path = path_database.format(year=this_year)
     if this_path not in file_db:
