@@ -123,7 +123,6 @@ except Exception as e:
 # Note: both path need to be on ODOO Server where Docnaet is installed!
 
 years = [from_year, ]  # todo from to this
-pdb.set_trace()
 try:
     for this_year in years:
         this_path = folder_mask.format(year=this_year)
