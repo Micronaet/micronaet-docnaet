@@ -136,18 +136,15 @@ try:
             # ----------------------------------------------------------------------------------------------------------
 
             for filename in files:
-                if filename != 'FT01.000336_LECCHI DOMENICO RINALDO.pdf':
-                    continue
-                pdb.set_trace()
                 fullname = os.path.join(root, filename)
                 invoice_ref = filename.split('_')[0]  # todo check
                 if invoice_ref not in account_db.get(this_year, {}):
                     print('File non identificabile da gestionale {}, saltato'.format(filename))
                     continue
 
-                # ----------------------------------------------------------------------------------------------------------
+                # ------------------------------------------------------------------------------------------------------
                 #                                         ODOO Docnaet record:
-                # ----------------------------------------------------------------------------------------------------------
+                # ------------------------------------------------------------------------------------------------------
                 date, customer_code = account_db[this_year][invoice_ref]
                 auto_import_key = 'INVOICE-{}.{}'.format(year, invoice_ref)  # Key
                 # Read ODOO record:
