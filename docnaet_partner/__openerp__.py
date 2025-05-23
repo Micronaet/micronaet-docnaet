@@ -32,7 +32,7 @@
     'depends': [
         'base',
         'docnaet',
-        'sapnaet',
+        # 'sapnaet',
         ],
     'init_xml': [],
     'demo': [],

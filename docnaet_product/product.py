@@ -39,8 +39,8 @@ from openerp.tools import (DEFAULT_SERVER_DATE_FORMAT,
 _logger = logging.getLogger(__name__)
 
 class DocnaetDocument(orm.Model):
-    ''' Add extra fields for integrare a link to docnaet document
-    '''
+    """ Add extra fields for integrare a link to docnaet document
+    """
     _inherit = 'docnaet.document'
     
     _columns = {
@@ -55,13 +55,11 @@ class DocnaetDocument(orm.Model):
         }
 
 class ProductProduct(orm.Model):
-    ''' Add extra fields for integrare docnaet document
-    '''
+    """ Add extra fields for integrare docnaet document
+    """
     _inherit = 'product.product'
     
     _columns = {
         'docnaet_ids': fields.one2many('docnaet.document', 'linked_product_id',
             'Docnaet document'),
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

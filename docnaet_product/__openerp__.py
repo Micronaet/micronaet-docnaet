@@ -21,7 +21,7 @@
     'name': 'Docnaet: Product integration',
     'version': '0.1',
     'category': 'Documanet / Product',
-    'description': '''        
+    'description': '''
         Integrate docnaet document in product form
         Used for activate a page in product for have docnaet document available
         there
@@ -32,7 +32,7 @@
     'depends': [
         'docnaet',
         'product',
-        'sapnaet',
+        #  'sapnaet',  # MX problem!
         ],
     'init_xml': [],
     'demo': [],

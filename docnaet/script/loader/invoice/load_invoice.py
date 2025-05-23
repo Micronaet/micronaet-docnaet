@@ -140,16 +140,11 @@ for this_year in years:
                 print('File non identificabile da gestionale {}, saltato'.format(filename))
                 continue
 
-            invoice_detail = account_db[this_year][invoice_ref]
-            if not invoice_detail:
-                print('Fattura rif. {} non trovato nel file CSV da gestionale {}'.format(invoice_ref, file_account))
-                continue
-
             # ----------------------------------------------------------------------------------------------------------
             #                                         ODOO Docnaet record:
             # ----------------------------------------------------------------------------------------------------------
-            date, customer_code = invoice_detail
-            auto_import_key = 'FT-{}.{}'.format(year, invoice_ref)  # Key
+            date, customer_code = account_db[this_year][invoice_ref]
+            auto_import_key = 'INVOICE-{}.{}'.format(year, invoice_ref)  # Key
             # Read ODOO record:
             doc_ids = doc_pool.search([
                 ('auto_import_key', '=', auto_import_key),

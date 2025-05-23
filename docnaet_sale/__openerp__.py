@@ -33,7 +33,7 @@
         'base',
         'docnaet',
         'sale',
-        'sapnaet',
+        # 'sapnaet',  # todo needed here!
         'docnaet_download',
         ],
     'init_xml': [],
