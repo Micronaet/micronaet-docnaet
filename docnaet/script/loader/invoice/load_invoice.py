@@ -149,7 +149,9 @@ for this_year in years:
             doc_ids = doc_pool.search([
                 ('auto_import_key', '=', auto_import_key),
             ])
-            if not doc_ids:
+            if doc_ids:
+                doc_id = doc_ids[0]
+            else:
                 # Search partner:
                 partner_ids = partner_pool.search([
                     ('sql_customer_code', '=', customer_code),
@@ -174,31 +176,37 @@ for this_year in years:
 
                     'auto_import_key': auto_import_key,
                 })
+                doc_id = doc_pool.create(record)
 
+            # ----------------------------------------------------------------------------------------------------------
+            # Check document state for WF confirm:
+            # ----------------------------------------------------------------------------------------------------------
+            document = doc_pool.browse(doc_id)
+            if document.state == 'draft':
                 # Confirm document (assign number protocol)
                 odoo.exec_workflow(
                     'docnaet.document',
                     'document_draft_confirmed',
-                    item_id)
+                    doc_id)
 
-                # ------------------------------------------------------------------------------------------------------
-                # Check if need to be updated the file:
-                # ------------------------------------------------------------------------------------------------------
-                # Get filename in ERP
-                this_filename = doc_pool.erppeek_get_document_filename(doc_id)
-                update_file = False
-                if os.path.isfile(this_filename):
-                    update_file = True
+            # ----------------------------------------------------------------------------------------------------------
+            # Check if need to be updated the file:
+            # ----------------------------------------------------------------------------------------------------------
+            # Get filename in ERP
+            this_filename = doc_pool.erppeek_get_document_filename(doc_id)
+            update_file = False
+            if os.path.isfile(this_filename):
+                update_file = True
 
-                modify_ts = os.path.getmtime(fullname)
-                stored_modify_ts = file_db[this_path].get(fullname)
-                if modify_ts != stored_modify_ts:
-                    # Save filename timestamp in picked db
-                    file_db[this_path][fullname] = modify_ts
-                    update_file = True
+            modify_ts = os.path.getmtime(fullname)
+            stored_modify_ts = file_db[this_path].get(fullname)
+            if modify_ts != stored_modify_ts:
+                # Save filename timestamp in picked db
+                file_db[this_path][fullname] = modify_ts
+                update_file = True
 
-                if update_file:
-                    shutil.copy(fullname, this_filename)
+            if update_file:
+                shutil.copy(fullname, this_filename)
         break   # Only base subfolder
 
 
