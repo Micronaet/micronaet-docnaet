@@ -175,12 +175,16 @@ try:
                     # todo format date?
 
                     # Create if not present (create record with default values)
+                    if partner.country_id:
+                        country_id = partner.country_id.id
+                    else:
+                        country_id = partner.company_id.country_id.id
                     record.update({
                         'name': '{} del {}'.format(invoice_ref, date),
                         # 'number': '',
                         'date': date,
                         'partner_id': partner_id,
-                        'country_id': partner.country_id.id,
+                        'country_id': country_id,
 
                         'auto_import_key': auto_import_key,
                     })
@@ -188,16 +192,16 @@ try:
                     doc_id = document.id
                     print('Create {}'.format(invoice_ref))
 
-                # ----------------------------------------------------------------------------------------------------------
+                # ------------------------------------------------------------------------------------------------------
                 # Check document state for WF confirm:
-                # ----------------------------------------------------------------------------------------------------------
+                # ------------------------------------------------------------------------------------------------------
                 if document.state == 'draft':
                     # Confirm document (assign number protocol)
                     odoo.exec_workflow('docnaet.document', 'document_draft_confirmed', doc_id)
 
-                # ----------------------------------------------------------------------------------------------------------
+                # ------------------------------------------------------------------------------------------------------
                 # Check if need to be updated the file:
-                # ----------------------------------------------------------------------------------------------------------
+                # ------------------------------------------------------------------------------------------------------
                 # Get filename in ERP
                 this_filename = doc_pool.erppeek_get_document_filename(doc_id)
                 modify_ts = os.path.getmtime(fullname)
