@@ -151,6 +151,7 @@ for this_year in years:
             ])
             if doc_ids:
                 doc_id = doc_ids[0]
+                document = doc_pool.browse(doc_id)
             else:
                 # Search partner:
                 partner_ids = partner_pool.search([
@@ -176,18 +177,15 @@ for this_year in years:
 
                     'auto_import_key': auto_import_key,
                 })
-                doc_id = doc_pool.create(record)
+                document = doc_pool.create(record)
+                doc_id = document.id
 
             # ----------------------------------------------------------------------------------------------------------
             # Check document state for WF confirm:
             # ----------------------------------------------------------------------------------------------------------
-            document = doc_pool.browse(doc_id)
             if document.state == 'draft':
                 # Confirm document (assign number protocol)
-                odoo.exec_workflow(
-                    'docnaet.document',
-                    'document_draft_confirmed',
-                    doc_id)
+                odoo.exec_workflow('docnaet.document', 'document_draft_confirmed', doc_id)
 
             # ----------------------------------------------------------------------------------------------------------
             # Check if need to be updated the file:
