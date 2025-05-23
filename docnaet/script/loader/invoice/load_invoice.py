@@ -69,6 +69,7 @@ default_data = {
     'docnaet_extension': 'pdf',
     'docnaet_mode': 'docnaet',
     'priority': 'normal',
+    'note': 'Importazione automatica'
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
