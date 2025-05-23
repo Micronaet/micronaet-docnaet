@@ -101,12 +101,9 @@ class DocnaetDocument(orm.Model):
 
         model_pool = self.pool.get('ir.model.data')
         form_view_id = model_pool.get_object_reference(
-            cr, uid,
-            'sapnaet', 'view_sale_order_matrix_form')[1]
+            cr, uid, 'sapnaet', 'view_sale_order_matrix_form')[1]
         tree_view_id = model_pool.get_object_reference(
-            cr, uid,
-            'sapnaet',
-            'sale_order_for_delivery_operation_deadline_view_tree')[1]
+            cr, uid, 'sapnaet', 'sale_order_for_delivery_operation_deadline_view_tree')[1]
         if not order_ids:  # No order
             raise
         elif len(order_ids) == 1:  # Single order

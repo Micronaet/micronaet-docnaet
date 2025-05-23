@@ -58,7 +58,7 @@ i = 0
 for doc in doc_pool.browse(doc_ids):
     i += 1
     if i % 100 == 0:
-        print 'Record: %s' % i
+        print('Record: %s' % i)
         
     data = {
         'date': doc.date,
