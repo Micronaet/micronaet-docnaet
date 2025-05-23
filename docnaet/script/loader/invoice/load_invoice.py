@@ -122,103 +122,105 @@ except Exception as e:
 # Read folders:
 # Note: both path need to be on ODOO Server where Docnaet is installed!
 
-years = [from_year]  # todo from to this
+years = [from_year, ]  # todo from to this
 pdb.set_trace()
-for this_year in years:
-    this_path = folder_mask.format(year=this_year)
-    if this_path not in file_db:
-        file_db[this_path] = {}
-
-    for root, folders, files in os.walk(this_path):
-        # --------------------------------------------------------------------------------------------------------------
-        #                                                Invoice file:
-        # --------------------------------------------------------------------------------------------------------------
-
-        for filename in files:
-            fullname = os.path.join(root, filename)
-            invoice_ref = filename.split('_')[0]  # todo check
-            if invoice_ref not in account_db.get(this_year, {}):
-                print('File non identificabile da gestionale {}, saltato'.format(filename))
-                continue
-
-            # ----------------------------------------------------------------------------------------------------------
-            #                                         ODOO Docnaet record:
-            # ----------------------------------------------------------------------------------------------------------
-            date, customer_code = account_db[this_year][invoice_ref]
-            auto_import_key = 'INVOICE-{}.{}'.format(year, invoice_ref)  # Key
-            # Read ODOO record:
-            doc_ids = doc_pool.search([
-                ('auto_import_key', '=', auto_import_key),
-            ])
-            if doc_ids:
-                doc_id = doc_ids[0]
-                document = doc_pool.browse(doc_id)
-                print('Select {}'.format(invoice_ref))
-
-            else:
-                # Search partner:
-                partner_ids = partner_pool.search([
-                    ('sql_customer_code', '=', customer_code),
-                ])
-                if not partner_ids:
-                    print('Codice partner {} non trovato, non importato {}'.format(customer_code, invoice_ref))
-                    continue
-                partner_id = partner_ids[0]
-                partner = partner_pool.browse(partner_id)
-
-                # Invoice not present in ODOO create:
-                record = default_data.copy()
-                # todo format date?
-
-                # Create if not present (create record with default values)
-                record.update({
-                    'name': '{} del {}'.format(invoice_ref, date),
-                    # 'number': '',
-                    'date': date,
-                    'partner_id': partner_id,
-                    'country_id': partner.country_id.id,
-
-                    'auto_import_key': auto_import_key,
-                })
-                document = doc_pool.create(record)
-                doc_id = document.id
-                print('Create {}'.format(invoice_ref))
-
-            # ----------------------------------------------------------------------------------------------------------
-            # Check document state for WF confirm:
-            # ----------------------------------------------------------------------------------------------------------
-            if document.state == 'draft':
-                # Confirm document (assign number protocol)
-                odoo.exec_workflow('docnaet.document', 'document_draft_confirmed', doc_id)
-
-            # ----------------------------------------------------------------------------------------------------------
-            # Check if need to be updated the file:
-            # ----------------------------------------------------------------------------------------------------------
-            # Get filename in ERP
-            this_filename = doc_pool.erppeek_get_document_filename(doc_id)
-            update_file = False
-            if os.path.isfile(this_filename):
-                update_file = True
-
-            modify_ts = os.path.getmtime(fullname)
-            stored_modify_ts = file_db.get(this_path, {}).get(fullname)
-            if modify_ts != stored_modify_ts:
-                # Save filename timestamp in picked db
-                file_db[this_path][fullname] = modify_ts
-                update_file = True
-
-            if update_file:
-                shutil.copy(fullname, this_filename)
-                print(' > Update file {}'.format(fullname))
-            else:
-                print(' > Not update file {}'.format(fullname))
-
-        break   # Only base subfolder
-
-# Save Pickle:
 try:
-    with open(file_pickle, 'wb') as file:
-        pickle.dump(file_db, file)
-    print('Storicizzato file pickle {}'.format(file_pickle))
-except Exception as e:
-    print('Errore salvataggio file pickle {}, viene rigenerato la prossima volta!'.format(file_pickle))
+    for this_year in years:
+        this_path = folder_mask.format(year=this_year)
+        if this_path not in file_db:
+            file_db[this_path] = {}
+
+        for root, folders, files in os.walk(this_path):
+            # --------------------------------------------------------------------------------------------------------------
+            #                                                Invoice file:
+            # --------------------------------------------------------------------------------------------------------------
+
+            for filename in files:
+                fullname = os.path.join(root, filename)
+                invoice_ref = filename.split('_')[0]  # todo check
+                if invoice_ref not in account_db.get(this_year, {}):
+                    print('File non identificabile da gestionale {}, saltato'.format(filename))
+                    continue
+
+                # ----------------------------------------------------------------------------------------------------------
+                #                                         ODOO Docnaet record:
+                # ----------------------------------------------------------------------------------------------------------
+                date, customer_code = account_db[this_year][invoice_ref]
+                auto_import_key = 'INVOICE-{}.{}'.format(year, invoice_ref)  # Key
+                # Read ODOO record:
+                doc_ids = doc_pool.search([
+                    ('auto_import_key', '=', auto_import_key),
+                ])
+                if doc_ids:
+                    doc_id = doc_ids[0]
+                    document = doc_pool.browse(doc_id)
+                    print('Select {}'.format(invoice_ref))
+
+                else:
+                    # Search partner:
+                    partner_ids = partner_pool.search([
+                        ('sql_customer_code', '=', customer_code),
+                    ])
+                    if not partner_ids:
+                        print('Codice partner {} non trovato, non importato {}'.format(customer_code, invoice_ref))
+                        continue
+                    partner_id = partner_ids[0]
+                    partner = partner_pool.browse(partner_id)
+
+                    # Invoice not present in ODOO create:
+                    record = default_data.copy()
+                    # todo format date?
+
+                    # Create if not present (create record with default values)
+                    record.update({
+                        'name': '{} del {}'.format(invoice_ref, date),
+                        # 'number': '',
+                        'date': date,
+                        'partner_id': partner_id,
+                        'country_id': partner.country_id.id,
+
+                        'auto_import_key': auto_import_key,
+                    })
+                    document = doc_pool.create(record)
+                    doc_id = document.id
+                    print('Create {}'.format(invoice_ref))
+
+                # ----------------------------------------------------------------------------------------------------------
+                # Check document state for WF confirm:
+                # ----------------------------------------------------------------------------------------------------------
+                if document.state == 'draft':
+                    # Confirm document (assign number protocol)
+                    odoo.exec_workflow('docnaet.document', 'document_draft_confirmed', doc_id)
+
+                # ----------------------------------------------------------------------------------------------------------
+                # Check if need to be updated the file:
+                # ----------------------------------------------------------------------------------------------------------
+                # Get filename in ERP
+                this_filename = doc_pool.erppeek_get_document_filename(doc_id)
+                update_file = False
+                if os.path.isfile(this_filename):
+                    update_file = True
+
+                modify_ts = os.path.getmtime(fullname)
+                stored_modify_ts = file_db.get(this_path, {}).get(fullname)
+                if modify_ts != stored_modify_ts:
+                    # Save filename timestamp in picked db
+                    file_db[this_path][fullname] = modify_ts
+                    update_file = True
+
+                if update_file:
+                    shutil.copy(fullname, this_filename)
+                    print(' > Update file {}'.format(fullname))
+                else:
+                    print(' > Not update file {}'.format(fullname))
+
+            break   # Only base subfolder
+
+    # Save Pickle:
+finally:
+    try:
+        with open(file_pickle, 'wb') as file:
+            pickle.dump(file_db, file)
+        print('Storicizzato file pickle {}'.format(file_pickle))
+    except:
+        print('Errore salvataggio file pickle {}, viene rigenerato la prossima volta!'.format(file_pickle))
