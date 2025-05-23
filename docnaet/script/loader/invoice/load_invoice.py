@@ -136,8 +136,9 @@ try:
             # ----------------------------------------------------------------------------------------------------------
 
             for filename in files:
-                if filename == 'FT01.000335_EDELWEISS ENERGIA S.P.A..pdf':
-                    pdb.set_trace()
+                if filename != 'FT01.000335_EDELWEISS ENERGIA S.P.A..pdf':
+                    continue
+                pdb.set_trace()
                 fullname = os.path.join(root, filename)
                 invoice_ref = filename.split('_')[0]  # todo check
                 if invoice_ref not in account_db.get(this_year, {}):
