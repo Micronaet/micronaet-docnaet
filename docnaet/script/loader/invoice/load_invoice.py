@@ -153,6 +153,8 @@ for this_year in years:
             if doc_ids:
                 doc_id = doc_ids[0]
                 document = doc_pool.browse(doc_id)
+                print('Select {}'.format(invoice_ref))
+
             else:
                 # Search partner:
                 partner_ids = partner_pool.search([
@@ -180,6 +182,7 @@ for this_year in years:
                 })
                 document = doc_pool.create(record)
                 doc_id = document.id
+                print('Create {}'.format(invoice_ref))
 
             # ----------------------------------------------------------------------------------------------------------
             # Check document state for WF confirm:
@@ -198,7 +201,7 @@ for this_year in years:
                 update_file = True
 
             modify_ts = os.path.getmtime(fullname)
-            stored_modify_ts = file_db[this_path].get(fullname)
+            stored_modify_ts = file_db.get(this_path, {}).get(fullname)
             if modify_ts != stored_modify_ts:
                 # Save filename timestamp in picked db
                 file_db[this_path][fullname] = modify_ts
@@ -206,13 +209,11 @@ for this_year in years:
 
             if update_file:
                 shutil.copy(fullname, this_filename)
+                print(' > Update file {}'.format(fullname))
+            else:
+                print(' > Not update file {}'.format(fullname))
+
         break   # Only base subfolder
-
-
-# -----------------------------------------------------------------------------
-doc_ids = doc_pool.search([
-    ('date_month', '=', False),
-    ])
 
 # Save Pickle:
 try:
