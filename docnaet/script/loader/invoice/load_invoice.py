@@ -101,7 +101,7 @@ with open(file_account, 'r') as file_csv:
     for line in file_csv:
         counter += 1
         try:
-            year, invoice_ref, date, customer_code = line.split('|')
+            year, invoice_ref, date, customer_code = line.strip().split('|')
             if year not in account_db:
                 account_db[year] = {}
             account_db[year][invoice_ref] = [date, customer_code]
