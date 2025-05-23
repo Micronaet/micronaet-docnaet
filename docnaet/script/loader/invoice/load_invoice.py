@@ -197,22 +197,21 @@ try:
                 # ----------------------------------------------------------------------------------------------------------
                 # Get filename in ERP
                 this_filename = doc_pool.erppeek_get_document_filename(doc_id)
-                update_file = False
-                if os.path.isfile(this_filename):
-                    update_file = True
-
                 modify_ts = os.path.getmtime(fullname)
-                stored_modify_ts = file_db.get(this_path, {}).get(fullname)
-                if modify_ts != stored_modify_ts:
-                    # Save filename timestamp in picked db
-                    file_db[this_path][fullname] = modify_ts
+                update_file = False
+                if not os.path.isfile(this_filename):  # destination
                     update_file = True
+                else:
+                    stored_modify_ts = file_db.get(this_path, {}).get(fullname)
+                    if modify_ts != stored_modify_ts:  # File original modified:
+                        file_db[this_path][fullname] = modify_ts
+                        update_file = True
 
                 if update_file:
                     shutil.copy(fullname, this_filename)
                     print(' > Update file {}'.format(fullname))
                 else:
-                    print(' > Not update file {}'.format(fullname))
+                    print(' > Not updated file {}'.format(fullname))
 
             break   # Only base subfolder
 
