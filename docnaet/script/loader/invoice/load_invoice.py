@@ -136,7 +136,7 @@ try:
             # ----------------------------------------------------------------------------------------------------------
 
             for filename in files:
-                if filename != 'FT01.000335_EDELWEISS ENERGIA S.P.A..pdf':
+                if filename != 'FT01.000336_LECCHI DOMENICO RINALDO.pdf':
                     continue
                 pdb.set_trace()
                 fullname = os.path.join(root, filename)
