@@ -94,16 +94,16 @@ class DocnaetDocument(orm.Model):
     _inherit = 'docnaet.document'
 
     def show_linked_sale_ids(self, cr, uid, ids, context=None):
-        """ Open Sale order document (overriden?)
+        """ Open Sale order document (overridden?)
         """
         current = self.browse(cr, uid, ids, context=context)[0]
         order_ids = [o.id for o in current.linked_sale_ids]
 
         model_pool = self.pool.get('ir.model.data')
-        form_view_id = model_pool.get_object_reference(
-            cr, uid, 'sapnaet', 'view_sale_order_matrix_form')[1]
+        form_view_id = model_pool.get_object_reference(cr, uid, 'sapnaet', 'view_sale_order_matrix_form')[1]
         tree_view_id = model_pool.get_object_reference(
             cr, uid, 'sapnaet', 'sale_order_for_delivery_operation_deadline_view_tree')[1]
+
         if not order_ids:  # No order
             raise
         elif len(order_ids) == 1:  # Single order
