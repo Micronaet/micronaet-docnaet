@@ -208,7 +208,7 @@ try:
 
                     # Customer code not used:
                     if customer_code[:3] in excluded_code:
-                        print('Partner non riconosciuto {}, non importato {}'.format(
+                        print('Partner escluso {}, non importata {}'.format(
                             customer_code, customer_name, invoice_ref))
                         continue
 
