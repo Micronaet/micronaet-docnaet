@@ -73,6 +73,7 @@ default_data = {
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
+#                                                 Utility:
 # ----------------------------------------------------------------------------------------------------------------------
 def get_name(invoice_ref, date):
     """ Return invoice name if correct format: “8/xxx del 05.05.25”
@@ -226,8 +227,7 @@ try:
                         country_id = partner.company_id.country_id.id
                         
                     record.update({
-                        # “8/xxx del 05.05.25”
-                        'name': '{} del {}'.format(invoice_ref, date),
+                        'name': get_name(invoice_ref, date), # '{} del {}'.format(invoice_ref, date),
                         # 'number': '',
                         'date': date,
                         'partner_id': partner_id,
