@@ -206,13 +206,14 @@ try:
                     partner = partner_pool.browse(partner_id)
                     customer_name = partner.name or ''
 
-                    # Customer name "Cliente":
-                    if customer_name.startswith('Cliente'):
+                    # Customer code not used:
+                    if customer_code[:3] in excluded_code:
                         print('Partner non riconosciuto {}, non importato {}'.format(
                             customer_code, customer_name, invoice_ref))
                         continue
 
-                    if customer_code[:3] in excluded_code:
+                    # Customer name "Cliente":
+                    if customer_name.startswith('Cliente'):
                         print('Partner non riconosciuto {}, non importato {}'.format(
                             customer_code, customer_name, invoice_ref))
                         continue
