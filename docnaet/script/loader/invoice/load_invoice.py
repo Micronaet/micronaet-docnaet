@@ -73,6 +73,20 @@ default_data = {
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------------------------------------------
+def get_name(invoice_ref, date):
+    """ Return invoice name if correct format: “8/xxx del 05.05.25”
+    """
+    return '{}/{} del {}.{}.{}'.foramat(
+        int(invoice_ref[2:4]),
+        int(invoice_ref[5:4]),
+
+        date[8:10],
+        date[5:7],
+        date[2:4],
+    )
+
+# ----------------------------------------------------------------------------------------------------------------------
 # Mount check:
 # ----------------------------------------------------------------------------------------------------------------------
 # Account File used for this check:
@@ -95,6 +109,14 @@ partner_pool = odoo.model('res.partner')
 # ======================================================================================================================
 # Load files from Path:
 # ======================================================================================================================
+excluded_code = ['270']
+exclude_invoice = {
+    '2025': {
+        '201': 328,
+        '230': 174,
+    },
+}
+
 print('Lettura file contabile {}'.format(file_account))
 account_db = {}
 with open(file_account, 'r') as file_csv:
@@ -136,7 +158,7 @@ try:
 
             for filename in files:
                 fullname = os.path.join(root, filename)
-                invoice_ref = filename.split('_')[0]  # todo check
+                invoice_ref = filename.split('_')[0]  # todo check  	"FT01.000336"
                 if invoice_ref not in account_db.get(this_year, {}):
                     print('File non identificabile da gestionale {}, saltato'.format(filename))
                     continue
@@ -146,6 +168,14 @@ try:
                 # ------------------------------------------------------------------------------------------------------
                 date, customer_code = account_db[this_year][invoice_ref]
                 auto_import_key = 'INVOICE-{}.{}'.format(year, invoice_ref)  # Key
+                invoice_number = int(invoice_ref.split('.')[-1])
+                customer_mode = customer_mode[:3]
+                from_number = exclude_invoice[this_year].get(customer_mode, 0)
+                if invoice_number < from_number:
+                    print('Codice partner {} e fattura {}, sotto la soglia {}, non importata'.format(
+                        customer_mode, invoice_ref, from_number))
+                    continue
+
                 # Read ODOO record:
                 doc_ids = doc_pool.search([
                     ('auto_import_key', '=', auto_import_key),
@@ -156,15 +186,34 @@ try:
                     print('Select {}'.format(invoice_ref))
 
                 else:
-                    # Search partner:
+                    # --------------------------------------------------------------------------------------------------
+                    #                                          Search partner:
+                    # --------------------------------------------------------------------------------------------------
                     partner_ids = partner_pool.search([
                         ('sql_customer_code', '=', customer_code),
                     ])
+
+                    # --------------------------------------------------------------------------------------------------
+                    # Exclude clause:
+                    # --------------------------------------------------------------------------------------------------
+                    # Not found:
                     if not partner_ids:
                         print('Codice partner {} non trovato, non importato {}'.format(customer_code, invoice_ref))
                         continue
                     partner_id = partner_ids[0]
                     partner = partner_pool.browse(partner_id)
+                    customer_name = partner.name or ''
+
+                    # Customer name "Cliente":
+                    if customer_name.startswith('Cliente'):
+                        print('Partner non riconosciuto {}, non importato {}'.format(
+                            customer_code, customer_name, invoice_ref))
+                        continue
+
+                    if customer_code[:3] in excluded_code:
+                        print('Partner non riconosciuto {}, non importato {}'.format(
+                            customer_code, customer_name, invoice_ref))
+                        continue
 
                     # Invoice not present in ODOO create:
                     record = default_data.copy()
@@ -175,7 +224,9 @@ try:
                         country_id = partner.country_id.id
                     else:
                         country_id = partner.company_id.country_id.id
+                        
                     record.update({
+                        # “8/xxx del 05.05.25”
                         'name': '{} del {}'.format(invoice_ref, date),
                         # 'number': '',
                         'date': date,
