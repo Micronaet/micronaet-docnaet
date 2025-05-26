@@ -78,7 +78,7 @@ default_data = {
 def get_name(invoice_ref, date):
     """ Return invoice name if correct format: “8/xxx del 05.05.25”
     """
-    return '{}/{} del {}.{}.{}'.foramat(
+    return '{}/{} del {}.{}.{}'.format(
         int(invoice_ref[2:4]),
         int(invoice_ref[5:4]),
 
