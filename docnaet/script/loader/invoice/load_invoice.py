@@ -170,7 +170,7 @@ try:
                 date, customer_code = account_db[this_year][invoice_ref]
                 auto_import_key = 'INVOICE-{}.{}'.format(year, invoice_ref)  # Key
                 invoice_number = int(invoice_ref.split('.')[-1])
-                customer_mode = customer_mode[:3]
+                customer_mode = customer_code[:3]
                 from_number = exclude_invoice[this_year].get(customer_mode, 0)
                 if invoice_number < from_number:
                     print('Codice partner {} e fattura {}, sotto la soglia {}, non importata'.format(
