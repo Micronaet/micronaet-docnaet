@@ -267,8 +267,7 @@ try:
                     shutil.copy(fullname, this_filename)
                     print(' > Update file {}'.format(fullname))
                 else:
-                    print(' > Not updated file {}'.format(fullname))
-
+                    print(' > No need to update, file {}'.format(fullname))
             break   # Only base subfolder
 
     # Save Pickle:
