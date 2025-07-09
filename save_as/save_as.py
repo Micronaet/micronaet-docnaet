@@ -55,14 +55,14 @@ class IrAttachment(orm.Model):
         config_pool = self.pool.get('ir.config_parameter')
         key = 'web.base.url.docnaet'
         config_ids = config_pool.search(cr, uid, [
-            ('key', '=', key)], context=context)
+            ('key', '=', key),
+        ], context=context)
         if not config_ids:
             raise osv.except_osv(
                 _('Errore'),
                 _('Avvisare amministratore: configurare parametro: %s' % key),
                 )
-        config_proxy = config_pool.browse(
-            cr, uid, config_ids, context=context)[0]
+        config_proxy = config_pool.browse(cr, uid, config_ids, context=context)[0]
         base_address = config_proxy.value
         _logger.info('URL parameter: %s' % base_address)
 
@@ -108,5 +108,4 @@ class IrAttachment(orm.Model):
             name = 'docnaet_download.%s' % extension
 
         # Return link for open temp file:
-        return self._get_php_return_page(
-            cr, uid, destination, name, context=context)
+        return self._get_php_return_page(cr, uid, destination, name, context=context)

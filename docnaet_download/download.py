@@ -52,9 +52,7 @@ class DocnaetDocument(orm.Model):
 
         # Get file fullpath:
         document = self.browse(cr, uid, ids, context=context)[0]
-        filename = self.get_document_filename(
-            cr, uid, document, mode='fullname', context=context)
+        filename = self.get_document_filename(cr, uid, document, mode='fullname', context=context)
 
         name = 'docnaet_download_%s' % os.path.basename(filename)
-        return attachment_pool.return_file_apache_php(
-            cr, uid, filename, name=name, context=context)
+        return attachment_pool.return_file_apache_php(cr, uid, filename, name=name, context=context)
