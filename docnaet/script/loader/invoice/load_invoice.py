@@ -79,7 +79,9 @@ def get_name(invoice_ref, date):
     """ Return invoice name if correct format:
         from "FT01.000336" to "8/xxx del 05.05.25"
     """
-    return '{}/{} del {}.{}.{}'.format(
+    extra = 'Nota di credito '
+    return '{}{}/{} del {}.{}.{}'.format(
+        extra if invoice_ref[:2].upper() == 'NC' else '',
         int(invoice_ref[2:4]),
         int(invoice_ref[5:]),
 
@@ -160,7 +162,7 @@ try:
 
             for filename in files:
                 fullname = os.path.join(root, filename)
-                invoice_ref = filename.split('_')[0]  # todo check  	"FT01.000336"
+                invoice_ref = filename.split('_')[0]  # todo check "FT01.000336"
                 if invoice_ref not in account_db.get(this_year, {}):
                     print('File non identificabile da gestionale {}, saltato'.format(filename))
                     continue
