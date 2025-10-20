@@ -114,8 +114,8 @@ partner_pool = odoo.model('res.partner')
 excluded_code = ['270', '290']
 exclude_invoice = {
     '2025': {
-        '201': 328,
-        '230': 174,
+        '201': 622,
+        '230': 294,
     },
 }
 
@@ -264,8 +264,8 @@ try:
                         update_file = True
 
                 if update_file:
-                    shutil.copy(fullname, this_filename)
-                    print(' > Update file {}'.format(fullname))
+                    # shutil.copy(fullname, this_filename)
+                    print(' > ***** Update file {}'.format(fullname))
                 else:
                     print(' > No need to update, file {}'.format(fullname))
             break   # Only base subfolder
