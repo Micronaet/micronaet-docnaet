@@ -264,7 +264,7 @@ try:
                         update_file = True
 
                 if update_file:
-                    # shutil.copy(fullname, this_filename)
+                    shutil.copy(fullname, this_filename)
                     print(' > ***** Update file {}'.format(fullname))
                 else:
                     print(' > No need to update, file {}'.format(fullname))
