@@ -123,7 +123,7 @@ class FlaskDocnaet:
             fullname = self.get_block_fullname(folder_public, filename)
 
             if not os.path.isfile(fullname):
-                error = 'File not found: {}'.format(fullname)
+                error = 'File not found: {}'.format(os.path.basename(fullname))
                 print(error)
             else:
                 cmd = 'START {}'.format(fullname)
