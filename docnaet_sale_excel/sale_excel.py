@@ -75,6 +75,9 @@ class ResPartner(orm.Model):
             commercial_code = row[4].strip()
             commercial_name = row[5].strip()
 
+            responsible_code = row[6].strip()
+            responsible_name = row[7].strip()
+
             if not partner_code:
                 _logger.warning('%s. Jump line: partner code empty' % i)
                 continue
@@ -109,6 +112,8 @@ class ResPartner(orm.Model):
                 'account_reference1_name': agent_name,
                 'account_reference2_code': commercial_code,
                 'account_reference2_name': commercial_name,
+                'account_reference3_code': responsible_code,
+                'account_reference3_name': responsible_name,
 
                 # SQL mx_agent_id part:
                 'agent_id': agent_id,
