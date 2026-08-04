@@ -168,8 +168,7 @@ class DocnaetProtocolEmail(orm.Model):
                 if address.auto_partner:
                     to_address = (record.get('To') or '').split(', ')
                     if to_address:  # Take only the first
-                        email_address = \
-                            to_address[0].split('<')[-1].split('>')[0]
+                        email_address = to_address[0].split('<')[-1].split('>')[0]
                         if email_address:
                             # Search user:
                             partner_ids = partner_pool.search(cr, uid, [
