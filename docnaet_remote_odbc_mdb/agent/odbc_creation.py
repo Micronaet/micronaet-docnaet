@@ -129,11 +129,11 @@ try:
     connection = pyodbc.connect(
         'DRIVER={Microsoft Access Driver (*.mdb)};DBQ=%s' % mdb['execute'])    
 except:
-    print '[ERROR] Connection to database %s\nString: %s\n[%s]' % (
+    print('[ERROR] Connection to database %s\nString: %s\n[%s]' % (
         mdb['execute'],
         odbc_string,
         sys.exc_info(),
-        )
+        ))
     sys.exit()    
 
 # Create cursor:
@@ -266,14 +266,14 @@ if mode == 'update':
         # Remove document if update:        
         query = 'DELETE FROM %s;' % table
         if verbose:
-            print '[INFO] %s. Delete query: %s' % (i, query)
+            print('[INFO] %s. Delete query: %s' % (i, query))
         try:    
             cr.execute(query)
             cr.commit()
         except:
-            print '[ERROR] %s remove items: %s' % (
+            print('[ERROR] %s remove items: %s' % (
                 table, sys.exc_info(), 
-                )
+                ))
                 
 for table in import_table:
     item = convert_db[table]
@@ -288,19 +288,19 @@ for table in import_table:
     
     # Delete previous documents if update period
     if mode == 'update' and table == 'Documenti':
-        print '[INFO] Delete document of update period: [record: %s]' % (
+        print('[INFO] Delete document of update period: [record: %s]' % (
             len(erp_ids), 
-            )
+            ))
         query = 'DELETE FROM %s WHERE id in %s;' % (
             table, erp_ids,
             )
         
-    print '[INFO] Start export %s [record: %s]' % (
-        table, len(erp_ids))        
+    print('[INFO] Start export %s [record: %s]' % (
+        table, len(erp_ids)))
     for record in erp_pool.browse(erp_ids):
         i += 1
         if i % 100 == 0:
-            print '[INFO] ... %s record exported: %s' % (table, i)
+            print('[INFO] ... %s record exported: %s' % (table, i))
             
         values = tuple([eval(v) for v in oerp_fields])
         query = 'INSERT INTO %s %s VALUES %s' % (
@@ -309,14 +309,14 @@ for table in import_table:
             values,
             )
         if verbose:
-            print '[INFO] %s. Query: %s' % (i, query)
+            print('[INFO] %s. Query: %s' % (i, query))
         try:    
             cr.execute(query)
             cr.commit()
         except:
-            print '[ERROR] %s export: %s' % (
+            print('[ERROR] %s export: %s' % (
                 table, sys.exc_info(), 
-                )
+                ))
                 
 if 'Documenti' in import_table:
     # Change for problem:
@@ -325,11 +325,10 @@ if 'Documenti' in import_table:
         '''
     cr.execute(query)
     cr.commit()
-    print '[INFO] docFile null when 0'
+    print('[INFO] docFile null when 0')
 
 # close the cursor and connection
 cr.close()
 connection.close()
 # Final rename for agent copy:
 shutil.move(mdb['execute'], mdb['agent'])
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
