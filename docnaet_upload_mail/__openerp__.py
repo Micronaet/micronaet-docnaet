@@ -36,6 +36,7 @@
     'demo': [],
     'data': [
         'security/ir.model.access.csv',
+
         'mail_view.xml',
         'scheduler.xml',
         ],
