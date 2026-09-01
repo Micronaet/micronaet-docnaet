@@ -1,6 +1,18 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+        <!--res.partner-->
+        <record model="ir.ui.view" id="view_res_partner_domain_form">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="email" position="after">
+                    <field name="docnaet_domain" />
+                </field>
+            </field>
+        </record>
+
         <!--docnaet.protocol-->
         <record model="ir.ui.view" id="view_docnaet_protocol_upload_email_form">
             <field name="name">Docnaet protocol email</field>

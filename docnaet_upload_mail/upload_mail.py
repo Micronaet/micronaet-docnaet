@@ -162,7 +162,9 @@ class DocnaetProtocolEmail(orm.Model):
                     if user_ids:
                         user_id = user_ids[0]
 
+                # ------------------------------------------------------------------------------------------------------
                 # Auto partner:
+                # ------------------------------------------------------------------------------------------------------
                 # Try to search partner from 'to address':
                 partner_id = False
                 if address.auto_partner:
@@ -170,19 +172,29 @@ class DocnaetProtocolEmail(orm.Model):
                     if to_address:  # Take only the first
                         email_address = to_address[0].split('<')[-1].split('>')[0]
                         if email_address:
-                            # Search user:
+                            # ------------------------------------------------------------------------------------------
+                            # Search direct partner:
+                            # ------------------------------------------------------------------------------------------
                             partner_ids = partner_pool.search(cr, uid, [
                                 ('email', '=', email_address),
-                                ('docnaet_enable', '=', True), #Docnaet partner
+                                ('docnaet_enable', '=', True), # Docnaet partner
                                 ], context=context)
+
+                            if not partner_ids:
+                                # --------------------------------------------------------------------------------------
+                                # Search domain partner:
+                                # --------------------------------------------------------------------------------------
+                                partner_domain = (email_address.split('@')[-1]).strip()
+                                partner_ids = partner_pool.search(cr, uid, [
+                                    ('docnaet_domain', 'ilike', partner_domain),
+                                    ('docnaet_enable', '=', True),  # Docnaet partner
+                                ], context=context)
+
                             if partner_ids:
                                 partner_id = partner_ids[0]
                                 if len(partner_ids) > 1:
                                     _logger.warning(
-                                        '%s partner with address: %s' % (
-                                            len(partner_ids),
-                                            email_address,
-                                            ))
+                                        '%s partner with address: %s' % (len(partner_ids), email_address))
 
                 # ------------------------------------------------------------------------------------------------------
                 # Labnaet setup:
@@ -341,3 +353,15 @@ class DocnaetProtocol(orm.Model):
             'docnaet.protocol.email', 'protocol_id', 'Account'),
         }
 
+
+class ResPartner(orm.Model):
+    """ Model name: Partner
+    """
+    _inherit = 'res.partner'
+
+    _columns = {
+        'docnaet_domain': fields.text(
+            'Dominio di posta',
+            help='Indicare il dominio di posta, in caso di elenco multiplo utilizzare | per separare. es.: '
+                 'example.com|example.it'),
+    }
