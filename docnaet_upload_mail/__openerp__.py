@@ -25,7 +25,7 @@
         Add email to protocol for auto upload documents in upload list
         ''',
     'author': 'Micronaet S.r.l. - Nicola Riolini',
-    'website': 'http://www.micronaet.it',
+    'website': 'https://micronaet.com',
     'license': 'AGPL-3',
     'depends': [
         'base',
