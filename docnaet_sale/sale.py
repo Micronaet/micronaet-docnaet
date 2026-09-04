@@ -289,8 +289,9 @@ class DocnaetDocument(orm.Model):
     def check_amount_present(self, cr, uid, ids, context=None):
         """ Check if manatory amount
         """
+        # 04/09/2026: Cassandra richiede che non sia più presente la forzatura del prezzo:
+        return True
         assert len(ids) == 1, 'Works only with one record a time'
-
         document = self.browse(cr, uid, ids, context=context)[0]
         if document.protocol_id.sale_management and \
                 not document.no_sale_price and not document.sale_order_amount:
