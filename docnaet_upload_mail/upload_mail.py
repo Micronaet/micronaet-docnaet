@@ -69,7 +69,9 @@ class DocnaetProtocolEmail(orm.Model):
         user_pool = self.pool.get('res.users')
         partner_pool = self.pool.get('res.partner')
 
-        protocol_proxy = protocol_pool.browse(cr, uid, ids, context=context)[0]
+        email_proxy = self.browse(cr, uid, ids[0], context=context)
+        # protocol_proxy = protocol_pool.browse(cr, uid, ids, context=context)[0]  # BUGFIX
+        protocol_proxy = email_proxy.protocol_id
 
         # Block setup
         block = doc_pool._block_size  # 1000 files every folder block
