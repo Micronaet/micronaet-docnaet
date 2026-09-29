@@ -78,7 +78,6 @@ class DocnaetProtocolEmail(orm.Model):
         block_mode_on = block > 0  # Manage with block mode folder ON
 
         # Keep docnaet mode as in protocol setup:
-        pdb.set_trace()
         docnaet_mode = protocol_proxy.docnaet_mode
         context['docnaet_mode'] = docnaet_mode
 
