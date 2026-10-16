@@ -31,7 +31,7 @@ Installazione:
   
 - Attivare nella gestione utenti di OpenERP / Docnaet la spunta Flask
   
-- Lanciare a mano il collegameno e provare ad aprire un file di Docnaet e Labonaet  
+- Lanciare a mano il collegamento e provare ad aprire un file di Docnaet e Labonaet  
 
 - Provare un riavvio PC
 

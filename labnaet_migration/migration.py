@@ -73,5 +73,3 @@ class DocnaetDocument(orm.Model):
     _columns = {        
         'old_protocol_id': fields.integer('Old protocol ID'),         
         }
-    
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

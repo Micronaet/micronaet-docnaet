@@ -302,8 +302,7 @@ class DocnaetProduct(orm.Model):
     _description = 'Docnaet Product'
 
     _columns = {
-        'name': fields.char('Name', size=64, required=True,
-            translate=True),
+        'name': fields.char('Name', size=64, required=True, translate=True),
         'default_code': fields.char('Default code', size=64),
         'docnaet_category_id': fields.many2one(
             'product.product.docnaet', 'Docnaet category'),
